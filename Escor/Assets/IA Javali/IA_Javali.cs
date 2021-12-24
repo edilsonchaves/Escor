@@ -9,10 +9,9 @@ public class IA_Javali : MonoBehaviour
 
     [Range(1,50)]
     public float MovementDistance;
-    public bool walkInAllGround; // precisa ser melhorado
+    public bool walkInAllGround; // só funciona com "AiLevel == 1"
     
-    public float MovementSpeed, JumpHeight, FollowDistance;
-    public SpriteRenderer JavaliSprite;
+    public float MovementSpeed, JumpHeight, FollowDistance, AttackDistance;
     public Animator JavaliAnimator;
 
     [Header("Raycast")]
@@ -23,21 +22,21 @@ public class IA_Javali : MonoBehaviour
     public Vector3 offSetGround, offSetWall;
 
 
-
     // a linha vermelha é usada para mostrar a altura do pulo e para detectar se é possível pular o obstaculo
     // a linha roxa é para detectar obstaculos
     // a linha amarela é para detectar se há colisão com o chão
     // a linha preta é para mostrar onde é o limite da movimentação do javali
 
-    private Rigidbody2D myRb;
-    private Vector3 myStartPosition;
-    private int currentDirection;
-    private float auxMovement;
-    private bool isGrounded, following, started;
-    private Transform playerTrans;
+
+    protected Rigidbody2D myRb;
+    protected Vector3 myStartPosition;
+    protected int currentDirection;
+    protected float auxMovement, distanceOfCollision = .3f;
+    protected bool isGrounded, following, started, attacking;
+    protected Transform playerTrans;
 
 
-    // Gizmos - desenha o caminho - Desenvolvimento
+    // Gizmos - Desenvolvimento
     void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;     
@@ -69,159 +68,211 @@ public class IA_Javali : MonoBehaviour
 
     void Start()
     {
-        started = true;
-        playerTrans = GameObject.FindGameObjectWithTag("Player").transform;
-        myRb = GetComponent<Rigidbody2D>();
-        myStartPosition = myRb.position;
-        currentDirection = RandomDirection();
-        // currentDirection = -1;
+        started             = true;
+        playerTrans         = GameObject.FindGameObjectWithTag("Player").transform;
+        myRb                = GetComponent<Rigidbody2D>();
+        myStartPosition     = myRb.position;
+        currentDirection    = RandomDirection();
         if(currentDirection == -1)
             FlipJavali();
+    }
 
+    void Update()
+    {
+        if(attacking)
+        {
+            ChangeAnimation("JavaliAtacando");
+        }
+        else if(!isGrounded)
+        {
+            ChangeAnimation("JavaliParado");
+        }
+        else
+        {
+            ChangeAnimation("JavaliAndando");
+        }
     }
 
 
     void FixedUpdate()
     {
         isGrounded = CheckIsGrounded();
-        // print("isGrounded:  "+isGrounded);
-        // print("CheckIfPlayerIsOnDifferentGround: "+CheckIfPlayerIsOnDifferentGround());
         Movement(); // faz a movimentação do javali
-        // if(HitWall())
-        // {
-        //     RaycastHit2D w = GetWall();
-        //     GetHeightOfWall(w);
-        // }
-    
-        CanJumpWall();
-
     }
 
 
-    // aqui é feito todo o calculo para movimentar o javali (IA Level 1)
-    void Movement()
+    // aqui é feito todo o calculo para movimentar o javali
+    private void Movement()
     {
         auxMovement = Time.fixedDeltaTime * MovementSpeed * currentDirection * 100; // calcula quanto ele deve se mover
         Vector2 newPosition = myRb.position + new Vector2(auxMovement*Time.fixedDeltaTime, 0); // salva a nova posição após o movimento
 
-        if(AiLevel == 1)
+        // inteligência do javali nível 1
+        if(AiLevel == 1 && !attacking)
         {
             myRb.velocity = new Vector2(auxMovement, myRb.velocity.y); // movimenta para a nova posição
 
+            // verifica se é para andar em todo o terreno
             if(walkInAllGround)
             {
-                if(CheckIsGrounded())
+                // verifica se está tocando o chão
+                if(CheckIsGrounded(true))
                 {
-                    if(HitWall() && GetDistanceOfCollisionWithWall(GetWall()) < 0.2f) 
+                    // verifica se encontrou algum obstaculo e faz o retorno quando estiver próximo
+                    if(HitWall() && GetDistanceOfCollisionWithWall(GetWall()) < distanceOfCollision) 
                     {
-                        InvertDirection();
+                        FlipFaceToStartPosition(); // vira a face do javali para o ponto inicial
                     }
                 }
                 else
                 {
-                    InvertDirection(); // muda a direção
+                    FlipFaceToStartPosition(); // vira a face do javali para o ponto inicial
                 }
             }
-            else if(HitWall() && GetDistanceOfCollisionWithWall(GetWall()) < 0.2f || IsOutLimite(newPosition)) // verifica se a nova posição está fora do limite
+            // verifica se encontrou algum obstaculo ou está fora do limite e faz o retorno 
+            else if(HitWall() && GetDistanceOfCollisionWithWall(GetWall()) < distanceOfCollision || IsOutLimite(newPosition) || !CheckIsGrounded(true)) // verifica se a nova posição está fora do limite
             {
-                InvertDirection();
+                FlipFaceToStartPosition(); // vira a face do javali para o ponto inicial
             }
-            // else if(IsOutLimite(newPosition)) 
-            // {
-            //     InvertDirection();
-            // }
+
+            if(GetDistaceOfPlayer() < AttackDistance && !attacking && IsFaceToPlayer())
+            {
+                Attack(); // ataca
+            }
         }
-        else if(AiLevel == 2)
+        // inteligência do javali nível 2
+        else if(AiLevel == 2 && !attacking)
         {
-            //ainda tenho que terminar
+            myRb.velocity = new Vector2(auxMovement, myRb.velocity.y); // movimenta para a nova posição
+
+            // verifica se o javali consegue pular o primeiro obstaculo na direção do player
+            if(CanJumpWallInDirectionOfPlayer())
+            {
+                following = false; // else
+
+                // verifica se pode seguir ou não o player
+                if(GetDistaceOfPlayer() < FollowDistance && !HasObstacleOnWay() && GetXDistaceOfPlayer() != 0f)
+                {
+                    following = true;
+                    FlipFaceToPlayer(); // vira a face do javali para o lado do player
+                }
+            }
+
+            // não seguindo
+            if(!following)
+            {
+                // volta para dentro do limite
+                if(IsOutLimite(newPosition))
+                {
+                    FlipFaceToStartPosition(); // vira a face do javali para o ponto inicial
+                }
+
+                // encontrou uma parede
+                if(HitWall())
+                {
+                    // verifica se é possível pular essa parede
+                    if(CanJumpWall())
+                    {
+                        Jump(); // pula
+                    }
+                    // verifica o quão próximo está a parede e faz o retorno
+                    else if(GetDistanceOfCollisionWithWall(GetWall()) < .3f)
+                    {
+                        FlipFaceToStartPosition(); // vira a face do javali para o ponto inicial
+                    }
+                }
+            }
+            // está seguindo
+            // encontrou uma parede
+            else if(HitWall())
+            {
+                // verifica se é possível pular essa parede
+                if(CanJumpWall())
+                {
+                    Jump(); // pula
+                    
+                    if(PlayerIsOnTheEdge())
+                    {
+                        Attack(false);
+                    }
+                    else
+                    {
+                        //Jump(3f); // pula
+                    }
+                }
+                // verifica o quão próximo está a parede e faz o retorno
+                else if(GetDistanceOfCollisionWithWall(GetWall()) < .3f)
+                {
+                    following = false;
+                    FlipFaceToStartPosition(); // vira a face do javali para o ponto inicial
+                }
+            }
+
+
+            // verifica se está próximo o bastante para atacar
+            if(GetDistaceOfPlayer() < AttackDistance && !attacking && !HasObstacleOnWay())
+            {
+                FlipFaceToPlayer(); // vira a face do javali para o lado do player
+                Attack(); // ataca
+
+            }
         }
+    }
 
-
-
-
-
-
-        // if(walkInAllGround)
-        // {
-        //     bool groundCollision = CheckIsGrounded();
-
-        //     if(groundCollision)
-        //     {
-        //         myRb.MovePosition(newPosition); // movimenta para a nova posição
-        //     }
-        //     else
-        //     {
-        //         InvertDirection(); // muda a direção
-        //     }
-
-        // }
-        // else if(GetXDistaceOfPlayer() < FollowDistance && CanJumpWall() )
-        // {
-        //     FlipFaceToPlayer();
-        //     following = true;
-        // }
-        // else if(!IsOutLimite(newPosition) || following) // verifica se a nova posição está fora do limite
-        // {
-        //     myRb.velocity = new Vector2(auxMovement, myRb.velocity.y);
-            
-        //     if(HitWall())
-        //     {
-        //         if(CanJumpWall())
-        //         {
-        //             Jump();
-        //         }
-        //         else if(GetDistanceOfCollisionWithWall(GetWall()) < 0.2f) 
-        //         {
-        //             following = false;
-        //             InvertDirection();
-        //         }
-        //     }
-         
-        //     // myRb.AddForce(new Vector2(auxMovement, 0), ForceMode2D.Force); // movimenta para a nova posição
-        // }
-        // else if(following)
-        // {
-        //     FlipFaceToPlayer();
-        //     myRb.velocity = new Vector2(auxMovement, myRb.velocity.y);
-        // }
-        // else
-        // {
-        //     InvertDirection();
-        // }
+    //muda a animação do javali
+    protected void ChangeAnimation(string str)
+    {
+        JavaliAnimator.Play(str);
     }
 
 
-    private void InvertDirection()
+    // inicia a contagem para finalizar o estado de ataque
+    private IEnumerator AttackFinished(float sec=0.9f)
+    {
+        yield return new WaitForSeconds(sec);
+        Debug.Log("Attack Finished");
+        attacking = false;
+    }
+
+
+    protected void InvertDirection()
     {
         currentDirection *= -1; // muda a direção
         FlipJavali();
     }
 
-    private void FlipJavali()
+
+    // muda a direção do sprite do javali
+    protected void FlipJavali()
     {
-        // JavaliSprite.flipX = !JavaliSprite.flipX;
         transform.Rotate(Vector2.up *180);
     }
 
 
     // verifica se está tocando o chão
-    private bool CheckIsGrounded()
+    protected bool CheckIsGrounded(bool onlyFace=false)
     {
-        return Physics2D.Raycast((Vector2)(transform.position) + (Vector2)(offSetGround)*currentDirection, -Vector2.up, offSetGround.z, groundLayer) ||
-                Physics2D.Raycast(new Vector2(transform.position.x - offSetGround.x, transform.position.y + offSetGround.y), -Vector2.up, offSetGround.z, groundLayer) ||
-                 Physics2D.Raycast((Vector2)(transform.position) + (Vector2)(offSetGround)*currentDirection, -Vector2.up, offSetGround.z, wallLayer) ||
-                  Physics2D.Raycast(new Vector2(transform.position.x - offSetGround.x, transform.position.y + offSetGround.y), -Vector2.up, offSetGround.z, wallLayer);
+        if(!onlyFace)
+        {
+            return Physics2D.Raycast(new Vector2(transform.position.x + offSetGround.x*currentDirection, transform.position.y + offSetGround.y), -Vector2.up, offSetGround.z, groundLayer).distance != 0 ||
+                    Physics2D.Raycast(new Vector2(transform.position.x - offSetGround.x*currentDirection, transform.position.y + offSetGround.y), -Vector2.up, offSetGround.z, groundLayer).distance != 0 ||
+                     Physics2D.Raycast(new Vector2(transform.position.x + offSetGround.x*currentDirection, transform.position.y + offSetGround.y), -Vector2.up, offSetGround.z, wallLayer).distance != 0 ||
+                      Physics2D.Raycast(new Vector2(transform.position.x - offSetGround.x*currentDirection, transform.position.y + offSetGround.y), -Vector2.up, offSetGround.z, wallLayer).distance != 0;
+        }
+ 
+        return Physics2D.Raycast(new Vector2(transform.position.x + offSetGround.x*currentDirection, transform.position.y + offSetGround.y), -Vector2.up, offSetGround.z, groundLayer).distance != 0 ||
+                 Physics2D.Raycast(new Vector2(transform.position.x + offSetGround.x*currentDirection, transform.position.y + offSetGround.y), -Vector2.up, offSetGround.z, wallLayer).distance != 0;
     }
 
     // retorna 1 ou -1 aleatoriamente
-    private int RandomDirection()
+    protected int RandomDirection()
     {
         return new List<int>(){-1,1}[UnityEngine.Random.Range(0,2)];
     }
 
 
     // verifica se a posição passada está fora dos limites de movimentação
-    private bool IsOutLimite(Vector3 position)
+    protected bool IsOutLimite(Vector3 position)
     {
         float distance = Mathf.Abs(myStartPosition.x - position.x); // guarda a distancia a partir do ponto inicial
         // print("distance: "+distance);
@@ -236,7 +287,7 @@ public class IA_Javali : MonoBehaviour
 
 
     // retorna a distancia de uma parede até o javali
-    private float GetDistanceOfCollisionWithWall(RaycastHit2D _wall)
+    protected float GetDistanceOfCollisionWithWall(RaycastHit2D _wall)
     {
         RaycastHit2D javaliHit = Physics2D.Raycast(new Vector2(_wall.point.x, transform.position.y), Vector2.right*currentDirection*-1, 100f, javaliLayer);
 
@@ -247,7 +298,7 @@ public class IA_Javali : MonoBehaviour
 
     // INÚTIL
     // retorna a altura da parede
-    private float GetHeightOfWall(RaycastHit2D _wall)
+    protected float GetHeightOfWall(RaycastHit2D _wall)
     {
         float width = _wall.transform.lossyScale.x;
         float height = _wall.transform.lossyScale.y;
@@ -257,7 +308,7 @@ public class IA_Javali : MonoBehaviour
 
 
     // retorna se há uma parede na frente do javali na distacia definida
-    private bool HitWall()
+    protected bool HitWall()
     {
         RaycastHit2D wall = GetWall(); // pega a parede
         
@@ -270,21 +321,29 @@ public class IA_Javali : MonoBehaviour
 
 
     // retorna a parede na frente do javali dentro da distancia definida    
-    private RaycastHit2D GetWall()
+    protected RaycastHit2D GetWall()
     {
-        RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x+offSetWall.x*currentDirection, transform.position.y+offSetWall.y), Vector2.right*currentDirection, offSetWall.z, wallLayer);
-        // Debug.DrawRay(new Vector2(transform.position.x+offSetWall.x*currentDirection, transform.position.y+offSetWall.y), Vector2.right*currentDirection*hit.distance, Color.black);
-        return hit;
+        return Physics2D.Raycast(new Vector2(transform.position.x+offSetWall.x*currentDirection, transform.position.y+offSetWall.y), Vector2.right*currentDirection, offSetWall.z, wallLayer);
     }
 
 
-    // verifica se o javali é capaz de pular o obstáculo
-    private bool CanJumpWall()
+    // verifica se o javali é capaz de pular o obstáculo na sua frente
+    protected bool CanJumpWall()
     {
-        //new Vector2(transform.position.x+offSetWall.x, transform.position.y + JumpHeight), Vector2.right*offSetWall.z
         Vector2 origin = new Vector2(transform.position.x+offSetWall.x*currentDirection, transform.position.y + JumpHeight); // ponto de partida do Raycast2D
         RaycastHit2D wall = Physics2D.Raycast(origin, Vector2.right*currentDirection, offSetWall.z, wallLayer); // lança o Raycast2D
-        // Debug.DrawRay(origin, Vector2.right*currentDirection*distance, Color.red); // desenha o Raycast2D
+
+        return wall.distance == 0;
+    }
+
+
+    // verifica se o javali é capaz de pular o obstáculo na direção do player
+    protected bool CanJumpWallInDirectionOfPlayer()
+    {
+        Vector2 origin = new Vector2(transform.position.x+offSetWall.x*currentDirection, transform.position.y + offSetWall.y); // ponto de partida do Raycast2D
+        RaycastHit2D wall = Physics2D.Raycast(origin, Vector2.right*GetDirectionOfPlayer(), GetXDistaceOfPlayer(), wallLayer); // lança o Raycast2D
+        origin = new Vector2(transform.position.x+offSetWall.x*currentDirection, transform.position.y + JumpHeight); // ponto de partida do Raycast2D
+        wall = Physics2D.Raycast(origin, Vector2.right*GetDirectionOfPlayer(), wall.distance+.2f, wallLayer); // lança o Raycast2D
 
         if(wall)// verifica se encontrou um obstáculo e retorna falso
             return false;
@@ -294,7 +353,7 @@ public class IA_Javali : MonoBehaviour
 
 
     // faz o javali pular
-    private void Jump()
+    protected void Jump(float forceMultiply=1f)
     {
         // verifica se o javali está no chão
         if(isGrounded)
@@ -311,7 +370,7 @@ public class IA_Javali : MonoBehaviour
                 GroundCheck = GroundCheck2;
 
             // calcula a força necessária para pular na altura definida
-            float forceY = Mathf.Sqrt((JumpHeight+(transform.position.y-GroundCheck.point.y)*1.25f)*2*g); 
+            float forceY = Mathf.Sqrt(((JumpHeight*forceMultiply)+(transform.position.y-GroundCheck.point.y)*1.25f)*2*g); 
 
             myRb.velocity = new Vector2(myRb.velocity.x, forceY); // pula
             // myRb.AddForce(transform.up*forceY);
@@ -319,8 +378,14 @@ public class IA_Javali : MonoBehaviour
     }
 
 
+    // protected RaycastHit2D GetWallInDirectionOfPlayer()
+    // {
+    //     return Physics2D.Raycast((Vector2)(transform.position), Vector2.right*GetDirectionOfPlayer(), GetXDistaceOfPlayer()+1, wallLayer);
+    // }
+
+
     // verifica se o javali e o player estão na mesma plataforma (talvez nem use)
-    private bool CheckIfPlayerIsOnDifferentGround()
+    protected bool CheckIfPlayerIsOnDifferentGround()
     {
         RaycastHit2D groundOfPlayer = Physics2D.Raycast((Vector2) playerTrans.position, -Vector2.up, 1000f, groundLayer);
         RaycastHit2D wallOfPlayer = Physics2D.Raycast((Vector2) playerTrans.position, -Vector2.up, 1000f, wallLayer);
@@ -338,28 +403,144 @@ public class IA_Javali : MonoBehaviour
     }
 
 
-    private void Attack()
+    //inicia o ataque
+    protected void Attack(bool stopToAttack=true)
     {
-
+        attacking = true;
+        print("Attack");
+        StartCoroutine(AttackFinished());
+        if(stopToAttack)
+        {
+            myRb.velocity = Vector3.zero;
+        }
     }
 
 
-    private float GetXDistaceOfPlayer()
+    // retorna a distacia do player no eixo X
+    protected float GetXDistaceOfPlayer()
     {
-        RaycastHit2D javaliHit = Physics2D.Raycast(new Vector2(playerTrans.position.x, transform.position.y), Vector2.right*currentDirection*-1, 1000f, javaliLayer);
-        RaycastHit2D playerHit = Physics2D.Raycast(new Vector2(javaliHit.point.x, playerTrans.position.y), Vector2.right*currentDirection, 1000f, playerLayer);
+        RaycastHit2D javaliHit = Physics2D.Raycast(new Vector2(playerTrans.position.x, transform.position.y), Vector2.right*GetDirectionOfPlayer()*-1, Mathf.Infinity, javaliLayer);
+        RaycastHit2D playerHit = Physics2D.Raycast(new Vector2(javaliHit.point.x, playerTrans.position.y), Vector2.right*GetDirectionOfPlayer(), Mathf.Infinity, playerLayer);
 
         return playerHit.distance;
     }
 
 
-    private void FlipFaceToPlayer()
+    // retorna a magnitude da distancia entre o player e o javali
+    protected float GetDistaceOfPlayer()
     {
-        if((playerTrans.position.x < transform.position.x && currentDirection == 1) ||
-           (playerTrans.position.x > transform.position.x && currentDirection == -1))
+        Vector2 dir = (transform.position - playerTrans.position).normalized; // direção
+
+        RaycastHit2D[] javaliHits = Physics2D.RaycastAll((Vector2)playerTrans.position, dir, Mathf.Infinity, javaliLayer);
+        RaycastHit2D javaliHit = default(RaycastHit2D);
+
+        foreach(RaycastHit2D hit in javaliHits)
         {
-            InvertDirection();
+            if(hit.transform == this.transform)
+            {
+                javaliHit = hit;
+            }
+        }
+        
+        RaycastHit2D playerHit = Physics2D.Raycast((Vector2)javaliHit.point, dir*-1, Mathf.Infinity, playerLayer);
+
+        return Vector2.Distance(javaliHit.point, playerHit.point);
+    }
+
+
+    // retorna se o javali está virado para o lado do player    
+    protected bool IsFaceToPlayer()
+    {
+        return GetDirectionOfPlayer() == currentDirection;
+    }
+
+
+    protected void FlipFaceToPlayer(bool onlyIfGrounded=true)
+    {
+        if(GetDirectionOfPlayer() != currentDirection)
+        {
+            if(onlyIfGrounded)
+            {
+                if(CheckIsGrounded())
+                {
+                    InvertDirection();
+                }
+            }
+            else
+            {
+                InvertDirection();
+            }
+        }
+    }
+
+
+    protected void FlipFaceToStartPosition(bool onlyIfGrounded=true)
+    {
+        if((myStartPosition.x < transform.position.x && currentDirection == 1) ||
+           (myStartPosition.x > transform.position.x && currentDirection == -1))
+        {
+            if(onlyIfGrounded)
+            {
+                if(CheckIsGrounded())
+                {
+                    InvertDirection();
+                }
+            }
+            else
+            {
+                InvertDirection();
+            }
+        }
+    }
+
+    protected int GetDirectionOfPlayer()
+    {
+        if(playerTrans.position.x < transform.position.x)
+        {
+            return -1;
+        }
+        else if(playerTrans.position.x > transform.position.x)
+        {
+            return 1;
         }
 
+        return 0;
+    }
+
+
+    // verifica se há alguma plataforma (ground) entre o player e o javali
+    protected bool HasObstacleOnWay()
+    {
+        float distance  = Vector2.Distance(playerTrans.position, transform.position);
+        Vector2 dir     = (playerTrans.position - transform.position); 
+        RaycastHit2D obstacle = Physics2D.Raycast(transform.position, dir.normalized, distance, groundLayer);
+        Debug.DrawRay((Vector2)transform.position, dir, Color.white);
+
+        return obstacle.distance != 0;
+    }
+
+
+    // verifica se o player está a beirada de uma plataforma
+    protected bool PlayerIsOnTheEdge()
+    {
+        Vector2 origin = new Vector2(transform.position.x+offSetWall.x*currentDirection, transform.position.y + JumpHeight); // ponto de partida do Raycast2D
+        RaycastHit2D player = Physics2D.Raycast(origin, Vector2.right*currentDirection, offSetWall.z*1.5f, playerLayer); // lança o Raycast2D
+        return player.distance != 0;        
+    }
+
+
+    // verifica se há um precipício na direção do player (ainda vou desenvolver)
+    protected bool HaveACliff()
+    {
+        return false;
+    }
+
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.tag == "Player")
+        {
+            Debug.Log("Jogador recebeu dano");
+        }
     }
 }
