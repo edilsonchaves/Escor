@@ -25,13 +25,23 @@ public class Manager_Game : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
             SaveLoadSystem.SaveFile<SectionData>(new SectionData(1,3));
             saveGameData = SaveLoadSystem.LoadFile<GameData>("C:/Users/Edilson Chaves/AppData/LocalLow/DefaultCompany/Escor/GameData.data");
-            sectionGameData = SaveLoadSystem.LoadFile<SectionData>("C:/Users/Edilson Chaves/AppData/LocalLow/DefaultCompany/Escor/SectionData.data");
             Debug.Log(saveGameData._volume+" "+ saveGameData._volumeAmbient + " "+ saveGameData._letterSize+" "+ saveGameData._resolution);
         }
         else
         {
             Destroy(this.gameObject);
         }
+    }
+
+
+    public void InitialNewSectionGame()
+    {
+        SaveLoadSystem.SaveFile<SectionData>(new SectionData(1, 3));
+    }
+
+    public void LoadSectionGame()
+    {
+        sectionGameData = SaveLoadSystem.LoadFile<SectionData>("C:/Users/Edilson Chaves/AppData/LocalLow/DefaultCompany/Escor/SectionData.data");
     }
 }
 
