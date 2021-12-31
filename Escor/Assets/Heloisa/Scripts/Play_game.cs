@@ -6,7 +6,8 @@ public class Play_game : MonoBehaviour
 {
 	public void CarregarJogo()
 	{
-		SceneManager.LoadScene("nome_da_fase_do_jogo");
+		SceneManager.LoadScene("SelectLevel");
+		Manager_Game.Instance.LoadSectionGame();
 	}
 
 	public void CarregarConfig()

@@ -14,6 +14,6 @@ public class BGImageControllLevel : MonoBehaviour
 
     void UpdateBGImage(int level)
     {
-        _bg.sprite = _spritesBG[level];
+        _bg.sprite = _spritesBG[level-1];
     }
 }
