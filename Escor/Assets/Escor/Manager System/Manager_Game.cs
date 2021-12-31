@@ -66,6 +66,13 @@ public class SectionData
     {
         return _currentLevel;
     }
+
+    public void ConclusionLevelData(int level,int maxPercentualConclusion,bool[]targetsComplete)
+    {
+        _levelsData[level].SetPercentualConclusion(maxPercentualConclusion);
+        _levelsData[level].SetTargetComplete(targetsComplete);
+        Debug.Log(_levelsData[level].GetPercentualConclusion()+"/"+ _levelsData[level].GetTargetsComplete().GetValue(0,1,2));
+    }
     [System.Serializable]
     public class LevelData{
         [SerializeField]int _currentMaxPercentualConclusion;
@@ -79,10 +86,25 @@ public class SectionData
         {
             return _currentMaxPercentualConclusion;
         }
-
+        public void SetPercentualConclusion(int newValue)
+        {
+            if (newValue > _currentMaxPercentualConclusion)
+            {
+                _currentMaxPercentualConclusion = newValue;
+            }
+        }
         public bool[] GetTargetsComplete()
         {
             return _currentTargetsComplete;
+        }
+
+        public void SetTargetComplete(bool[] newTargetsObjective)
+        {
+            for(int i = 0; i < newTargetsObjective.Length; i++)
+            {
+                if (newTargetsObjective[i])
+                    _currentTargetsComplete[i] = true;
+            }
         }
     }
 }
