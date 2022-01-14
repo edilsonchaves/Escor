@@ -5,7 +5,8 @@ using UnityEngine;
 public class Rope : MonoBehaviour
 {
     public Rigidbody2D hook;
-    public GameObject[] prefabRopeSegs;
+    public GameObject prefabRopeLastSegment;
+    public GameObject prefabRopeSegs;
     public int numLinks = 5;
     private PlayerRopeControll rpCon;
 
@@ -19,11 +20,17 @@ public class Rope : MonoBehaviour
     void GenerateRope()
     {
         Rigidbody2D prevBod = hook;
+        // GameObject newSeg           = Instantiate(prefabRopeHook);
+        // newSeg.transform.parent     = this.transform;
+        // newSeg.transform.position   = this.transform.position;
+        // HingeJoint2D hj             = newSeg.GetComponent<HingeJoint2D>();
+        // hj.connectedBody            = prevBod;
+        // prevBod                     = newSeg.GetComponent<Rigidbody2D>();
 
         for(int i=0; i < numLinks; i++)
         {
-            int index                   = Random.Range(0, prefabRopeSegs.Length);
-            GameObject newSeg           = Instantiate(prefabRopeSegs[index]);
+            // int index                   = Random.Range(0, prefabRopeSegs.Length);
+            GameObject newSeg           = Instantiate(prefabRopeSegs);
             newSeg.transform.parent     = this.transform;
             newSeg.transform.position   = this.transform.position;
             HingeJoint2D hj             = newSeg.GetComponent<HingeJoint2D>();
@@ -31,6 +38,12 @@ public class Rope : MonoBehaviour
             prevBod                     = newSeg.GetComponent<Rigidbody2D>();
             if(numLinks == i+1)
             {
+                newSeg           = Instantiate(prefabRopeLastSegment);
+                newSeg.transform.parent     = this.transform;
+                newSeg.transform.position   = this.transform.position;
+                hj             = newSeg.GetComponent<HingeJoint2D>();
+                hj.connectedBody            = prevBod;
+                prevBod                     = newSeg.GetComponent<Rigidbody2D>();
                 StartCoroutine(StopSwing(newSeg, newSeg.GetComponent<RopeSegment>(), newSeg.GetComponent<Rigidbody2D>()));
             }
         }
