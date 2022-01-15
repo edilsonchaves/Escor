@@ -11,7 +11,6 @@ public class SaveLoadSystem
         BinaryFormatter bf = new BinaryFormatter();
         string path = "" + Application.persistentDataPath;
         path += "/"+typeof(T).ToString()+".data";
-        Debug.Log(path);
         FileStream stream = new FileStream(path,FileMode.Create);
         bf.Serialize(stream,data);
         stream.Close();        

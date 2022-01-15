@@ -5,11 +5,27 @@ using UnityEngine.UI;
 
 public class LocalizedText : MonoBehaviour
 {
-    public string key;
-    void Start()
+    public string keyDefault;
+    Text text;
+    private void Awake()
     {
-        Text text = GetComponent<Text>();
-        text.text = LocalizationManager.instance.GetLocalizedValue(key);
+        text = GetComponent<Text>();
     }
+    void SetupLanguage(int value)
+    {
+        text.text = CSVParser.GetTextFromID(keyDefault, value );
+    }
+    public void Setup(string key,int value)
+    {
+        text.text = CSVParser.GetTextFromID(key, value);
+    }
+    private void OnEnable()
+    {
+        ManagerEvents.GameConfig.onChangeLanguage += SetupLanguage;
+    }
+    private void OnDisable()
+    {
+        ManagerEvents.GameConfig.onChangeLanguage -= SetupLanguage;
 
+    }
 }
