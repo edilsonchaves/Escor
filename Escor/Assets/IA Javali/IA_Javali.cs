@@ -16,7 +16,7 @@ public class IA_Javali : MonoBehaviour
 
     [Header("Raycast")]
     public LayerMask groundLayer;
-    public LayerMask wallLayer;
+    private LayerMask wallLayer;
     public LayerMask playerLayer;
     public LayerMask javaliLayer;
     public Vector3 offSetGround, offSetWall;
@@ -32,7 +32,7 @@ public class IA_Javali : MonoBehaviour
     protected Vector3 myStartPosition;
     protected int currentDirection;
     protected float auxMovement, distanceOfCollision = .3f;
-    protected bool isGrounded, following, started, attacking;
+    protected bool isGrounded, following, started, attacking, stuned, bug;
     protected Transform playerTrans;
 
 
@@ -68,29 +68,41 @@ public class IA_Javali : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(AddForceIfBuged());
+
+
+        wallLayer           = groundLayer;
         started             = true;
         playerTrans         = GameObject.FindGameObjectWithTag("Player").transform;
         myRb                = GetComponent<Rigidbody2D>();
         myStartPosition     = myRb.position;
         currentDirection    = RandomDirection();
+        // currentDirection    = 1;
         if(currentDirection == -1)
             FlipJavali();
+        // bug                 = true;
     }
 
     void Update()
     {
-        if(attacking)
-        {
-            ChangeAnimation("JavaliAtacando");
-        }
-        else if(!isGrounded)
-        {
-            ChangeAnimation("JavaliParado");
-        }
-        else
-        {
-            ChangeAnimation("JavaliAndando");
-        }
+        // if(gameObject.name == "Javali (1)")
+        //     print(attacking+"  "+stuned);
+        // if(stuned)
+        // {
+        //     ChangeAnimation("JavaliTonto");
+        // }
+        // else if(attacking)
+        // {
+        //     ChangeAnimation("JavaliAtacando");
+        // }
+        // else if(!isGrounded)
+        // {
+        //     ChangeAnimation("JavaliParado");
+        // }
+        // else
+        // {
+        //     ChangeAnimation("JavaliAndando");
+        // }
     }
 
 
@@ -107,130 +119,185 @@ public class IA_Javali : MonoBehaviour
         auxMovement = Time.fixedDeltaTime * MovementSpeed * currentDirection * 100; // calcula quanto ele deve se mover
         Vector2 newPosition = myRb.position + new Vector2(auxMovement*Time.fixedDeltaTime, 0); // salva a nova posição após o movimento
 
-        // inteligência do javali nível 1
-        if(AiLevel == 1 && !attacking)
+        if(!bug)
         {
-            myRb.velocity = new Vector2(auxMovement, myRb.velocity.y); // movimenta para a nova posição
-
-            // verifica se é para andar em todo o terreno
-            if(walkInAllGround)
+            // inteligência do javali nível 1
+            if(AiLevel == 1 && !attacking && !stuned)
             {
-                // verifica se está tocando o chão
-                if(CheckIsGrounded(true))
+                myRb.velocity = new Vector2(auxMovement, myRb.velocity.y); // movimenta para a nova posição
+
+                // verifica se é para andar em todo o terreno
+                if(walkInAllGround)
                 {
-                    // verifica se encontrou algum obstaculo e faz o retorno quando estiver próximo
-                    if(HitWall() && GetDistanceOfCollisionWithWall(GetWall()) < distanceOfCollision) 
+                    // verifica se está tocando o chão
+                    if(CheckIsGrounded(true))
+                    {
+                        // verifica se encontrou algum obstaculo e faz o retorno quando estiver próximo
+                        if(HitWall() && GetDistanceOfCollisionWithWall(GetWall()) < distanceOfCollision) 
+                        {
+                            FlipFaceToStartPosition(); // vira a face do javali para o ponto inicial
+                        }
+                    }
+                    else
                     {
                         FlipFaceToStartPosition(); // vira a face do javali para o ponto inicial
                     }
                 }
-                else
-                {
-                    FlipFaceToStartPosition(); // vira a face do javali para o ponto inicial
-                }
-            }
-            // verifica se encontrou algum obstaculo ou está fora do limite e faz o retorno 
-            else if(HitWall() && GetDistanceOfCollisionWithWall(GetWall()) < distanceOfCollision || IsOutLimite(newPosition) || !CheckIsGrounded(true)) // verifica se a nova posição está fora do limite
-            {
-                FlipFaceToStartPosition(); // vira a face do javali para o ponto inicial
-            }
-
-            if(GetDistaceOfPlayer() < AttackDistance && !attacking && IsFaceToPlayer())
-            {
-                Attack(); // ataca
-            }
-        }
-        // inteligência do javali nível 2
-        else if(AiLevel == 2 && !attacking)
-        {
-            myRb.velocity = new Vector2(auxMovement, myRb.velocity.y); // movimenta para a nova posição
-
-            // verifica se o javali consegue pular o primeiro obstaculo na direção do player
-            if(CanJumpWallInDirectionOfPlayer())
-            {
-                following = false; // else
-
-                // verifica se pode seguir ou não o player
-                if(GetDistaceOfPlayer() < FollowDistance && !HasObstacleOnWay() && GetXDistaceOfPlayer() != 0f)
-                {
-                    following = true;
-                    FlipFaceToPlayer(); // vira a face do javali para o lado do player
-                }
-            }
-
-            // não seguindo
-            if(!following)
-            {
-                // volta para dentro do limite
-                if(IsOutLimite(newPosition))
+                // verifica se encontrou algum obstaculo ou está fora do limite e faz o retorno 
+                else if(HitWall() && GetDistanceOfCollisionWithWall(GetWall()) < distanceOfCollision || IsOutLimite(newPosition) || !CheckIsGrounded(true)) // verifica se a nova posição está fora do limite
                 {
                     FlipFaceToStartPosition(); // vira a face do javali para o ponto inicial
                 }
 
+       
+                if(GetDistaceOfPlayer() < AttackDistance && !attacking && IsFaceToPlayer())
+                {
+                    Attack(); // ataca
+                }
+            }
+            // inteligência do javali nível 2
+            else if(AiLevel == 2 && !attacking && !stuned)
+            {
+                myRb.velocity = new Vector2(auxMovement, myRb.velocity.y); // movimenta para a nova posição
+
+                // verifica se o javali consegue pular o primeiro obstaculo na direção do player
+                if(CanJumpWallInDirectionOfPlayer())
+                {
+                    following = false; // else
+
+                    // verifica se pode seguir ou não o player
+                    if(GetDistaceOfPlayer() < FollowDistance && !HasObstacleOnWay() && GetXDistaceOfPlayer() != 0f)
+                    {
+                        following = true;
+                        FlipFaceToPlayer(); // vira a face do javali para o lado do player
+                    }
+                }
+
+                // print("following   "+following);
+                // não seguindo
+                if(!following)
+                {
+                    // volta para dentro do limite
+                    if(IsOutLimite(newPosition))
+                    {
+                        FlipFaceToStartPosition(); // vira a face do javali para o ponto inicial
+                    }
+
+                    // encontrou uma parede
+                    if(HitWall())
+                    {
+                        // verifica se é possível pular essa parede
+                        if(CanJumpWall())
+                        {
+                            Jump(); // pula
+                        }
+                        // verifica o quão próximo está a parede e faz o retorno
+                        else if(GetDistanceOfCollisionWithWall(GetWall()) < .3f)
+                        {
+                            FlipFaceToStartPosition(); // vira a face do javali para o ponto inicial
+                        }
+                    }
+                }
+                // está seguindo
                 // encontrou uma parede
-                if(HitWall())
+                else if(HitWall())
                 {
                     // verifica se é possível pular essa parede
                     if(CanJumpWall())
                     {
                         Jump(); // pula
+                        
+                        if(PlayerIsOnTheEdge())
+                        {
+                            Attack(false);
+                        }
+                        else
+                        {
+                            //Jump(3f); // pula
+                        }
                     }
                     // verifica o quão próximo está a parede e faz o retorno
                     else if(GetDistanceOfCollisionWithWall(GetWall()) < .3f)
                     {
+                        following = false;
                         FlipFaceToStartPosition(); // vira a face do javali para o ponto inicial
                     }
                 }
-            }
-            // está seguindo
-            // encontrou uma parede
-            else if(HitWall())
-            {
-                // verifica se é possível pular essa parede
-                if(CanJumpWall())
+
+
+                // verifica se está próximo o bastante para atacar
+                if(GetDistaceOfPlayer() < AttackDistance && !attacking && !HasObstacleOnWay())
                 {
-                    Jump(); // pula
-                    
-                    if(PlayerIsOnTheEdge())
-                    {
-                        Attack(false);
-                    }
-                    else
-                    {
-                        //Jump(3f); // pula
-                    }
+                    FlipFaceToPlayer(); // vira a face do javali para o lado do player
+                    Attack(); // ataca
+
                 }
-                // verifica o quão próximo está a parede e faz o retorno
-                else if(GetDistanceOfCollisionWithWall(GetWall()) < .3f)
+
+                if(!attacking && !stuned && isGrounded)
                 {
-                    following = false;
-                    FlipFaceToStartPosition(); // vira a face do javali para o ponto inicial
+                    // print("JavaliAndando");
+                    ChangeAnimation("JavaliAndando");
                 }
             }
+        }
+        else
+        {
 
-
-            // verifica se está próximo o bastante para atacar
-            if(GetDistaceOfPlayer() < AttackDistance && !attacking && !HasObstacleOnWay())
+            if(!isGrounded)
             {
-                FlipFaceToPlayer(); // vira a face do javali para o lado do player
-                Attack(); // ataca
-
+                ChangeAnimation("JavaliTonto");
+                myRb.AddForce(new Vector2(currentDirection*-1, 0)*2, ForceMode2D.Impulse);
             }
+            else
+            {
+                bug = false;
+            }
+            // myRb.AddForce(new Vector2(currentDirection*-1, 0)*200, ForceMode2D.Impulse);
+        }
+    }
+
+    protected IEnumerator AddForceIfBuged()
+    {
+        while (true)
+        {
+            Vector2 startPos = transform.position;
+            float time=0;
+            bool stop = false;
+            while (startPos == (Vector2)transform.position && !stop && !isGrounded)
+            {
+                time += Time.fixedDeltaTime;
+                if (time > 2)
+                {
+                    bug = true;
+                    stop = true;
+                }
+                yield return null;
+            }
+            time = 0;
+            yield return null;
         }
     }
 
     //muda a animação do javali
-    protected void ChangeAnimation(string str)
+    protected void ChangeAnimation(string str, bool restart=false)
     {
-        JavaliAnimator.Play(str);
+        if(!restart)
+        {
+            JavaliAnimator.Play(str);
+        }
+        else
+        {
+            JavaliAnimator.Play(str, -1, 0);
+        }
+
     }
 
 
     // inicia a contagem para finalizar o estado de ataque
-    private IEnumerator AttackFinished(float sec=0.9f)
+    private IEnumerator AttackFinished(float sec=1f)
     {
         yield return new WaitForSeconds(sec);
-        Debug.Log("Attack Finished");
+        // Debug.Log("Attack Finished");
         attacking = false;
     }
 
@@ -275,7 +342,6 @@ public class IA_Javali : MonoBehaviour
     protected bool IsOutLimite(Vector3 position)
     {
         float distance = Mathf.Abs(myStartPosition.x - position.x); // guarda a distancia a partir do ponto inicial
-        // print("distance: "+distance);
 
         if(distance >= MovementDistance)
         {
@@ -358,6 +424,8 @@ public class IA_Javali : MonoBehaviour
         // verifica se o javali está no chão
         if(isGrounded)
         {
+            // print("Jump");
+            ChangeAnimation("JavaliParado", true);
             float g = myRb.gravityScale * Physics2D.gravity.magnitude;
             // float v0 = jumpForce / myRb.mass; // converts the jumpForce to an initial velocity
             // float maxJump_y = GroundCheck1.position.y + (v0 * v0)/(2*g);
@@ -406,12 +474,16 @@ public class IA_Javali : MonoBehaviour
     //inicia o ataque
     protected void Attack(bool stopToAttack=true)
     {
-        attacking = true;
-        print("Attack");
-        StartCoroutine(AttackFinished());
-        if(stopToAttack)
+        if(!stuned)
         {
-            myRb.velocity = Vector3.zero;
+            attacking = true;
+            // print("Attack");
+            ChangeAnimation("JavaliAtacando", true);
+            StartCoroutine(AttackFinished());
+            if(stopToAttack)
+            {
+                myRb.velocity = Vector3.zero;
+            }
         }
     }
 
@@ -528,6 +600,30 @@ public class IA_Javali : MonoBehaviour
         return player.distance != 0;        
     }
 
+    protected void JavaliStuned()
+    {
+        if(!stuned)
+        {
+            StartCoroutine(_JavaliStuned());
+        }
+    }
+
+    protected IEnumerator _JavaliStuned()
+    {
+        if(attacking)
+        {
+            yield return new WaitForSeconds(0.3f);
+            ChangeAnimation("JavaliTonto", true);
+            stuned = true;
+            attacking = false;
+            yield return new WaitForSeconds(2.2f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(2.5f);
+        }
+        stuned = false;
+    }
 
     // verifica se há um precipício na direção do player (ainda vou desenvolver)
     protected bool HaveACliff()
@@ -538,9 +634,20 @@ public class IA_Javali : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.tag == "Player")
+        bool playerIsShield = true;
+
+        if(col.tag == "Player" && !stuned && attacking)
         {
-            Debug.Log("Jogador recebeu dano");
+            if(!playerIsShield)
+            {
+                Debug.Log("Jogador recebeu dano");
+            }
+            else
+            {
+                JavaliStuned();
+                Debug.Log("Jogador não recebeu dano");
+            }
         }
+
     }
 }

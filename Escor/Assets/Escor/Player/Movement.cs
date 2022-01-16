@@ -7,19 +7,29 @@ public class Movement : MonoBehaviour {
     public float speed;
     public float jumpForce;
     public bool isJumping;
+    public bool isGrounded;
 
     private Rigidbody2D rb;
+    private PlayerRopeControll ropeControll;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
+        ropeControll = GetComponent<PlayerRopeControll>();
     }
 
     void Update()
     {
-        Move();
-        Jump();
+        if(!ropeControll.attached)
+        {
+            Move();
+            Jump();
+        }
+        
+        if(isGrounded)
+        {
+            isJumping = false;
+        }
     }
 
     void Move()
@@ -44,6 +54,7 @@ public class Movement : MonoBehaviour {
     {
         if(Input.GetButtonDown("Jump") && !isJumping)
         {
+            isJumping = true;
             rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
         }
     }
