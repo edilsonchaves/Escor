@@ -5,7 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Plataform
-  - "Decora\xE7\xE3oComAnimator"
+  - ground
+  - Rope
+  - Canvas
   layers:
   - Default
   - TransparentFX
