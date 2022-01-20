@@ -4,69 +4,43 @@ using UnityEngine;
 
 public class ParallaxEffect : MonoBehaviour
 {
-    public bool moveGameObject;
-    public float farMovementSpeed, bettewMovementSpeed;
 
-    private List<Material> layersMaterial = new List<Material>();
-    private List<GameObject> layersGameObject = new List<GameObject>();
-    private List<Vector3> layersGameObjectStartPosition = new List<Vector3>();
+    protected float[] speedOfLayers;
+    protected float farMovementSpeed, bettewMovementSpeed;
+    // protected bool moveGameObject, startInCurrentPosition;
 
-    Collider2D m_Collider;
-    Vector3 camStartPos, currentCamPos;
+    protected List<Material> layersMaterial = new List<Material>();
+    protected List<GameObject> layersGameObject = new List<GameObject>();
+    protected List<Vector3> layersGameObjectStartPosition = new List<Vector3>();
+    protected List<Vector3> layersStartOffset = new List<Vector3>();
+
+    protected Collider2D m_Collider;
+    protected Vector3 camStartPos, currentCamPos;
+    protected float pixelsPerUnit;
  
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        camStartPos = Camera.main.transform.position;
-        SetABS(); // se certifica que as variáveis sejam positivas
-        SetLayers();
-    }
-
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        currentCamPos = Camera.main.transform.position;
-
-        if(moveGameObject)
-        {
-            MoveParallaxGameObject();
-        }
-        else
-        {
-            MoveParallaxMaterial();
-        }
-    }
-
-
-    void SetABS()
+    protected void SetABS()
     {
         farMovementSpeed    = Mathf.Abs(farMovementSpeed);
         bettewMovementSpeed = Mathf.Abs(bettewMovementSpeed);
     }
 
 
-    void SetLayers()
+    virtual protected void SetLayers()
     {
         for(int c=0; c<transform.childCount; c++)
         {
-            if(!moveGameObject)
-            {
-                layersMaterial.Add(transform.GetChild(c).gameObject.GetComponent<SpriteRenderer>().material);
-            }
-            else
-            {
-                layersGameObjectStartPosition.Add(transform.GetChild(c).gameObject.transform.position);
-            }
-
+            layersMaterial.Add(transform.GetChild(c).gameObject.GetComponent<SpriteRenderer>().material);
+            layersGameObjectStartPosition.Add(transform.GetChild(c).gameObject.transform.position);
             layersGameObject.Add(transform.GetChild(c).gameObject);
+            layersStartOffset.Add(transform.GetChild(c).gameObject.GetComponent<SpriteRenderer>().material.GetTextureOffset("_MainTex"));
         }
     }
 
 
-    void MoveParallaxGameObject()
+    protected void MoveCavernParallax()
     {
+        currentCamPos = Camera.main.transform.position; 
         for(int c=0; c<layersGameObject.Count; c++)
         {
             Vector3 currentCamMovement              = (currentCamPos - layersGameObjectStartPosition[c]);
@@ -79,72 +53,59 @@ public class ParallaxEffect : MonoBehaviour
     }
 
 
-    void MoveParallaxMaterial()
+    protected void MoveCityParallax()
     {
-        // Vector3 currentCamMovement = (currentCamPos-camStartPos); // efeito parallax apenas na horizontal
+        currentCamPos = Camera.main.transform.position; 
+        for(int c=0; c<layersMaterial.Count; c++)
+        {
+            Vector3 currentCamMovement = (currentCamPos-camStartPos);
+            Vector2 offset = currentCamMovement / layersGameObject[c].transform.lossyScale.x /10.08f*pixelsPerUnit/100;
+            offset      -= offset*(c * bettewMovementSpeed + farMovementSpeed)*Time.deltaTime;
+            offset.y    -= offset.y/1.97f;
+            layersMaterial[c].SetTextureOffset("_MainTex", -offset);
+            // layersMaterial[c].SetTextureOffset("_MainTex", new Vector2(-offset.x, offset.y));
+            // layersMaterial[c].SetTextureOffset("_MainTex", new Vector2(-offset.x+layersStartOffset[c].x, offsetY+layersStartOffset[c].y));
+        }
+    }
 
+
+    protected void MoveCityParallaxBackup()
+    {
+        currentCamPos = Camera.main.transform.position; 
         for(int c=0; c<layersMaterial.Count; c++)
         {
             Vector3 currentCamMovement = (currentCamPos-layersGameObject[c].transform.position); // efeito parallax apenas na horizontal
-            Vector2 offset = currentCamMovement / layersGameObject[c].transform.lossyScale.x /20.935f;
+            Vector2 offset = currentCamMovement / layersGameObject[c].transform.lossyScale.x /12.8f*pixelsPerUnit/100;
             offset      -= offset*(c * bettewMovementSpeed + farMovementSpeed);
             layersMaterial[c].SetTextureOffset("_MainTex", -offset);
         }
     }
 
 
-    void MoveParallaxMaterialBackup()
+
+    protected void MoveCloudParallax()
     {
-        float currentCamMovement = (currentCamPos-camStartPos).x; // efeito parallax apenas na horizontal
-
-        for(int c=0; c<layersMaterial.Count; c++)
+        currentCamPos = Camera.main.transform.position; 
+        print("speedOfLayers.Length:       "+speedOfLayers.Length);
+        for(int c=0; c<layersGameObject.Count; c++)
         {
-            float offset = transform.TransformPoint(new Vector2(currentCamMovement, 0)).x / layersGameObject[c].transform.lossyScale.x /20.935f;
-            offset      -= offset*(c * bettewMovementSpeed + farMovementSpeed);
-            layersMaterial[c].SetTextureOffset("_MainTex", new Vector2(-offset, 0));
+                // Vector3 currentCamMovement              = (currentCamPos - camStartPos);
+            // Vector3 offset                          = currentCamMovement * (c * bettewMovementSpeed + farMovementSpeed) / 85 / layersGameObject[c].transform.lossyScale.x;
+                // float offset                            = (c * bettewMovementSpeed + farMovementSpeed) / layersGameObject[c].transform.lossyScale.x;
+            // offset                                 += offset**Time.deltaTime;
+                // Vector3 newPos                          = (Vector2)layersGameObjectStartPosition[c] + (Vector2)currentCamMovement / offset;
+                // print(newPos);
+                // newPos.z                                = layersGameObjectStartPosition[c].z;
+                // layersGameObject[c].transform.position  = newPos;
+            // print(offset);
+
+
+            Vector3 currentCamMovement              = (currentCamPos - camStartPos);
+            Vector3 offset                          = currentCamMovement * speedOfLayers[c];
+            Vector3 newPos                          = layersGameObjectStartPosition[c] + currentCamMovement - offset;
+            newPos.z                                = layersGameObjectStartPosition[c].z;
+            layersGameObject[c].transform.position  = newPos;
         }
+
     }
-
-
-    // não é mais útil
-    private bool IsInside()
-    {
-        foreach(Vector3 pos in GetCameraBounds(20))
-        {
-            if (m_Collider.OverlapPoint(pos))
-                return true;
-        }
-
-        return false;
-    }
-
-
-    // não é mais útil
-    private List<Vector3> GetCameraBounds(float extraArea = 0f)
-    {
-        float width = Screen.width, height = Screen.height;
-
-        // por algum motivo as posições ficam um pouco diferentes
-        // por isso estou compensando com essas variáveis
-        const float X_Compensator = -5.7f, Y_Compensator = +2.5f; 
-
-        (float, float)[] corneBounds = {(-extraArea,-extraArea),(width + extraArea,-extraArea),(width + extraArea,height + extraArea),(-extraArea,height + extraArea)};
-
-        List<Vector3> cameraBoundsPos = new List<Vector3>();
-
-        foreach((float, float) cornePos in corneBounds)
-        {
-            Vector3 corne = Camera.main.ScreenToWorldPoint(new Vector3(cornePos.Item1 - currentCamPos.x + X_Compensator, cornePos.Item2 - currentCamPos.y + Y_Compensator,0));
-            cameraBoundsPos.Add(corne);
-        }
-
-        Debug.DrawLine(cameraBoundsPos[0], cameraBoundsPos[3], Color.green);
-        for(int c=0; c<3; c++)
-        {
-            Debug.DrawLine(cameraBoundsPos[c], cameraBoundsPos[c+1], Color.green);
-        }
-
-        return cameraBoundsPos;
-    }
-
 }
