@@ -16,7 +16,7 @@ public class Grounded : MonoBehaviour
     {
         if(collisor.gameObject.tag == "ground")
         {
-            Player.isJumping = false;
+            Player.noChao = true;
         }
     }
 
@@ -24,7 +24,7 @@ public class Grounded : MonoBehaviour
     {
         if(collisor.gameObject.tag == "ground")
         {
-            Player.isJumping = true;
+            Player.noChao = false;
         }
     }
 }

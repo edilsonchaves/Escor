@@ -4,47 +4,83 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour {
     
+    Animator animator;
     public float speed;
     public float jumpForce;
-    public bool isJumping;
-
+    public bool noChao = true;
+    private bool pulando = false;
     private Rigidbody2D rb;
 
     void Start()
     {
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
 
     }
 
     void Update()
     {
+        animator.SetBool("NoChao", noChao);
+
+        if(noChao == false && pulando == false && rb.velocity.y < 0)
+        {
+            animator.SetBool("Caindo", true);
+        } else
+        {
+            animator.SetBool("Caindo", false);
+        }
+        
         Move();
         Jump();
+        
     }
 
     void Move()
     {
         Vector3 movement = new Vector2(Input.GetAxis("Horizontal"), 0f);
         transform.position += movement * Time.deltaTime * speed;
+        
 
         float inputAxis = Input.GetAxis("Horizontal");
+        animator.SetFloat("VelocidadeX", Mathf.Abs (inputAxis));
 
         if(inputAxis > 0)
         {
-            transform.eulerAngles = new Vector2(0f, 0f);
+            LookDirection(0);
         }
 
         if(inputAxis < 0)
         {
-            transform.eulerAngles = new Vector2(0f, 180f);
+            LookDirection(180);
         }
     }
 
     void Jump()
     {
-        if(Input.GetButtonDown("Jump") && !isJumping)
+        if(Input.GetButtonDown("Jump") && noChao)
         {
+            pulando = true;
+            noChao = false;
+            animator.SetBool("Pulando", pulando);
             rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+        
+        } else if (noChao == true)
+        {
+            pulando = false;
+            animator.SetBool("Pulando", false);
         }
+    }
+
+    void Defense()
+    {
+        if(Input.GetButtonDown("Defesa"))
+        {
+            animator.SetBool("Defendendo", true);
+        }
+    }
+
+    void LookDirection(int yAngle)
+    {
+        transform.eulerAngles = new Vector2(0f, yAngle);
     }
 }
