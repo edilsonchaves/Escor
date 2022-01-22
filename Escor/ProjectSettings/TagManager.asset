@@ -7,6 +7,10 @@ TagManager:
   - ground
   - cinematic
   - event
+  - Plataform
+  - ground
+  - Rope
+  - Canvas
   layers:
   - Default
   - TransparentFX
@@ -18,9 +22,9 @@ TagManager:
   - Ground
   - Player
   - Javali
-  - 
-  - 
-  - 
+  - Tiles
+  - Background
+  - Parallax
   - 
   - 
   - 
@@ -43,4 +47,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Cloud
+    uniqueID: 579328459
     locked: 0

@@ -25,7 +25,6 @@ public class Manager_Game : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
             SaveLoadSystem.SaveFile<SectionData>(new SectionData(1,3));
             saveGameData = SaveLoadSystem.LoadFile<GameData>("C:/Users/Edilson Chaves/AppData/LocalLow/DefaultCompany/Escor/GameData.data");
-            Debug.Log(saveGameData._volume+" "+ saveGameData._volumeAmbient + " "+ saveGameData._letterSize+" "+ saveGameData._resolution);
         }
         else
         {
@@ -48,16 +47,20 @@ public class Manager_Game : MonoBehaviour
 [System.Serializable]
 public class GameData
 {
-    public int _volume;
-    public int _volumeAmbient;
-    public int _letterSize;
-    public int _resolution;
-    public GameData(int valueVolume,int valueVolumeAmbient,int valueLettrSize, int valueResolution)
+    [SerializeField] int _volume;
+    [SerializeField] int _volumeAmbient;
+    [SerializeField] int _letterSize;
+    [SerializeField] int _languageSelect;
+    public int Volume { get { return _volume; } set { _volume = value; } }
+    public int VolumeAmbient { get { return _volumeAmbient; } set { _volumeAmbient = value; } }
+    public int LetterSize { get { return _letterSize; } set { _letterSize = value; } }
+    public int LanguageSelect { get { return _languageSelect; } set { _languageSelect = value; } }
+    public GameData(int valueVolume,int valueVolumeAmbient,int valueLettrSize, int valueLanguageSelect)
     {
         _volume = valueVolume;
         _volumeAmbient = valueVolumeAmbient;
         _letterSize = valueLettrSize;
-        _resolution = valueResolution;
+        _languageSelect = valueLanguageSelect;
     }
 }
 [System.Serializable]

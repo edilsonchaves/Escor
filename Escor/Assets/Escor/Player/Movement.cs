@@ -10,12 +10,13 @@ public class Movement : MonoBehaviour {
     public bool noChao = true;
     private bool pulando = false;
     private Rigidbody2D rb;
+    private PlayerRopeControll ropeControll;
 
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-
+        ropeControll = GetComponent<PlayerRopeControll>();
     }
 
     void Update()
@@ -33,6 +34,16 @@ public class Movement : MonoBehaviour {
         Move();
         Jump();
         
+        if(!ropeControll.attached)
+        {
+            Move();
+            Jump();
+        }
+        
+        if(isGrounded)
+        {
+            isJumping = false;
+        }
     }
 
     void Move()

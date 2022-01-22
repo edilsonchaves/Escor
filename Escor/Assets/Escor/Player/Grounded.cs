@@ -4,25 +4,24 @@ using UnityEngine;
 
 public class Grounded : MonoBehaviour
 {
-
-    
     Movement Player;
+
     void Start()
     {
         Player = gameObject.transform.parent.gameObject.GetComponent<Movement>();
     }
 
-    void OnCollisionEnter2D(Collision2D collisor)
+    void OnTriggerEnter2D(Collider2D collisor)
     {
-        if(collisor.gameObject.tag == "ground")
+        if(collisor.gameObject.tag == "ground" || collisor.gameObject.layer == 7)
         {
             Player.noChao = true;
         }
     }
 
-    void OnCollisionExit2D(Collision2D collisor)
+    void OnTriggerExit2D(Collider2D collisor)
     {
-        if(collisor.gameObject.tag == "ground")
+        if(collisor.gameObject.tag == "ground" || collisor.gameObject.layer == 7)
         {
             Player.noChao = false;
         }
