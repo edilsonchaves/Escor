@@ -12,11 +12,22 @@ public class Movement : MonoBehaviour {
     private Rigidbody2D rb;
     private PlayerRopeControll ropeControll;
 
+
+
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         ropeControll = GetComponent<PlayerRopeControll>();
+    }
+
+    private void OnEnable()
+    {
+        ManagerEvents.PlayerMovementsEvents.onLookDirection += LookDirection;
+    }
+    private void OnDisable()
+    {
+        ManagerEvents.PlayerMovementsEvents.onLookDirection -= LookDirection;
     }
 
     void Update()
@@ -34,16 +45,16 @@ public class Movement : MonoBehaviour {
         Move();
         Jump();
         
-        if(!ropeControll.attached)
-        {
-            Move();
-            Jump();
-        }
+        // if(!ropeControll.attached)
+        // {
+        //     Move();
+        //     Jump();
+        // }
         
-        if(isGrounded)
-        {
-            isJumping = false;
-        }
+        // if(isGrounded)
+        // {
+        //     isJumping = false;
+        // }
     }
 
     void Move()
@@ -90,7 +101,7 @@ public class Movement : MonoBehaviour {
         }
     }
 
-    void LookDirection(int yAngle)
+    void LookDirection(float yAngle)
     {
         transform.eulerAngles = new Vector2(0f, yAngle);
     }

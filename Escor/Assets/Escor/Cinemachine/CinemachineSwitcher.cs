@@ -41,13 +41,14 @@ public class CinemachineSwitcher : MonoBehaviour
         Debug.Log("2");
 
     }
+    IEnumerator LevaBossAnimation()
+    {
+        ManagerEvents.PlayerMovementsEvents.LookedDirection(180);
+        yield return new WaitForSeconds(1);
+    }
     public void SwitchState()
     {
-        animator.Play("Camera Boss");
-        Debug.Log("1");
-        StartCoroutine(CallAgain(5));
-        animator.Play("Camera Player");
-        Debug.Log("3");
+       StartCoroutine(LevaBossAnimation());
         //Aproximar camera Javali
         // if(playerCamera) {
         //     // StartCoroutine(dashCooldown(4));
@@ -67,11 +68,11 @@ public class CinemachineSwitcher : MonoBehaviour
     private void SwitchPriority()
     {
         if(playerCamera) {
-            vcam1.Priority = 3;
+            vcam1.Priority = 1;
             vcam2.Priority = 0;
         } else {
             vcam1.Priority = 0;
-            vcam2.Priority = 3;
+            vcam2.Priority = 1;
         }
 
         // inimigoCamera = !inimigoCamera;

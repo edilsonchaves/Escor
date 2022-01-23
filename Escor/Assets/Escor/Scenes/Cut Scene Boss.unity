@@ -163,7 +163,7 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: 57412982-1c91-46fb-becd-7cd8d128250a
+      m_Id: 4a3c65f2-df21-46fd-96db-e1a09be57468
       m_Path: <Keyboard>/c
       m_Interactions: 
       m_Processors: 
@@ -1265,7 +1265,7 @@ GameObject:
   - component: {fileID: 1674848659}
   m_Layer: 0
   m_Name: Events
-  m_TagString: event
+  m_TagString: ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1306,7 +1306,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1674848656}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.59, y: -3.12, z: -8.914362}
+  m_LocalPosition: {x: -1.59, y: -3.12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1322,10 +1322,10 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.0387223, y: 0.08698642}
+  m_Offset: {x: 1.0830605, y: -0.00019419193}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1336,7 +1336,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.0774446, y: 0.15060115}
+  m_Size: {x: 2.9222608, y: 0.35597634}
   m_EdgeRadius: 0
 --- !u!1 &1687536980
 GameObject:
