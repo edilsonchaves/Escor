@@ -32,7 +32,7 @@ public class PlayerRopeControll : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(mvtScript.isGrounded && !attached)
+        if(mvtScript.noChao && !attached)
         {
             attachedTo = null;
         }
