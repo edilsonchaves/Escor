@@ -42,4 +42,19 @@ public class ManagerEvents : MonoBehaviour
         }
                 
     }        
+
+    public static class PlayerMovementsEvents
+    {
+        public static event Action<float> onLookDirection;
+
+        public static void LookedDirection(float value)
+        {
+            
+            if (onLookDirection!=null)
+            {
+                onLookDirection(value);
+            }
+        }
+    }
+
 }
