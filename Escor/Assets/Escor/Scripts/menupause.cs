@@ -1,58 +1,35 @@
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
-using UnityEditor;
+
 
 public class menupause : MonoBehaviour
 {
-    //private Popup _popup;
-   // Action action1;
-    //Action action2;
-    //Action action3;
-    public static bool gameIsPaused = false;
+       
+   
     public GameObject pauseMenuUI;
+    public Text textPercentual, textCoins, textLife; 
 
-   // private void Start()
-    //{
-     //   action1 = () => { };
-    //    action2 = () => { };
-     //   action3 = () => { };
-   // }
-
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (gameIsPaused)
-            {
-                Resume();
-            } else
-            {
-                Pause();
-            }
-        }
-
-        
-    }
 
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
-        gameIsPaused = false;
+        //gameIsPaused = false;
        
     }
 
-    void Pause()
+    void Pause(int percentualComplete, int Coins, int LifePlayer)
     {
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
-        gameIsPaused = true;
+        textPercentual.text = percentualComplete + "/0";
+        textCoins.text = Coins + "/0";
+        textLife.text = LifePlayer + "/0";
+        //gameIsPaused = true;
     }
-
-
-   
+      
 
     public void menuConfig()
     {
@@ -69,8 +46,16 @@ public class menupause : MonoBehaviour
         Application.Quit();
         Debug.Log("Saiu do jogo");
     }
-
-    
+    private void OnEnable()
+    {
+        ManagerEvents.UIConfig.onPauseGame += Pause;
+        ManagerEvents.UIConfig.onResumeGame += Resume;
+    }
+    private void OnDisable()
+    {
+        ManagerEvents.UIConfig.onPauseGame -= Pause;
+        ManagerEvents.UIConfig.onResumeGame -= Resume;
+    }
 
 }
 
