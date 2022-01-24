@@ -14,6 +14,8 @@ public class CloudManager : MonoBehaviour
     private List<Transform> cloudsTrans;
     private List<float> usedPositionsX;
 
+    [HideInInspector]
+    public static bool StartUnactived;
 
     // Start is called before the first frame update
     void Start()
@@ -86,6 +88,7 @@ public class CloudManager : MonoBehaviour
             }
 
             GameObject tmpCloud         = Instantiate(cloudPrefabs[randomIdx], transform);
+            tmpCloud.transform.GetChild(0).gameObject.SetActive(!StartUnactived); // parar a animação, fiz isso porque script de otmização não tava dando conta sozinho 
             tmpCloud.transform.position = new Vector3(randomX, randomY  , transform.position.z);
             
             usedPositionsX.Add(randomX);
