@@ -86,7 +86,7 @@ public class ParallaxEffect : MonoBehaviour
     protected void MoveCloudParallax()
     {
         currentCamPos = Camera.main.transform.position; 
-        print("speedOfLayers.Length:       "+speedOfLayers.Length);
+        // print("speedOfLayers.Length:       "+speedOfLayers.Length);
         for(int c=0; c<layersGameObject.Count; c++)
         {
                 // Vector3 currentCamMovement              = (currentCamPos - camStartPos);
