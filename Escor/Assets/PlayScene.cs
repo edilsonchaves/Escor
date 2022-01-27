@@ -5,6 +5,6 @@ public class PlayScene : MonoBehaviour
 {
     void OnEnable()
     {
-        SceneManager.LoadScene("Level_1", LoadSceneMode.Single);
+        SceneManager.LoadScene("Level_2", LoadSceneMode.Single);
     }
 }
