@@ -233,11 +233,12 @@ public class IA_Javali : MonoBehaviour
 
                 }
 
-                if(!attacking && !stuned && isGrounded)
-                {
-                    // print("JavaliAndando");
-                    ChangeAnimation("JavaliAndando");
-                }
+            }
+            
+            if(!attacking && !stuned && isGrounded)
+            {
+                // print("JavaliAndando");
+                ChangeAnimation("JavaliAndando");
             }
         }
         else

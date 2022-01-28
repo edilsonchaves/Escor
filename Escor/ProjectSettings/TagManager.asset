@@ -11,6 +11,8 @@ TagManager:
   - ground
   - Rope
   - Canvas
+  - "Decora\xE7\xE3oComAnimator"
+  - "Decora\xE7\xE3oComCollider"
   layers:
   - Default
   - TransparentFX
