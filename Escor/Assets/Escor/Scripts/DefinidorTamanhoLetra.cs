@@ -1,17 +1,18 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class DefinidorTamanhoLetra : MonoBehaviour
 {
-    
-    private TextMeshProUGUI _text;
-    
+
+    //private TextMeshProUGUI _text;
+    private Text _text;
     
     
 
     private void Awake()
     {
-        _text = GetComponent<TextMeshProUGUI>();
+        _text = GetComponent<Text>();
     }
 
     private void OnEnable()
@@ -30,6 +31,6 @@ public class DefinidorTamanhoLetra : MonoBehaviour
 
     public void UpdateSize()
     {
-        _text.fontSize = PlayerPrefs.GetFloat("tamanholetra", 20f);
+        _text.fontSize = PlayerPrefs.GetInt("tamanholetra", 20);
     }
 }
