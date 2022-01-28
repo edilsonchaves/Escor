@@ -419,8 +419,7 @@ RectTransform:
   - {fileID: 1827981529}
   - {fileID: 35697296}
   - {fileID: 1112890993}
-  - {fileID: 1965720268}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1965720268}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -820,7 +819,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 37.092472
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -845,10 +844,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1965720265}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -358.66666, y: -161.33333, z: -10}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 263, y: 112, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 691425376}
-  m_RootOrder: 4
+  m_Children:
+  - {fileID: 691425376}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
