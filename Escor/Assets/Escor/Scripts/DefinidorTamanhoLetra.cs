@@ -31,6 +31,6 @@ public class DefinidorTamanhoLetra : MonoBehaviour
 
     public void UpdateSize()
     {
-        _text.fontSize = PlayerPrefs.GetInt("tamanholetra", 20);
+        _text.fontSize = PlayerPrefs.GetInt("tamanholetra", 5);
     }
 }

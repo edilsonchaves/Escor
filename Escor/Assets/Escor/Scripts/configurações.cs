@@ -25,7 +25,7 @@ public class configurações : MonoBehaviour
         volume.value = Manager_Game.Instance.saveGameData.VolumeAmbient;
         volumeVoz.value = Manager_Game.Instance.saveGameData.Volume;
 
-        _fontSlider.value = PlayerPrefs.GetInt("tamanholetra", 20);
+        _fontSlider.value = PlayerPrefs.GetInt("tamanholetra", 5);
 
         ChangeFontSize();
 
@@ -41,7 +41,7 @@ public class configurações : MonoBehaviour
             SizeChangeDelegate.Invoke();
         }
 
-        PlayerPrefs.SetInt("tamanholetra", (int)_fontSlider.value * 10);
+        PlayerPrefs.SetInt("tamanholetra", (int)_fontSlider.value * 1);
                 
     }
 
