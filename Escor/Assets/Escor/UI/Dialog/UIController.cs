@@ -7,6 +7,8 @@ using TMPro;
 public class UIController : MonoBehaviour
 {
     private static UIController _instance;
+    [SerializeField] Transform MainCanvas;
+
     public static UIController Instance
     {
         get
@@ -20,7 +22,6 @@ public class UIController : MonoBehaviour
         }
 
     }
-    public Transform MainCanvas;
     public Popup CreatePopup()
     {
         LocalizeMainCanvas();
@@ -34,6 +35,7 @@ public class UIController : MonoBehaviour
 
     private void LocalizeMainCanvas()
     {
+        Debug.Log("Teste" + GameObject.FindGameObjectWithTag("Canvas").name);
         MainCanvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Transform>();
     }
 }
