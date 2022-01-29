@@ -5,31 +5,34 @@ using UnityEngine.Events;
 
 public class EventsManager : MonoBehaviour
 {
-    public UnityEvent cinematic;
+    public UnityEvent cinematic1;
+    public UnityEvent cinematic2;
     public Movement Player;
     private Transform target;
     void Start()
     {
-        // Player = gameObject.transform.parent.gameObject.GetComponent<Movement>();
-        // target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+
+    }
+
+    IEnumerator ProxCinematica()
+    {
+        yield return new WaitForSeconds(9);
+        Movement.canMove = true;
     }
 
     void OnTriggerEnter2D(Collider2D collisor)
     {
-        if(collisor.gameObject.tag == "Player" && cinematic != null)
+        if(collisor.gameObject.tag == "Player" && cinematic1 != null)
         {
-            Debug.Log("colisou");
-            cinematic.Invoke();
+
+            Movement.canMove = false;
+            cinematic1.Invoke();
             GetComponent<BoxCollider2D>().enabled = false;
+            StartCoroutine(ProxCinematica());
+            
         }
+
+        
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        // if(cinematic != null)
-        // {
-            
-        // }
-    }
 }
