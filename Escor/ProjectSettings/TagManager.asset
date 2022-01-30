@@ -13,6 +13,14 @@ TagManager:
   - Canvas
   - "Decora\xE7\xE3oComAnimator"
   - "Decora\xE7\xE3oComCollider"
+  - play_text
+  - vidaUi
+  - vidaUi1
+  - vidaUi2
+  - vidaUi3
+  - poderAmarelo
+  - poderAzul
+  - poderVermelho
   layers:
   - Default
   - TransparentFX
