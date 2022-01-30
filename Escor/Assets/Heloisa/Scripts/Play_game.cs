@@ -15,25 +15,38 @@ public class Play_game : MonoBehaviour
 		popup.gameObject.SetActive(false);
 
 	}
-    public void CarregarJogo()
+    public void BTN_Play()
 	{
-		popup.InitPopup("Você possui um jogo salvo. Deseja continuar?", "Sim", () => Debug.Log("Carregar jogo"), "Não", () => Debug.Log("Novo jogo"));		
-		//SceneManager.LoadScene("SelectLevel");
-		//Manager_Game.Instance.LoadSectionGame();
-		
+		popup.InitPopup("Você possui um jogo salvo. Deseja continuar?", "Sim", () => CarregarJogo(), "Não", () => Debug.Log("Novo jogo"));		
 	}
+	void CarregarJogo()
+    {
+        if (Manager_Game.Instance.levelData.LevelGaming == 0)
+        {
+			SceneManager.LoadScene("SelectLevel");
+        }
+        else
+        {
+			SceneManager.LoadScene("GameLevel");
+		}
+    }
 
-	public void CarregarConfig()
+	void NovoJogo() 
+	{
+		SceneManager.LoadScene("Prologo");
+
+	}
+	public void BTN_Config()
 	{
 		SceneManager.LoadScene("menu_config");
 	}
 
-	public void CarregarCreditos()
+	public void BTN_Credits()
 	{
-		SceneManager.LoadScene("nome_cena_de_creditos");
+		SceneManager.LoadScene("CreditsScene");
 	}
 
-	public void Sair()
+	public void BTN_Exit()
 	{
 		popup.InitPopup("Você realmente deseja sair do Jogo?", "Sim", ExitAction, "Não", () => Debug.Log(""));
 		
@@ -49,7 +62,7 @@ public class Play_game : MonoBehaviour
 	}
 
 
-	public void Voltar()
+	public void BTN_Voltar()
 	{
 		SceneManager.LoadScene("menu_inicial");
 	}
