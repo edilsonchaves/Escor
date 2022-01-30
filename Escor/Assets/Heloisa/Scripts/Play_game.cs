@@ -27,7 +27,7 @@ public class Play_game : MonoBehaviour
 	}
 	void CarregarJogo()
     {
-        if (Manager_Game.Instance.levelData.LevelGaming == 0)
+        if (Manager_Game.Instance.levelStatus == LevelInfo.LevelStatus.NewLevel)
         {
 			SceneManager.LoadScene("SelectLevel");
         }

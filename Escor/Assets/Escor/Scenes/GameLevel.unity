@@ -813,6 +813,8 @@ MonoBehaviour:
   - {fileID: 8172695851442949358, guid: 00733a56ab67eb042bd68e95cc8c9d1a, type: 3}
   - {fileID: 0}
   - {fileID: 0}
+  characterPrefab: {fileID: 7302654321608639650, guid: 99624e07b8ae0aa4a9f8fda63f6fbe3b, type: 3}
+  cam: {fileID: 11747968}
 --- !u!4 &589729024
 Transform:
   m_ObjectHideFlags: 0

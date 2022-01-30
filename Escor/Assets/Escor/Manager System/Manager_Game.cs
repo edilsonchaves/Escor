@@ -11,8 +11,6 @@ public class LevelInfo
 public class Manager_Game : MonoBehaviour
 {
     private static Manager_Game _instance;
-
-    public static LevelInfo.LevelStatus levelStatus;
     public static Manager_Game Instance
     {
         get
@@ -23,9 +21,13 @@ public class Manager_Game : MonoBehaviour
         }
 
     }
+
+    public LevelInfo.LevelStatus levelStatus;
     public GameData saveGameData;
     public SectionData sectionGameData;
     public LevelData levelData;
+
+
     private void Awake()
     {
         if (_instance == null)
@@ -61,6 +63,11 @@ public class Manager_Game : MonoBehaviour
         sectionGameData = SaveLoadSystem.LoadFile<SectionData>("C:/Users/Edilson Chaves/AppData/LocalLow/DefaultCompany/Escor/SectionData.data");
     }
 
+    public void LoadLevelData()
+    {
+        levelData = SaveLoadSystem.LoadFile<LevelData>("C:/Users/Edilson Chaves/AppData/LocalLow/DefaultCompany/Escor/LevelData.data");
+
+    }
     public void InitialNewLevelGame(int levelSelected)
     {
         levelStatus = LevelInfo.LevelStatus.NewLevel;
@@ -72,7 +79,11 @@ public class Manager_Game : MonoBehaviour
 
     public void LoadLevelGame()
     {
-        levelStatus = LevelInfo.LevelStatus.ContinueLevel;
+        LoadLevelData();
+        if (levelData == null)
+            levelStatus = LevelInfo.LevelStatus.NewLevel;    
+        else
+            levelStatus = LevelInfo.LevelStatus.ContinueLevel;
     }
 
     public void AdaptLanguageInScene()
