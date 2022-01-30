@@ -7,42 +7,48 @@ using System.Collections;
 public class menupause : MonoBehaviour
 {
 
-    [SerializeField]Popup popupTeste;
+    [SerializeField]Popup _popup;
     public GameObject pauseMenuUI;
-    public Text textPercentual, textCoins, textLife; 
+    public Text textPercentual, textCoins, textLife;
 
-
+    private void Start()
+    {
+    }
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f;
-        //gameIsPaused = false;
-       
     }
 
     void Pause(int percentualComplete, int Coins, int LifePlayer)
     {
         pauseMenuUI.SetActive(true);
-        Time.timeScale = 0f;
         textPercentual.text = percentualComplete + "/0";
         textCoins.text = Coins + "/0";
         textLife.text = LifePlayer + "/0";
     }
-      
 
-    public void menuConfig()
+    public void BTN_SalvarJogo()
     {
-        SceneManager.LoadScene("menu_config");
+        Debug.Log("Salvar Jogo");
     }
 
-    public void voltarMenu()
+    public void BTN_VoltarMenu()
     {
-        Debug.Log("Ola");
+        ManagerEvents.UIConfig.ResumedGame();
         ManagerEvents.UIConfig.ReturnedMenu();
     }
-
-    public void Sair()
+    public void BTN_VoltarJogo()
     {
+        ManagerEvents.UIConfig.ResumedGame();
+    }
+    public void BTN_MenuConfig()
+    {
+        Debug.Log("Configurações Jogo");
+
+    }
+    public void BTN_Exit()
+    {
+        Debug.Log("Sair Jogo");
         ManagerEvents.UIConfig.ExitedMenu();
     }
     private void OnEnable()

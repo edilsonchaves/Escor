@@ -90,6 +90,11 @@ public class Manager_Game : MonoBehaviour
     {
         ManagerEvents.GameConfig.ChangedLanguage(saveGameData.LanguageSelect);
     }
+
+    public void SaveLevelData()
+    {
+        SaveLoadSystem.SaveFile<LevelData>(new LevelData(1));
+    }
 }
 
 [System.Serializable]

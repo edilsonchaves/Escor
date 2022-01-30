@@ -14,14 +14,19 @@ public class Movement : MonoBehaviour {
     private Rigidbody2D rb;
     private PlayerRopeControll ropeControll;
     public static bool canMove = true;
-
-
+    [SerializeField]int _life;
+    public int Life
+    {
+        get { return _life; }
+        set { _life = value;  if (Life == 0) { Debug.Log("Personagem Morreu"); LevelManager.levelstatus = LevelManager.LevelStatus.EndGame; }}
+    }
 
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         ropeControll = GetComponent<PlayerRopeControll>();
+        Life = 3;
         
     }
 
@@ -36,36 +41,38 @@ public class Movement : MonoBehaviour {
 
     void Update()
     {
-        animator.SetBool("NoChao", noChao);
+        if (LevelManager.levelstatus == LevelManager.LevelStatus.Game) 
+        {
+            animator.SetBool("NoChao", noChao);
 
-        if(noChao == false && pulando == false && rb.velocity.y < 0)
-        {
-            animator.SetBool("Caindo", true);
-        } else
-        {
-            animator.SetBool("Caindo", false);
+            if (noChao == false && pulando == false && rb.velocity.y < 0)
+            {
+                animator.SetBool("Caindo", true);
+            }
+            else
+            {
+                animator.SetBool("Caindo", false);
+            }
+
+            if (canMove)
+            {
+                Move();
+                Jump();
+                Defense();
+            }
+
+            // if(!ropeControll.attached)
+            // {
+            //     Move();
+            //     Jump();
+            // }
+
+            // if(isGrounded)
+            // {
+            //     isJumping = false;
+            // }
         }
-        
-        if(canMove)
-        {
-            Move();
-            Jump();
-            Defense();
-        }
-            
-        
-        
-        
-        // if(!ropeControll.attached)
-        // {
-        //     Move();
-        //     Jump();
-        // }
-        
-        // if(isGrounded)
-        // {
-        //     isJumping = false;
-        // }
+
     }
 
     void Move()

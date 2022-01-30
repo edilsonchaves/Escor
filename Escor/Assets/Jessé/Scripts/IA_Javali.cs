@@ -83,33 +83,15 @@ public class IA_Javali : MonoBehaviour
         // bug                 = true;
     }
 
-    void Update()
-    {
-        // if(gameObject.name == "Javali (1)")
-        //     print(attacking+"  "+stuned);
-        // if(stuned)
-        // {
-        //     ChangeAnimation("JavaliTonto");
-        // }
-        // else if(attacking)
-        // {
-        //     ChangeAnimation("JavaliAtacando");
-        // }
-        // else if(!isGrounded)
-        // {
-        //     ChangeAnimation("JavaliParado");
-        // }
-        // else
-        // {
-        //     ChangeAnimation("JavaliAndando");
-        // }
-    }
 
 
     void FixedUpdate()
     {
-        isGrounded = CheckIsGrounded();
-        Movement(); // faz a movimentação do javali
+        if (LevelManager.levelstatus == LevelManager.LevelStatus.Game) 
+        {
+            isGrounded = CheckIsGrounded();
+            Movement(); // faz a movimentação do javali
+        }
     }
 
 
@@ -635,13 +617,12 @@ public class IA_Javali : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        bool playerIsShield = true;
-
         if(col.tag == "Player" && !stuned && attacking)
         {
-            if(!playerIsShield)
+            Movement playerMovement = col.GetComponent<Movement>();
+            if (!playerMovement.defendendo)
             {
-                Debug.Log("Jogador recebeu dano");
+                playerMovement.Life -= 1;
             }
             else
             {
