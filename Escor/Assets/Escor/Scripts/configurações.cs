@@ -7,7 +7,7 @@ public class configurações : MonoBehaviour
     [SerializeField] private Slider _fontSlider;
     [SerializeField] private Slider volume = null;
     [SerializeField] private Slider volumeVoz = null;
-    [SerializeField] private TextMeshProUGUI _texto;
+    [SerializeField] private Text _texto;
 
     public delegate void OnSizeChange();
     public static OnSizeChange SizeChangeDelegate;
@@ -25,7 +25,7 @@ public class configurações : MonoBehaviour
         volume.value = Manager_Game.Instance.saveGameData.VolumeAmbient;
         volumeVoz.value = Manager_Game.Instance.saveGameData.Volume;
 
-        _fontSlider.value = PlayerPrefs.GetFloat("tamanholetra", 20f);
+        _fontSlider.value = PlayerPrefs.GetInt("tamanholetra", 5);
 
         ChangeFontSize();
 
@@ -41,7 +41,7 @@ public class configurações : MonoBehaviour
             SizeChangeDelegate.Invoke();
         }
 
-        PlayerPrefs.SetFloat("tamanholetra", _fontSlider.value);
+        PlayerPrefs.SetInt("tamanholetra", (int)_fontSlider.value * 1);
                 
     }
 

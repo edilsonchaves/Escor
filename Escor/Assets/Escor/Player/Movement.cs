@@ -1,16 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour {
     
-    Animator animator;
+    public Animator animator;
     public float speed;
     public float jumpForce;
     public bool noChao = true;
     private bool pulando = false;
+    public bool defendendo = false;
     private Rigidbody2D rb;
     private PlayerRopeControll ropeControll;
+    public static bool canMove = true;
 
 
 
@@ -19,6 +22,7 @@ public class Movement : MonoBehaviour {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         ropeControll = GetComponent<PlayerRopeControll>();
+        
     }
 
     private void OnEnable()
@@ -42,8 +46,15 @@ public class Movement : MonoBehaviour {
             animator.SetBool("Caindo", false);
         }
         
-        Move();
-        Jump();
+        if(canMove)
+        {
+            Move();
+            Jump();
+            Defense();
+        }
+            
+        
+        
         
         // if(!ropeControll.attached)
         // {
@@ -97,7 +108,13 @@ public class Movement : MonoBehaviour {
     {
         if(Input.GetButtonDown("Defesa"))
         {
+            defendendo = true;
             animator.SetBool("Defendendo", true);
+        }
+        if (Input.GetButtonUp("Defesa"))
+        {
+            defendendo = false;
+            animator.SetBool("Defendendo", false);
         }
     }
 
@@ -105,4 +122,7 @@ public class Movement : MonoBehaviour {
     {
         transform.eulerAngles = new Vector2(0f, yAngle);
     }
+
+
+    
 }

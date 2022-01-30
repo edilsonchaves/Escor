@@ -19,6 +19,7 @@ public class CinemachineSwitcher : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
+
         
     }
     private void OnEnable()
@@ -46,23 +47,37 @@ public class CinemachineSwitcher : MonoBehaviour
         ManagerEvents.PlayerMovementsEvents.LookedDirection(180);
         yield return new WaitForSeconds(1);
     }
+
+    IEnumerator TrocaCameraAnimation()
+    {
+        yield return new WaitForSeconds(2);
+        animator.Play("Camera Boss");
+        yield return new WaitForSeconds(4);
+        animator.Play("Camera Player");
+        yield return new WaitForSeconds(2);
+    }
     public void SwitchState()
     {
        StartCoroutine(LevaBossAnimation());
-        //Aproximar camera Javali
-        // if(playerCamera) {
-        //     // StartCoroutine(dashCooldown(4));
-        //     animator.Play("Camera Boss");
-        //     Debug.Log("Animando o inimigo");
-        //     // animator.Play("Camera Player");
-        // }
-        //  else {
-        //     Debug.Log("Animando o Player");
-        //     animator.Play("Camera Player");
-        // } 
+    //    animator.Play("fadeTest");
+    //     //Aproximar camera Javali
+    //     if(playerCamera) {
+    //         // StartCoroutine(dashCooldown(4));
+    //         animator.Play("Camera Boss");
+    //         Debug.Log("Animando o inimigo");
+    //         // animator.Play("Camera Player");
+    //     }
+    //      else {
+    //         Debug.Log("Animando o Player");
+    //         animator.Play("Camera Player");
+    //     } 
 
         // playerCamera = !playerCamera;
         // inimigoCamera = !inimigoCamera;
+    }
+    public void TrocaCamera()
+    {
+        StartCoroutine(TrocaCameraAnimation());
     }
 
     private void SwitchPriority()
@@ -81,11 +96,6 @@ public class CinemachineSwitcher : MonoBehaviour
 
     }
 
-    // void Update()
-    // {
-    //     Debug.Log(playerCamera);
-    //     SwitchState();
-        
-    // }
+    
 
 }

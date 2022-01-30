@@ -6,8 +6,8 @@ using System.Collections;
 
 public class menupause : MonoBehaviour
 {
-       
-   
+
+    [SerializeField]Popup popupTeste;
     public GameObject pauseMenuUI;
     public Text textPercentual, textCoins, textLife; 
 
@@ -27,7 +27,6 @@ public class menupause : MonoBehaviour
         textPercentual.text = percentualComplete + "/0";
         textCoins.text = Coins + "/0";
         textLife.text = LifePlayer + "/0";
-        //gameIsPaused = true;
     }
       
 
@@ -38,13 +37,13 @@ public class menupause : MonoBehaviour
 
     public void voltarMenu()
     {
-        SceneManager.LoadScene("menu_inicial");
+        Debug.Log("Ola");
+        ManagerEvents.UIConfig.ReturnedMenu();
     }
 
     public void Sair()
     {
-        Application.Quit();
-        Debug.Log("Saiu do jogo");
+        ManagerEvents.UIConfig.ExitedMenu();
     }
     private void OnEnable()
     {
