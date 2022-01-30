@@ -17,7 +17,13 @@ public class Play_game : MonoBehaviour
 	}
     public void BTN_Play()
 	{
-		popup.InitPopup("Você possui um jogo salvo. Deseja continuar?", "Sim", () => CarregarJogo(), "Não", () => Debug.Log("Novo jogo"));		
+		Manager_Game.Instance.LoadSectionGame();
+		if (Manager_Game.Instance.sectionGameData!=null)
+			popup.InitPopup("Você possui um jogo salvo. Deseja continuar?", "Sim", () => CarregarJogo(), "Não", NovoJogo);
+        else
+        {
+			NovoJogo();
+		}
 	}
 	void CarregarJogo()
     {
@@ -33,6 +39,7 @@ public class Play_game : MonoBehaviour
 
 	void NovoJogo() 
 	{
+		Manager_Game.Instance.InitialNewSectionGame();
 		SceneManager.LoadScene("Prologo");
 
 	}

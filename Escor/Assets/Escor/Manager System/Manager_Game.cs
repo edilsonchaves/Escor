@@ -32,8 +32,11 @@ public class Manager_Game : MonoBehaviour
         {
             _instance = this;
             DontDestroyOnLoad(this.gameObject);
-            SaveLoadSystem.SaveFile<SectionData>(new SectionData(1,3));
             saveGameData = SaveLoadSystem.LoadFile<GameData>("C:/Users/Edilson Chaves/AppData/LocalLow/DefaultCompany/Escor/GameData.data");
+            if (saveGameData == null)
+            {
+                saveGameData=InitializingGameDataSystem();
+            }
         }
         else
         {
@@ -41,7 +44,13 @@ public class Manager_Game : MonoBehaviour
         }
     }
 
+    public GameData InitializingGameDataSystem()
+    {
+        GameData initializeGameData = new GameData(50, 50, 32, 0);
 
+        SaveLoadSystem.SaveFile<GameData>(initializeGameData);
+        return initializeGameData;
+    }
     public void InitialNewSectionGame()
     {
         SaveLoadSystem.SaveFile<SectionData>(new SectionData(1, 3));
@@ -64,6 +73,11 @@ public class Manager_Game : MonoBehaviour
     public void LoadLevelGame()
     {
         levelStatus = LevelInfo.LevelStatus.ContinueLevel;
+    }
+
+    public void AdaptLanguageInScene()
+    {
+        ManagerEvents.GameConfig.ChangedLanguage(saveGameData.LanguageSelect);
     }
 }
 
