@@ -10,6 +10,10 @@ public class LevelManager : MonoBehaviour
     private LevelStatus auxLevelStatus;
     [SerializeField]UIController control;
     [SerializeField] GameObject[] levelsAvaibles;
+    GameObject currentLevel;
+    [SerializeField] GameObject characterPrefab;
+    GameObject currentCharacter;
+    [SerializeField] Camera cam;
     Popup popup;
     void Start()
     {
@@ -20,7 +24,18 @@ public class LevelManager : MonoBehaviour
 
     void CreateLevel(int level=1)
     {
-        Instantiate(levelsAvaibles[level-1],Vector3.zero,Quaternion.identity);
+        currentLevel=Instantiate(levelsAvaibles[level-1],Vector3.zero,Quaternion.identity);
+        if (Manager_Game.Instance.levelStatus == LevelInfo.LevelStatus.NewLevel)
+        {
+            currentLevel.GetComponent<LevelInformation>().initializeLevelInformation(out Transform initialSpawnPosition);
+            currentCharacter=Instantiate(characterPrefab, initialSpawnPosition.position, initialSpawnPosition.rotation);
+            cam.transform.SetParent(currentCharacter.transform);
+            cam.transform.localPosition = new Vector3(0, 0, -10);
+        }
+        else
+        {
+
+        }
     }
     void Update()
     {

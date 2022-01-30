@@ -17,11 +17,17 @@ public class Play_game : MonoBehaviour
 	}
     public void BTN_Play()
 	{
-		popup.InitPopup("Você possui um jogo salvo. Deseja continuar?", "Sim", () => CarregarJogo(), "Não", () => Debug.Log("Novo jogo"));		
+		Manager_Game.Instance.LoadSectionGame();
+		if (Manager_Game.Instance.sectionGameData!=null)
+			popup.InitPopup("Você possui um jogo salvo. Deseja continuar?", "Sim", () => CarregarJogo(), "Não", NovoJogo);
+        else
+        {
+			NovoJogo();
+		}
 	}
 	void CarregarJogo()
     {
-        if (Manager_Game.Instance.levelData.LevelGaming == 0)
+        if (Manager_Game.Instance.levelStatus == LevelInfo.LevelStatus.NewLevel)
         {
 			SceneManager.LoadScene("SelectLevel");
         }
@@ -33,6 +39,7 @@ public class Play_game : MonoBehaviour
 
 	void NovoJogo() 
 	{
+		Manager_Game.Instance.InitialNewSectionGame();
 		SceneManager.LoadScene("Prologo");
 
 	}
