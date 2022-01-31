@@ -15,19 +15,63 @@ public class Movement : MonoBehaviour {
     private PlayerRopeControll ropeControll;
     public static bool canMove = true;
     [SerializeField]int _life;
+    SpriteRenderer sprite;
+    public bool isInvunerable;
     public int Life
     {
         get { return _life; }
-        set { _life = value;  if (Life == 0) { Debug.Log("Personagem Morreu"); LevelManager.levelstatus = LevelManager.LevelStatus.EndGame; }}
-    }
+        set {
+            if (isInvunerable == false) 
+            {
+                _life = value;
+                if (Life == 0)
+                {
+                    animator.SetTrigger("Morrendo");
+                    LevelManager.levelstatus = LevelManager.LevelStatus.EndGame;
+                }
+                else
+                {
+                    animator.SetTrigger("TakeDamage");
+                    PersonagemMudarEstado();
+                }
+            }
 
+        }
+    }
+    public void PersonagemMudarEstado()
+    {
+        StartCoroutine(InvunerablePersonagem());
+    }
+    IEnumerator InvunerablePersonagem()
+    {
+        isInvunerable = true;
+        float timeAnimation = 3;
+        int status = -1;
+        while (timeAnimation > 0)
+        {
+            float timeFrame= Time.deltaTime;
+            timeAnimation -= timeFrame;
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, sprite.color.a+(timeFrame * status*2));
+            if(sprite.color.a<0|| sprite.color.a > 1)
+            {
+                status *= -1;
+
+            }
+            yield return new WaitForSeconds(timeFrame);
+        }
+        sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
+        isInvunerable = false;
+        yield return null;
+    }
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         ropeControll = GetComponent<PlayerRopeControll>();
-        Life = 3;
-        
+        _life = 3;
+        sprite = GetComponent<SpriteRenderer>();
+
+
     }
 
     private void OnEnable()
@@ -41,6 +85,7 @@ public class Movement : MonoBehaviour {
 
     void Update()
     {
+        Debug.Log("Level status:"+ LevelManager.levelstatus);
         if (LevelManager.levelstatus == LevelManager.LevelStatus.Game) 
         {
             animator.SetBool("NoChao", noChao);
