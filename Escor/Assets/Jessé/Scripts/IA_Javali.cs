@@ -622,7 +622,11 @@ public class IA_Javali : MonoBehaviour
             Movement playerMovement = col.GetComponent<Movement>();
             if (!playerMovement.defendendo)
             {
-                playerMovement.Life -= 1;
+                if (!playerMovement.isInvunerable)
+                {
+                    playerMovement.Life -= 1;
+                }
+
             }
             else
             {

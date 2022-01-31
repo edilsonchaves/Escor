@@ -100,8 +100,12 @@ public class LevelManager : MonoBehaviour
 
     public void SaveGame()
     {
-        Manager_Game.Instance.SaveLevelData();
+        Manager_Game.Instance.SaveLevelData(Manager_Game.Instance.levelData.LevelGaming,currentCharacter.transform.position.x, currentCharacter.transform.position.y, currentCharacter.GetComponent<Movement>().Life);
         SceneManager.LoadScene("SelectLevel");
+    }
+    void SaveGameButton()
+    {
+        SaveGame();
     }
     void ExitMenuPressButton()
     {        
