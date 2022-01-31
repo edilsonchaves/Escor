@@ -16,13 +16,14 @@ public class ParallaxEffect : MonoBehaviour
 
     protected Collider2D m_Collider;
     protected Vector3 camStartPos, currentCamPos;
-    protected float pixelsPerUnit;
- 
+    protected float pixelsPerUnit, cavernMovementRange;
+    protected Bounds sptBounds;
 
     protected void SetABS()
     {
         farMovementSpeed    = Mathf.Abs(farMovementSpeed);
         bettewMovementSpeed = Mathf.Abs(bettewMovementSpeed);
+        cavernMovementRange = Mathf.Abs(cavernMovementRange);
     }
 
 
@@ -41,13 +42,20 @@ public class ParallaxEffect : MonoBehaviour
     protected void MoveCavernParallax()
     {
         currentCamPos = Camera.main.transform.position; 
-        for(int c=0; c<layersGameObject.Count; c++)
+
+        if(((Vector2)(currentCamPos-transform.position)).magnitude < cavernMovementRange)
         {
-            Vector3 currentCamMovement              = (currentCamPos - layersGameObjectStartPosition[c]);
-            Vector3 offset                          = currentCamMovement * (c * bettewMovementSpeed + farMovementSpeed);
-            Vector3 newPos                          = layersGameObjectStartPosition[c] - offset;
-            newPos.z                                = layersGameObjectStartPosition[c].z;
-            layersGameObject[c].transform.position  = newPos;
+
+            for(int c=0; c<layersGameObject.Count; c++)
+            {
+                Vector3 currentCamMovement              = (currentCamPos - transform.position);
+                // Vector3 currentCamMovement              = (currentCamPos - layersGameObjectStartPosition[c]);
+                Vector3 offset                          = currentCamMovement * ((layersMaterial.Count-c) * bettewMovementSpeed + farMovementSpeed);
+                Vector3 newPos                          = layersGameObjectStartPosition[c] + offset;
+                newPos.z                                = layersGameObjectStartPosition[c].z;
+                layersGameObject[c].transform.position  = newPos;
+            }
+
         }
 
     }
@@ -58,28 +66,46 @@ public class ParallaxEffect : MonoBehaviour
         currentCamPos = Camera.main.transform.position; 
         for(int c=0; c<layersMaterial.Count; c++)
         {
-            Vector3 currentCamMovement = (currentCamPos-camStartPos);
+            // print(sptBounds);
+            Vector3 currentCamMovement = (Camera.main.transform.position-camStartPos);
             Vector2 offset = currentCamMovement / layersGameObject[c].transform.lossyScale.x /10.08f*pixelsPerUnit/100;
-            offset      -= offset*(c * bettewMovementSpeed + farMovementSpeed)*Time.deltaTime;
-            offset.y    -= offset.y/1.97f;
-            layersMaterial[c].SetTextureOffset("_MainTex", -offset);
-            // layersMaterial[c].SetTextureOffset("_MainTex", new Vector2(-offset.x, offset.y));
+            offset = new Vector2(currentCamMovement.x/sptBounds.extents.x/2/layersGameObject[c].transform.lossyScale.x, currentCamMovement.y/sptBounds.extents.y/2/layersGameObject[c].transform.lossyScale.y);
+            offset      -= offset*(c * bettewMovementSpeed + farMovementSpeed)*Time.fixedDeltaTime;
+            // offset.y    -= offset.y/1.97f;
+            layersMaterial[c].SetTextureOffset("_MainTex", new Vector2(layersStartOffset[c].x-offset.x, layersStartOffset[c].y-offset.y));
+            // layersMaterial[c].SetTextureOffset("_MainTex", -offset);
             // layersMaterial[c].SetTextureOffset("_MainTex", new Vector2(-offset.x+layersStartOffset[c].x, offsetY+layersStartOffset[c].y));
         }
     }
 
 
-    protected void MoveCityParallaxBackup()
-    {
-        currentCamPos = Camera.main.transform.position; 
-        for(int c=0; c<layersMaterial.Count; c++)
-        {
-            Vector3 currentCamMovement = (currentCamPos-layersGameObject[c].transform.position); // efeito parallax apenas na horizontal
-            Vector2 offset = currentCamMovement / layersGameObject[c].transform.lossyScale.x /12.8f*pixelsPerUnit/100;
-            offset      -= offset*(c * bettewMovementSpeed + farMovementSpeed);
-            layersMaterial[c].SetTextureOffset("_MainTex", -offset);
-        }
-    }
+    // protected void MoveCityParallaxbackup2()
+    // {
+    //     currentCamPos = Camera.main.transform.position; 
+    //     for(int c=0; c<layersMaterial.Count; c++)
+    //     {
+    //         Vector3 currentCamMovement = (currentCamPos-camStartPos);
+    //         Vector2 offset = currentCamMovement / layersGameObject[c].transform.lossyScale.x /10.08f*pixelsPerUnit/100;
+    //         offset      -= offset*(c * bettewMovementSpeed + farMovementSpeed)*Time.deltaTime;
+    //         offset.y    -= offset.y/1.97f;
+    //         layersMaterial[c].SetTextureOffset("_MainTex", -offset);
+    //         // layersMaterial[c].SetTextureOffset("_MainTex", new Vector2(-offset.x, offset.y));
+    //         // layersMaterial[c].SetTextureOffset("_MainTex", new Vector2(-offset.x+layersStartOffset[c].x, offsetY+layersStartOffset[c].y));
+    //     }
+    // }
+
+
+    // protected void MoveCityParallaxBackup()
+    // {
+    //     currentCamPos = Camera.main.transform.position; 
+    //     for(int c=0; c<layersMaterial.Count; c++)
+    //     {
+    //         Vector3 currentCamMovement = (currentCamPos-layersGameObject[c].transform.position); // efeito parallax apenas na horizontal
+    //         Vector2 offset = currentCamMovement / layersGameObject[c].transform.lossyScale.x /12.8f*pixelsPerUnit/100;
+    //         offset      -= offset*(c * bettewMovementSpeed + farMovementSpeed);
+    //         layersMaterial[c].SetTextureOffset("_MainTex", -offset);
+    //     }
+    // }
 
 
 

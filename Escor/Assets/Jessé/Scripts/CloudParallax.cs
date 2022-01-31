@@ -29,7 +29,7 @@ public class CloudParallax : ParallaxEffect
 
     override protected void SetLayers()
     {
-        print("TEST");
+        // print("TEST");
         for(int c=0; c<transform.childCount; c++)
         {
             layersGameObjectStartPosition.Add(transform.GetChild(c).gameObject.transform.position);

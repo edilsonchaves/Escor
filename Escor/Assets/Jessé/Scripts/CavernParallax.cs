@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class CavernParallax : ParallaxEffect
 {
-    public float m_farMovementSpeed, m_bettewMovementSpeed;
+    public float m_farMovementSpeed, m_bettewMovementSpeed, m_movementRange;
 
     // Start is called before the first frame update
     void Start()
     {
         farMovementSpeed = m_farMovementSpeed;
         bettewMovementSpeed = m_bettewMovementSpeed;
+        cavernMovementRange = m_movementRange;
         camStartPos = Camera.main.transform.position;
         SetABS(); // se certifica que as variáveis sejam positivas
         SetLayers();
@@ -18,8 +19,12 @@ public class CavernParallax : ParallaxEffect
 
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
+        // farMovementSpeed = m_farMovementSpeed;
+        // bettewMovementSpeed = m_bettewMovementSpeed;
+        // cavernMovementRange = m_movementRange;
+        // SetABS(); // se certifica que as variáveis sejam positivas
         MoveCavernParallax(); 
     }
 
@@ -31,4 +36,6 @@ public class CavernParallax : ParallaxEffect
             layersGameObject.Add(transform.GetChild(c).gameObject);
         }
     }
+
+
 }
