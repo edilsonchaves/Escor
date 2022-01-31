@@ -28,6 +28,7 @@ public class LevelManager : MonoBehaviour
         else
         {
             CreateLevel(Manager_Game.Instance.levelData.LevelGaming);
+            PlayerSetupInformation();
         }
         levelstatus = LevelStatus.Game;
     }
@@ -35,18 +36,15 @@ public class LevelManager : MonoBehaviour
     void CreateLevel(int level=1)
     {
         currentLevel=Instantiate(levelsAvaibles[level-1],Vector3.zero,Quaternion.identity);
-        if (Manager_Game.Instance.levelStatus == LevelInfo.LevelStatus.NewLevel)
-        {
-            currentLevel.GetComponent<LevelInformation>().initializeLevelInformation(out Transform initialSpawnPosition);
-            currentCharacter = Instantiate(characterPrefab, initialSpawnPosition.position, initialSpawnPosition.rotation);
-            cam.transform.localPosition = new Vector3(0, 0, -10);
-            virtualCam.Follow = currentCharacter.transform;
-        }
-        else
-        {
-
-        }
-
+        currentLevel.GetComponent<LevelInformation>().initializeLevelInformation(out Transform initialSpawnPosition);
+        currentCharacter = Instantiate(characterPrefab, initialSpawnPosition.position, initialSpawnPosition.rotation);
+        cam.transform.localPosition = new Vector3(0, 0, -10);
+        virtualCam.Follow = currentCharacter.transform;
+    }
+    void PlayerSetupInformation()
+    {
+        Vector2 pos = Manager_Game.Instance.levelData.CharacterPosition;
+        currentCharacter.transform.position = new Vector3(pos.x, pos.y,0);
     }
     void Update()
     {
@@ -69,13 +67,16 @@ public class LevelManager : MonoBehaviour
         ManagerEvents.UIConfig.onReturnMenu += VoltarMenuPressButton;
         ManagerEvents.UIConfig.onExitMenu += ExitMenuPressButton;
         ManagerEvents.UIConfig.onResumeGame += Resume;
+        ManagerEvents.UIConfig.onSaveGame += SaveGameButton;
 
     }
     private void OnDisable()
     {
         ManagerEvents.UIConfig.onReturnMenu -= VoltarMenuPressButton;
         ManagerEvents.UIConfig.onExitMenu -= ExitMenuPressButton;
-        ManagerEvents.UIConfig.onResumeGame += Resume;
+        ManagerEvents.UIConfig.onResumeGame -= Resume;
+        ManagerEvents.UIConfig.onSaveGame -= SaveGameButton;
+
 
     }
     void Resume()

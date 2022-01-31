@@ -29,7 +29,7 @@ public class menupause : MonoBehaviour
 
     public void BTN_SalvarJogo()
     {
-        Debug.Log("Salvar Jogo");
+        ManagerEvents.UIConfig.SavedGame();
     }
 
     public void BTN_VoltarMenu()

@@ -26,6 +26,7 @@ public class ManagerEvents : MonoBehaviour
         public static event Action onResumeGame;
         public static event Action onReturnMenu;
         public static event Action onExitMenu;
+        public static event Action onSaveGame;
         public static void PausedGame(int PercentualGame, int CoinGame, int Life)
         {
             if(onPauseGame != null)
@@ -57,7 +58,13 @@ public class ManagerEvents : MonoBehaviour
                 onExitMenu();
             }
         }
-
+        public static void SavedGame()
+        {
+            if (onSaveGame != null)
+            {
+                onSaveGame();
+            }
+        }
     }        
 
     public static class PlayerMovementsEvents
