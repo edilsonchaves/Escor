@@ -75,6 +75,9 @@ Shader "Sprites-GrayScale"
                 return texcol;
             }
         ENDCG
+
+
+
         }
     }
     Fallback "Sprites/Default"

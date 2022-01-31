@@ -5,22 +5,63 @@ using UnityEngine;
 public class CloudManager : MonoBehaviour
 {
 
+//
+//  Usar um valor muito alto para núvens ou distancia mínina ou uma combinação de ambos
+//  pode ocasionar em um loop infinito
+//
+//  OBS: Eu tomei algumas medidas de precaução para evitar isso, então deve ficar tudo bem. 
+//       Mas nunca se sabe né :)  ...
+//
+
     public int numberOfClouds;
-    public float movementSpeed;
+    public float minimeDistance=10, movementSpeed;
     public bool movementForLeft;
-    public Transform limitLeft, limitRight, limitDown;
+    public Transform limitLeft, limitRight, limitDown, limitUp;
     public GameObject[] cloudPrefabs;
 
     private List<Transform> cloudsTrans;
-    private List<float> usedPositionsX;
+    private List<Vector2> usedPositions;
 
     [HideInInspector]
     public static bool StartUnactived;
 
+    private bool stopLoop=false;
+
+
+
+    //for debug
+
+        [Header("DEBUG")]
+        public bool changeColor;
+        public Color color;
+    
+    //---------------    
+    
+
     // Start is called before the first frame update
     void Start()
     {
-        GenerateClouds(numberOfClouds, 10, false);
+        // StartCoroutine("StopInfiniteLoop");
+
+        // int sizeX = (int)(limitRight.position.x-limitLeft.position.x);
+        // int sizeY = (int)(limitUp.position.y-limitDown.position.y);
+        // int pixelsCount = (int)(sizeX*sizeY);
+        // print("pixelsCount:   "+pixelsCount);
+
+        // if(minDistance <= 0)
+        // {
+        //     minDistance = 1;
+        // }
+
+
+
+        GenerateClouds(numberOfClouds, minimeDistance, false);
+    }
+
+    IEnumerator StopInfiniteLoop()
+    {
+        yield return new WaitForSeconds(10);
+        stopLoop = true;
     }
 
     // Update is called once per frame
@@ -53,45 +94,185 @@ public class CloudManager : MonoBehaviour
 
     void GenerateClouds(int quant=1, float minDistance=1f, bool useMaxDistance=false)
     {    
-        if(quant >= (limitRight.position.x-limitLeft.position.x))
+
+        int sizeX = (int)(limitRight.position.x-limitLeft.position.x);
+        int sizeY = (int)(limitUp.position.y-limitDown.position.y);
+
+        if(minDistance <= 0)
         {
-            quant = (int) (limitRight.position.x-limitLeft.position.x)/2;
+            minDistance = 1;
+        }
+
+        int pixelsCount = (int)(sizeX*sizeY);
+
+        // float maxDistance = Mathf.Floor(pixelsCount/quant*(minDistance+1));
+        float maxDistance = pixelsCount/minDistance/quant/2;
+        // float maxDistance = Mathf.Floor(pixelsCount/quant/2);
+
+        float mediaOfSize = (sizeX + sizeY) / 2;
+        // print("pixelsCount:   "+pixelsCount);
+            // print("old quant: "+quant);
+            // print("old maxDistance: "+maxDistance);
+            // print("old minDistance: "+minDistance);
+
+        if(minDistance > maxDistance)
+        {
+            minDistance = maxDistance/1.5f;
+            maxDistance = pixelsCount/minDistance/quant/2;
+        }
+
+        if(quant >= pixelsCount || maxDistance <= 2.5f)
+        {
+            // print("Vai dá não mermão tu tá maluco");
+            // print("old quant: "+quant);
+            // print("old maxDistance: "+maxDistance);
+            // print("old minDistance: "+minDistance);
+            quant = (int) pixelsCount/8;
+            maxDistance = pixelsCount/quant/2;
+            // maxDistance = 1;
+            minDistance = maxDistance/5;
+            // print("new quant: "+quant);
+            // print("new maxDistance: "+maxDistance);
+            // print("new minDistance: "+minDistance);
+            // print("Agora sim :)");
         }    
 
-        float maxDistance = (limitRight.position.x-limitLeft.position.x)/quant;
+
+
+        // return;
+
+
+
+
+
+// ---------------------------------------------------
+
+        // if(quant >= (limitRight.position.x-limitLeft.position.x))
+        // {
+        //     quant = (int) (limitRight.position.x-limitLeft.position.x)/2;
+        // }    
+
+        // float maxDistance = (limitRight.position.x-limitLeft.position.x)/quant;
         
         // print("A  "+(int)((limitRight.position.x-limitLeft.position.x)/minDistance/1.25f));
         // print("B  "+(maxDistance/10));
-        if(quant >= (int)((limitRight.position.x-limitLeft.position.x)/minDistance/1.25f))
-        {
-            minDistance = maxDistance/10;
-        }
+        // if(quant >= (int)((limitRight.position.x-limitLeft.position.x)/minDistance/1.25f))
+        // {
+        //     minDistance = maxDistance/10;
+        // }
 
-        // return;
+// ---------------------------------------------------
+        
+        // int sizeX = (int)(limitRight.position.x-limitLeft.position.x);
+        // int sizeY = (int)(limitUp.position.y-limitDown.position.y);
+
+        // int maxSize = sizeY > sizeX ? sizeY : sizeX; 
+
+
+        // float mediaOfSize = (sizeX + sizeY) / 2;
+
+        // if(sizeY > sizeX)
+        // {
+        //     if(sizeY % 2 == 0)
+        //     {
+        //         sizeY -= 1; 
+        //     }
+
+        //     maxSize = sizeY;
+        // }
+        // else
+        // {
+        //     if(sizeX % 2 == 0)
+        //     {
+        //         sizeX -= 1; 
+        //     }
+        //     maxSize = sizeX;
+
+        // }
+        
+
+        // int pixelsCount = (int)(sizeX*sizeY);
+
+
+        // if(quant >= pixelsCount)
+        // {
+        //     quant = (int) pixelsCount/4;
+        // }    
+
+        // float maxDistance = Mathf.Ceil(Mathf.Ceil(sizeX/2)*Mathf.Ceil(sizeY/2) / quant / (mediaOfSize**0.5)); //12=3.4641 //11=3.3166 //8=2.8284 //7=2.6458 //6=2.4495 
+        // // float maxDistance = pixelsCount / quant / (mediaOfSize**0.5); //12=3.4641 //11=3.3166 //8=2.8284 //7=2.6458 //6=2.4495 
+        
+        // if(minDistance > maxDistance)
+        // {
+        //     minDistance = maxDistance;
+        // }
+
+        // else if(maxDistance < 1)
+        // {
+        //     quant = pixelsCount/4;
+        //     maxDistance = 1;
+        //     minDistance = 1;
+        // }
+
+        // else
+        // {
+        //     if(quant >= (int)((limitRight.position.x-limitLeft.position.x)*(limitUp.position.y-limitDown.position.y)/(minDistance+1)/1.25f))
+        //     {
+        //         minDistance = maxDistance/10;
+        //     }
+
+        // }
+        // print("A  "+(int)((limitRight.position.x-limitLeft.position.x)/minDistance/1.25f));
+        // print("B  "+(maxDistance/10));
+
         // ClearClouds();
-        usedPositionsX = new List<float>();
+        usedPositions = new List<Vector2>();
+
+        bool stopLoop = false;
 
         for(int c=0; c<quant; c++)
         {
-            int randomIdx               = Random.Range(0, cloudPrefabs.Length);
-            float randomX               = limitLeft.position.x+maxDistance/2+(maxDistance*c);
-            float randomY               = Random.Range(transform.position.y, transform.position.y+50*transform.lossyScale.x);
-
-            if(!useMaxDistance)
+            if(!stopLoop)
             {
-                randomX                 = Random.Range(limitLeft.position.x, limitRight.position.x);
 
-                while(!CheckIfOutMinimeDistance(randomX, minDistance))
+                float timePassed=0;
+
+                int randomIdx               = Random.Range(0, cloudPrefabs.Length);
+                float randomX               = limitLeft.position.x+maxDistance/2+(maxDistance*c);
+                float randomY               = Random.Range(transform.position.y, limitUp.position.y);
+                Vector2 posi = new Vector2(randomX, randomY);
+
+                if(!useMaxDistance)
                 {
-                    randomX             = Random.Range(limitLeft.position.x, limitRight.position.x);
-                }
-            }
+                    randomX                 = Random.Range(limitLeft.position.x, limitRight.position.x);
+                    randomY               = Random.Range(transform.position.y, limitUp.position.y);
 
-            GameObject tmpCloud         = Instantiate(cloudPrefabs[randomIdx], transform);
-            tmpCloud.transform.GetChild(0).gameObject.SetActive(!StartUnactived); // parar a animação, fiz isso porque script de otmização não tava dando conta sozinho 
-            tmpCloud.transform.position = new Vector3(randomX, randomY  , transform.position.z);
-            
-            usedPositionsX.Add(randomX);
+                    while(!CheckIfOutMinimeDistance(new Vector2(randomX, randomY), minDistance) && !stopLoop)
+                    {   
+                        timePassed += 2f;
+                        
+                        if(timePassed >= 10000000)
+                        {
+                            stopLoop = true;
+                            print("LOOP INFINITO");
+                        }
+
+                        randomX             = Random.Range(limitLeft.position.x, limitRight.position.x);
+                        randomY               = Random.Range(transform.position.y, limitUp.position.y);
+                    }
+                }
+
+                GameObject tmpCloud         = Instantiate(cloudPrefabs[randomIdx], transform);
+                if(changeColor)
+                {
+                    tmpCloud.transform.GetChild(0).GetComponent<SpriteRenderer>().color = color;
+                }
+
+                tmpCloud.transform.GetChild(0).gameObject.SetActive(!StartUnactived); // parar a animação, fiz isso porque script de otmização não tava dando conta sozinho 
+                tmpCloud.transform.position = new Vector3(randomX, randomY  , transform.position.z);
+                
+                usedPositions.Add(new Vector2(randomX, randomY));
+            }
 
         }
 
@@ -120,11 +301,12 @@ public class CloudManager : MonoBehaviour
     }
 
 
-    bool CheckIfOutMinimeDistance(float posX, float minDistance)
+    bool CheckIfOutMinimeDistance(Vector2 pos, float minDistance)
     {
-        foreach(float x in usedPositionsX)
+        foreach(Vector2 xy in usedPositions)
         {
-            if(posX <= x+minDistance && posX >= x-minDistance)
+            // if((pos.x >= xy.x && pos.x <= xy.x+minDistance) || (pos.y <= xy.y-minDistance && pos.y >= xy.y))
+            if(pos.x <= xy.x+minDistance && pos.x >= xy.x-minDistance && pos.y <= xy.y+minDistance && pos.y >= xy.y-minDistance)
             {
                 return false;
             }
@@ -234,54 +416,54 @@ public class CloudManager : MonoBehaviour
 
 
     // TEST --------
-    void Test_CheckIfOutMinimeDistance()
-    {
-        float[] PositionsX = {0, 7, 15, 27, 40};
-        usedPositionsX = new List<float>();
-        usedPositionsX.Add(0);
-        usedPositionsX.Add(4);
-        usedPositionsX.Add(6);
-        usedPositionsX.Add(-6);
-        usedPositionsX.Add(-2);
-        usedPositionsX.Add(-10);
+    // void Test_CheckIfOutMinimeDistance()
+    // {
+    //     float[] PositionsX = {0, 7, 15, 27, 40};
+    //     usedPositionsX = new List<float>();
+    //     usedPositionsX.Add(0);
+    //     usedPositionsX.Add(4);
+    //     usedPositionsX.Add(6);
+    //     usedPositionsX.Add(-6);
+    //     usedPositionsX.Add(-2);
+    //     usedPositionsX.Add(-10);
 
-        foreach(float x in PositionsX)
-        {
-            if(CheckIfOutMinimeDistance(x, 5))
-            {
-                print("OUT :"+x);
-            }
-            else
-            {
-                print("IN :"+x);
-            }
-        }
-    }
+    //     foreach(float x in PositionsX)
+    //     {
+    //         if(CheckIfOutMinimeDistance(x, 5))
+    //         {
+    //             print("OUT :"+x);
+    //         }
+    //         else
+    //         {
+    //             print("IN :"+x);
+    //         }
+    //     }
+    // }
 
-    void Test_CheckDistance()
-    {
-        int[] quants = {5, 10, 15, 20, 30, 40, 80, 100};
-        float minDistance = 50;
+//     void Test_CheckDistance()
+//     {
+//         int[] quants = {5, 10, 15, 20, 30, 40, 80, 100};
+//         float minDistance = 50;
 
-        foreach(int quant in quants)
-        {
-            string text = "SEM LOOP INFINITO";
-            if(quant >= (limitRight.position.x-limitLeft.position.x)/minDistance*2)
-            {
-                minDistance = (limitRight.position.x-limitLeft.position.x)/quant;
-                text = "LOOP INFINITO";
+//         foreach(int quant in quants)
+//         {
+//             string text = "SEM LOOP INFINITO";
+//             if(quant >= (limitRight.position.x-limitLeft.position.x)/minDistance*2)
+//             {
+//                 minDistance = (limitRight.position.x-limitLeft.position.x)/quant;
+//                 text = "LOOP INFINITO";
 
-                if(quant >= (limitRight.position.x-limitLeft.position.x)/minDistance*2)
-                {
-                    text += " | LOOP INFINITO NÂO CORRIGIDO";
-                }
-                else
-                {
-                    text += " | LOOP INFINITO CORRIGIDO";
-                }    
-            }
-            print(text);
-        }
-    }
+//                 if(quant >= (limitRight.position.x-limitLeft.position.x)/minDistance*2)
+//                 {
+//                     text += " | LOOP INFINITO NÂO CORRIGIDO";
+//                 }
+//                 else
+//                 {
+//                     text += " | LOOP INFINITO CORRIGIDO";
+//                 }    
+//             }
+//             print(text);
+//         }
+//     }
 }
 

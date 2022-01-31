@@ -9,6 +9,7 @@ public class CityParallax : ParallaxEffect
     // Start is called before the first frame update
     void Start()
     {
+        sptBounds = transform.GetChild(0).GetComponent<SpriteRenderer>().sprite.bounds;
         farMovementSpeed = m_farMovementSpeed;
         bettewMovementSpeed = m_bettewMovementSpeed;
         pixelsPerUnit = transform.GetChild(0).GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
@@ -19,7 +20,7 @@ public class CityParallax : ParallaxEffect
 
 
     // Update is called once per frame
-    void FixedUpdate()
+    void LateUpdate()
     {
         MoveCityParallax();
     }
