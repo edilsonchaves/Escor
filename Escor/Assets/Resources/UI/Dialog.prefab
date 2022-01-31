@@ -869,7 +869,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6383604207565916653}
-  - component: {fileID: 1500023507928779156}
+  - component: {fileID: 6926530505665153482}
   m_Layer: 5
   m_Name: Dialog
   m_TagString: Untagged
@@ -898,7 +898,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1500023507928779156
+--- !u!114 &6926530505665153482
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

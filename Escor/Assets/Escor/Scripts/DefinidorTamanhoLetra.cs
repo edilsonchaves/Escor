@@ -1,14 +1,18 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine;
+using UnityEngine.UI;
 
 public class DefinidorTamanhoLetra : MonoBehaviour
 {
-    private TextMeshProUGUI _text;
+
+    //private TextMeshProUGUI _text;
+    private Text _text;
+    
+    
 
     private void Awake()
     {
-        _text = GetComponent<TextMeshProUGUI>();
+        _text = GetComponent<Text>();
     }
 
     private void OnEnable()
@@ -16,17 +20,17 @@ public class DefinidorTamanhoLetra : MonoBehaviour
         UpdateSize();
 
         //Salvar o método de atualizar o tamanho no delegate
-        FontSize.SizeChangeDelegate += UpdateSize;
+        configurações.SizeChangeDelegate += UpdateSize;
     }
 
     private void OnDisable()
     {
         //Remove o método de atualizar o tamanho no delegate
-        FontSize.SizeChangeDelegate -= UpdateSize;
+        configurações.SizeChangeDelegate -= UpdateSize;
     }
 
-    private void UpdateSize()
+    public void UpdateSize()
     {
-        _text.fontSize = PlayerPrefs.GetFloat("font_size", 60f);
+        _text.fontSize = PlayerPrefs.GetInt("tamanholetra", 5);
     }
 }

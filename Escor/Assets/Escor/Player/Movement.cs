@@ -1,24 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour {
     
-    Animator animator;
+    public Animator animator;
     public float speed;
     public float jumpForce;
     public bool noChao = true;
     private bool pulando = false;
+    public bool defendendo = false;
     private Rigidbody2D rb;
     private PlayerRopeControll ropeControll;
-
-
+    public static bool canMove = true;
+    [SerializeField]int _life;
+    public int Life
+    {
+        get { return _life; }
+        set { _life = value;  if (Life == 0) { Debug.Log("Personagem Morreu"); LevelManager.levelstatus = LevelManager.LevelStatus.EndGame; }}
+    }
 
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         ropeControll = GetComponent<PlayerRopeControll>();
+        Life = 3;
+        
     }
 
     private void OnEnable()
@@ -32,29 +41,38 @@ public class Movement : MonoBehaviour {
 
     void Update()
     {
-        animator.SetBool("NoChao", noChao);
+        if (LevelManager.levelstatus == LevelManager.LevelStatus.Game) 
+        {
+            animator.SetBool("NoChao", noChao);
 
-        if(noChao == false && pulando == false && rb.velocity.y < 0)
-        {
-            animator.SetBool("Caindo", true);
-        } else
-        {
-            animator.SetBool("Caindo", false);
+            if (noChao == false && pulando == false && rb.velocity.y < 0)
+            {
+                animator.SetBool("Caindo", true);
+            }
+            else
+            {
+                animator.SetBool("Caindo", false);
+            }
+
+            if (canMove)
+            {
+                Move();
+                Jump();
+                Defense();
+            }
+
+            // if(!ropeControll.attached)
+            // {
+            //     Move();
+            //     Jump();
+            // }
+
+            // if(isGrounded)
+            // {
+            //     isJumping = false;
+            // }
         }
-        
-        Move();
-        Jump();
-        
-        // if(!ropeControll.attached)
-        // {
-        //     Move();
-        //     Jump();
-        // }
-        
-        // if(isGrounded)
-        // {
-        //     isJumping = false;
-        // }
+
     }
 
     void Move()
@@ -97,7 +115,13 @@ public class Movement : MonoBehaviour {
     {
         if(Input.GetButtonDown("Defesa"))
         {
+            defendendo = true;
             animator.SetBool("Defendendo", true);
+        }
+        if (Input.GetButtonUp("Defesa"))
+        {
+            defendendo = false;
+            animator.SetBool("Defendendo", false);
         }
     }
 
@@ -105,4 +129,7 @@ public class Movement : MonoBehaviour {
     {
         transform.eulerAngles = new Vector2(0f, yAngle);
     }
+
+
+    
 }

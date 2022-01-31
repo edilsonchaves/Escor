@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class LevelInfo
+{
+    public enum LevelStatus {NewLevel, ContinueLevel};
+
+}
+
 public class Manager_Game : MonoBehaviour
 {
     private static Manager_Game _instance;
@@ -15,16 +21,24 @@ public class Manager_Game : MonoBehaviour
         }
 
     }
+
+    public LevelInfo.LevelStatus levelStatus;
     public GameData saveGameData;
     public SectionData sectionGameData;
+    public LevelData levelData;
+
+
     private void Awake()
     {
         if (_instance == null)
         {
             _instance = this;
             DontDestroyOnLoad(this.gameObject);
-            SaveLoadSystem.SaveFile<SectionData>(new SectionData(1,3));
             saveGameData = SaveLoadSystem.LoadFile<GameData>("C:/Users/Edilson Chaves/AppData/LocalLow/DefaultCompany/Escor/GameData.data");
+            if (saveGameData == null)
+            {
+                saveGameData=InitializingGameDataSystem();
+            }
         }
         else
         {
@@ -32,7 +46,13 @@ public class Manager_Game : MonoBehaviour
         }
     }
 
+    public GameData InitializingGameDataSystem()
+    {
+        GameData initializeGameData = new GameData(50, 50, 32, 0);
 
+        SaveLoadSystem.SaveFile<GameData>(initializeGameData);
+        return initializeGameData;
+    }
     public void InitialNewSectionGame()
     {
         SaveLoadSystem.SaveFile<SectionData>(new SectionData(1, 3));
@@ -41,6 +61,39 @@ public class Manager_Game : MonoBehaviour
     public void LoadSectionGame()
     {
         sectionGameData = SaveLoadSystem.LoadFile<SectionData>("C:/Users/Edilson Chaves/AppData/LocalLow/DefaultCompany/Escor/SectionData.data");
+    }
+
+    public void LoadLevelData()
+    {
+        levelData = SaveLoadSystem.LoadFile<LevelData>("C:/Users/Edilson Chaves/AppData/LocalLow/DefaultCompany/Escor/LevelData.data");
+
+    }
+    public void InitialNewLevelGame(int levelSelected)
+    {
+        levelStatus = LevelInfo.LevelStatus.NewLevel;
+        levelData = new LevelData(levelSelected);
+        SaveLoadSystem.SaveFile<LevelData>(levelData);
+
+
+    }
+
+    public void LoadLevelGame()
+    {
+        LoadLevelData();
+        if (levelData == null)
+            levelStatus = LevelInfo.LevelStatus.NewLevel;    
+        else
+            levelStatus = LevelInfo.LevelStatus.ContinueLevel;
+    }
+
+    public void AdaptLanguageInScene()
+    {
+        ManagerEvents.GameConfig.ChangedLanguage(saveGameData.LanguageSelect);
+    }
+
+    public void SaveLevelData()
+    {
+        SaveLoadSystem.SaveFile<LevelData>(new LevelData(1));
     }
 }
 
@@ -122,11 +175,13 @@ public class SectionData
     }
 }
 [System.Serializable]
-public class PlayerData
+public class LevelData
 {
-    int _value;
-    public PlayerData(int value)
+    [SerializeField] int _levelGaming;
+    public int LevelGaming { get { return _levelGaming; } private set { } }
+
+    public LevelData(int valueLevel)
     {
-        _value = value;
+        _levelGaming = valueLevel;
     }
 }
