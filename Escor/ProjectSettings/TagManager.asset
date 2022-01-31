@@ -13,6 +13,8 @@ TagManager:
   - Canvas
   - "Decora\xE7\xE3oComAnimator"
   - "Decora\xE7\xE3oComCollider"
+  - Estalactite
+  - Gota
   layers:
   - Default
   - TransparentFX
@@ -27,7 +29,7 @@ TagManager:
   - Tiles
   - Background
   - Parallax
-  - 
+  - Platform
   - 
   - 
   - 
