@@ -68,6 +68,17 @@ public class Manager_Game : MonoBehaviour
         levelData = SaveLoadSystem.LoadFile<LevelData>("C:/Users/Edilson Chaves/AppData/LocalLow/DefaultCompany/Escor/LevelData.data");
 
     }
+
+    public LevelInfo.LevelStatus GetStatusLevel()
+    {
+        LoadLevelData();
+        if (levelData == null)
+        {
+            return LevelInfo.LevelStatus.NewLevel;
+        }
+        return LevelInfo.LevelStatus.ContinueLevel;
+
+    }
     public void InitialNewLevelGame(int levelSelected)
     {
         levelStatus = LevelInfo.LevelStatus.NewLevel;
@@ -91,9 +102,9 @@ public class Manager_Game : MonoBehaviour
         ManagerEvents.GameConfig.ChangedLanguage(saveGameData.LanguageSelect);
     }
 
-    public void SaveLevelData()
+    public void SaveLevelData(int level,float posPlayerX,float posPlayerY,int lifePlayer)
     {
-        SaveLoadSystem.SaveFile<LevelData>(new LevelData(1));
+        SaveLoadSystem.SaveFile<LevelData>(new LevelData(level, posPlayerX, posPlayerY, lifePlayer));
     }
 }
 
@@ -178,10 +189,22 @@ public class SectionData
 public class LevelData
 {
     [SerializeField] int _levelGaming;
+    [SerializeField] float _playerPositionX, _playerPositionY;
+    [SerializeField] int _lifePlayerAmount;
+    [SerializeField] bool[] powers;
+    [SerializeField] bool[] coinsLevel;
+    [SerializeField] int progressLevel;
+    [SerializeField] bool[] regionsVisited;
+    [SerializeField] Vector2?[] bossLevelPosition;
     public int LevelGaming { get { return _levelGaming; } private set { } }
+    public Vector2 CharacterPosition { get { return new Vector2(_playerPositionX, _playerPositionY); } private set { } }
 
-    public LevelData(int valueLevel)
+    public LevelData(int valueLevel,float posPlayerX=0,float posPlayerY=0,int valueLifePlayerAmount=3)
     {
         _levelGaming = valueLevel;
+        _playerPositionX = posPlayerX;
+        _playerPositionY = posPlayerY;
+        _lifePlayerAmount = valueLifePlayerAmount;
+
     }
 }
