@@ -10,6 +10,7 @@ public class EspinhosManager : MonoBehaviour
         if(col.tag == "Player")
         {
             // dá o dano no player ou mata
+            
         }
     }
 

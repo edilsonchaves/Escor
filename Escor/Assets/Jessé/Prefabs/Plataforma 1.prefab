@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3369946508103784547}
   - component: {fileID: 4767980836482833040}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Plataforma
   m_TagString: Plataform
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 12
   m_Sprite: {fileID: 21300000, guid: e860f0365c0743a4a8be7e538b9ffe51, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 9111703881484696066}
   - component: {fileID: 8033284753780584714}
   - component: {fileID: 5575847587359307660}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Plataforma 1
   m_TagString: Plataform
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 12
   m_Sprite: {fileID: 21300000, guid: e860f0365c0743a4a8be7e538b9ffe51, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
