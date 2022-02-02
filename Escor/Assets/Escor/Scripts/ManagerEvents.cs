@@ -70,13 +70,29 @@ public class ManagerEvents : MonoBehaviour
     public static class PlayerMovementsEvents
     {
         public static event Action<float> onLookDirection;
-
+        public static event Action<int> onLifePlayer;
+        public static event Action onDiePlayer;
         public static void LookedDirection(float value)
         {
             
             if (onLookDirection!=null)
             {
                 onLookDirection(value);
+            }
+        }
+        public static void LifedPlayer(int value)
+        {
+            if (onLifePlayer != null)
+            {
+                onLifePlayer(value);
+            }
+        }
+
+        public static void DiedPlayer()
+        {
+            if (onDiePlayer != null)
+            {
+                onDiePlayer();
             }
         }
     }

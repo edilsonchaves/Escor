@@ -19,6 +19,7 @@ public class Movement : MonoBehaviour {
     public bool isInvunerable;
     public int Life
     {
+        
         get { return _life; }
         set {
             if (isInvunerable == false) 
@@ -28,6 +29,7 @@ public class Movement : MonoBehaviour {
                 {
                     animator.SetTrigger("Morrendo");
                     LevelManager.levelstatus = LevelManager.LevelStatus.EndGame;
+                    StartCoroutine(DiePersonagem());
                 }
                 else
                 {
@@ -35,8 +37,15 @@ public class Movement : MonoBehaviour {
                     PersonagemMudarEstado();
                 }
             }
-
+            ManagerEvents.PlayerMovementsEvents.LifedPlayer(Life);
         }
+    }
+    IEnumerator DiePersonagem()
+    {
+        yield return new WaitForSeconds(1f);
+        Debug.Log("OIE");
+        ManagerEvents.PlayerMovementsEvents.DiedPlayer();
+
     }
     public void PersonagemMudarEstado()
     {
@@ -69,6 +78,7 @@ public class Movement : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         ropeControll = GetComponent<PlayerRopeControll>();
         _life = 3;
+        ManagerEvents.PlayerMovementsEvents.LifedPlayer(_life);
         sprite = GetComponent<SpriteRenderer>();
 
 

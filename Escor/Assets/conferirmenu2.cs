@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class conferirmenu2 : MonoBehaviour
 {
+    [SerializeField] GameObject bgUI;
     [SerializeField] private Sprite[] _vidasSprite;
     [SerializeField] private Sprite[] _poderSprite;
     [SerializeField] private Image _vidasImg;
@@ -26,6 +27,21 @@ public class conferirmenu2 : MonoBehaviour
     public void UpdatePoder(int poderCorrentes)
     {
         _poderImg.sprite = _poderSprite[poderCorrentes];
+    }
+    public void BGDesactiveDead()
+    {
+        bgUI.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        ManagerEvents.PlayerMovementsEvents.onLifePlayer += UpdateVidas;
+        ManagerEvents.PlayerMovementsEvents.onDiePlayer += BGDesactiveDead;
+    }
+    private void OnDisable()
+    {
+        ManagerEvents.PlayerMovementsEvents.onLifePlayer -= UpdateVidas;
+        ManagerEvents.PlayerMovementsEvents.onDiePlayer -= BGDesactiveDead;
     }
 
 }
