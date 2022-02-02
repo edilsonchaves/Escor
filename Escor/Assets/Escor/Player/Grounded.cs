@@ -6,6 +6,9 @@ public class Grounded : MonoBehaviour
 {
     Movement Player;
 
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private string groundTag;
+
     void Start()
     {
         Player = gameObject.transform.parent.gameObject.GetComponent<Movement>();
@@ -13,7 +16,7 @@ public class Grounded : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collisor)
     {
-        if(collisor.gameObject.tag == "ground" || collisor.gameObject.layer == 7)
+        if(collisor.gameObject.tag == groundTag || collisor.gameObject.layer == groundLayer)
         {
             Player.noChao = true;
         }
@@ -21,7 +24,7 @@ public class Grounded : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D collisor)
     {
-        if(collisor.gameObject.tag == "ground" || collisor.gameObject.layer == 7)
+        if(collisor.gameObject.tag == groundTag || collisor.gameObject.layer == groundLayer)
         {
             Player.noChao = false;
         }

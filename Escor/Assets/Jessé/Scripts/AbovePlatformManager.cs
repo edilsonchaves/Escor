@@ -17,6 +17,7 @@ public class AbovePlatformManager : MonoBehaviour
             // print("Above");
             // StopAllCoroutines();
             // StartCoroutine(ChangeParent(collision.transform));
+            collision.gameObject.GetComponent<Movement>().noChao = true;
             collision.transform.SetParent(transform);
             isAbove = true;
         }
@@ -26,7 +27,6 @@ public class AbovePlatformManager : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D collision) {
     
-        print("Socorro");
         if (collision.gameObject.tag == "Player") 
         {
             if(collision.transform.parent == transform)
@@ -34,6 +34,8 @@ public class AbovePlatformManager : MonoBehaviour
                 collision.transform.SetParent(null);
             }
             isAbove = false;
+            collision.gameObject.GetComponent<Movement>().noChao = false;
+
         }
 
     }

@@ -56,7 +56,7 @@ MonoBehaviour:
   JavaliAnimator: {fileID: 1724477956533421018}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 8320
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
