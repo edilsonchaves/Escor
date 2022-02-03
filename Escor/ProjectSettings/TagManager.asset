@@ -15,6 +15,7 @@ TagManager:
   - "Decora\xE7\xE3oComCollider"
   - Estalactite
   - Gota
+  - Vida
   layers:
   - Default
   - TransparentFX
@@ -31,8 +32,7 @@ TagManager:
   - Parallax
   - Tilemap_liso
   - Platform
-  - 
-  - 
+  - Espinhos
   - 
   - 
   - 

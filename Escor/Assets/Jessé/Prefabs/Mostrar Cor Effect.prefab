@@ -1145,6 +1145,7 @@ GameObject:
   - component: {fileID: 5108862749752964563}
   - component: {fileID: 5108862749752964562}
   - component: {fileID: 5108862749752964561}
+  - component: {fileID: 5356727886684319810}
   m_Layer: 0
   m_Name: Mostrar Cor Effect
   m_TagString: Untagged
@@ -1159,7 +1160,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5108862749752964556}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1.4896137, y: 1.4896137, z: 1.4896137}
   m_Children:
@@ -1218,6 +1219,20 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!114 &5356727886684319810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5108862749752964556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c4e92123d804b41ae6575e123cabad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementScript: {fileID: 0}
+  myAnimator: {fileID: 0}
 --- !u!1 &5108862749857902209
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,6 +21,9 @@ public class PlayerRopeControll : MonoBehaviour
     [HideInInspector]
     public GameObject pulleySelected = null;
     private Movement mvtScript;
+    private Transform currentSegment;
+
+    bool canSwing;
 
     void Awake()
     {
@@ -36,6 +39,20 @@ public class PlayerRopeControll : MonoBehaviour
         {
             attachedTo = null;
         }
+        else if(attached)
+        {
+            if(mvtScript.transform.eulerAngles.y == 0)
+            {
+                mvtScript.transform.eulerAngles = new Vector3(currentSegment.eulerAngles.x, mvtScript.transform.eulerAngles.y, currentSegment.eulerAngles.z);
+
+            }
+            else
+            {
+                mvtScript.transform.eulerAngles = new Vector3(-currentSegment.eulerAngles.x, mvtScript.transform.eulerAngles.y, -currentSegment.eulerAngles.z);
+            }
+
+           
+        }
         CheckKeyboardInputs();
     }
 
@@ -45,11 +62,13 @@ public class PlayerRopeControll : MonoBehaviour
         {
             if(Input.GetKey("a") || Input.GetKey("left"))
             {
-                rb.AddRelativeForce(-Vector2.right * pushForce);
+                mvtScript.transform.eulerAngles = new Vector3(mvtScript.transform.eulerAngles.x,180, mvtScript.transform.eulerAngles.z);
+                rb.AddRelativeForce(-Vector2.right * pushForce * (canSwing ? 1 : 0));
             }
             if(Input.GetKey("d") || Input.GetKey("right"))
             {
-                rb.AddRelativeForce(Vector2.right * pushForce);
+                mvtScript.transform.eulerAngles = new Vector3(mvtScript.transform.eulerAngles.x,0,mvtScript.transform.eulerAngles.z);
+                rb.AddRelativeForce(Vector2.right * pushForce * (canSwing ? 1 : 0));
             }
 
             if(Input.GetKey("w") || Input.GetKey("up"))
@@ -72,12 +91,14 @@ public class PlayerRopeControll : MonoBehaviour
     {
         // print("Attach");
         ropeBone.gameObject.GetComponent<RopeSegment>().isPlayerAttached = true;
+        currentSegment = ropeBone.gameObject.GetComponent<RopeSegment>().transform;
         ropeBone.velocity = rb.velocity*3;
         hj.connectedBody = ropeBone;
         transform.position = ropeBone.transform.position;
         hj.enabled = true;
         attached = true;
         attachedTo = ropeBone.gameObject.transform.parent;
+        canSwing = attachedTo.GetComponent<Rope>().canSwing;
     }
 
     public void Detach()
@@ -213,7 +234,7 @@ public class PlayerRopeControll : MonoBehaviour
             {
                 if(attachedTo != col.gameObject.transform.parent)
                 {
-                    if(disregard == null || col.gameObject.transform.parent.gameObject != disregard)
+                    if(disregard == null || col.gameObject.transform.parent.gameObject != disregard && !mvtScript.noChao)
                     {
                         Attach(col.gameObject.GetComponent<Rigidbody2D>());
                     }

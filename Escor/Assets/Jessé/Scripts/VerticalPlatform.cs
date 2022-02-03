@@ -12,7 +12,7 @@ public class VerticalPlatform : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        effector = GetComponent<PlatformEffector2D>();
+        effector = transform.GetChild(0).GetComponent<PlatformEffector2D>();
     }
 
 
@@ -23,7 +23,7 @@ public class VerticalPlatform : MonoBehaviour
         {
             isDown = true;
             effector.rotationalOffset = 180f;
-            waitTime = 0.5f;
+            waitTime = 0.4f;
         }
         else if(isDown)
         {

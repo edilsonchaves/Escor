@@ -9,7 +9,7 @@ public class Movement : MonoBehaviour {
     public float speed;
     public float jumpForce;
     public bool noChao = true;
-    private bool pulando = false;
+    public bool pulando = false;
     public bool defendendo = false;
     private bool slowmotion = false;
     private Rigidbody2D rb;
@@ -24,21 +24,29 @@ public class Movement : MonoBehaviour {
         
         get { return _life; }
         set {
-            if (isInvunerable == false) 
+            if (value > 0)
             {
                 _life = value;
-                if (Life == 0)
+            }
+            else
+            {
+                if (isInvunerable == false)
                 {
-                    animator.SetTrigger("Morrendo");
-                    LevelManager.levelstatus = LevelManager.LevelStatus.EndGame;
-                    StartCoroutine(DiePersonagem());
-                }
-                else
-                {
-                    animator.SetTrigger("TakeDamage");
-                    PersonagemMudarEstado();
+                    _life = value;
+                    if (Life == 0)
+                    {
+                        animator.SetTrigger("Morrendo");
+                        LevelManager.levelstatus = LevelManager.LevelStatus.EndGame;
+                        StartCoroutine(DiePersonagem());
+                    }
+                    else
+                    {
+                        animator.SetTrigger("TakeDamage");
+                        PersonagemMudarEstado();
+                    }
                 }
             }
+
             ManagerEvents.PlayerMovementsEvents.LifedPlayer(Life);
         }
     }
@@ -97,9 +105,12 @@ public class Movement : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (canMove)
+        if (LevelManager.levelstatus == LevelManager.LevelStatus.Game) 
         {
-            Move();
+            if (canMove && !ropeControll.attached)
+            {
+                Move();
+            }    
         }
     }
 
@@ -108,12 +119,16 @@ public class Movement : MonoBehaviour {
         Debug.Log("Level status:"+ LevelManager.levelstatus);
         if (LevelManager.levelstatus == LevelManager.LevelStatus.Game) 
         {
-            animator.SetBool("NoChao", noChao);
-           
-            animator.SetBool("Caindo", noChao == false && pulando == false && rb.velocity.y < 0);
             
-            if (canMove)
+            animator.SetBool("Balancando", ropeControll.attached);
+
+
+            if (canMove && !ropeControll.attached)
             {
+    
+                animator.SetBool("NoChao", noChao);
+               
+                animator.SetBool("Caindo", noChao == false && pulando == false && rb.velocity.y < 0);
                 
                 // Jump();
                 if(Input.GetButtonDown("Jump") && noChao)
@@ -131,16 +146,6 @@ public class Movement : MonoBehaviour {
             }
             SlowMotion();
 
-            // if(!ropeControll.attached)
-            // {
-            //     Move();
-            //     Jump();
-            // }
-
-            // if(isGrounded)
-            // {
-            //     isJumping = false;
-            // }
         }
 
     }
@@ -214,7 +219,6 @@ public class Movement : MonoBehaviour {
             animator.SetBool("Defendendo", false);
         }
     }
-
     void SlowMotion()
     {
         if(Input.GetButtonDown("Tempo") && slowmotion == false)
@@ -234,12 +238,59 @@ public class Movement : MonoBehaviour {
             //Efeito slowmotion inativo
         }
     }
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Vida"))
+        {
+            GainLife();
+        }
+    }
+    // void Defense()
+    // {
+    //     if(defendendo == false)
+    //     {
+    //         Debug.Log("Defesa False");
+    //         if(Input.GetButtonDown("Defesa"))
+    //         {
+    //             Debug.Log("Defesa pressionando");
+    //             defendendo = true;
+    //             animator.SetBool("Defendendo", true);
+    //             animator.Play("defesa", -1, 0);
+    //         }
+    //         // defendendo = true;
+    //     }
+        
+    //     // if (Input.GetButtonUp("Defesa"))
+    //     // {
+    //     //     defendendo = false;
+    //     //     animator.SetBool("Defendendo", false);
+    //     // }
+    // }
 
-    void LookDirection(float yAngle)
+    // void HoldShield()
+    // {
+    //     Debug.Log("Chamou Hold");
+    //     animator.Play("defesa", -1, 0.6667f);
+    //     if(Input.GetButtonDown("Defesa"))
+    //     {
+    //         Debug.Log("Segurou botao");
+            
+    //     } else if (Input.GetButtonUp("Defesa"))
+    //     {
+    //         Debug.Log("Soltou botao");
+    //         animator.SetBool("Defendendo", false);
+    //         defendendo = false;
+    //     }
+    // }
+
+    public void LookDirection(float yAngle)
     {
         transform.eulerAngles = new Vector2(0f, yAngle);
     }
 
-
+    public void GainLife()
+    {
+        Life++;
+    }
     
 }
