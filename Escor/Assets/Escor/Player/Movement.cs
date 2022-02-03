@@ -11,10 +11,12 @@ public class Movement : MonoBehaviour {
     public bool noChao = true;
     public bool pulando = false;
     public bool defendendo = false;
+    private bool slowmotion = false;
     private Rigidbody2D rb;
     private PlayerRopeControll ropeControll;
     public static bool canMove = true;
     [SerializeField]int _life;
+    [SerializeField]IA_Javali javali;
     SpriteRenderer sprite;
     public bool isInvunerable;
     public int Life
@@ -142,6 +144,7 @@ public class Movement : MonoBehaviour {
                     }
                 Defense();
             }
+            SlowMotion();
 
         }
 
@@ -150,20 +153,33 @@ public class Movement : MonoBehaviour {
     void Move()
     {
         Vector3 movement = new Vector2(Input.GetAxis("Horizontal"), 0f);
-        transform.position += movement * Time.fixedDeltaTime * speed;
         
-
+        if(slowmotion == true)
+        {
+            transform.position += movement * Time.fixedDeltaTime * (speed * 1.5f);
+            if(pulando == true)
+            {
+                movement.y = 0.10f;
+                // transform.position += movement * Time.fixedDeltaTime * (speed * 1.5f);
+            }
+        }
+        if(slowmotion == false)
+        {
+            transform.position += movement * Time.fixedDeltaTime * speed;
+        }
         float inputAxis = Input.GetAxis("Horizontal");
         animator.SetFloat("VelocidadeX", Mathf.Abs (inputAxis));
 
         if(inputAxis > 0)
         {
             LookDirection(0);
+            
         }
 
         if(inputAxis < 0)
         {
             LookDirection(180);
+            
         }
     }
 
@@ -174,7 +190,16 @@ public class Movement : MonoBehaviour {
             pulando = true;
             noChao = false;
             // animator.SetBool("Pulando", pulando);
-            rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+            if(slowmotion == true)
+            {
+                
+                rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+            }
+            if(slowmotion == false)
+            {
+                rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+            }
+            
         
         // } else 
         
@@ -194,7 +219,25 @@ public class Movement : MonoBehaviour {
             animator.SetBool("Defendendo", false);
         }
     }
-
+    void SlowMotion()
+    {
+        if(Input.GetButtonDown("Tempo") && slowmotion == false)
+        {
+            Debug.Log("slowmotion ativo");
+            slowmotion = true;
+            Time.timeScale = 0.75f;
+            Time.fixedDeltaTime = Time.timeScale * .02f;
+            // javali.GetComponent<Rigidbody2D>().AddForce(new Vector2(80, 0), )
+            //Efeito slowmotion ativo
+        } else if (Input.GetButtonDown("Tempo") && slowmotion == true)
+        {
+            Debug.Log("slowmotion inativo");
+            slowmotion = false;
+            Time.timeScale = 1;
+            Time.fixedDeltaTime = Time.timeScale * .02f;
+            //Efeito slowmotion inativo
+        }
+    }
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Vida"))
