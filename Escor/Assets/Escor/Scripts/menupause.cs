@@ -6,8 +6,6 @@ using System.Collections;
 
 public class menupause : MonoBehaviour
 {
-
-    [SerializeField]Popup _popup;
     public GameObject pauseMenuUI;
     public Text textPercentual, textCoins, textLife;
 

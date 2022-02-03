@@ -22,21 +22,29 @@ public class Movement : MonoBehaviour {
         
         get { return _life; }
         set {
-            if (isInvunerable == false) 
+            if (value > 0)
             {
                 _life = value;
-                if (Life == 0)
+            }
+            else
+            {
+                if (isInvunerable == false)
                 {
-                    animator.SetTrigger("Morrendo");
-                    LevelManager.levelstatus = LevelManager.LevelStatus.EndGame;
-                    StartCoroutine(DiePersonagem());
-                }
-                else
-                {
-                    animator.SetTrigger("TakeDamage");
-                    PersonagemMudarEstado();
+                    _life = value;
+                    if (Life == 0)
+                    {
+                        animator.SetTrigger("Morrendo");
+                        LevelManager.levelstatus = LevelManager.LevelStatus.EndGame;
+                        StartCoroutine(DiePersonagem());
+                    }
+                    else
+                    {
+                        animator.SetTrigger("TakeDamage");
+                        PersonagemMudarEstado();
+                    }
                 }
             }
+
             ManagerEvents.PlayerMovementsEvents.LifedPlayer(Life);
         }
     }
@@ -187,6 +195,13 @@ public class Movement : MonoBehaviour {
         }
     }
 
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Vida"))
+        {
+            GainLife();
+        }
+    }
     // void Defense()
     // {
     //     if(defendendo == false)
@@ -230,6 +245,9 @@ public class Movement : MonoBehaviour {
         transform.eulerAngles = new Vector2(0f, yAngle);
     }
 
-
+    public void GainLife()
+    {
+        Life++;
+    }
     
 }
