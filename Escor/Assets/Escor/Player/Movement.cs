@@ -101,26 +101,38 @@ public class Movement : MonoBehaviour {
         ManagerEvents.PlayerMovementsEvents.onLookDirection -= LookDirection;
     }
 
+    void FixedUpdate()
+    {
+        if (canMove)
+        {
+            Move();
+        }
+    }
+
     void Update()
     {
         Debug.Log("Level status:"+ LevelManager.levelstatus);
         if (LevelManager.levelstatus == LevelManager.LevelStatus.Game) 
         {
             animator.SetBool("NoChao", noChao);
-
-            if (noChao == false && pulando == false && rb.velocity.y < 0)
-            {
-                animator.SetBool("Caindo", true);
-            }
-            else
-            {
-                animator.SetBool("Caindo", false);
-            }
-
+           
+            animator.SetBool("Caindo", noChao == false && pulando == false && rb.velocity.y < 0);
+            
             if (canMove)
             {
-                Move();
-                Jump();
+                
+                // Jump();
+                if(Input.GetButtonDown("Jump") && noChao)
+                    {
+                        noChao = false;
+                        animator.SetBool("Pulando", true);
+                        animator.Play("pulando", -1, 0);
+                        
+                    } else if (noChao == true)
+                    {
+                        pulando = false;
+                        animator.SetBool("Pulando", false);
+                    }
                 Defense();
             }
 
@@ -141,7 +153,7 @@ public class Movement : MonoBehaviour {
     void Move()
     {
         Vector3 movement = new Vector2(Input.GetAxis("Horizontal"), 0f);
-        transform.position += movement * Time.deltaTime * speed;
+        transform.position += movement * Time.fixedDeltaTime * speed;
         
 
         float inputAxis = Input.GetAxis("Horizontal");
@@ -160,18 +172,15 @@ public class Movement : MonoBehaviour {
 
     void Jump()
     {
-        if(Input.GetButtonDown("Jump") && noChao)
-        {
+        // if(Input.GetButtonDown("Jump") && noChao)
+        // {
             pulando = true;
             noChao = false;
-            animator.SetBool("Pulando", pulando);
+            // animator.SetBool("Pulando", pulando);
             rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
         
-        } else if (noChao == true)
-        {
-            pulando = false;
-            animator.SetBool("Pulando", false);
-        }
+        // } else 
+        
     }
 
     void Defense()
@@ -183,6 +192,7 @@ public class Movement : MonoBehaviour {
         }
         if (Input.GetButtonUp("Defesa"))
         {
+            animator.Play("defesa");
             defendendo = false;
             animator.SetBool("Defendendo", false);
         }
@@ -195,6 +205,43 @@ public class Movement : MonoBehaviour {
             GainLife();
         }
     }
+    // void Defense()
+    // {
+    //     if(defendendo == false)
+    //     {
+    //         Debug.Log("Defesa False");
+    //         if(Input.GetButtonDown("Defesa"))
+    //         {
+    //             Debug.Log("Defesa pressionando");
+    //             defendendo = true;
+    //             animator.SetBool("Defendendo", true);
+    //             animator.Play("defesa", -1, 0);
+    //         }
+    //         // defendendo = true;
+    //     }
+        
+    //     // if (Input.GetButtonUp("Defesa"))
+    //     // {
+    //     //     defendendo = false;
+    //     //     animator.SetBool("Defendendo", false);
+    //     // }
+    // }
+
+    // void HoldShield()
+    // {
+    //     Debug.Log("Chamou Hold");
+    //     animator.Play("defesa", -1, 0.6667f);
+    //     if(Input.GetButtonDown("Defesa"))
+    //     {
+    //         Debug.Log("Segurou botao");
+            
+    //     } else if (Input.GetButtonUp("Defesa"))
+    //     {
+    //         Debug.Log("Soltou botao");
+    //         animator.SetBool("Defendendo", false);
+    //         defendendo = false;
+    //     }
+    // }
 
     void LookDirection(float yAngle)
     {
