@@ -17,7 +17,9 @@ public class HideCavern : MonoBehaviour
     {
         if(col.tag == "Player")
         {
-            myAnimator.Play("FadeInStart", -1, 0);
+            print("Enter");
+            myAnimator.SetBool("In", true);
+            // myAnimator.Play("FadeInStart", -1, 0);
         }
     }
 
@@ -26,7 +28,8 @@ public class HideCavern : MonoBehaviour
     {
         if(col.tag == "Player")
         {
-            myAnimator.Play("FadeOutStart", -1, 0);
+            myAnimator.SetBool("In", false);
+            // myAnimator.Play("FadeOutStart", -1, 0);
         }
     }
 }

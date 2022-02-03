@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Rope : MonoBehaviour
 {
+    public bool canSwing; 
     public Rigidbody2D hook;
     public GameObject prefabRopeLastSegment;
     public GameObject prefabRopeSegs;

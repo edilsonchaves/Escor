@@ -9,7 +9,7 @@ public class Movement : MonoBehaviour {
     public float speed;
     public float jumpForce;
     public bool noChao = true;
-    private bool pulando = false;
+    public bool pulando = false;
     public bool defendendo = false;
     private Rigidbody2D rb;
     private PlayerRopeControll ropeControll;
@@ -85,9 +85,12 @@ public class Movement : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (canMove)
+        if (LevelManager.levelstatus == LevelManager.LevelStatus.Game) 
         {
-            Move();
+            if (canMove && !ropeControll.attached)
+            {
+                Move();
+            }    
         }
     }
 
@@ -96,12 +99,16 @@ public class Movement : MonoBehaviour {
         Debug.Log("Level status:"+ LevelManager.levelstatus);
         if (LevelManager.levelstatus == LevelManager.LevelStatus.Game) 
         {
-            animator.SetBool("NoChao", noChao);
-           
-            animator.SetBool("Caindo", noChao == false && pulando == false && rb.velocity.y < 0);
             
-            if (canMove)
+            animator.SetBool("Balancando", ropeControll.attached);
+
+
+            if (canMove && !ropeControll.attached)
             {
+    
+                animator.SetBool("NoChao", noChao);
+               
+                animator.SetBool("Caindo", noChao == false && pulando == false && rb.velocity.y < 0);
                 
                 // Jump();
                 if(Input.GetButtonDown("Jump") && noChao)
@@ -118,16 +125,6 @@ public class Movement : MonoBehaviour {
                 Defense();
             }
 
-            // if(!ropeControll.attached)
-            // {
-            //     Move();
-            //     Jump();
-            // }
-
-            // if(isGrounded)
-            // {
-            //     isJumping = false;
-            // }
         }
 
     }
@@ -218,7 +215,7 @@ public class Movement : MonoBehaviour {
     //     }
     // }
 
-    void LookDirection(float yAngle)
+    public void LookDirection(float yAngle)
     {
         transform.eulerAngles = new Vector2(0f, yAngle);
     }

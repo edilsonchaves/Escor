@@ -9,6 +9,8 @@ public class CityParallax : ParallaxEffect
     // Start is called before the first frame update
     void Start()
     {
+        vcam = GameObject.Find("CM vcam1").transform;
+        camStartPos = vcam.position;
         sptBounds = transform.GetChild(0).GetComponent<SpriteRenderer>().sprite.bounds;
         farMovementSpeed = m_farMovementSpeed;
         bettewMovementSpeed = m_bettewMovementSpeed;
