@@ -9,12 +9,18 @@ public class CloudParallax : ParallaxEffect
     // Start is called before the first frame update
     void Start()
     {
+        vcam = GameObject.Find("CM vcam1").transform;
+        camStartPos = vcam.position;
 
 
 
         
+
+        camStartPos = GameObject.Find("CM vcam1").transform.position;
         speedOfLayers = m_speedOfLayers;
-        camStartPos = Camera.main.transform.position;
+        // camStartPos = Camera.main.transform.position;
+        
+        // camStartPos = GameObject.Find("CM vcam1").transform.position;
         SetABS(); // se certifica que as variáveis sejam positivas
         SetLayers();
     }

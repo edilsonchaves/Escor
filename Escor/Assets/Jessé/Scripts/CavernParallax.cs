@@ -9,17 +9,21 @@ public class CavernParallax : ParallaxEffect
     // Start is called before the first frame update
     void Start()
     {
+        vcam = GameObject.Find("CM vcam1").transform;
+        camStartPos = vcam.position;
+
         farMovementSpeed = m_farMovementSpeed;
         bettewMovementSpeed = m_bettewMovementSpeed;
         cavernMovementRange = m_movementRange;
-        camStartPos = Camera.main.transform.position;
+
+        // camStartPos = GameObject.Find("CM vcam1").transform.position;
+        // camStartPos = Camera.main.transform.position;
         SetABS(); // se certifica que as variáveis sejam positivas
         SetLayers();
     }
 
-
-    // Update is called once per frame
-    void LateUpdate()
+    
+    void FixedUpdate()
     {
         // farMovementSpeed = m_farMovementSpeed;
         // bettewMovementSpeed = m_bettewMovementSpeed;

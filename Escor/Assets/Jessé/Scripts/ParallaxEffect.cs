@@ -18,6 +18,7 @@ public class ParallaxEffect : MonoBehaviour
     protected Vector3 camStartPos, currentCamPos;
     protected float pixelsPerUnit, cavernMovementRange;
     protected Bounds sptBounds;
+    protected Transform vcam;
 
     protected void SetABS()
     {
@@ -41,7 +42,7 @@ public class ParallaxEffect : MonoBehaviour
 
     protected void MoveCavernParallax()
     {
-        currentCamPos = Camera.main.transform.position; 
+        currentCamPos = vcam.position; 
 
         if(((Vector2)(currentCamPos-transform.position)).magnitude < cavernMovementRange)
         {
@@ -63,11 +64,11 @@ public class ParallaxEffect : MonoBehaviour
 
     protected void MoveCityParallax()
     {
-        currentCamPos = Camera.main.transform.position; 
+        currentCamPos = vcam.position; 
         for(int c=0; c<layersMaterial.Count; c++)
         {
             // print(sptBounds);
-            Vector3 currentCamMovement = (Camera.main.transform.position-camStartPos);
+            Vector3 currentCamMovement = (vcam.position-camStartPos);
             Vector2 offset = currentCamMovement / layersGameObject[c].transform.lossyScale.x /10.08f*pixelsPerUnit/100;
             offset = new Vector2(currentCamMovement.x/sptBounds.extents.x/2/layersGameObject[c].transform.lossyScale.x, currentCamMovement.y/sptBounds.extents.y/2/layersGameObject[c].transform.lossyScale.y);
             offset      -= offset*(c * bettewMovementSpeed + farMovementSpeed)*Time.fixedDeltaTime;
@@ -81,7 +82,7 @@ public class ParallaxEffect : MonoBehaviour
 
     // protected void MoveCityParallaxbackup2()
     // {
-    //     currentCamPos = Camera.main.transform.position; 
+    //     currentCamPos = vcam.position; 
     //     for(int c=0; c<layersMaterial.Count; c++)
     //     {
     //         Vector3 currentCamMovement = (currentCamPos-camStartPos);
@@ -97,7 +98,7 @@ public class ParallaxEffect : MonoBehaviour
 
     // protected void MoveCityParallaxBackup()
     // {
-    //     currentCamPos = Camera.main.transform.position; 
+    //     currentCamPos = vcam.position; 
     //     for(int c=0; c<layersMaterial.Count; c++)
     //     {
     //         Vector3 currentCamMovement = (currentCamPos-layersGameObject[c].transform.position); // efeito parallax apenas na horizontal
@@ -111,7 +112,7 @@ public class ParallaxEffect : MonoBehaviour
 
     protected void MoveCloudParallax()
     {
-        currentCamPos = Camera.main.transform.position; 
+        currentCamPos = vcam.position; 
         // print("speedOfLayers.Length:       "+speedOfLayers.Length);
         for(int c=0; c<layersGameObject.Count; c++)
         {
