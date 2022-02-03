@@ -624,6 +624,7 @@ public class IA_Javali : MonoBehaviour
             {
                 if (!playerMovement.isInvunerable)
                 {
+                    Debug.Log("Vim aqui caba da peste");
                     playerMovement.Life -= 1;
                 }
 
