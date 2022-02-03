@@ -6,14 +6,14 @@ using UnityEngine;
 public class ManagerEvents : MonoBehaviour
 {
     public static class GameConfig
-        
+
     {
         public static event Action<int> onChangeLanguage;
 
         public static void ChangedLanguage(int value)
         {
-            
-            if (onChangeLanguage!=null)
+
+            if (onChangeLanguage != null)
             {
                 onChangeLanguage(value);
             }
@@ -29,7 +29,7 @@ public class ManagerEvents : MonoBehaviour
         public static event Action onSaveGame;
         public static void PausedGame(int PercentualGame, int CoinGame, int Life)
         {
-            if(onPauseGame != null)
+            if (onPauseGame != null)
             {
                 onPauseGame(PercentualGame, CoinGame, Life);
             }
@@ -37,7 +37,7 @@ public class ManagerEvents : MonoBehaviour
 
         public static void ResumedGame()
         {
-            if(onResumeGame != null)
+            if (onResumeGame != null)
             {
                 onResumeGame();
             }
@@ -65,7 +65,20 @@ public class ManagerEvents : MonoBehaviour
                 onSaveGame();
             }
         }
-    }        
+    }
+
+    public static class PlayerDeadUI
+    {
+        public static event Action onReplayLevel;
+
+        public static void ReplayedLevel()
+        {
+            if (onReplayLevel != null)
+            {
+                onReplayLevel();
+            }
+        }
+    }
 
     public static class PlayerMovementsEvents
     {

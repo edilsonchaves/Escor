@@ -68,7 +68,7 @@ public class LevelManager : MonoBehaviour
         ManagerEvents.UIConfig.onExitMenu += ExitMenuPressButton;
         ManagerEvents.UIConfig.onResumeGame += Resume;
         ManagerEvents.UIConfig.onSaveGame += SaveGameButton;
-
+        ManagerEvents.PlayerDeadUI.onReplayLevel += RecomeçarFasePressButton;
     }
     private void OnDisable()
     {
@@ -76,6 +76,7 @@ public class LevelManager : MonoBehaviour
         ManagerEvents.UIConfig.onExitMenu -= ExitMenuPressButton;
         ManagerEvents.UIConfig.onResumeGame -= Resume;
         ManagerEvents.UIConfig.onSaveGame -= SaveGameButton;
+        ManagerEvents.PlayerDeadUI.onReplayLevel -= RecomeçarFasePressButton;
 
 
     }
@@ -113,6 +114,11 @@ public class LevelManager : MonoBehaviour
         popup.InitPopup("Voce deseja sair do jogo e perder todo o progresso da fase?", "Sim", Exit, "Nao", () => Debug.Log("")); ;
     }
 
+
+    public void RecomeçarFasePressButton()
+    {
+        popup.InitPopup("Cuidado! Esta ação irá fazer com que você perca o progresso salvo. Deseja continuar?", "Sim", () => Debug.Log("Sim Action"), "Nao", () => Debug.Log("Nao"));
+    }
     private void Exit()
     {
         #if UNITY_EDITOR
