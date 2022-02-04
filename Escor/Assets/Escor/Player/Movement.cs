@@ -134,7 +134,7 @@ public class Movement : MonoBehaviour {
                 animator.SetBool("Caindo", noChao == false && pulando == false && rb.velocity.y < 0);
                 
                 // Jump();
-                if(Input.GetButtonDown("Jump") && noChao)
+                if(Input.GetButtonDown("Jump") && noChao && powerHero[0])
                     {
                         noChao = false;
                         animator.SetBool("Pulando", true);
@@ -207,17 +207,21 @@ public class Movement : MonoBehaviour {
 
     void Defense()
     {
-        if(Input.GetButtonDown("Defesa"))
+        if (powerHero[1]) 
         {
-            defendendo = true;
-            animator.SetBool("Defendendo", true);
+            if (Input.GetButtonDown("Defesa"))
+            {
+                defendendo = true;
+                animator.SetBool("Defendendo", true);
+            }
+            if (Input.GetButtonUp("Defesa"))
+            {
+                animator.Play("defesa");
+                defendendo = false;
+                animator.SetBool("Defendendo", false);
+            }
         }
-        if (Input.GetButtonUp("Defesa"))
-        {
-            animator.Play("defesa");
-            defendendo = false;
-            animator.SetBool("Defendendo", false);
-        }
+
     }
     void SlowMotion()
     {
