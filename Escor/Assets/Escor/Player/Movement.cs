@@ -16,7 +16,6 @@ public class Movement : MonoBehaviour {
     private PlayerRopeControll ropeControll;
     public static bool canMove = true;
     [SerializeField]int _life;
-    [SerializeField]IA_Javali javali;
     SpriteRenderer sprite;
     public bool isInvunerable;
     public int Life
@@ -136,6 +135,7 @@ public class Movement : MonoBehaviour {
                 // Jump();
                 if(Input.GetButtonDown("Jump") && noChao && powerHero[0])
                     {
+                        pulando = true;
                         noChao = false;
                         animator.SetBool("Pulando", true);
                         animator.Play("pulando", -1, 0);
@@ -163,7 +163,7 @@ public class Movement : MonoBehaviour {
             if(pulando == true)
             {
                 movement.y = 0.10f;
-                // transform.position += movement * Time.fixedDeltaTime * (speed * 1.5f);
+                
             }
         }
         if(slowmotion == false)
@@ -207,7 +207,7 @@ public class Movement : MonoBehaviour {
 
     void Defense()
     {
-        if (powerHero[1]) 
+        if (powerHero[1] && pulando == false) 
         {
             if (Input.GetButtonDown("Defesa"))
             {
@@ -231,7 +231,7 @@ public class Movement : MonoBehaviour {
             slowmotion = true;
             Time.timeScale = 0.75f;
             Time.fixedDeltaTime = Time.timeScale * .02f;
-            // javali.GetComponent<Rigidbody2D>().AddForce(new Vector2(80, 0), )
+
             //Efeito slowmotion ativo
         } else if (Input.GetButtonDown("Tempo") && slowmotion == true)
         {
@@ -257,44 +257,7 @@ public class Movement : MonoBehaviour {
             Destroy(col.gameObject);
         }
     }
-    // void Defense()
-    // {
-    //     if(defendendo == false)
-    //     {
-    //         Debug.Log("Defesa False");
-    //         if(Input.GetButtonDown("Defesa"))
-    //         {
-    //             Debug.Log("Defesa pressionando");
-    //             defendendo = true;
-    //             animator.SetBool("Defendendo", true);
-    //             animator.Play("defesa", -1, 0);
-    //         }
-    //         // defendendo = true;
-    //     }
-        
-    //     // if (Input.GetButtonUp("Defesa"))
-    //     // {
-    //     //     defendendo = false;
-    //     //     animator.SetBool("Defendendo", false);
-    //     // }
-    // }
-
-    // void HoldShield()
-    // {
-    //     Debug.Log("Chamou Hold");
-    //     animator.Play("defesa", -1, 0.6667f);
-    //     if(Input.GetButtonDown("Defesa"))
-    //     {
-    //         Debug.Log("Segurou botao");
-            
-    //     } else if (Input.GetButtonUp("Defesa"))
-    //     {
-    //         Debug.Log("Soltou botao");
-    //         animator.SetBool("Defendendo", false);
-    //         defendendo = false;
-    //     }
-    // }
-
+    
     public void LookDirection(float yAngle)
     {
         transform.eulerAngles = new Vector2(0f, yAngle);
