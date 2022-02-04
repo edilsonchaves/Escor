@@ -24,7 +24,8 @@ public class Movement : MonoBehaviour {
         
         get { return _life; }
         set {
-            if (value > 0)
+            
+            if (value > _life)
             {
                 _life = value;
             }
@@ -41,6 +42,7 @@ public class Movement : MonoBehaviour {
                     }
                     else
                     {
+                        Debug.Log("Teste");
                         animator.SetTrigger("TakeDamage");
                         PersonagemMudarEstado();
                     }
@@ -50,10 +52,11 @@ public class Movement : MonoBehaviour {
             ManagerEvents.PlayerMovementsEvents.LifedPlayer(Life);
         }
     }
+
+    [SerializeField] bool[] powerHero;
     IEnumerator DiePersonagem()
     {
         yield return new WaitForSeconds(1f);
-        Debug.Log("OIE");
         ManagerEvents.PlayerMovementsEvents.DiedPlayer();
 
     }
@@ -90,7 +93,7 @@ public class Movement : MonoBehaviour {
         _life = 3;
         ManagerEvents.PlayerMovementsEvents.LifedPlayer(_life);
         sprite = GetComponent<SpriteRenderer>();
-
+        powerHero = new bool[3];
 
     }
 
@@ -198,10 +201,7 @@ public class Movement : MonoBehaviour {
             if(slowmotion == false)
             {
                 rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-            }
-            
-        
-        // } else 
+            } 
         
     }
 
@@ -240,9 +240,17 @@ public class Movement : MonoBehaviour {
     }
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Vida"))
+        if (col.gameObject.CompareTag("Vida") && Life<3)
         {
             GainLife();
+            Destroy(col.gameObject);
+        }
+
+        if (col.gameObject.CompareTag("Power"))
+        {
+            powerHero[(int)col.gameObject.GetComponent<PowerScript>().power]= true;
+            ManagerEvents.PlayerMovementsEvents.PlayerGetedPower((int)col.gameObject.GetComponent<PowerScript>().power);
+            Destroy(col.gameObject);
         }
     }
     // void Defense()
@@ -292,5 +300,7 @@ public class Movement : MonoBehaviour {
     {
         Life++;
     }
+
+
     
 }
