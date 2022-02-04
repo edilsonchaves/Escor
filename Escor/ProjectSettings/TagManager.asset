@@ -15,7 +15,11 @@ TagManager:
   - "Decora\xE7\xE3oComCollider"
   - Estalactite
   - Gota
-  - Vida
+  - credits_text
+  - play_text
+  - quit_text
+  - config_text
+  - Power
   layers:
   - Default
   - TransparentFX
@@ -32,7 +36,7 @@ TagManager:
   - Parallax
   - Tilemap_liso
   - Platform
-  - Espinhos
+  - 
   - 
   - 
   - 

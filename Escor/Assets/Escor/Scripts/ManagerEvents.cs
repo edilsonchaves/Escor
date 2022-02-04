@@ -85,6 +85,7 @@ public class ManagerEvents : MonoBehaviour
         public static event Action<float> onLookDirection;
         public static event Action<int> onLifePlayer;
         public static event Action onDiePlayer;
+        public static event Action<int> onPlayerGetPower;
         public static void LookedDirection(float value)
         {
             
@@ -106,6 +107,14 @@ public class ManagerEvents : MonoBehaviour
             if (onDiePlayer != null)
             {
                 onDiePlayer();
+            }
+        }
+
+        public static void PlayerGetedPower(int value)
+        {
+            if (onPlayerGetPower != null)
+            {
+                onPlayerGetPower(value);
             }
         }
     }
