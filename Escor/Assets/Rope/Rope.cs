@@ -14,7 +14,7 @@ public class Rope : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // rpCon = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerRopeControll>();
+        rpCon = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerRopeControll>();
         GenerateRope();
     }
 
@@ -45,40 +45,40 @@ public class Rope : MonoBehaviour
                 hj             = newSeg.GetComponent<HingeJoint2D>();
                 hj.connectedBody            = prevBod;
                 prevBod                     = newSeg.GetComponent<Rigidbody2D>();
-                // StartCoroutine(StopSwing(newSeg, newSeg.GetComponent<RopeSegment>(), newSeg.GetComponent<Rigidbody2D>()));
+                StartCoroutine(StopSwing(newSeg, newSeg.GetComponent<RopeSegment>(), newSeg.GetComponent<Rigidbody2D>()));
             }
         }
     }
 
 
-    // IEnumerator StopSwing(GameObject ns, RopeSegment rs, Rigidbody2D rb)
-    // {
-        // while(true)
-        // {
-        //     // if(!rpCon.attached)
-        //     // {
-        //         if(rpCon.attachedTo != transform || !rpCon.attached)
-        //         {
-        //             float dis = Mathf.Abs(transform.position.x-rs.transform.position.x);
-        //             if(dis >= 0.5f)
-        //             {
-        //                 // print("AddRelativeForce");
-        //                 int dir = (int)(rb.velocity.x/Mathf.Abs(rb.velocity.x));
-        //                 rb.AddRelativeForce(new Vector2((-Vector2.right.x*dir*Mathf.Abs(rb.velocity.x)), 0f));
-        //                 // print(((-Vector2.right*dir*Mathf.Abs(rb.velocity.x))/2));
-        //             }
-        //             else if(rb.velocity.x > 0.2f)
-        //             {
-        //                 rb.velocity = new Vector2(rb.velocity.x/1.01f, rb.velocity.y/1.01f);
-        //             }
-        //         }
-        //         // else if(!rpCon.attached)
-        //         // {
+    IEnumerator StopSwing(GameObject ns, RopeSegment rs, Rigidbody2D rb)
+    {
+        while(true)
+        {
+            // if(!rpCon.attached)
+            // {
+                if(rpCon.attachedTo != transform || !rpCon.attached)
+                {
+                    float dis = Mathf.Abs(transform.position.x-rs.transform.position.x);
+                    if(dis >= 0.5f)
+                    {
+                        // print("AddRelativeForce");
+                        int dir = (int)(rb.velocity.x/Mathf.Abs(rb.velocity.x));
+                        rb.AddRelativeForce(new Vector2((-Vector2.right.x*dir*Mathf.Abs(rb.velocity.x)), 0f));
+                        // print(((-Vector2.right*dir*Mathf.Abs(rb.velocity.x))/2));
+                    }
+                    else if(rb.velocity.x > 0.2f)
+                    {
+                        rb.velocity = new Vector2(rb.velocity.x/1.01f, rb.velocity.y/1.01f);
+                    }
+                }
+                // else if(!rpCon.attached)
+                // {
 
-        //         // }
-        //     // }
+                // }
+            // }
 
-        //     yield return null;
-        // }
-    // }
+            yield return null;
+        }
+    }
 }

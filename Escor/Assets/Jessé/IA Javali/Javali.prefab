@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1724477956436621063}
   m_Layer: 9
   m_Name: Javali
-  m_TagString: Untagged
+  m_TagString: Javali
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56,7 +56,7 @@ MonoBehaviour:
   JavaliAnimator: {fileID: 1724477956533421018}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8320
+    m_Bits: 24704
   playerLayer:
     serializedVersion: 2
     m_Bits: 256

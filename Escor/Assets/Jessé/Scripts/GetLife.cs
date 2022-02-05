@@ -5,7 +5,7 @@ using UnityEngine;
 public class GetLife : MonoBehaviour
 {
  
-    [SerializeField] private string tagOfPlayer;
+    [SerializeField] private string tagOfPlayer = "Player";
 
     bool alreadyPickedUp=false;
 
@@ -18,9 +18,17 @@ public class GetLife : MonoBehaviour
 
             print("Pegou vida");
 
-            // executar animação 
-            // dizer ao player que ele pegou uma vida
+            // executar animação caso tenha
+
+            DestroyMe();
 
         }
+    }
+
+
+    void DestroyMe(float waitTime=1f)
+    {
+        transform.localScale = Vector3.zero;
+        Destroy(gameObject, waitTime);
     }
 }

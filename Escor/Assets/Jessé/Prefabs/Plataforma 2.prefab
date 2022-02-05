@@ -186,7 +186,6 @@ GameObject:
   - component: {fileID: 888919944491699796}
   - component: {fileID: 1781809708305420267}
   - component: {fileID: -1536066207680081593}
-  - component: {fileID: -6317468419324756115}
   m_Layer: 14
   m_Name: Plataforma 2
   m_TagString: Plataform
@@ -233,7 +232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cedacb1dfbaefd4c914184563f3dad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abovePlatformManager: {fileID: -6317468419324756115}
+  abovePlatformManager: {fileID: 1531693005395371551}
   waitPlayerToStartMovement: 0
   stopMovementOnTheEnd: 0
   MoveOnHorizontal: 0
@@ -241,19 +240,6 @@ MonoBehaviour:
   maxDistance: 0
   waitTimeOnEnd: 2
   startDirection: 1
---- !u!114 &-6317468419324756115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 888919944491699800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17cea3301e00f9c4495364b9d49599df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isAbove: 0
 --- !u!1 &1725065757624471980
 GameObject:
   m_ObjectHideFlags: 0
