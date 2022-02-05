@@ -17,9 +17,9 @@ public class EstalactiteManager : MonoBehaviour
     [Range(0,100)]
     public float chanceToFall;
 
+    public bool killInstantly=false;
+
     public string tagOfPlayer = "Player";
-    public string tagOfGround = "ground";
-    public string tagOfPlatform = "Platform";
 
     public LayerMask groundLayer;
     
@@ -43,7 +43,7 @@ public class EstalactiteManager : MonoBehaviour
 
         gota                                    = Instantiate(GotaPrefab, transform.GetChild(0).transform);
         gotaScale                               = gota.transform.lossyScale.x ;
-        gota.GetComponent<GotaManager>().script = this;
+        gota.GetComponent<GotaManager>().scriptOfEstalactite = this;
 
 
         if(!(gotaScale > 0.02f && gotaScale < 0.045f))
@@ -150,7 +150,10 @@ public class EstalactiteManager : MonoBehaviour
         gotaRB.isKinematic          = true;
         gotaRB.velocity             = Vector3.zero;
         gota.transform.localScale   = Vector3.zero;
-        splash.transform.position   = gota.transform.position;
+        
+        if(gota)
+            splash.transform.position   = gota.transform.position;
+
         StartCoroutine(ShowSplash());
     }
 
@@ -186,12 +189,23 @@ public class EstalactiteManager : MonoBehaviour
             else
             {
                 // if(col.tag == "Player" || (col.tag != "Gota" && col.tag != "Estalactite"))
-                if(col.tag == tagOfPlayer || col.tag == tagOfGround || col.tag == tagOfPlatform)
+                if(groundLayer == (groundLayer | (1 << col.gameObject.layer)))
                 {
+
                     StartAnimationOfDestroyEstalactite();
+                
+                    if(col.tag == tagOfPlayer)
+                    {
+                        // dano no player aqui 
 
-                    // dano no player aqui
+                        Movement playerMovement = col.GetComponent<Movement>();
+                        if (!playerMovement.isInvunerable && playerMovement.Life > 0)
+                        {
 
+                            playerMovement.Life -= killInstantly ? playerMovement.Life : 1;
+                            // Debug.Log("E tome dano");
+                        }
+                    }
                 }
             }
         }

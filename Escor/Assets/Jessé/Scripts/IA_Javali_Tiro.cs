@@ -75,7 +75,7 @@ public class IA_Javali_Tiro : MonoBehaviour
         ChangeAnimation("JavaliAtacando");
         yield return new WaitForSeconds(0.5f);
         bullet          = GetBullet();
-        bullet.GetComponent<BulletScript>().script   = GetComponent<IA_Javali_Tiro>();
+        bullet.GetComponent<BulletScript>().script = this;
         Vector2 force   = CalculateDirectionToAttack();
         bullet.GetComponent<Rigidbody2D>().AddForce(force*shootForce, ForceMode2D.Impulse);
         yield return new WaitForSeconds(0.5f);
@@ -112,13 +112,14 @@ public class IA_Javali_Tiro : MonoBehaviour
 
     protected bool HaveObstacle()
     {
-        Vector2 dir = target.position - transform.position;
+        Vector2 dir = target.position - ShootPosition.position;
         float distance = dir.magnitude;
-        RaycastHit2D[] obstacles = Physics2D.RaycastAll(transform.position, dir.normalized, distance);
+        RaycastHit2D[] obstacles = Physics2D.RaycastAll(ShootPosition.position, dir.normalized, distance);
 
         foreach(RaycastHit2D r in obstacles)
         {
-            if(r.collider.gameObject.layer == 7)
+            // if(r.collider.gameObject.layer == 7)
+            if(groundLayer == (groundLayer | ( 1 << r.collider.gameObject.layer)))
                 return true;
         }
 

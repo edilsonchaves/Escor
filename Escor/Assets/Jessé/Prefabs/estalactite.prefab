@@ -81,12 +81,14 @@ MonoBehaviour:
   SplashPrefab: {fileID: 5922096120857270404, guid: 9ce5e7a27d3911b41872ffec07e025ea, type: 3}
   shotPoint: {fileID: 7423360178972522161}
   delayMinime: 5
+  randomDelayIcrement: 15
   useRandomChanceToFall: 0
+  chanceToFall: 35
+  killInstantly: 0
+  tagOfPlayer: Player
   groundLayer:
     serializedVersion: 2
-    m_Bits: 128
-  chanceToFall: 30
-  randomDelayIcrement: 15
+    m_Bits: 41344
 --- !u!95 &7550969463660233806
 Animator:
   serializedVersion: 3

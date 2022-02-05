@@ -20,6 +20,8 @@ TagManager:
   - quit_text
   - config_text
   - Power
+  - Vida
+  - Javali
   layers:
   - Default
   - TransparentFX
