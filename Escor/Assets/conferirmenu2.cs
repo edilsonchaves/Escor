@@ -7,7 +7,7 @@ public class conferirmenu2 : MonoBehaviour
 {
     [SerializeField] GameObject bgUI;
     [SerializeField] private Sprite[] _vidasSprite;
-    [SerializeField] private Sprite[] _poderSprite;
+    [SerializeField] private GameObject[] _poderSprite;
     [SerializeField] private Image _vidasImg;
     [SerializeField] private Image _poderImg;
 
@@ -26,7 +26,7 @@ public class conferirmenu2 : MonoBehaviour
 
     public void UpdatePoder(int poderCorrentes)
     {
-        _poderImg.sprite = _poderSprite[poderCorrentes];
+        _poderSprite[poderCorrentes+1].SetActive(true);
     }
     public void BGDesactiveDead()
     {
@@ -37,11 +37,14 @@ public class conferirmenu2 : MonoBehaviour
     {
         ManagerEvents.PlayerMovementsEvents.onLifePlayer += UpdateVidas;
         ManagerEvents.PlayerMovementsEvents.onDiePlayer += BGDesactiveDead;
+        ManagerEvents.PlayerMovementsEvents.onPlayerGetPower += UpdatePoder;
     }
     private void OnDisable()
     {
         ManagerEvents.PlayerMovementsEvents.onLifePlayer -= UpdateVidas;
         ManagerEvents.PlayerMovementsEvents.onDiePlayer -= BGDesactiveDead;
+        ManagerEvents.PlayerMovementsEvents.onPlayerGetPower -= UpdatePoder;
+
     }
 
 }

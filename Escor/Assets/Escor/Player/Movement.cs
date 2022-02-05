@@ -16,7 +16,6 @@ public class Movement : MonoBehaviour {
     private PlayerRopeControll ropeControll;
     public static bool canMove = true;
     [SerializeField]int _life;
-    [SerializeField]IA_Javali javali;
     SpriteRenderer sprite;
     public bool isInvunerable;
     public int Life
@@ -24,7 +23,8 @@ public class Movement : MonoBehaviour {
         
         get { return _life; }
         set {
-            if (value > 0)
+            
+            if (value > _life)
             {
                 _life = value;
             }
@@ -41,6 +41,7 @@ public class Movement : MonoBehaviour {
                     }
                     else
                     {
+                        Debug.Log("Teste");
                         animator.SetTrigger("TakeDamage");
                         PersonagemMudarEstado();
                     }
@@ -50,10 +51,11 @@ public class Movement : MonoBehaviour {
             ManagerEvents.PlayerMovementsEvents.LifedPlayer(Life);
         }
     }
+
+    [SerializeField] bool[] powerHero;
     IEnumerator DiePersonagem()
     {
         yield return new WaitForSeconds(1f);
-        Debug.Log("OIE");
         ManagerEvents.PlayerMovementsEvents.DiedPlayer();
 
     }
@@ -90,7 +92,7 @@ public class Movement : MonoBehaviour {
         _life = 3;
         ManagerEvents.PlayerMovementsEvents.LifedPlayer(_life);
         sprite = GetComponent<SpriteRenderer>();
-
+        powerHero = new bool[3];
 
     }
 
@@ -131,8 +133,9 @@ public class Movement : MonoBehaviour {
                 animator.SetBool("Caindo", noChao == false && pulando == false && rb.velocity.y < 0);
                 
                 // Jump();
-                if(Input.GetButtonDown("Jump") && noChao)
+                if(Input.GetButtonDown("Jump") && noChao && powerHero[0])
                     {
+                        pulando = true;
                         noChao = false;
                         animator.SetBool("Pulando", true);
                         animator.Play("pulando", -1, 0);
@@ -160,7 +163,7 @@ public class Movement : MonoBehaviour {
             if(pulando == true)
             {
                 movement.y = 0.10f;
-                // transform.position += movement * Time.fixedDeltaTime * (speed * 1.5f);
+                
             }
         }
         if(slowmotion == false)
@@ -198,26 +201,27 @@ public class Movement : MonoBehaviour {
             if(slowmotion == false)
             {
                 rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-            }
-            
-        
-        // } else 
+            } 
         
     }
 
     void Defense()
     {
-        if(Input.GetButtonDown("Defesa"))
+        if (powerHero[1] && pulando == false) 
         {
-            defendendo = true;
-            animator.SetBool("Defendendo", true);
+            if (Input.GetButtonDown("Defesa"))
+            {
+                defendendo = true;
+                animator.SetBool("Defendendo", true);
+            }
+            if (Input.GetButtonUp("Defesa"))
+            {
+                animator.Play("defesa");
+                defendendo = false;
+                animator.SetBool("Defendendo", false);
+            }
         }
-        if (Input.GetButtonUp("Defesa"))
-        {
-            animator.Play("defesa");
-            defendendo = false;
-            animator.SetBool("Defendendo", false);
-        }
+
     }
     void SlowMotion()
     {
@@ -227,7 +231,7 @@ public class Movement : MonoBehaviour {
             slowmotion = true;
             Time.timeScale = 0.75f;
             Time.fixedDeltaTime = Time.timeScale * .02f;
-            // javali.GetComponent<Rigidbody2D>().AddForce(new Vector2(80, 0), )
+
             //Efeito slowmotion ativo
         } else if (Input.GetButtonDown("Tempo") && slowmotion == true)
         {
@@ -240,49 +244,20 @@ public class Movement : MonoBehaviour {
     }
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Vida"))
+        if (col.gameObject.CompareTag("Vida") && Life<3)
         {
             GainLife();
+            Destroy(col.gameObject);
+        }
+
+        if (col.gameObject.CompareTag("Power"))
+        {
+            powerHero[(int)col.gameObject.GetComponent<PowerScript>().power]= true;
+            ManagerEvents.PlayerMovementsEvents.PlayerGetedPower((int)col.gameObject.GetComponent<PowerScript>().power);
+            Destroy(col.gameObject);
         }
     }
-    // void Defense()
-    // {
-    //     if(defendendo == false)
-    //     {
-    //         Debug.Log("Defesa False");
-    //         if(Input.GetButtonDown("Defesa"))
-    //         {
-    //             Debug.Log("Defesa pressionando");
-    //             defendendo = true;
-    //             animator.SetBool("Defendendo", true);
-    //             animator.Play("defesa", -1, 0);
-    //         }
-    //         // defendendo = true;
-    //     }
-        
-    //     // if (Input.GetButtonUp("Defesa"))
-    //     // {
-    //     //     defendendo = false;
-    //     //     animator.SetBool("Defendendo", false);
-    //     // }
-    // }
-
-    // void HoldShield()
-    // {
-    //     Debug.Log("Chamou Hold");
-    //     animator.Play("defesa", -1, 0.6667f);
-    //     if(Input.GetButtonDown("Defesa"))
-    //     {
-    //         Debug.Log("Segurou botao");
-            
-    //     } else if (Input.GetButtonUp("Defesa"))
-    //     {
-    //         Debug.Log("Soltou botao");
-    //         animator.SetBool("Defendendo", false);
-    //         defendendo = false;
-    //     }
-    // }
-
+    
     public void LookDirection(float yAngle)
     {
         transform.eulerAngles = new Vector2(0f, yAngle);
@@ -292,5 +267,7 @@ public class Movement : MonoBehaviour {
     {
         Life++;
     }
+
+
     
 }

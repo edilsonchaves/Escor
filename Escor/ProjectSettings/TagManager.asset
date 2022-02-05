@@ -15,6 +15,11 @@ TagManager:
   - "Decora\xE7\xE3oComCollider"
   - Estalactite
   - Gota
+  - credits_text
+  - play_text
+  - quit_text
+  - config_text
+  - Power
   - Vida
   - Javali
   layers:
@@ -33,7 +38,7 @@ TagManager:
   - Parallax
   - Tilemap_liso
   - Platform
-  - Espinhos
+  - 
   - 
   - 
   - 
