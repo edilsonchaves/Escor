@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 256992910733110807}
   - component: {fileID: 989080781551069598}
   - component: {fileID: 8481209917066767628}
-  m_Layer: 7
+  m_Layer: 14
   m_Name: ApenasPlataformaSemSprite
   m_TagString: ground
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7614048060104885504}
   - component: {fileID: 4153424988302294147}
-  m_Layer: 7
+  m_Layer: 14
   m_Name: ApenasPlataformaSemSprite
   m_TagString: ground
   m_Icon: {fileID: 0}
