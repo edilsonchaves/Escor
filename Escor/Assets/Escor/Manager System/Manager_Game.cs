@@ -22,7 +22,12 @@ public class Manager_Game : MonoBehaviour
 
     }
 
-    public LevelInfo.LevelStatus levelStatus;
+    [SerializeField]LevelInfo.LevelStatus _levelStatus;
+    public LevelInfo.LevelStatus LevelStatus
+    {
+        get { return _levelStatus; }
+        set { _levelStatus = value; }
+    }
     public GameData saveGameData;
     public SectionData sectionGameData;
     public LevelData levelData;
@@ -71,32 +76,21 @@ public class Manager_Game : MonoBehaviour
 
     }
 
-    public LevelInfo.LevelStatus GetStatusLevel()
-    {
-        LoadLevelData();
-        if (levelData == null)
-        {
-            return LevelInfo.LevelStatus.NewLevel;
-        }
-        return LevelInfo.LevelStatus.ContinueLevel;
-
-    }
     public void InitialNewLevelGame(int levelSelected)
     {
-        levelStatus = LevelInfo.LevelStatus.NewLevel;
-        levelData = new LevelData(levelSelected);
+        _levelStatus = LevelInfo.LevelStatus.NewLevel;
+        LevelData data = new LevelData(levelSelected,0,0,3,sectionGameData.GetPowersAwarded());
+        levelData = data;
         SaveLoadSystem.SaveFile<LevelData>(levelData);
-
-
     }
 
     public void LoadLevelGame()
     {
         LoadLevelData();
         if (levelData == null)
-            levelStatus = LevelInfo.LevelStatus.NewLevel;    
+            _levelStatus = LevelInfo.LevelStatus.NewLevel;    
         else
-            levelStatus = LevelInfo.LevelStatus.ContinueLevel;
+            _levelStatus = LevelInfo.LevelStatus.ContinueLevel;
     }
 
     public void AdaptLanguageInScene()
@@ -104,9 +98,9 @@ public class Manager_Game : MonoBehaviour
         ManagerEvents.GameConfig.ChangedLanguage(saveGameData.LanguageSelect);
     }
 
-    public void SaveLevelData(int level,float posPlayerX,float posPlayerY,int lifePlayer)
+    public void SaveLevelData(int level,float posPlayerX,float posPlayerY,int lifePlayer,bool[] powerLevel)
     {
-        SaveLoadSystem.SaveFile<LevelData>(new LevelData(level, posPlayerX, posPlayerY, lifePlayer));
+        SaveLoadSystem.SaveFile<LevelData>(new LevelData(level, posPlayerX, posPlayerY, lifePlayer,powerLevel));
     }
 }
 
@@ -213,20 +207,20 @@ public class LevelData
     [SerializeField] int _levelGaming;
     [SerializeField] float _playerPositionX, _playerPositionY;
     [SerializeField] int _lifePlayerAmount;
-    [SerializeField] bool[] powers;
+    [SerializeField] bool[] _powers;
     [SerializeField] bool[] coinsLevel;
-    [SerializeField] int progressLevel;
-    [SerializeField] bool[] regionsVisited;
+    //[SerializeField] int progressLevel;
+    //[SerializeField] bool[] regionsVisited;
     [SerializeField] Vector2?[] bossLevelPosition;
     public int LevelGaming { get { return _levelGaming; } private set { } }
     public Vector2 CharacterPosition { get { return new Vector2(_playerPositionX, _playerPositionY); } private set { } }
-
-    public LevelData(int valueLevel,float posPlayerX=0,float posPlayerY=0,int valueLifePlayerAmount=3)
+    public bool[] Powers { get { return _powers; }  private set{}}
+    public LevelData(int valueLevel, float posPlayerX=0,float posPlayerY=0, int valueLifePlayerAmount = 3, bool[] valuePowerPlayer = null)
     {
         _levelGaming = valueLevel;
         _playerPositionX = posPlayerX;
         _playerPositionY = posPlayerY;
         _lifePlayerAmount = valueLifePlayerAmount;
-
+        _powers = valuePowerPlayer;
     }
 }

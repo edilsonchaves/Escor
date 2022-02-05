@@ -52,7 +52,9 @@ public class Movement : MonoBehaviour {
         }
     }
 
-    [SerializeField] bool[] powerHero;
+    [SerializeField] bool[] _powerHero;
+    public bool[] PowerHero { get { return _powerHero; } private set { } }
+    [SerializeField] float[] timeAbilityDefense;
     IEnumerator DiePersonagem()
     {
         yield return new WaitForSeconds(1f);
@@ -92,8 +94,10 @@ public class Movement : MonoBehaviour {
         _life = 3;
         ManagerEvents.PlayerMovementsEvents.LifedPlayer(_life);
         sprite = GetComponent<SpriteRenderer>();
-        powerHero = new bool[3];
-
+        _powerHero = new bool[3];
+        timeAbilityDefense = new float[2];
+        timeAbilityDefense[1] = 5;
+        timeAbilityDefense[0] = 5;
     }
 
     private void OnEnable()
@@ -133,7 +137,7 @@ public class Movement : MonoBehaviour {
                 animator.SetBool("Caindo", noChao == false && pulando == false && rb.velocity.y < 0);
                 
                 // Jump();
-                if(Input.GetButtonDown("Jump") && noChao && powerHero[0])
+                if(Input.GetButtonDown("Jump") && noChao && _powerHero[0])
                     {
                         pulando = true;
                         noChao = false;
@@ -146,6 +150,25 @@ public class Movement : MonoBehaviour {
                         animator.SetBool("Pulando", false);
                     }
                 Defense();
+                if (defendendo)
+                {
+                    if (timeAbilityDefense[0] > 0)
+                        timeAbilityDefense[0] -= Time.deltaTime;
+                    else
+                    {
+                        timeAbilityDefense[0] = 0;
+                        animator.SetBool("Defendendo", false);
+                        defendendo = false;
+                    }
+                }
+                else
+                {
+                    if (timeAbilityDefense[0] < timeAbilityDefense[1])
+                        timeAbilityDefense[0] += Time.deltaTime;
+                    else
+                        timeAbilityDefense[0] = timeAbilityDefense[1];
+                }
+                ManagerEvents.PlayerMovementsEvents.PlayerDefensedPower(timeAbilityDefense[0],timeAbilityDefense[1]);
             }
             SlowMotion();
 
@@ -207,16 +230,18 @@ public class Movement : MonoBehaviour {
 
     void Defense()
     {
-        if (powerHero[1] && pulando == false) 
+        if (_powerHero[1] && pulando == false) 
         {
-            if (Input.GetButtonDown("Defesa"))
+            if (Input.GetButtonDown("Defesa") && timeAbilityDefense[0] >0)
             {
                 defendendo = true;
                 animator.SetBool("Defendendo", true);
+
             }
             if (Input.GetButtonUp("Defesa"))
             {
-                animator.Play("defesa");
+                if(defendendo)
+                    animator.Play("defesa");
                 defendendo = false;
                 animator.SetBool("Defendendo", false);
             }
@@ -252,8 +277,8 @@ public class Movement : MonoBehaviour {
 
         if (col.gameObject.CompareTag("Power"))
         {
-            powerHero[(int)col.gameObject.GetComponent<PowerScript>().power]= true;
-            ManagerEvents.PlayerMovementsEvents.PlayerGetedPower((int)col.gameObject.GetComponent<PowerScript>().power);
+            _powerHero[(int)col.gameObject.GetComponent<PowerScript>().GetPower()]= true;
+            ManagerEvents.PlayerMovementsEvents.PlayerGetedPower((int)col.gameObject.GetComponent<PowerScript>().GetPower());
             Destroy(col.gameObject);
         }
     }

@@ -1092,6 +1092,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 664303284}
     m_Modifications:
+    - target: {fileID: 3200883732836698818, guid: 0be8f31ebb319294a9ac04beff329bb7, type: 3}
+      propertyPath: m_Type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3200883732836698818, guid: 0be8f31ebb319294a9ac04beff329bb7, type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3200883732836698818, guid: 0be8f31ebb319294a9ac04beff329bb7, type: 3}
+      propertyPath: m_FillMethod
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3200883732836698818, guid: 0be8f31ebb319294a9ac04beff329bb7, type: 3}
+      propertyPath: m_FillOrigin
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3200883732836698818, guid: 0be8f31ebb319294a9ac04beff329bb7, type: 3}
+      propertyPath: m_RaycastPadding.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4238305178899279094, guid: 0be8f31ebb319294a9ac04beff329bb7, type: 3}
       propertyPath: _poderSprite.Array.data[0]
       value: 
@@ -1108,6 +1128,10 @@ PrefabInstance:
       propertyPath: _poderSprite.Array.data[3]
       value: 
       objectReference: {fileID: 400633913}
+    - target: {fileID: 7957232861547522936, guid: 0be8f31ebb319294a9ac04beff329bb7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8148578264767877402, guid: 0be8f31ebb319294a9ac04beff329bb7, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1509,8 +1533,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   control: {fileID: 140349217}
   levelsAvaibles:
+  - {fileID: 7248150087756879033, guid: 5897f0cab24a03c4aa647e0a167dde8d, type: 3}
   - {fileID: 3918995391385978380, guid: ecb353e8bfdc9ca40bbb36d6676f7d9f, type: 3}
-  - {fileID: 0}
   - {fileID: 0}
   characterPrefab: {fileID: 7302654321608639650, guid: 99624e07b8ae0aa4a9f8fda63f6fbe3b, type: 3}
   cam: {fileID: 11747968}

@@ -152,7 +152,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 11
+  m_SortingOrder: 100
   m_Sprite: {fileID: 21300000, guid: 7214d2bdc5f913141a107eeb892e4449, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -209,8 +209,9 @@ MonoBehaviour:
   pulando: 0
   defendendo: 0
   _life: 3
-  javali: {fileID: 0}
   isInvunerable: 0
+  powerHero: 
+  timeAbilityDefense: []
 --- !u!95 &9071136497506583917
 Animator:
   serializedVersion: 3

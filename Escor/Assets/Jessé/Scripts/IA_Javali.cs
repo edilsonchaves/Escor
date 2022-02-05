@@ -557,7 +557,6 @@ public class IA_Javali : MonoBehaviour
                 if(CheckIsGrounded())
                 {
                     InvertDirection();
-                    print("Invert");
                 }
             }
             else

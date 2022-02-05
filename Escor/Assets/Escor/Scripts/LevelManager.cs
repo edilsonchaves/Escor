@@ -19,6 +19,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField]Popup popup;
     void Start()
     {
+        Debug.Log(Manager_Game.Instance.levelData);
         popup = control.CreatePopup();
         popup.gameObject.SetActive(false);
         if (Manager_Game.Instance.levelData == null)
@@ -28,12 +29,13 @@ public class LevelManager : MonoBehaviour
         else
         {
             CreateLevel(Manager_Game.Instance.levelData.LevelGaming);
-            PlayerSetupInformation();
+            if(Manager_Game.Instance.LevelStatus==LevelInfo.LevelStatus.ContinueLevel)
+                PlayerSetupInformation();
         }
         levelstatus = LevelStatus.Game;
     }
 
-    void CreateLevel(int level=1)
+    void CreateLevel(int level)
     {
         currentLevel=Instantiate(levelsAvaibles[level-1],Vector3.zero,Quaternion.identity);
         currentLevel.GetComponent<LevelInformation>().initializeLevelInformation(out Transform initialSpawnPosition);
@@ -45,6 +47,15 @@ public class LevelManager : MonoBehaviour
     {
         Vector2 pos = Manager_Game.Instance.levelData.CharacterPosition;
         currentCharacter.transform.position = new Vector3(pos.x, pos.y,0);
+        int id = 0;
+        foreach(bool powerID in Manager_Game.Instance.levelData.Powers)
+        {
+            if (powerID)
+            {
+                ManagerEvents.PlayerMovementsEvents.PlayerGetedPower(id);
+            }
+            id++;
+        }
     }
     void Update()
     {
@@ -102,7 +113,7 @@ public class LevelManager : MonoBehaviour
 
     public void SaveGame()
     {
-        Manager_Game.Instance.SaveLevelData(Manager_Game.Instance.levelData.LevelGaming,currentCharacter.transform.position.x, currentCharacter.transform.position.y, currentCharacter.GetComponent<Movement>().Life);
+        Manager_Game.Instance.SaveLevelData(Manager_Game.Instance.levelData.LevelGaming,currentCharacter.transform.position.x, currentCharacter.transform.position.y, currentCharacter.GetComponent<Movement>().Life, currentCharacter.GetComponent<Movement>().PowerHero);
         SceneManager.LoadScene("SelectLevel");
     }
     void SaveGameButton()

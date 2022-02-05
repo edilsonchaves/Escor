@@ -18,6 +18,7 @@ public class Play_game : MonoBehaviour
     public void BTN_Play()
 	{
 		Manager_Game.Instance.LoadSectionGame();
+		Manager_Game.Instance.LoadLevelGame();
 		if (Manager_Game.Instance.sectionGameData!=null)
 			popup.InitPopup("Você possui um jogo salvo. Deseja continuar?", "Sim", () => CarregarJogo(), "Não", NovoJogo);
         else
@@ -27,7 +28,7 @@ public class Play_game : MonoBehaviour
 	}
 	void CarregarJogo()
     {
-        if (Manager_Game.Instance.GetStatusLevel() == LevelInfo.LevelStatus.NewLevel)
+        if (Manager_Game.Instance.levelData.LevelGaming==0)
         {
 			SceneManager.LoadScene("SelectLevel");
         }
