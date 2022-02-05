@@ -55,7 +55,9 @@ public class Manager_Game : MonoBehaviour
     }
     public void InitialNewSectionGame()
     {
-        SaveLoadSystem.SaveFile<SectionData>(new SectionData(1, 3));
+        sectionGameData = new SectionData(1,3,new bool[3]);
+
+        SaveLoadSystem.SaveFile<SectionData>(sectionGameData);
     }
 
     public void LoadSectionGame()
@@ -132,11 +134,12 @@ public class SectionData
 {
     [SerializeField] int _currentLevel;
     [SerializeField]LevelData[] _levelsData;
-
-    public SectionData(int valueLevel, int valueNumberLevels)
+    [SerializeField] bool[] powerAwarded;
+    public SectionData(int valueLevel, int valueNumberLevels,bool[] valuePowersAwarded)
     {
         _currentLevel = valueLevel;
         _levelsData = new LevelData[valueNumberLevels];
+        powerAwarded = valuePowersAwarded;
     }
 
     public int GetCurrentLevel()
@@ -144,20 +147,33 @@ public class SectionData
         return _currentLevel;
     }
 
-    public void ConclusionLevelData(int level,int maxPercentualConclusion,bool[]targetsComplete)
+    public void ConclusionLevelData(int level,int maxPercentualConclusion,bool[]targetsComplete,bool[] powerAwardedLevel)
     {
         _levelsData[level].SetPercentualConclusion(maxPercentualConclusion);
         _levelsData[level].SetTargetComplete(targetsComplete);
-        Debug.Log(_levelsData[level].GetPercentualConclusion()+"/"+ _levelsData[level].GetTargetsComplete().GetValue(0,1,2));
+        powerAwarded = powerAwardedLevel;
+        _currentLevel = level + 1;
+    }
+
+    public bool[] GetPowersAwarded()
+    {
+        return powerAwarded;
+    }
+
+    public void SetPowersAwarded(bool[] newValuePowersAwarded)
+    {
+        powerAwarded = newValuePowersAwarded;
     }
     [System.Serializable]
     public class LevelData{
         [SerializeField]int _currentMaxPercentualConclusion;
         [SerializeField]bool[] _currentTargetsComplete;
-        public LevelData(int valuePercentualConclusion,bool[] valueTargetsComplete)
+        [SerializeField] bool[] powerAwardedLevel;
+        public LevelData(int valuePercentualConclusion,bool[] valueTargetsComplete, bool[] valuePowersAwarded)
         {
             _currentMaxPercentualConclusion = valuePercentualConclusion;
             _currentTargetsComplete = valueTargetsComplete;
+            powerAwardedLevel = valuePowersAwarded;
         }
         public int GetPercentualConclusion()
         {
@@ -177,11 +193,17 @@ public class SectionData
 
         public void SetTargetComplete(bool[] newTargetsObjective)
         {
-            for(int i = 0; i < newTargetsObjective.Length; i++)
-            {
-                if (newTargetsObjective[i])
-                    _currentTargetsComplete[i] = true;
-            }
+            _currentTargetsComplete = newTargetsObjective;
+        }
+
+        public bool[] GetPowersAwarded()
+        {
+            return powerAwardedLevel;
+        }
+
+        public void SetPowersAwarded(bool[] newValuePowersAwarded)
+        {
+            powerAwardedLevel = newValuePowersAwarded;
         }
     }
 }
