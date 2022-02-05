@@ -52,7 +52,7 @@ public class IA_Javali : MonoBehaviour
         Gizmos.DrawRay(new Vector2(transform.position.x - offSetWall.x, transform.position.y + offSetWall.y), -Vector2.right*offSetWall.z);
 
 
-        Gizmos.color = Color.black;     
+        Gizmos.color = Color.green;     
         if(started)
         {
             Gizmos.DrawRay(new Vector2(myStartPosition.x - MovementDistance, myStartPosition.y+0.5f), -Vector2.up);
@@ -101,6 +101,7 @@ public class IA_Javali : MonoBehaviour
         auxMovement = Time.fixedDeltaTime * MovementSpeed * currentDirection * 100; // calcula quanto ele deve se mover
         Vector2 newPosition = myRb.position + new Vector2(auxMovement*Time.fixedDeltaTime, 0); // salva a nova posição após o movimento
 
+
         if(!bug)
         {
             // inteligência do javali nível 1
@@ -141,26 +142,35 @@ public class IA_Javali : MonoBehaviour
             else if(AiLevel == 2 && !attacking && !stuned)
             {
                 myRb.velocity = new Vector2(auxMovement, myRb.velocity.y); // movimenta para a nova posição
-
-                // verifica se o javali consegue pular o primeiro obstaculo na direção do player
-                if(CanJumpWallInDirectionOfPlayer())
+                following = false;
+                
+                if(CheckIsGrounded(true))
                 {
-                    following = false; // else
 
-                    // verifica se pode seguir ou não o player
-                    if(GetDistaceOfPlayer() < FollowDistance && !HasObstacleOnWay() && GetXDistaceOfPlayer() != 0f)
+                    // verifica se o javali consegue pular o primeiro obstaculo na direção do player
+                    if(CanJumpWallInDirectionOfPlayer())
                     {
-                        following = true;
-                        FlipFaceToPlayer(); // vira a face do javali para o lado do player
+
+                        // verifica se pode seguir ou não o player
+                        if(GetDistaceOfPlayer() < FollowDistance && !HasObstacleOnWay() && GetXDistaceOfPlayer() != 0f && !CheckIfPlayerIsOnDifferentGround())
+                        {
+                            following = true;
+                            FlipFaceToPlayer(); // vira a face do javali para o lado do player
+                        }
                     }
+
+                }
+                else
+                {
+                    following = false;
+                    FlipFaceToStartPosition();
                 }
 
-                // print("following   "+following);
                 // não seguindo
                 if(!following)
                 {
                     // volta para dentro do limite
-                    if(IsOutLimite(newPosition))
+                    if(IsOutLimite(newPosition) || !CheckIsGrounded(true))
                     {
                         FlipFaceToStartPosition(); // vira a face do javali para o ponto inicial
                     }
@@ -199,7 +209,7 @@ public class IA_Javali : MonoBehaviour
                         }
                     }
                     // verifica o quão próximo está a parede e faz o retorno
-                    else if(GetDistanceOfCollisionWithWall(GetWall()) < .3f)
+                    else if(GetDistanceOfCollisionWithWall(GetWall()) < .3f || HaveACliff())
                     {
                         following = false;
                         FlipFaceToStartPosition(); // vira a face do javali para o ponto inicial
@@ -208,7 +218,7 @@ public class IA_Javali : MonoBehaviour
 
 
                 // verifica se está próximo o bastante para atacar
-                if(GetDistaceOfPlayer() < AttackDistance && !attacking && !HasObstacleOnWay())
+                if(GetDistaceOfPlayer() < AttackDistance && !attacking && !HasObstacleOnWay() && !HaveACliff() && !CheckIfPlayerIsOnDifferentGround())
                 {
                     FlipFaceToPlayer(); // vira a face do javali para o lado do player
                     Attack(); // ataca
@@ -439,18 +449,26 @@ public class IA_Javali : MonoBehaviour
     protected bool CheckIfPlayerIsOnDifferentGround()
     {
         RaycastHit2D groundOfPlayer = Physics2D.Raycast((Vector2) playerTrans.position, -Vector2.up, 1000f, groundLayer);
-        RaycastHit2D wallOfPlayer = Physics2D.Raycast((Vector2) playerTrans.position, -Vector2.up, 1000f, wallLayer);
-
-        if(groundOfPlayer.distance >= wallOfPlayer.distance)
-            groundOfPlayer = wallOfPlayer;
-
         RaycastHit2D groundOfJavali = Physics2D.Raycast((Vector2) transform.position, -Vector2.up, 1000f, groundLayer);
-        RaycastHit2D wallOfJavali = Physics2D.Raycast((Vector2) transform.position, -Vector2.up, 1000f, wallLayer);
 
-        if(groundOfJavali.distance >= wallOfJavali.distance)
-            groundOfJavali = wallOfJavali;
+        return Mathf.Abs(groundOfPlayer.point.y - groundOfJavali.point.y) > .0001f;
 
-        return groundOfPlayer.point.y != groundOfJavali.point.y;
+        // ------------------------------
+
+
+        // RaycastHit2D groundOfPlayer = Physics2D.Raycast((Vector2) playerTrans.position, -Vector2.up, 1000f, groundLayer);
+        // RaycastHit2D wallOfPlayer = Physics2D.Raycast((Vector2) playerTrans.position, -Vector2.up, 1000f, wallLayer);
+
+        // if(groundOfPlayer.distance >= wallOfPlayer.distance)
+        //     groundOfPlayer = wallOfPlayer;
+
+        // RaycastHit2D groundOfJavali = Physics2D.Raycast((Vector2) transform.position, -Vector2.up, 1000f, groundLayer);
+        // RaycastHit2D wallOfJavali = Physics2D.Raycast((Vector2) transform.position, -Vector2.up, 1000f, wallLayer);
+
+        // if(groundOfJavali.distance >= wallOfJavali.distance)
+        //     groundOfJavali = wallOfJavali;
+
+        // return groundOfPlayer.point.y != groundOfJavali.point.y;
     }
 
 
@@ -539,6 +557,7 @@ public class IA_Javali : MonoBehaviour
                 if(CheckIsGrounded())
                 {
                     InvertDirection();
+                    print("Invert");
                 }
             }
             else
@@ -611,7 +630,7 @@ public class IA_Javali : MonoBehaviour
     // verifica se há um precipício na direção do player (ainda vou desenvolver)
     protected bool HaveACliff()
     {
-        return false;
+        return !CheckIsGrounded(true);
     }
 
 

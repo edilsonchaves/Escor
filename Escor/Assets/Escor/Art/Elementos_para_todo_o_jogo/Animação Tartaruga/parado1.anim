@@ -100,7 +100,92 @@ AnimationClip:
     - time: 3.25
       value: {fileID: 21300000, guid: 84e141e7b099063418cc7e87d07ae85a, type: 3}
     attribute: m_Sprite
-    path: 
+    path: Tartaruga do kung fu panda
+    classID: 212
+    script: {fileID: 0}
+  - curve:
+    - time: 0
+      value: {fileID: 21300000, guid: f97be86a56a556d49a80390d55f90d37, type: 3}
+    - time: 0.083333336
+      value: {fileID: 21300000, guid: 751ca925dcdafd64c9b2ffb85431d25a, type: 3}
+    - time: 0.16666667
+      value: {fileID: 21300000, guid: c6b67c1a5fdd9a740b48a67bccbc082c, type: 3}
+    - time: 0.25
+      value: {fileID: 21300000, guid: 601a3331567443f4092adfd548ffa350, type: 3}
+    - time: 0.33333334
+      value: {fileID: 21300000, guid: a4194e1ed607a634e8fb0e0c88612a58, type: 3}
+    - time: 0.41666666
+      value: {fileID: 21300000, guid: e93c54889f2751b47b1c9b13e9980a77, type: 3}
+    - time: 0.5
+      value: {fileID: 21300000, guid: 9b663c93982c775468269131e71a8782, type: 3}
+    - time: 0.5833333
+      value: {fileID: 21300000, guid: e0ab55734f944d34fac935fe4eed038e, type: 3}
+    - time: 0.6666667
+      value: {fileID: 21300000, guid: 06f6da5efe4b3fe4abdae160590b84b4, type: 3}
+    - time: 0.75
+      value: {fileID: 21300000, guid: 26bf7c80ab14ab44aae663b22b1aa361, type: 3}
+    - time: 0.8333333
+      value: {fileID: 21300000, guid: 1c48fa10e93b52841bb579ac8022aede, type: 3}
+    - time: 0.9166667
+      value: {fileID: 21300000, guid: 882ef60299b888644915db6008f32e2e, type: 3}
+    - time: 1
+      value: {fileID: 21300000, guid: 9107ceba49a6a104dbf40aca19fff990, type: 3}
+    - time: 1.0833334
+      value: {fileID: 21300000, guid: abd8f1e05ffeeb94ebc11e84c1021764, type: 3}
+    - time: 1.1666666
+      value: {fileID: 21300000, guid: 809b2816281e1e34a8606653736e8c71, type: 3}
+    - time: 1.25
+      value: {fileID: 21300000, guid: 49fd85f2de1afc64b9f94d7c3c09fa06, type: 3}
+    - time: 1.3333334
+      value: {fileID: 21300000, guid: 463448e56b9ab854d9003f5ffbd2899b, type: 3}
+    - time: 1.4166666
+      value: {fileID: 21300000, guid: 19be777352f1e1f4b920b88deb760179, type: 3}
+    - time: 1.5
+      value: {fileID: 21300000, guid: c64b56deb4bde0c47838df2e9c7f10e6, type: 3}
+    - time: 1.5833334
+      value: {fileID: 21300000, guid: 921aa421b61cfa840a4a670249884831, type: 3}
+    - time: 1.6666666
+      value: {fileID: 21300000, guid: abc29ecf732e4154ca44baaffb4a840f, type: 3}
+    - time: 1.75
+      value: {fileID: 21300000, guid: eaffd10bcf7b1b841b9ac1aa9f7d8bd8, type: 3}
+    - time: 1.8333334
+      value: {fileID: 21300000, guid: e29171a0d2ff35e45853d7f4559683d6, type: 3}
+    - time: 1.9166666
+      value: {fileID: 21300000, guid: b5df3fa9eba4a7e4c94a2c241a293949, type: 3}
+    - time: 2
+      value: {fileID: 21300000, guid: f67da7a7186848b409a6dd0fcd25ec67, type: 3}
+    - time: 2.0833333
+      value: {fileID: 21300000, guid: e24ff58149b2f75489e09db35e88962a, type: 3}
+    - time: 2.1666667
+      value: {fileID: 21300000, guid: 938d17e251c4d7842ac9cccb740c2e4f, type: 3}
+    - time: 2.25
+      value: {fileID: 21300000, guid: a80a6e7b9fa3f3d4c894ac875235d008, type: 3}
+    - time: 2.3333333
+      value: {fileID: 21300000, guid: a369195a16a5d1e4d9f480398a89a7fa, type: 3}
+    - time: 2.4166667
+      value: {fileID: 21300000, guid: 505bf389c7d58974eb1644141951d08f, type: 3}
+    - time: 2.5
+      value: {fileID: 21300000, guid: 8e30ca18918bf074cbe5b8b1c4190f21, type: 3}
+    - time: 2.5833333
+      value: {fileID: 21300000, guid: 36614032b97a78244bb96e847d7f202e, type: 3}
+    - time: 2.6666667
+      value: {fileID: 21300000, guid: 034049c1aabe8014ba77f4692c51f468, type: 3}
+    - time: 2.75
+      value: {fileID: 21300000, guid: ebe588c935f09b245a63fbafe6a9820a, type: 3}
+    - time: 2.8333333
+      value: {fileID: 21300000, guid: 2e4e1524a6cfc534080921fc6e9a9766, type: 3}
+    - time: 2.9166667
+      value: {fileID: 21300000, guid: 02085fae7418e5a44b92595381c08e8c, type: 3}
+    - time: 3
+      value: {fileID: 21300000, guid: 33241ff4ef6bc2643a67d982134378d8, type: 3}
+    - time: 3.0833333
+      value: {fileID: 21300000, guid: cba16b17616024e47b41e86bd77f86f9, type: 3}
+    - time: 3.1666667
+      value: {fileID: 21300000, guid: bc0cf35a8943ca847b243b7890cf7f0b, type: 3}
+    - time: 3.25
+      value: {fileID: 21300000, guid: 84e141e7b099063418cc7e87d07ae85a, type: 3}
+    attribute: m_Sprite
+    path: Tartaruga do kung fu panda/Tartaruga do kung fu panda (1)
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 12
@@ -111,13 +196,60 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 0
+      path: 995564082
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 212
+      customType: 23
+      isPPtrCurve: 1
+    - serializedVersion: 2
+      path: 3913555284
       attribute: 0
       script: {fileID: 0}
       typeID: 212
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
+    - {fileID: 21300000, guid: f97be86a56a556d49a80390d55f90d37, type: 3}
+    - {fileID: 21300000, guid: 751ca925dcdafd64c9b2ffb85431d25a, type: 3}
+    - {fileID: 21300000, guid: c6b67c1a5fdd9a740b48a67bccbc082c, type: 3}
+    - {fileID: 21300000, guid: 601a3331567443f4092adfd548ffa350, type: 3}
+    - {fileID: 21300000, guid: a4194e1ed607a634e8fb0e0c88612a58, type: 3}
+    - {fileID: 21300000, guid: e93c54889f2751b47b1c9b13e9980a77, type: 3}
+    - {fileID: 21300000, guid: 9b663c93982c775468269131e71a8782, type: 3}
+    - {fileID: 21300000, guid: e0ab55734f944d34fac935fe4eed038e, type: 3}
+    - {fileID: 21300000, guid: 06f6da5efe4b3fe4abdae160590b84b4, type: 3}
+    - {fileID: 21300000, guid: 26bf7c80ab14ab44aae663b22b1aa361, type: 3}
+    - {fileID: 21300000, guid: 1c48fa10e93b52841bb579ac8022aede, type: 3}
+    - {fileID: 21300000, guid: 882ef60299b888644915db6008f32e2e, type: 3}
+    - {fileID: 21300000, guid: 9107ceba49a6a104dbf40aca19fff990, type: 3}
+    - {fileID: 21300000, guid: abd8f1e05ffeeb94ebc11e84c1021764, type: 3}
+    - {fileID: 21300000, guid: 809b2816281e1e34a8606653736e8c71, type: 3}
+    - {fileID: 21300000, guid: 49fd85f2de1afc64b9f94d7c3c09fa06, type: 3}
+    - {fileID: 21300000, guid: 463448e56b9ab854d9003f5ffbd2899b, type: 3}
+    - {fileID: 21300000, guid: 19be777352f1e1f4b920b88deb760179, type: 3}
+    - {fileID: 21300000, guid: c64b56deb4bde0c47838df2e9c7f10e6, type: 3}
+    - {fileID: 21300000, guid: 921aa421b61cfa840a4a670249884831, type: 3}
+    - {fileID: 21300000, guid: abc29ecf732e4154ca44baaffb4a840f, type: 3}
+    - {fileID: 21300000, guid: eaffd10bcf7b1b841b9ac1aa9f7d8bd8, type: 3}
+    - {fileID: 21300000, guid: e29171a0d2ff35e45853d7f4559683d6, type: 3}
+    - {fileID: 21300000, guid: b5df3fa9eba4a7e4c94a2c241a293949, type: 3}
+    - {fileID: 21300000, guid: f67da7a7186848b409a6dd0fcd25ec67, type: 3}
+    - {fileID: 21300000, guid: e24ff58149b2f75489e09db35e88962a, type: 3}
+    - {fileID: 21300000, guid: 938d17e251c4d7842ac9cccb740c2e4f, type: 3}
+    - {fileID: 21300000, guid: a80a6e7b9fa3f3d4c894ac875235d008, type: 3}
+    - {fileID: 21300000, guid: a369195a16a5d1e4d9f480398a89a7fa, type: 3}
+    - {fileID: 21300000, guid: 505bf389c7d58974eb1644141951d08f, type: 3}
+    - {fileID: 21300000, guid: 8e30ca18918bf074cbe5b8b1c4190f21, type: 3}
+    - {fileID: 21300000, guid: 36614032b97a78244bb96e847d7f202e, type: 3}
+    - {fileID: 21300000, guid: 034049c1aabe8014ba77f4692c51f468, type: 3}
+    - {fileID: 21300000, guid: ebe588c935f09b245a63fbafe6a9820a, type: 3}
+    - {fileID: 21300000, guid: 2e4e1524a6cfc534080921fc6e9a9766, type: 3}
+    - {fileID: 21300000, guid: 02085fae7418e5a44b92595381c08e8c, type: 3}
+    - {fileID: 21300000, guid: 33241ff4ef6bc2643a67d982134378d8, type: 3}
+    - {fileID: 21300000, guid: cba16b17616024e47b41e86bd77f86f9, type: 3}
+    - {fileID: 21300000, guid: bc0cf35a8943ca847b243b7890cf7f0b, type: 3}
+    - {fileID: 21300000, guid: 84e141e7b099063418cc7e87d07ae85a, type: 3}
     - {fileID: 21300000, guid: f97be86a56a556d49a80390d55f90d37, type: 3}
     - {fileID: 21300000, guid: 751ca925dcdafd64c9b2ffb85431d25a, type: 3}
     - {fileID: 21300000, guid: c6b67c1a5fdd9a740b48a67bccbc082c, type: 3}

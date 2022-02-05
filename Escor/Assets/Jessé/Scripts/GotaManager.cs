@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class GotaManager : MonoBehaviour
 {
-    public EstalactiteManager script;
+    public EstalactiteManager scriptOfEstalactite;
     public string tagOfPlayer = "Player";
     public string tagOfGround = "ground";
     public string tagOfPlatform = "Platform";
 
+    public LayerMask layersToCanSplash;
+
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.tag == tagOfPlayer || col.tag == tagOfGround || col.tag == tagOfPlatform)
+        // if(col.tag == tagOfPlayer || col.tag == tagOfGround || col.tag == tagOfPlatform || col.gameObject.layer == layersToCanSplash)
+        // if(col.gameObject.layer == layersToCanSplash.value)
+        if( layersToCanSplash == (layersToCanSplash | ( 1 << col.gameObject.layer)))
         {
-            script.ShowSplashAnimation();
+            scriptOfEstalactite.ShowSplashAnimation();
         }
     }
 }

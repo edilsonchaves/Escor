@@ -165,7 +165,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b04d189b2fe4e34fb16d4e19dcc3c1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  script: {fileID: 0}
+  scriptOfEstalactite: {fileID: 0}
+  tagOfPlayer: Player
+  tagOfGround: ground
+  tagOfPlatform: Platform
+  layersToCanSplash:
+    serializedVersion: 2
+    m_Bits: 58240
 --- !u!1 &8370085944306521245
 GameObject:
   m_ObjectHideFlags: 0

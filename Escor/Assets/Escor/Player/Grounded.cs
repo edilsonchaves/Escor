@@ -19,6 +19,10 @@ public class Grounded : MonoBehaviour
         if(collisor.gameObject.tag == groundTag || collisor.gameObject.layer == groundLayer)
         {
             print("noChao");
+            if(!Player)
+            {
+                Player = gameObject.transform.parent.gameObject.GetComponent<Movement>();
+            }
             Player.noChao = true;
         }
     }
@@ -26,9 +30,13 @@ public class Grounded : MonoBehaviour
     void OnTriggerExit2D(Collider2D collisor)
     {
         // as vezes o player está na plataforma porém noChao=false, para contorna isso estou verificando se ele está ou não em uma plataforma
-        if((collisor.gameObject.tag == groundTag || collisor.gameObject.layer == groundLayer) && (collisor.transform.parent == null))
+        if((collisor.gameObject.tag == groundTag || collisor.gameObject.layer == groundLayer) && (collisor.transform.parent == null || (collisor.transform.parent.tag != "Rope")))
         {
             print("!noChao");
+            if(!Player)
+            {
+                Player = gameObject.transform.parent.gameObject.GetComponent<Movement>();
+            }
             Player.noChao = false;
         }
     }
