@@ -1015,7 +1015,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3448090209284137714, guid: 852f72ae098636d46ad2611f54abceb5, type: 3}
       propertyPath: sectionGameData._levelsData.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3448090209284137715, guid: 852f72ae098636d46ad2611f54abceb5, type: 3}
       propertyPath: m_RootOrder
