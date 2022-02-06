@@ -21,7 +21,6 @@ public class LevelManager : MonoBehaviour
     [SerializeField]Popup popup;
     void Start()
     {
-        Debug.Log(Manager_Game.Instance.levelData);
         popup = control.CreatePopup();
         popup.gameObject.SetActive(false);
         if (Manager_Game.Instance.levelData == null)
