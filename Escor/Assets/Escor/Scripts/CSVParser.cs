@@ -66,7 +66,6 @@ public class CSVParser : MonoBehaviour
     
     public static string GetTextFromID(string id, int languageIndex)
     {
-        Debug.Log("1"+id+" "+languageIndex);
         if (languageDictionary.Count == 0)
         {
             Debug.Log("2");
