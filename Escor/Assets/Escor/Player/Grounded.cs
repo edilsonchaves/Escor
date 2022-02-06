@@ -4,40 +4,57 @@ using UnityEngine;
 
 public class Grounded : MonoBehaviour
 {
-    Movement Player;
+
+    // tem um bug quando kuro sai de uma plataforma para o chão, isso quando a plataforma está encostada em um tile do tipo chão.
+    // então o bug é que kuro fica sempre caindo, já que noChao está falso
+
+
+    Movement PlayerMovement;
+    PlayerRopeControll PlayerRopeControll;
 
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private string groundTag;
+    [SerializeField] private string platformTag = "Plataform";
 
     void Start()
     {
-        Player = gameObject.transform.parent.gameObject.GetComponent<Movement>();
+        PlayerMovement = gameObject.transform.parent.gameObject.GetComponent<Movement>();
+        PlayerRopeControll = gameObject.transform.parent.gameObject.GetComponent<PlayerRopeControll>();
     }
 
     void OnTriggerEnter2D(Collider2D collisor)
     {
-        if(collisor.gameObject.tag == groundTag || collisor.gameObject.layer == groundLayer)
-        {
-            print("noChao");
-            if(!Player)
-            {
-                Player = gameObject.transform.parent.gameObject.GetComponent<Movement>();
-            }
-            Player.noChao = true;
-        }
+
+        if(!(collisor.gameObject.tag == groundTag || (groundLayer == (groundLayer | ( 1 << collisor.gameObject.layer)))))
+            return;
+
+        if(!PlayerMovement)
+            PlayerMovement = gameObject.transform.parent.gameObject.GetComponent<Movement>();
+
+        PlayerMovement.noChao = true;
+
+        if(collisor.gameObject.tag == platformTag)
+            return;
+
+        PlayerMovement.transform.SetParent(null);
     }
 
     void OnTriggerExit2D(Collider2D collisor)
     {
-        // as vezes o player está na plataforma porém noChao=false, para contorna isso estou verificando se ele está ou não em uma plataforma
-        if((collisor.gameObject.tag == groundTag || collisor.gameObject.layer == groundLayer) && (collisor.transform.parent == null || (collisor.transform.parent.tag != "Rope")))
+        if(!(transform.parent.parent == null))
         {
-            print("!noChao");
-            if(!Player)
-            {
-                Player = gameObject.transform.parent.gameObject.GetComponent<Movement>();
-            }
-            Player.noChao = false;
+            return;
         }
+
+        if(!(collisor.gameObject.tag == groundTag || collisor.gameObject.tag == platformTag || groundLayer == (groundLayer | ( 1 << collisor.gameObject.layer))))
+        {
+            return;
+        }
+
+        if(!PlayerMovement)
+            PlayerMovement = gameObject.transform.parent.gameObject.GetComponent<Movement>();
+
+
+        PlayerMovement.noChao = false;
     }
 }

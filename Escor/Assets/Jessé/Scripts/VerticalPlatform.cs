@@ -8,11 +8,13 @@ public class VerticalPlatform : MonoBehaviour
     private float waitTime;
 
     bool isDown;
+    Transform player;
 
     // Start is called before the first frame update
     void Start()
     {
         effector = transform.GetChild(0).GetComponent<PlatformEffector2D>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
 
@@ -21,6 +23,7 @@ public class VerticalPlatform : MonoBehaviour
     {
         if((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && !isDown)
         {
+            // player.SetParent(null);
             isDown = true;
             effector.rotationalOffset = 180f;
             waitTime = 0.4f;

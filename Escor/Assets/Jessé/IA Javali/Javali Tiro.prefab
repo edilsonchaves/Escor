@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 789d7c45feb711d4a84dd9cf8eaeaa5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cadence: 2
+  cadence: 0.5
   attackDistance: 39.7
   shootForce: 6
   ShootPosition: {fileID: 6099879206776170127}

@@ -12,7 +12,14 @@ public static class SfxManager
         playerDie,
         playerJump,
         playerGetLife,
-        playerGetNewPower
+        playerGetNewPower,
+
+        javaliMove,
+        javaliAttack,
+        javaliShoot,
+        javaliStuned,
+        javaliParado,
+
     }
     private static Dictionary<Sound, float> soundTimerDic;
     public static List<GameObject> TiposDeSom = new List<GameObject>();

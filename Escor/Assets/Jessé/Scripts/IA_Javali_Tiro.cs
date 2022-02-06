@@ -20,6 +20,7 @@ public class IA_Javali_Tiro : MonoBehaviour
 
     private List<GameObject> bulletsActive = new List<GameObject>(){}, bulletsDisabled = new List<GameObject>(){}; 
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +28,7 @@ public class IA_Javali_Tiro : MonoBehaviour
         startX           = ShootPosition.position.x;
         currentDirection = 1;
     }
+
 
     // Update is called once per frame
     void Update()
@@ -45,6 +47,9 @@ public class IA_Javali_Tiro : MonoBehaviour
         else if(!attacking)
         {
             ChangeAnimation("JavaliParado2", false);
+
+            SfxManager.PlaySound(SfxManager.Sound.javaliParado);
+
             aux = 0;
         }
     }
@@ -72,7 +77,10 @@ public class IA_Javali_Tiro : MonoBehaviour
     protected IEnumerator Shoot_()
     {
         attacking = true;
-        ChangeAnimation("JavaliAtacando");
+        ChangeAnimation("JavaliAtacando");        
+
+            SfxManager.PlaySound(SfxManager.Sound.javaliShoot);
+
         yield return new WaitForSeconds(0.5f);
         bullet          = GetBullet();
         bullet.GetComponent<BulletScript>().script = this;

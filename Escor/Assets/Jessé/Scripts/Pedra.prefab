@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1950539736380858017}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 8044896005349682985}
   m_RootOrder: 0
@@ -172,6 +172,7 @@ MonoBehaviour:
     m_Bits: 57472
   myAnimator: {fileID: 2811681921014634883}
   tagOfPlayer: Player
+  tagOfJavali: Javali
   myRb: {fileID: 75463998329560092}
 --- !u!95 &2811681921014634883
 Animator:
