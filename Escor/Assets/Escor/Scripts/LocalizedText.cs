@@ -6,7 +6,7 @@ using TMPro;
 public class LocalizedText : MonoBehaviour
 {
     public string keyDefault;
-     TextMeshProUGUI text;
+    TextMeshProUGUI text;
     private void Awake()
     {
         text = GetComponent<TextMeshProUGUI>();

@@ -8,12 +8,7 @@ public class LanguageAdaptScene : MonoBehaviour
     void Start()
     {
         ManagerEvents.GameConfig.ChangedLanguage(Manager_Game.Instance.saveGameData.LanguageSelect);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        ManagerEvents.GameConfig.ChangedLanguageSize(Manager_Game.Instance.saveGameData.LetterSize);
     }
 }
 
