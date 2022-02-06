@@ -10,9 +10,12 @@ public class ConversaPersonagem : MonoBehaviour
     [SerializeField] TextMeshProUGUI dialogoTexto;
     [SerializeField] AudioSource dialogoAudio;
     [SerializeField] GameObject prefab;
-    public IEnumerator ConversaFase(List<Conversa> conversa)
+    bool _statusConversa;
+    public bool StatusConversa { get { return _statusConversa; } }
+    public IEnumerator  ConversaFase(List<Conversa> conversa)
     {
         prefab.SetActive(true);
+        _statusConversa = false;
         foreach ( var estrofe in conversa)
         {
             dialogoImagem.sprite = estrofe.personagemImagem;
@@ -21,6 +24,7 @@ public class ConversaPersonagem : MonoBehaviour
             dialogoAudio.Play();
             yield return new WaitUntil(()=>!dialogoAudio.isPlaying);
         }
+        _statusConversa = true;
         prefab.SetActive(false);
 
     }

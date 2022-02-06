@@ -26,7 +26,7 @@ public class LevelManager : MonoBehaviour
         popup.gameObject.SetActive(false);
         if (Manager_Game.Instance.levelData == null)
         {
-            CreateLevel(2);
+            CreateLevel(3);
         }
         else
         {
