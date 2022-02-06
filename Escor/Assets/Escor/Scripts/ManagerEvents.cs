@@ -138,4 +138,51 @@ public class ManagerEvents : MonoBehaviour
         }
     }
 
+
+    public static class Boss
+    {
+        public static event Action oninitialBattle;
+        public static event Action onTakeDamage;
+        public static event Action<int> onUpdateLifeUI;
+        public static void InitializedBattle()
+        {
+
+            if (oninitialBattle != null)
+            {
+                oninitialBattle();
+            }
+        }
+        public static void TakedDamage()
+        {
+
+            if (onTakeDamage != null)
+            {
+                onTakeDamage();
+            }
+        }
+
+        public static void UpdatedLife(int value)
+        {
+
+            if (onUpdateLifeUI != null)
+            {
+                onUpdateLifeUI(value);
+            }
+        }
+    }
+
+
+    public static class Enemy
+    {
+        public static event Action<GameObject> onRockDelete;
+
+        public static void RockDeleted(GameObject value)
+        {
+
+            if (onRockDelete != null)
+            {
+                onRockDelete(value);
+            }
+        }
+    }
 }

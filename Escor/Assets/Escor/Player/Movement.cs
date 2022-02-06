@@ -126,7 +126,6 @@ public class Movement : MonoBehaviour {
 
     void Update()
     {
-        Debug.Log("Level status:"+ LevelManager.levelstatus);
         if (LevelManager.levelstatus == LevelManager.LevelStatus.Game) 
         {
             

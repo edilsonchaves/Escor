@@ -81,9 +81,9 @@ public class IA_Javali_Tiro : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
         bullet          = GetBullet();
-        bullet.GetComponent<BulletScript>().script = this;
         bullet.GetComponent<BulletScript>().emissor = this.gameObject;
         Vector2 force   = CalculateDirectionToAttack();
+        bullet.GetComponent<BulletScript>().valueForce = shootForce;
         bullet.GetComponent<Rigidbody2D>().AddForce(force*shootForce, ForceMode2D.Impulse);
         yield return new WaitForSeconds(0.5f);
         attacking = false;
@@ -188,22 +188,12 @@ public class IA_Javali_Tiro : MonoBehaviour
             InvertDirection();
     }
 
-
-    protected Vector2 CalculateForce()
+    private void OnEnable()
     {
-        Vector2 dir         = target.position - ShootPosition.position;
-        Vector2 tgt         = target.position; 
-        float mass          = bullet.GetComponent<Rigidbody2D>().mass;
-        float gravity       = Physics.gravity.magnitude;
-        float velX          = dir.magnitude/mass;
-        float time          = (tgt.x - ShootPosition.position.x) / velX;
-        float velY          = gravity * (time/2);
-        float angle         = (Mathf.Atan2(velY, velX) * Mathf.Rad2Deg) - 15;
-        time                = (tgt.x - Mathf.Sin((90 - angle) * Mathf.Deg2Rad) - ShootPosition.position.x) / velX;
-        velY                = gravity * (time / 2);
-        Vector2 velocity    = new Vector2(velX, velY);
-        return velocity * mass;
+        ManagerEvents.Enemy.onRockDelete += DeletBullet;
     }
-
-
+    private void OnDisable()
+    {
+        ManagerEvents.Enemy.onRockDelete += DeletBullet;
+    }
 }

@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    [HideInInspector] public IA_Javali_Tiro script;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Animator myAnimator;
-    [SerializeField] private string tagOfPlayer = "Player", tagOfJavali = "Javali";
+    [SerializeField] private string tagOfPlayer = "Player", tagOfJavali = "Javali", tagOfBoss = "Boss";
     [SerializeField] private Rigidbody2D myRb;
-    [SerializeField] public GameObject emissor;
-    
+    public GameObject emissor;
+    public float valueForce;
+
     bool destroyed;
     bool isBackToJavali;
 
@@ -24,20 +24,20 @@ public class BulletScript : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if(destroyed)
+        if (destroyed)
             return;
 
-        if(col.tag == tagOfPlayer)
+        if (col.tag == tagOfPlayer)
         {
             // dano no player
             Movement mvt = col.gameObject.GetComponent<Movement>();
-            print("mvt.defendendo:         "+mvt.defendendo);
-            if(mvt.defendendo)
+            print("mvt.defendendo:         " + mvt.defendendo);
+            if (mvt.defendendo)
             {
                 isBackToJavali = true;
                 myRb.velocity = Vector2.zero;
                 Vector2 force = CalculateDirectionToAttack();
-                GetComponent<Rigidbody2D>().AddForce(force * 6, ForceMode2D.Impulse);
+                GetComponent<Rigidbody2D>().AddForce(force * valueForce/2, ForceMode2D.Impulse);
                 return;
             }
 
@@ -50,12 +50,16 @@ public class BulletScript : MonoBehaviour
 
 
         }
-        else if(col.tag == tagOfJavali && isBackToJavali)
+        else if (col.tag == tagOfJavali && isBackToJavali)
         {
-            script.anim.Play("JavaliTonto", -1, 0);
+            emissor.GetComponent<IA_Javali_Tiro>().anim.Play("JavaliTonto", -1, 0);
         }
-
-        else if(!(groundLayer == (groundLayer | ( 1 << col.gameObject.layer))))
+        else if (col.tag == tagOfBoss)
+        {
+            emissor.GetComponent<Boss_Script>()._animatorBoss.Play("BossLevandoDano", -1, 0);
+            ManagerEvents.Boss.TakedDamage();
+        }
+        else if (!(groundLayer == (groundLayer | (1 << col.gameObject.layer))))
         {
             return;
         }
@@ -66,16 +70,16 @@ public class BulletScript : MonoBehaviour
     }
 
 
-    // chamado por evento na animação
-    void DestroyMe()
-    {
-        destroyed = false;
-        script.DeletBullet(this.gameObject);
-    }
 
     protected Vector2 CalculateDirectionToAttack()
     {
         return (emissor.transform.position - this.transform.position).normalized;
     }
 
+    // chamado por evento na animação
+    void DestroyMe()
+    {
+        destroyed = false;
+        ManagerEvents.Enemy.RockDeleted(this.gameObject);
+    }
 }

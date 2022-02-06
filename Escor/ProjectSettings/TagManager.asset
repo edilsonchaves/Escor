@@ -24,6 +24,7 @@ TagManager:
   - Javali
   - EndGame
   - ConversaPersonagem
+  - Boss
   layers:
   - Default
   - TransparentFX
