@@ -203,16 +203,16 @@ public class Movement : MonoBehaviour {
         if(inputAxis > 0)
         {
             LookDirection(0);
-            Debug.Log('1');
-            SfxManager.PlaySound(SfxManager.Sound.playerMove);
+            if (noChao)
+                SfxManager.PlaySound(SfxManager.Sound.playerMove);
 
         }
 
         if (inputAxis < 0)
         {
-            Debug.Log('2');
             LookDirection(180);
-            SfxManager.PlaySound(SfxManager.Sound.playerMove);
+            if(noChao)
+                SfxManager.PlaySound(SfxManager.Sound.playerMove);
 
         }
     }
