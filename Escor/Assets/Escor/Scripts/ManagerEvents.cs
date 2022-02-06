@@ -9,6 +9,7 @@ public class ManagerEvents : MonoBehaviour
 
     {
         public static event Action<int> onChangeLanguage;
+        public static event Action<int> onChangeLanguageSize;
 
         public static void ChangedLanguage(int value)
         {
@@ -16,6 +17,15 @@ public class ManagerEvents : MonoBehaviour
             if (onChangeLanguage != null)
             {
                 onChangeLanguage(value);
+            }
+        }
+
+        public static void ChangedLanguageSize(int value)
+        {
+
+            if (onChangeLanguageSize != null)
+            {
+                onChangeLanguageSize(value);
             }
         }
     }

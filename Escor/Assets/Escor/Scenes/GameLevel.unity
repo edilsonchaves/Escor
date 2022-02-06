@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 11747968}
   - component: {fileID: 11747967}
   - component: {fileID: 11747970}
+  - component: {fileID: 11747971}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -244,6 +245,18 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &11747971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11747966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72cba5de4d8da9749b8d62303346b3db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &43269553
 GameObject:
   m_ObjectHideFlags: 0
@@ -1234,17 +1247,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 664303284}
     m_Modifications:
-    - target: {fileID: 8868806765055923813, guid: b891fb84b9876584bab01b851f520cce, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8868806766201655426, guid: b891fb84b9876584bab01b851f520cce, type: 3}
       propertyPath: m_Name
       value: Canvas_Pause
-      objectReference: {fileID: 0}
-    - target: {fileID: 8868806766201655426, guid: b891fb84b9876584bab01b851f520cce, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8868806766201655430, guid: b891fb84b9876584bab01b851f520cce, type: 3}
       propertyPath: m_Pivot.x
@@ -1538,10 +1543,10 @@ MonoBehaviour:
   control: {fileID: 140349217}
   levelsAvaibles:
   - {fileID: 7248150087756879033, guid: 5897f0cab24a03c4aa647e0a167dde8d, type: 3}
-
+  - {fileID: 0}
   - {fileID: 3918995391385978380, guid: ecb353e8bfdc9ca40bbb36d6676f7d9f, type: 3}
   - {fileID: 2076049616461170651, guid: bfd4d4165a1c2d240a117c135b4d08c9, type: 3}
-
+  - {fileID: 0}
   characterPrefab: {fileID: 7302654321608639650, guid: 99624e07b8ae0aa4a9f8fda63f6fbe3b, type: 3}
   cam: {fileID: 11747968}
   levelAudioSource: {fileID: 1363989497}
