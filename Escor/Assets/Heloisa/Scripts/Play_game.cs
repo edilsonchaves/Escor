@@ -51,6 +51,7 @@ public class Play_game : MonoBehaviour
 
 	public void BTN_Credits()
 	{
+		Debug.Log("Teste");
 		SceneManager.LoadScene("CreditsScene");
 	}
 

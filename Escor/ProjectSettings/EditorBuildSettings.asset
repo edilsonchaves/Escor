@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Escor/Scenes/menu_config.unity
     guid: 592526f79985a0845a90b13f24aa8055
   - enabled: 1
+    path: Assets/Escor/Scenes/CreditsScene.unity
+    guid: 0890b210fb7b7ff468df445130a9928e
+  - enabled: 1
     path: Assets/Escor/Scenes/SelectLevel.unity
     guid: 44e8a12c7db9e894f84363d5f85923b2
   - enabled: 1

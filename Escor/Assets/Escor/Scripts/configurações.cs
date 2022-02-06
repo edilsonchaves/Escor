@@ -1,32 +1,25 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class configurações : MonoBehaviour
 {
-    [SerializeField] private Slider _fontSlider;
     [SerializeField] private Slider volume = null;
     [SerializeField] private Slider volumeVoz = null;
-    [SerializeField] private Text _texto;
+    [SerializeField] private Slider _fontSlider;
 
     public delegate void OnSizeChange();
     public static OnSizeChange SizeChangeDelegate;
-    private static readonly string VolumePref = "VolumePref";
-    private static readonly string VozPref = "VozPref";
-    private float volumeFloat, vozFloat;
     public AudioSource musicaMenu;
     public AudioSource[] vozDoJogo;
 
 
     private void Start()
     {
-
         _fontSlider.value = Manager_Game.Instance.saveGameData.LetterSize;
         volume.value = Manager_Game.Instance.saveGameData.VolumeAmbient;
         volumeVoz.value = Manager_Game.Instance.saveGameData.Volume;
-
-        _fontSlider.value = PlayerPrefs.GetInt("tamanholetra", 5);
-
+        salvarAsConfig();
         ChangeFontSize();
 
        
@@ -39,32 +32,26 @@ public class configurações : MonoBehaviour
         if (SizeChangeDelegate != null)
         {
             SizeChangeDelegate.Invoke();
-        }
-
-        PlayerPrefs.SetInt("tamanholetra", (int)_fontSlider.value * 1);
-                
-    }
-
-    private void Awake()
-    {
-        salvarAsConfig();
+        }                
     }
 
     private void salvarAsConfig()
     {
-        volumeFloat = PlayerPrefs.GetFloat(VolumePref);
-        vozFloat = PlayerPrefs.GetFloat(VozPref);
 
-        musicaMenu.volume = volumeFloat;
+        //musicaMenu.volume = volumeFloat;
 
         for (int i = 0; i < vozDoJogo.Length; i++)
         {
-            vozDoJogo[i].volume = vozFloat;
+            //vozDoJogo[i].volume = vozFloat;
         }
     }
     
-    public void BackButton()
+    public void BTN_Voltar()
     {
+        Manager_Game.Instance.saveGameData.LetterSize = (int)_fontSlider.value;
+        Manager_Game.Instance.saveGameData.VolumeAmbient= (int)volume.value;
+        Manager_Game.Instance.saveGameData.Volume= (int)volumeVoz.value;
         SaveLoadSystem.SaveFile<GameData>(Manager_Game.Instance.saveGameData);
+        SceneManager.LoadScene("menu_inicial");
     }
 }
