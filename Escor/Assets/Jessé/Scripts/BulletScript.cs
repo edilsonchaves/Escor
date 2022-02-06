@@ -9,6 +9,7 @@ public class BulletScript : MonoBehaviour
     [SerializeField] private Animator myAnimator;
     [SerializeField] private string tagOfPlayer = "Player", tagOfJavali = "Javali";
     [SerializeField] private Rigidbody2D myRb;
+    [SerializeField] public GameObject emissor;
     
     bool destroyed;
     bool isBackToJavali;
@@ -34,7 +35,9 @@ public class BulletScript : MonoBehaviour
             if(mvt.defendendo)
             {
                 isBackToJavali = true;
-                myRb.velocity = -myRb.velocity;
+                myRb.velocity = Vector2.zero;
+                Vector2 force = CalculateDirectionToAttack();
+                GetComponent<Rigidbody2D>().AddForce(force * 6, ForceMode2D.Impulse);
                 return;
             }
 
@@ -68,6 +71,11 @@ public class BulletScript : MonoBehaviour
     {
         destroyed = false;
         script.DeletBullet(this.gameObject);
+    }
+
+    protected Vector2 CalculateDirectionToAttack()
+    {
+        return (emissor.transform.position - this.transform.position).normalized;
     }
 
 }
