@@ -175,6 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyDefault: ID_Credits
+  text: {fileID: 0}
 --- !u!222 &46918354
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -284,7 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d060c49896433f47bfb6b8fc348bba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLanguageletterAdapt: 20
+  maxLanguageletterAdapt: 30
 --- !u!1 &66629262
 GameObject:
   m_ObjectHideFlags: 0
@@ -1125,7 +1126,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72cba5de4d8da9749b8d62303346b3db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idLanguageSelect: 0
 --- !u!1 &796167623
 GameObject:
   m_ObjectHideFlags: 0
@@ -1315,6 +1315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyDefault: ID_Play
+  text: {fileID: 0}
 --- !u!222 &943429909
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1424,7 +1425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d060c49896433f47bfb6b8fc348bba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLanguageletterAdapt: 20
+  maxLanguageletterAdapt: 30
 --- !u!1 &1332775608
 GameObject:
   m_ObjectHideFlags: 0
@@ -1478,6 +1479,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyDefault: ID_Quit
+  text: {fileID: 0}
 --- !u!222 &1332775611
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1499,6 +1501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyDefault: ID_Quit
+  text: {fileID: 0}
 --- !u!114 &1332775613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1600,7 +1603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d060c49896433f47bfb6b8fc348bba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLanguageletterAdapt: 20
+  maxLanguageletterAdapt: 30
 --- !u!1 &1560375034
 GameObject:
   m_ObjectHideFlags: 0
@@ -1869,6 +1872,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyDefault: ID_Config
+  text: {fileID: 0}
 --- !u!222 &1768583036
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1890,6 +1894,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyDefault: ID_Config
+  text: {fileID: 0}
 --- !u!114 &1768583038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1991,7 +1996,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d060c49896433f47bfb6b8fc348bba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLanguageletterAdapt: 20
+  maxLanguageletterAdapt: 30
 --- !u!1 &1825180927
 GameObject:
   m_ObjectHideFlags: 0

@@ -31,4 +31,5 @@ public class LocalizedText : MonoBehaviour
         ManagerEvents.GameConfig.onChangeLanguage -= SetupLanguage;
 
     }
+    
 }
