@@ -6,14 +6,17 @@ using TMPro;
 public class LocalizedText : MonoBehaviour
 {
     public string keyDefault;
-    TextMeshProUGUI text;
+    [SerializeField]TextMeshProUGUI text;
     private void Awake()
     {
         text = GetComponent<TextMeshProUGUI>();
     }
     void SetupLanguage(int value)
     {
+        Debug.Log(gameObject.name);
+        Debug.Log("Localize key:" + keyDefault);
         text.text = CSVParser.GetTextFromID(keyDefault, value);
+        Debug.Log(text.text);
     }
     public void Setup(string key, int value)
     {
