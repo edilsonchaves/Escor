@@ -47,6 +47,7 @@ public class configurações : MonoBehaviour
             Manager_Game.Instance.saveGameData.LetterSize      = (int) _fontSlider.value;
             Manager_Game.Instance.saveGameData.VolumeAmbient   = (int) volume.value;
             Manager_Game.Instance.saveGameData.Volume          = (int) volumeVoz.value;
+            ManagerEvents.GameConfig.ChangedLanguageSize ((int) _fontSlider.value);
 
             volumeJogo.SetFloat("vozsound", -80 + volumeVoz.value * 0.8f); // Range de volume.value é [0, 100]
             volumeJogo.SetFloat("bgsound", -80 + volume.value * 0.8f); // Range de volume.value é [0, 100]
