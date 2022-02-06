@@ -5,14 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class Transicaocena : MonoBehaviour
 {
+
     [SerializeField] private Animator animator;
     // private int cenaIndice;
+
 
     void Start()
     {
         StartCoroutine(TrocarCena());
     }
-
 
     void update ()
     {
