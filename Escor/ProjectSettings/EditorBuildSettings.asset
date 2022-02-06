@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Escor/Scenes/AberturaInicial.unity
+    guid: 39a0705b2b3db5a4ebd9bade5d4d5786
+  - enabled: 1
     path: Assets/Escor/Scenes/menu_inicial.unity
     guid: 532e97451020c2c42a9e39d68d18508e
   - enabled: 1
@@ -18,9 +21,9 @@ EditorBuildSettings:
     path: Assets/Escor/Scenes/Prologo.unity
     guid: b7ee6aa031881ee4e9d15c40e907cbd0
   - enabled: 1
-    path: Assets/Escor/Scenes/Level_2.unity
-    guid: 2b3ae243d28c4104bbfe1a3318c4280d
-  - enabled: 1
     path: Assets/Escor/Scenes/GameLevel.unity
     guid: f5284c2609122ac44b665ab17e6c27e6
+  - enabled: 1
+    path: Assets/Escor/Scenes/Level_2.unity
+    guid: 2b3ae243d28c4104bbfe1a3318c4280d
   m_configObjects: {}
