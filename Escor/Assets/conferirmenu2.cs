@@ -38,13 +38,22 @@ public class conferirmenu2 : MonoBehaviour
         ManagerEvents.PlayerMovementsEvents.onLifePlayer += UpdateVidas;
         ManagerEvents.PlayerMovementsEvents.onDiePlayer += BGDesactiveDead;
         ManagerEvents.PlayerMovementsEvents.onPlayerGetPower += UpdatePoder;
+        ManagerEvents.PlayerMovementsEvents.onPlayerDefenseTime += UpdateFillPowerDefense;
     }
     private void OnDisable()
     {
         ManagerEvents.PlayerMovementsEvents.onLifePlayer -= UpdateVidas;
         ManagerEvents.PlayerMovementsEvents.onDiePlayer -= BGDesactiveDead;
         ManagerEvents.PlayerMovementsEvents.onPlayerGetPower -= UpdatePoder;
+        ManagerEvents.PlayerMovementsEvents.onPlayerDefenseTime -= UpdateFillPowerDefense;
 
+    }
+
+
+    private void UpdateFillPowerDefense(float defenseAmount,float defenseMax)
+    {
+        float valuePercentual = defenseAmount / defenseMax;
+        _poderSprite[2].GetComponent<Image>().fillAmount = valuePercentual;
     }
 
 }

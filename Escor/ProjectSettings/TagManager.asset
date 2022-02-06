@@ -22,6 +22,7 @@ TagManager:
   - Power
   - Vida
   - Javali
+  - EndGame
   layers:
   - Default
   - TransparentFX

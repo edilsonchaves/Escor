@@ -68,6 +68,7 @@ AudioMixerGroupController:
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 627810e0877f7174fb55bda536b6b633
   m_Children:
+  - {fileID: 8457371021192200006}
   - {fileID: 7980028146833873902}
   m_Volume: 6ecaec49be80dbe44902030d3efb92f1
   m_Pitch: c8b1f1d4d271b99459487336d3823ea3
@@ -101,7 +102,10 @@ AudioMixerSnapshotController:
   m_Name: Snapshot
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: dc28989e07c345a41928a6b57a788e7f
-  m_FloatValues: {}
+  m_FloatValues:
+    32c03b6150b8fb54faff669620922db0: -80
+    75f580449c8c8884a8d4171cbbbfab93: 0.10800299
+    6ecaec49be80dbe44902030d3efb92f1: 20
   m_TransitionOverrides: {}
 --- !u!243 &7980028146833873902
 AudioMixerGroupController:
@@ -112,8 +116,7 @@ AudioMixerGroupController:
   m_Name: Voz
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 70a61b153dc7c3244b06b652a53bba16
-  m_Children:
-  - {fileID: 8457371021192200006}
+  m_Children: []
   m_Volume: 75f580449c8c8884a8d4171cbbbfab93
   m_Pitch: a4a5ff5472089094a915f387dfdd9aab
   m_Send: 00000000000000000000000000000000
