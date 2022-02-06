@@ -57,9 +57,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
-    locked: 0
   - name: Cloud
     uniqueID: 579328459
+    locked: 0
+  - name: Parede
+    uniqueID: 3741989819
+    locked: 0
+  - name: SombraTocha
+    uniqueID: 3533326863
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0

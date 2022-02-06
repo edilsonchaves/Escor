@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ColorLerp : MonoBehaviour
 {
-    public float lerpTime;
+    public float lerpTime, transparence;
+
     SpriteRenderer spt;
     public Color[] myColor;
 
@@ -15,6 +16,13 @@ public class ColorLerp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // for(int c=0; c<myColor.Length; c++)
+        // {
+        //     myColor[c][3] = transparence;
+        // }
+
+        colorIdx = Random.Range(0, myColor.Length);
+
         spt = GetComponent<SpriteRenderer>();
     }
 
@@ -32,10 +40,10 @@ public class ColorLerp : MonoBehaviour
             colorIdx = (colorIdx >=  myColor.Length)?0:colorIdx;
         }
         // print(transform.lossyScale.x);
-        // float minScale = 0.25f, maxScale = 2;
-        // float newTransp = (transform.lossyScale.x * 3 - minScale) / (maxScale - minScale);
+        float minScale = 1f, maxScale = 6;
+        float newTransp = (transform.lossyScale.x * 3 - minScale) / (maxScale - minScale);
 
-        // spt.color = new Color(spt.color[0], spt.color[1], spt.color[2], newTransp);
+        spt.color = new Color(spt.color[0], spt.color[1], spt.color[2], newTransp);
     }
 
 

@@ -15,7 +15,7 @@ public class MostrarCor : MonoBehaviour
         movementScript  = player.GetComponent<Movement>();
         myAnimator      = GetComponent<Animator>();
         transform.SetParent(null);
-        transform.localScale = Vector3.one *1.34f;
+        transform.localScale = Vector3.one *1.5f;
     }
 
     // Update is called once per frame
