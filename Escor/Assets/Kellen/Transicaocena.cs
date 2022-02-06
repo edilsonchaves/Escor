@@ -5,24 +5,34 @@ using UnityEngine.SceneManagement;
 
 public class Transicaocena : MonoBehaviour
 {
-[SerializeField] private Animator animator;
-private int menu_inicial;
 
-private void update ()
-{
-    if(Input.GetKeyDown(KeyCode.Space))
+    [SerializeField] private Animator animator;
+    // private int cenaIndice;
+
+
+    void Start()
     {
-        IniciaTransicao(1);
+        StartCoroutine(TrocarCena());
     }
-}
 
-public void IniciaTransicao(int _cenaIndice)
-{
-    menu_inicial = _cenaIndice;
-    animator.SetTrigger("Inicia");
-}
-public void TrocaCena()
-{
-    SceneManager.LoadScene(menu_inicial);
-}
+    void update ()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            StopAllCoroutines();
+            StartCoroutine(TrocarCena(1));
+        }
+    }
+
+
+    IEnumerator TrocarCena(float delay=5f)
+    {
+        yield return new WaitForSeconds(delay);
+        animator.Play("Fade In");
+        print("Fade in");
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(1);
+    }
+
+
 }
