@@ -27,6 +27,7 @@ public class Movement : MonoBehaviour {
             if (value > _life)
             {
                 _life = value;
+                SfxManager.PlaySound(SfxManager.Sound.playerGetLife);
             }
             else
             {
@@ -36,6 +37,7 @@ public class Movement : MonoBehaviour {
                     if (Life == 0)
                     {
                         animator.SetTrigger("Morrendo");
+                        SfxManager.PlaySound(SfxManager.Sound.playerDie);
                         LevelManager.levelstatus = LevelManager.LevelStatus.EndGame;
                         StartCoroutine(DiePersonagem());
                     }
@@ -43,6 +45,7 @@ public class Movement : MonoBehaviour {
                     {
                         Debug.Log("Teste");
                         animator.SetTrigger("TakeDamage");
+                        SfxManager.PlaySound(SfxManager.Sound.playerHurt);
                         PersonagemMudarEstado();
                     }
                 }
@@ -141,6 +144,7 @@ public class Movement : MonoBehaviour {
                     {
                         pulando = true;
                         noChao = false;
+                        SfxManager.PlaySound(SfxManager.Sound.playerJump);
                         animator.SetBool("Pulando", true);
                         animator.Play("pulando", -1, 0);
                         
@@ -199,13 +203,17 @@ public class Movement : MonoBehaviour {
         if(inputAxis > 0)
         {
             LookDirection(0);
-            
+            Debug.Log('1');
+            SfxManager.PlaySound(SfxManager.Sound.playerMove);
+
         }
 
-        if(inputAxis < 0)
+        if (inputAxis < 0)
         {
+            Debug.Log('2');
             LookDirection(180);
-            
+            SfxManager.PlaySound(SfxManager.Sound.playerMove);
+
         }
     }
 
@@ -279,6 +287,8 @@ public class Movement : MonoBehaviour {
         {
             _powerHero[(int)col.gameObject.GetComponent<PowerScript>().GetPower()]= true;
             ManagerEvents.PlayerMovementsEvents.PlayerGetedPower((int)col.gameObject.GetComponent<PowerScript>().GetPower());
+            SfxManager.PlaySound(SfxManager.Sound.playerGetNewPower);
+
             Destroy(col.gameObject);
         }
     }

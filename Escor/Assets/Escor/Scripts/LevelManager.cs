@@ -15,6 +15,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] GameObject characterPrefab;
     GameObject currentCharacter;
     [SerializeField] Camera cam;
+    [SerializeField] AudioSource levelAudioSource;
+    [SerializeField] AudioClip[] levelsMusicsBG;
     [SerializeField] CinemachineVirtualCamera virtualCam;
     [SerializeField]Popup popup;
     void Start()
@@ -24,7 +26,7 @@ public class LevelManager : MonoBehaviour
         popup.gameObject.SetActive(false);
         if (Manager_Game.Instance.levelData == null)
         {
-            CreateLevel(1);
+            CreateLevel(2);
         }
         else
         {
@@ -32,6 +34,7 @@ public class LevelManager : MonoBehaviour
             if(Manager_Game.Instance.LevelStatus==LevelInfo.LevelStatus.ContinueLevel)
                 PlayerSetupInformation();
         }
+        SfxManager.Initialize();
         levelstatus = LevelStatus.Game;
     }
 
@@ -42,6 +45,8 @@ public class LevelManager : MonoBehaviour
         currentCharacter = Instantiate(characterPrefab, initialSpawnPosition.position, initialSpawnPosition.rotation);
         cam.transform.localPosition = new Vector3(0, 0, -10);
         virtualCam.Follow = currentCharacter.transform;
+        levelAudioSource.clip = levelsMusicsBG[level - 1];
+        levelAudioSource.Play();
     }
     void PlayerSetupInformation()
     {

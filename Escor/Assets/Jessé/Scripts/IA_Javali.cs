@@ -642,7 +642,6 @@ public class IA_Javali : MonoBehaviour
             {
                 if (!playerMovement.isInvunerable)
                 {
-                    Debug.Log("Vim aqui caba da peste");
                     playerMovement.Life -= 1;
                 }
 
@@ -650,6 +649,7 @@ public class IA_Javali : MonoBehaviour
             else
             {
                 JavaliStuned();
+                SfxManager.PlaySound(SfxManager.Sound.playerDefense);
                 Debug.Log("Jogador não recebeu dano");
             }
         }
