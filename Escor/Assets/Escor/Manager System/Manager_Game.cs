@@ -115,19 +115,21 @@ public class GameData
     public int VolumeAmbient { get { return _volumeAmbient; } set { _volumeAmbient = value; } }
     public int LetterSize { get { return _letterSize; } set { _letterSize = value; } }
     public int LanguageSelect { get { return _languageSelect; } set { _languageSelect = value; } }
+
     public GameData(int valueVolume,int valueVolumeAmbient,int valueLettrSize, int valueLanguageSelect)
     {
         _volume = valueVolume;
         _volumeAmbient = valueVolumeAmbient;
         _letterSize = valueLettrSize;
         _languageSelect = valueLanguageSelect;
+
     }
 }
 [System.Serializable]
 public class SectionData
 {
     [SerializeField] int _currentLevel;
-    [SerializeField]LevelData[] _levelsData;
+    [SerializeField] LevelData[] _levelsData;
     [SerializeField] bool[] powerAwarded;
     public SectionData(int valueLevel, int valueNumberLevels,bool[] valuePowersAwarded)
     {
@@ -135,6 +137,31 @@ public class SectionData
         _levelsData = new LevelData[valueNumberLevels];
         powerAwarded = valuePowersAwarded;
     }
+
+
+
+    // [Jessé] ----------------------------------
+
+        public void SetSectionData(int valueLevel, int valueNumberLevels,bool[] valuePowersAwarded)
+        {
+            SetCurrentLevel(valueLevel);
+            SetLevelsData(valueNumberLevels);
+            SetPowersAwarded(valuePowersAwarded);
+        }
+
+        public void SetCurrentLevel(int level)
+        {
+            _currentLevel = level;
+        }
+
+        public void SetLevelsData(int valueNumberLevels)
+        {
+            _levelsData = new LevelData[valueNumberLevels];
+        }
+
+    // ------------------------------------------
+
+
 
     public int GetCurrentLevel()
     {
@@ -215,7 +242,7 @@ public class LevelData
     public int LevelGaming { get { return _levelGaming; } private set { } }
     public Vector2 CharacterPosition { get { return new Vector2(_playerPositionX, _playerPositionY); } private set { } }
     public bool[] Powers { get { return _powers; }  private set{}}
-    public LevelData(int valueLevel, float posPlayerX=0,float posPlayerY=0, int valueLifePlayerAmount = 3, bool[] valuePowerPlayer = null)
+    public LevelData(int valueLevel, float posPlayerX=0,float posPlayerY=0, int valueLifePlayerAmount = 3, bool[] valuePowerPlayer = null) // falta colocar aqui "coinsLevel"
     {
         _levelGaming = valueLevel;
         _playerPositionX = posPlayerX;
@@ -223,4 +250,51 @@ public class LevelData
         _lifePlayerAmount = valueLifePlayerAmount;
         _powers = valuePowerPlayer;
     }
+
+
+    // [Jessé] -----------------------------------------------------------------------
+
+        public void SetLevelData(int valueLevel, float posPlayerX=0,float posPlayerY=0, int valueLifePlayerAmount = 3, bool[] valuePowerPlayer = null, bool[] coinsLevel = null)
+        {
+            SetLevelGaming(valueLevel);
+            SetPlayerPosition(posPlayerX, posPlayerY);
+            SetLifePlayerAmount(valueLifePlayerAmount);
+            SetPowers(valuePowerPlayer);
+            SetCoinsLevel(coinsLevel);
+        }
+
+
+        public void SetLevelGaming(int value)
+        {
+            _levelGaming = value;
+        }
+
+        public void SetLifePlayerAmount(int value=3)
+        {
+            _lifePlayerAmount = value;
+        }
+
+        public void ResetPlayerPosition()
+        {
+            _playerPositionX = _playerPositionY = 0;
+        }
+
+        public void SetPlayerPosition(float x, float y)
+        {
+            _playerPositionX = x;
+            _playerPositionY = y;
+        }
+
+        public void SetPowers(bool[] powers)
+        {
+            _powers = powers;
+        }
+
+        public void SetCoinsLevel(bool[] _coinsLevel)
+        {
+            coinsLevel = _coinsLevel;
+        }
+
+    // -------------------------------------------------------------------------------
+
 }
