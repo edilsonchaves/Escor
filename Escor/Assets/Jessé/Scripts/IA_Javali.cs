@@ -9,17 +9,20 @@ public class IA_Javali : MonoBehaviour
 
     [Range(1,50)]
     public float MovementDistance;
-    public bool walkInAllGround; // só funciona com "AiLevel == 1"
+    public bool walkInAllGround; // só funciona com "AiLevel == 1" (OBS: nem sei mais)
     
     public float MovementSpeed, JumpHeight, FollowDistance, AttackDistance;
     public Animator JavaliAnimator;
 
     [Header("Raycast")]
     public LayerMask groundLayer;
+    public LayerMask platformLayer;
     private LayerMask wallLayer;
     public LayerMask playerLayer;
     public LayerMask javaliLayer;
     public Vector3 offSetGround, offSetWall;
+
+            
 
 
     // a linha vermelha é usada para mostrar a altura do pulo e para detectar se é possível pular o obstaculo
@@ -34,6 +37,7 @@ public class IA_Javali : MonoBehaviour
     protected float auxMovement, distanceOfCollision = .3f;
     protected bool isGrounded, following, started, attacking, stuned, bug;
     protected Transform playerTrans;
+
 
 
     // Gizmos - Desenvolvimento
@@ -231,6 +235,9 @@ public class IA_Javali : MonoBehaviour
             {
                 // print("JavaliAndando");
                 ChangeAnimation("JavaliAndando");
+   
+                    // SfxManager.PlaySound(SfxManager.Sound.javaliMove);
+                
             }
         }
         else
@@ -239,6 +246,9 @@ public class IA_Javali : MonoBehaviour
             if(!isGrounded)
             {
                 ChangeAnimation("JavaliTonto");
+
+                    SfxManager.PlaySound(SfxManager.Sound.javaliStuned);
+
                 myRb.AddForce(new Vector2(currentDirection*-1, 0)*2, ForceMode2D.Impulse);
             }
             else
@@ -319,6 +329,9 @@ public class IA_Javali : MonoBehaviour
                      Physics2D.Raycast(new Vector2(transform.position.x + offSetGround.x*currentDirection, transform.position.y + offSetGround.y), -Vector2.up, offSetGround.z, wallLayer).distance != 0 ||
                       Physics2D.Raycast(new Vector2(transform.position.x - offSetGround.x*currentDirection, transform.position.y + offSetGround.y), -Vector2.up, offSetGround.z, wallLayer).distance != 0;
         }
+
+        if(Physics2D.Raycast(new Vector2(transform.position.x + offSetGround.x*currentDirection, transform.position.y + offSetGround.y), -Vector2.up, offSetGround.z, platformLayer).distance != 0)
+            return false;
  
         return Physics2D.Raycast(new Vector2(transform.position.x + offSetGround.x*currentDirection, transform.position.y + offSetGround.y), -Vector2.up, offSetGround.z, groundLayer).distance != 0 ||
                  Physics2D.Raycast(new Vector2(transform.position.x + offSetGround.x*currentDirection, transform.position.y + offSetGround.y), -Vector2.up, offSetGround.z, wallLayer).distance != 0;
@@ -419,6 +432,9 @@ public class IA_Javali : MonoBehaviour
         {
             // print("Jump");
             ChangeAnimation("JavaliParado", true);
+
+
+
             float g = myRb.gravityScale * Physics2D.gravity.magnitude;
             // float v0 = jumpForce / myRb.mass; // converts the jumpForce to an initial velocity
             // float maxJump_y = GroundCheck1.position.y + (v0 * v0)/(2*g);
@@ -480,6 +496,9 @@ public class IA_Javali : MonoBehaviour
             attacking = true;
             // print("Attack");
             ChangeAnimation("JavaliAtacando", true);
+
+                SfxManager.PlaySound(SfxManager.Sound.javaliAttack);
+
             StartCoroutine(AttackFinished());
             if(stopToAttack)
             {
