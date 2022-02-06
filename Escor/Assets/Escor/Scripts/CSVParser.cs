@@ -68,12 +68,9 @@ public class CSVParser : MonoBehaviour
     {
         if (languageDictionary.Count == 0)
         {
-            Debug.Log("2");
             string[] lines = csvFile.text.Split("\n"[0]);
-            Debug.Log("3");
             for (int i = 1; i < lines.Length; i++)
             {
-                Debug.Log("4");
                 string[] row = SplitLine(lines[i]);
                 if (row.Length > 1)
                 {
@@ -84,9 +81,8 @@ public class CSVParser : MonoBehaviour
                 }
             }
         }
-        Debug.Log("5");
+        Debug.Log("Key ID: "+id);
         var values = languageDictionary[id];
-        Debug.Log("6");
         return values[languageIndex];
     }
 }

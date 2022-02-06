@@ -20,6 +20,8 @@ public class menupause : MonoBehaviour
     void Pause(int percentualComplete, int Coins, int LifePlayer)
     {
         pauseMenuUI.SetActive(true);
+        ManagerEvents.GameConfig.ChangedLanguage(Manager_Game.Instance.saveGameData.LanguageSelect);
+        ManagerEvents.GameConfig.ChangedLanguageSize(Manager_Game.Instance.saveGameData.LetterSize);
         textPercentual.text = percentualComplete + "/0";
         textCoins.text = Coins + "/0";
         textLife.text = LifePlayer + "/0";

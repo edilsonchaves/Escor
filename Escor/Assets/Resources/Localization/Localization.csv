@@ -27,8 +27,13 @@ ID_Cena33kuro;Will not escape child of darkness!;Nao vai escapar filho das treva
 ID_Cena34lobe;Don't you understand yet?;Voce nao entendeu ainda?;
 ID_Cena35kuro;...?;...?;
 ID_Cena36lobe;Only children of darkness can control all colors! HAHA HA!!!;Somente filhos das trevas podem controlar todas as cores! HAHAHA!!!;
-ID_Cena37lobe;;No!!!!Nao!!!!;
+ID_Cena37lobe;No!!!!;Nao!!!!;
 ID_Cena38lobe;Boars, attack!; - Javalis, ataquem!;
 ID_Cena41;Kuro does the last blow, and thus conquers the last color, orange, with that complete, kuro starts to shine very bright and everything around him and all the scorch, the colors start to return, the existing animals start to improve and their gifts return, making them safe and happy again.;Kuro da o ultimo golpe, e assim conquista a ultima cor, o laranja, com isso completo, kuro comeca a brilhar bem forte e tudo ao seu redor e toda a Escor, as cores comecam a retornar, os animais existentes comecam a melhorar e os dons deles voltam, tornando escor novamente segura e feliz.;
 ID_Cena42;Lobe is arrested again and life returns to normal. Kuro becomes an apprentice to the remaining elders, the tiger, and begins to learn about Escor's past and stories, to carry on with his destiny: keeping Escor safe and sound!;Lobe e novamente preso e a vida volta ao normal. Kuro se torna aprendiz do anciao restante, o tigre e comeca a aprender sobre o passado e as histirias de Escor, para dar prosseguimento a seu destino: manter escor sa e salva;
 ID_Cena45;"The End!";"Fim!";
+ID_ReturnGame;Return Game;Voltar ao Jogo;
+ID_ReturnMenu;Return Menu;Voltar ao Menu;
+ID_SaveGame;Save Game;Salvar o Jogo;
+ID_ExitGame;Exit Game;Sair do Jogo;
+ID_Pausa;Pause Game;Jogo Pausado;
