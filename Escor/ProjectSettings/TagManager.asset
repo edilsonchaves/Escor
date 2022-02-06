@@ -23,6 +23,7 @@ TagManager:
   - Vida
   - Javali
   - EndGame
+  - ConversaPersonagem
   layers:
   - Default
   - TransparentFX
