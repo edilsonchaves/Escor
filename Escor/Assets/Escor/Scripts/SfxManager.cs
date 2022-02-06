@@ -50,7 +50,6 @@ public static class SfxManager
     }
     public static void PlaySound(Sound sound)
     {
-        Debug.Log(CanPlaySound(sound));
         if (CanPlaySound(sound))
         {
             foreach (GameObject som in TiposDeSom)
