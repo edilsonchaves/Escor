@@ -110,6 +110,7 @@ public class Movement : MonoBehaviour {
     private void OnDisable()
     {
         ManagerEvents.PlayerMovementsEvents.onLookDirection -= LookDirection;
+        SfxManager.TiposDeSom = new List<GameObject>();
     }
 
     void FixedUpdate()

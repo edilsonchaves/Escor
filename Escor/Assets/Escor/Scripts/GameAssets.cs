@@ -12,6 +12,7 @@ public class GameAssets : MonoBehaviour
             if (_i == null)
             {
                 _i = (Instantiate(Resources.Load("GameAssets"))as GameObject).GetComponent<GameAssets>();
+                DontDestroyOnLoad(_i.gameObject);
             }
             return _i;
         }
