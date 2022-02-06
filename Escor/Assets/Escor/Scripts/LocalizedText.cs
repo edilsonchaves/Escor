@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 public class LocalizedText : MonoBehaviour
 {
     public string keyDefault;
-    Text text;
+     TextMeshProUGUI text;
     private void Awake()
     {
-        text = GetComponent<Text>();
+        text = GetComponent<TextMeshProUGUI>();
     }
     void SetupLanguage(int value)
     {
-        text.text = CSVParser.GetTextFromID(keyDefault, value );
+        text.text = CSVParser.GetTextFromID(keyDefault, value);
     }
-    public void Setup(string key,int value)
+    public void Setup(string key, int value)
     {
         text.text = CSVParser.GetTextFromID(key, value);
     }
