@@ -6,23 +6,23 @@ using UnityEngine.SceneManagement;
 public class Transicaocena : MonoBehaviour
 {
 [SerializeField] private Animator animator;
-private int cenaIndice;
+private int menu_inicial;
 
 private void update ()
 {
     if(Input.GetKeyDown(KeyCode.Space))
     {
-        IniciaTransicao(0);
+        IniciaTransicao(1);
     }
 }
 
 public void IniciaTransicao(int _cenaIndice)
 {
-    cenaIndice = _cenaIndice;
+    menu_inicial = _cenaIndice;
     animator.SetTrigger("Inicia");
 }
 public void TrocaCena()
 {
-    SceneManager.LoadScene(cenaIndice);
+    SceneManager.LoadScene(menu_inicial);
 }
 }
