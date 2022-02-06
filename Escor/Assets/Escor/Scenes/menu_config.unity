@@ -1037,6 +1037,8 @@ MonoBehaviour:
   _fontSlider: {fileID: 979419715}
   musicaMenu: {fileID: 0}
   vozDoJogo: []
+  volumeJogo: {fileID: 24100000, guid: 4d963a9c4fb612546a1961350d64fdc1, type: 2}
+  volumePercentageIncrement: 50
 --- !u!1 &615261295
 GameObject:
   m_ObjectHideFlags: 0
