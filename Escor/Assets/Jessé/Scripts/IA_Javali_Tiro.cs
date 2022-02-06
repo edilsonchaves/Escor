@@ -47,9 +47,7 @@ public class IA_Javali_Tiro : MonoBehaviour
         else if(!attacking)
         {
             ChangeAnimation("JavaliParado2", false);
-
-            SfxManager.PlaySound(SfxManager.Sound.javaliParado);
-
+           
             aux = 0;
         }
     }
@@ -84,6 +82,7 @@ public class IA_Javali_Tiro : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         bullet          = GetBullet();
         bullet.GetComponent<BulletScript>().script = this;
+        bullet.GetComponent<BulletScript>().emissor = this.gameObject;
         Vector2 force   = CalculateDirectionToAttack();
         bullet.GetComponent<Rigidbody2D>().AddForce(force*shootForce, ForceMode2D.Impulse);
         yield return new WaitForSeconds(0.5f);
