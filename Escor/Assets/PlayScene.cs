@@ -3,9 +3,11 @@ using UnityEngine;
 
 public class PlayScene : MonoBehaviour
 {
+    public bool prologo=true;
+
     void OnEnable()
     {
-        SceneManager.LoadScene("SelectLevel");
+        SceneManager.LoadScene(prologo?"SelectLevel":"CreditsScene");
         Destroy(gameObject);
     }
 }
