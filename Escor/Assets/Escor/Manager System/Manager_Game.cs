@@ -39,7 +39,7 @@ public class Manager_Game : MonoBehaviour
         {
             _instance = this;
             DontDestroyOnLoad(this.gameObject);
-            saveGameData = SaveLoadSystem.LoadFile<GameData>("C:/Users/Edilson Chaves/AppData/LocalLow/DefaultCompany/Escor/GameData.data");
+            saveGameData = SaveLoadSystem.LoadFile<GameData>(Application.persistentDataPath+"/GameData.data");
             if (saveGameData == null)
             {
                 saveGameData=InitializingGameDataSystem();
@@ -67,12 +67,14 @@ public class Manager_Game : MonoBehaviour
 
     public void LoadSectionGame()
     {
-        sectionGameData = SaveLoadSystem.LoadFile<SectionData>("C:/Users/Edilson Chaves/AppData/LocalLow/DefaultCompany/Escor/SectionData.data");
+        Debug.Log(Application.persistentDataPath + "/SectionData.data");
+        sectionGameData = SaveLoadSystem.LoadFile<SectionData>(Application.persistentDataPath+"/SectionData.data");
     }
 
     public void LoadLevelData()
     {
-        levelData = SaveLoadSystem.LoadFile<LevelData>("C:/Users/Edilson Chaves/AppData/LocalLow/DefaultCompany/Escor/LevelData.data");
+        Debug.Log(Application.persistentDataPath + "/LevelData.data");
+        levelData = SaveLoadSystem.LoadFile<LevelData>(Application.persistentDataPath +"/LevelData.data");
 
     }
 
