@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Boss_Script : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class Boss_Script : MonoBehaviour
     [SerializeField] float shootForce;
     enum BossStatus {Parado,Game,Die }
     BossStatus bossStatus;
+    public GameObject fade;
     void Start()
     {
         conversa = GameObject.FindGameObjectWithTag("ConversaPersonagem").GetComponent<ConversaPersonagem>();
@@ -89,6 +91,17 @@ public class Boss_Script : MonoBehaviour
         _animatorBoss.Play("BossDerrotadoStart");
         yield return new WaitUntil(() => conversa.StatusConversa);
         bossStatus = BossStatus.Die;
+
+        // [Jessé] ----------------
+
+            // _animatorBoss.Play("BossDerrotadoLoop");
+            // fade.SetActive(true);
+            yield return new WaitForSeconds(1f);
+
+            SceneManager.LoadScene("Final");
+
+        // ------------------------
+
     }
 
     protected GameObject GetBullet()

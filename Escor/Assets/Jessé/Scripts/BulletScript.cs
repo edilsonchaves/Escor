@@ -35,9 +35,10 @@ public class BulletScript : MonoBehaviour
             if (mvt.defendendo)
             {
                 isBackToJavali = true;
-                myRb.velocity = Vector2.zero;
-                Vector2 force = CalculateDirectionToAttack();
-                GetComponent<Rigidbody2D>().AddForce(force * valueForce/2, ForceMode2D.Impulse);
+                myRb.velocity = -myRb.velocity;
+                // myRb.velocity = Vector2.zero;
+                // Vector2 force = CalculateDirectionToAttack();
+                // GetComponent<Rigidbody2D>().AddForce(force * valueForce/2, ForceMode2D.Impulse);
                 return;
             }
 
