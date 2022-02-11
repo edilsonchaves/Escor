@@ -97,7 +97,7 @@ public class Movement : MonoBehaviour {
         _life = 3;
         ManagerEvents.PlayerMovementsEvents.LifedPlayer(_life);
         sprite = GetComponent<SpriteRenderer>();
-        _powerHero = new bool[3];
+        _powerHero = Manager_Game.Instance.sectionGameData.GetPowersAwarded();
         timeAbilityDefense = new float[2];
         timeAbilityDefense[1] = 5;
         timeAbilityDefense[0] = 5;
