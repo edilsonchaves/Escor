@@ -106,7 +106,7 @@ public class EstalactiteManager : MonoBehaviour
                 gotaCollider.enabled        = true;
                 auxDelay                    = 0;
                 gota.transform.localScale   = Vector3.one * (gotaScale/transform.localScale.x);
-                gota.transform.SetParent(null);
+                gota.transform.SetParent(transform.parent != null ? transform.parent : null);
                 gotaRB.isKinematic          = false;
                 splashFinished              = false;
                 gotaFall                    = true;
