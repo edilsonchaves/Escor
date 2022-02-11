@@ -41,7 +41,7 @@ public class Play_game : MonoBehaviour
 	void NovoJogo() 
 	{
 		Manager_Game.Instance.InitialNewSectionGame();
-		SceneManager.LoadScene("Prologo");
+		SceneManager.LoadScene("SelectLevel");
 
 	}
 	public void BTN_Config()
