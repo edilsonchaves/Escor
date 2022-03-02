@@ -73,7 +73,6 @@ public class Boss_Script : MonoBehaviour
             GetComponent<BoxCollider2D>().enabled = false;
             StartCoroutine(InitialStatusBossBattle());
         }
-
     }
 
     IEnumerator InitialStatusBossBattle()

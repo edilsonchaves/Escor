@@ -117,7 +117,7 @@ public class Movement : MonoBehaviour {
     {
         if (LevelManager.levelstatus == LevelManager.LevelStatus.Game) 
         {
-            if (canMove && !ropeControll.attached)
+            if (canMove && !ropeControll.attached && !defendendo)
             {
                 Move();
             }    
