@@ -19,9 +19,9 @@ public class Tartaruga : MonoBehaviour
         conversa = GameObject.FindGameObjectWithTag("ConversaPersonagem").GetComponent<ConversaPersonagem>();
     }
 
-    void OnTriggerStay2D(Collider2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.tag == tagOfPlayer && Input.GetKey(actionButton) && !talking)
+        if(col.tag == tagOfPlayer && !talking)
         {
             StartCoroutine(TalkAnimation());
         }
@@ -47,7 +47,6 @@ public class Tartaruga : MonoBehaviour
     }
     public void StopTalking()
     {
-        talking = false;
         myAnimator.SetBool("Talking", false);        
     }
 }
