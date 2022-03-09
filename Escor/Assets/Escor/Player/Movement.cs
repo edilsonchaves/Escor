@@ -115,6 +115,9 @@ public class Movement : MonoBehaviour {
 
     void FixedUpdate()
     {
+        if(noChao)
+            rb.velocity = new Vector2(0, rb.velocity.y); // impedir que o player fique deslisando
+
         if (LevelManager.levelstatus == LevelManager.LevelStatus.Game) 
         {
             if (canMove && !ropeControll.attached)
@@ -137,23 +140,26 @@ public class Movement : MonoBehaviour {
     
                 animator.SetBool("NoChao", noChao);
                
-                animator.SetBool("Caindo", noChao == false && pulando == false && rb.velocity.y < 0);
+                animator.SetBool("Caindo", noChao == false && pulando == false && rb.velocity.y < -0.5f);
                 
-                // Jump();
-                if(Input.GetButtonDown("Jump") && noChao && _powerHero[0])
-                    {
-                        pulando = true;
-                        noChao = false;
-                        SfxManager.PlaySound(SfxManager.Sound.playerJump);
-                        animator.SetBool("Pulando", true);
-                        animator.Play("pulando", -1, 0);
-                        
-                    } else if (noChao == true)
-                    {
-                        pulando = false;
-                        animator.SetBool("Pulando", false);
-                    }
-                Defense();
+                bool canJump = noChao && !pulando && _powerHero[0];
+
+                if(Input.GetButtonDown("Jump") && canJump)
+                {
+                    pulando = true;
+                    // noChao = false;
+                    SfxManager.PlaySound(SfxManager.Sound.playerJump);
+                    animator.SetBool("Pulando", true);
+                    animator.Play("pulando", -1, 0);
+                    
+                } 
+                else if (noChao && !pulando)
+                {
+                    // pulando = false;
+                    animator.SetBool("Pulando", false);
+                }
+
+                
                 if (defendendo)
                 {
                     if (timeAbilityDefense[0] > 0)
@@ -174,6 +180,9 @@ public class Movement : MonoBehaviour {
                 }
                 ManagerEvents.PlayerMovementsEvents.PlayerDefensedPower(timeAbilityDefense[0],timeAbilityDefense[1]);
             }
+
+            Defense();
+
             SlowMotion();
 
         }
@@ -222,7 +231,7 @@ public class Movement : MonoBehaviour {
         // if(Input.GetButtonDown("Jump") && noChao)
         // {
             pulando = true;
-            noChao = false;
+            // noChao = false;
             // animator.SetBool("Pulando", pulando);
             if(slowmotion == true)
             {
@@ -244,13 +253,15 @@ public class Movement : MonoBehaviour {
             {
                 defendendo = true;
                 animator.SetBool("Defendendo", true);
+                canMove = false;
 
             }
-            if (Input.GetButtonUp("Defesa"))
+            else if ((Input.GetButtonUp("Defesa") || timeAbilityDefense[0] <= 0) && defendendo)
             {
                 if(defendendo)
                     animator.Play("defesa");
                 defendendo = false;
+                canMove = true;
                 animator.SetBool("Defendendo", false);
             }
         }

@@ -17,6 +17,7 @@ public class MovePlataform : MonoBehaviour
     Vector3 newPos, startPos;
     float _startDirection;
 
+    [HideInInspector] Vector2 myVelocity;
 
     // Gizmos - Desenvolvimento
     void OnDrawGizmos()
@@ -64,11 +65,15 @@ public class MovePlataform : MonoBehaviour
         }
 
         maxDistance = Mathf.Abs(maxDistance);
+
+        myVelocity = (MoveOnHorizontal ? Vector2.right : Vector2.up) * (maxDistance / movementTime) * startDirection;
     }
 
     // Update is called once per frame
     void Update()
     {
+        abovePlatformManager.SetVelocity(GetVelocity());
+
         if(!startMovement && abovePlatformManager.isAbove)
         {
             startMovement = true;
@@ -110,6 +115,14 @@ public class MovePlataform : MonoBehaviour
 
         }
     
+    }
+
+    public Vector2 GetVelocity()
+    {
+        if(!canMove) // se não pode se mover é porque está parado
+            return Vector2.zero ;
+        // print(myVelocity*startDirection);
+        return myVelocity*startDirection; // startDirection é a direção atual
     }
 
 
