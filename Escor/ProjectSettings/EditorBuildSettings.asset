@@ -36,6 +36,6 @@ EditorBuildSettings:
     path: Assets/Escor/Scenes/CreditsScene.unity
     guid: 0890b210fb7b7ff468df445130a9928e
   - enabled: 1
-    path: Assets/Escor/Scenes/Final.unity
+    path: Assets/Escor/Scenes/FinalVerdadeiro.unity
     guid: 57b5b6805af72344dad5ece7812fe224
   m_configObjects: {}
