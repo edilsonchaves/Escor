@@ -65,13 +65,13 @@ public class Manager_Game : MonoBehaviour
         SaveLoadSystem.SaveFile<SectionData>(sectionGameData);
     }
 
-    public void LoadSectionGame()
+    public void LoadSectionGameMemory()
     {
         Debug.Log(Application.persistentDataPath + "/SectionData.data");
         sectionGameData = SaveLoadSystem.LoadFile<SectionData>(Application.persistentDataPath+"/SectionData.data");
     }
 
-    public void LoadLevelData()
+    public void LoadLevelDataMemory()
     {
         Debug.Log(Application.persistentDataPath + "/LevelData.data");
         levelData = SaveLoadSystem.LoadFile<LevelData>(Application.persistentDataPath +"/LevelData.data");
@@ -88,7 +88,7 @@ public class Manager_Game : MonoBehaviour
 
     public void LoadLevelGame()
     {
-        LoadLevelData();
+        LoadLevelDataMemory();
         if (levelData == null)
             _levelStatus = LevelInfo.LevelStatus.NewLevel;    
         else
@@ -100,7 +100,7 @@ public class Manager_Game : MonoBehaviour
         ManagerEvents.GameConfig.ChangedLanguage(saveGameData.LanguageSelect);
     }
 
-    public void SaveLevelData(int level,float posPlayerX,float posPlayerY,int lifePlayer,bool[] powerLevel)
+    public void SaveLevelMemory(int level,float posPlayerX,float posPlayerY,int lifePlayer,bool[] powerLevel)
     {
         SaveLoadSystem.SaveFile<LevelData>(new LevelData(level, posPlayerX, posPlayerY, lifePlayer,powerLevel));
     }
@@ -109,35 +109,35 @@ public class Manager_Game : MonoBehaviour
 [System.Serializable]
 public class GameData
 {
-    [SerializeField] int _volume;
-    [SerializeField] int _volumeAmbient;
-    [SerializeField] int _letterSize;
-    [SerializeField] int _languageSelect;
-    public int Volume { get { return _volume; } set { _volume = value; } }
-    public int VolumeAmbient { get { return _volumeAmbient; } set { _volumeAmbient = value; } }
-    public int LetterSize { get { return _letterSize; } set { _letterSize = value; } }
-    public int LanguageSelect { get { return _languageSelect; } set { _languageSelect = value; } }
+    [SerializeField] int _volumeLocal;
+    [SerializeField] int _volumeAmbientLocal;
+    [SerializeField] int _letterSizeLocal;
+    [SerializeField] int _languageSelectLocal;
+    public int Volume { get { return _volumeLocal; } set { _volumeLocal = value; } }
+    public int VolumeAmbient { get { return _volumeAmbientLocal; } set { _volumeAmbientLocal = value; } }
+    public int LetterSize { get { return _letterSizeLocal; } set { _letterSizeLocal = value; } }
+    public int LanguageSelect { get { return _languageSelectLocal; } set { _languageSelectLocal = value; } }
 
     public GameData(int valueVolume,int valueVolumeAmbient,int valueLettrSize, int valueLanguageSelect)
     {
-        _volume = valueVolume;
-        _volumeAmbient = valueVolumeAmbient;
-        _letterSize = valueLettrSize;
-        _languageSelect = valueLanguageSelect;
+        _volumeLocal = valueVolume;
+        _volumeAmbientLocal = valueVolumeAmbient;
+        _letterSizeLocal = valueLettrSize;
+        _languageSelectLocal = valueLanguageSelect;
 
     }
 }
 [System.Serializable]
 public class SectionData
 {
-    [SerializeField] int _currentLevel;
-    [SerializeField] LevelData[] _levelsData;
-    [SerializeField] bool[] powerAwarded;
+    [SerializeField] int _currentLevelLocal;
+    [SerializeField] LevelData[] _levelsDataLocal;
+    [SerializeField] bool[] powerAwardedLocal;
     public SectionData(int valueLevel, int valueNumberLevels,bool[] valuePowersAwarded)
     {
-        _currentLevel = valueLevel;
-        _levelsData = new LevelData[valueNumberLevels];
-        powerAwarded = valuePowersAwarded;
+        _currentLevelLocal = valueLevel;
+        _levelsDataLocal = new LevelData[valueNumberLevels];
+        powerAwardedLocal = valuePowersAwarded;
     }
 
 
@@ -153,12 +153,12 @@ public class SectionData
 
         public void SetCurrentLevel(int level)
         {
-            _currentLevel = level;
+            _currentLevelLocal = level;
         }
 
         public void SetLevelsData(int valueNumberLevels)
         {
-            _levelsData = new LevelData[valueNumberLevels];
+            _levelsDataLocal = new LevelData[valueNumberLevels];
         }
 
     // ------------------------------------------
@@ -167,90 +167,90 @@ public class SectionData
 
     public int GetCurrentLevel()
     {
-        return _currentLevel;
+        return _currentLevelLocal;
     }
 
     public void ConclusionLevelData(int level,int maxPercentualConclusion,bool[]targetsComplete,bool[] powerAwardedLevel)
     {
-        _levelsData[level].SetPercentualConclusion(maxPercentualConclusion);
-        _levelsData[level].SetTargetComplete(targetsComplete);
-        powerAwarded = powerAwardedLevel;
-        _currentLevel = level + 1;
+        _levelsDataLocal[level].SetPercentualConclusion(maxPercentualConclusion);
+        _levelsDataLocal[level].SetTargetComplete(targetsComplete);
+        powerAwardedLocal = powerAwardedLevel;
+        _currentLevelLocal = level + 1;
     }
 
     public bool[] GetPowersAwarded()
     {
-        return powerAwarded;
+        return powerAwardedLocal;
     }
 
     public void SetPowersAwarded(bool[] newValuePowersAwarded)
     {
-        powerAwarded = newValuePowersAwarded;
+        powerAwardedLocal = newValuePowersAwarded;
     }
     [System.Serializable]
     public class LevelData{
-        [SerializeField]int _currentMaxPercentualConclusion;
-        [SerializeField]bool[] _currentTargetsComplete;
-        [SerializeField] bool[] powerAwardedLevel;
+        [SerializeField]int _currentMaxPercentualConclusionLocal;
+        [SerializeField]bool[] _currentTargetsCompleteLocal;
+        [SerializeField] bool[] powerAwardedLevelLocal;
         public LevelData(int valuePercentualConclusion,bool[] valueTargetsComplete, bool[] valuePowersAwarded)
         {
-            _currentMaxPercentualConclusion = valuePercentualConclusion;
-            _currentTargetsComplete = valueTargetsComplete;
-            powerAwardedLevel = valuePowersAwarded;
+            _currentMaxPercentualConclusionLocal = valuePercentualConclusion;
+            _currentTargetsCompleteLocal = valueTargetsComplete;
+            powerAwardedLevelLocal = valuePowersAwarded;
         }
         public int GetPercentualConclusion()
         {
-            return _currentMaxPercentualConclusion;
+            return _currentMaxPercentualConclusionLocal;
         }
         public void SetPercentualConclusion(int newValue)
         {
-            if (newValue > _currentMaxPercentualConclusion)
+            if (newValue > _currentMaxPercentualConclusionLocal)
             {
-                _currentMaxPercentualConclusion = newValue;
+                _currentMaxPercentualConclusionLocal = newValue;
             }
         }
         public bool[] GetTargetsComplete()
         {
-            return _currentTargetsComplete;
+            return _currentTargetsCompleteLocal;
         }
 
         public void SetTargetComplete(bool[] newTargetsObjective)
         {
-            _currentTargetsComplete = newTargetsObjective;
+            _currentTargetsCompleteLocal = newTargetsObjective;
         }
 
         public bool[] GetPowersAwarded()
         {
-            return powerAwardedLevel;
+            return powerAwardedLevelLocal;
         }
 
         public void SetPowersAwarded(bool[] newValuePowersAwarded)
         {
-            powerAwardedLevel = newValuePowersAwarded;
+            powerAwardedLevelLocal = newValuePowersAwarded;
         }
     }
 }
 [System.Serializable]
 public class LevelData
 {
-    [SerializeField] int _levelGaming;
-    [SerializeField] float _playerPositionX, _playerPositionY;
-    [SerializeField] int _lifePlayerAmount;
-    [SerializeField] bool[] _powers;
-    [SerializeField] bool[] coinsLevel;
-    //[SerializeField] int progressLevel;
-    //[SerializeField] bool[] regionsVisited;
-    [SerializeField] Vector2?[] bossLevelPosition;
-    public int LevelGaming { get { return _levelGaming; } private set { } }
-    public Vector2 CharacterPosition { get { return new Vector2(_playerPositionX, _playerPositionY); } private set { } }
-    public bool[] Powers { get { return _powers; }  private set{}}
+    [SerializeField] int _levelGamingLocal;
+    [SerializeField] float _playerPositionXLocal, _playerPositionYLocal;
+    [SerializeField] int _lifePlayerAmountLocal;
+    [SerializeField] bool[] _powersLocal;
+    [SerializeField] bool[] coinsLevelLocal;
+    //[SerializeField] int progressLevelLocal;
+    //[SerializeField] bool[] regionsVisitedLocal;
+    [SerializeField] Vector2?[] bossLevelPositionLocal;
+    public int LevelGaming { get { return _levelGamingLocal; } private set { } }
+    public Vector2 CharacterPosition { get { return new Vector2(_playerPositionXLocal, _playerPositionYLocal); } private set { } }
+    public bool[] Powers { get { return _powersLocal; }  private set{}}
     public LevelData(int valueLevel, float posPlayerX=0,float posPlayerY=0, int valueLifePlayerAmount = 3, bool[] valuePowerPlayer = null) // falta colocar aqui "coinsLevel"
     {
-        _levelGaming = valueLevel;
-        _playerPositionX = posPlayerX;
-        _playerPositionY = posPlayerY;
-        _lifePlayerAmount = valueLifePlayerAmount;
-        _powers = valuePowerPlayer;
+        _levelGamingLocal = valueLevel;
+        _playerPositionXLocal = posPlayerX;
+        _playerPositionYLocal = posPlayerY;
+        _lifePlayerAmountLocal = valueLifePlayerAmount;
+        _powersLocal = valuePowerPlayer;
     }
 
 
@@ -268,33 +268,33 @@ public class LevelData
 
         public void SetLevelGaming(int value)
         {
-            _levelGaming = value;
+            _levelGamingLocal = value;
         }
 
         public void SetLifePlayerAmount(int value=3)
         {
-            _lifePlayerAmount = value;
+            _lifePlayerAmountLocal = value;
         }
 
         public void ResetPlayerPosition()
         {
-            _playerPositionX = _playerPositionY = 0;
+            _playerPositionXLocal = _playerPositionYLocal = 0;
         }
 
         public void SetPlayerPosition(float x, float y)
         {
-            _playerPositionX = x;
-            _playerPositionY = y;
+            _playerPositionXLocal = x;
+            _playerPositionYLocal = y;
         }
 
         public void SetPowers(bool[] powers)
         {
-            _powers = powers;
+            _powersLocal = powers;
         }
 
         public void SetCoinsLevel(bool[] _coinsLevel)
         {
-            coinsLevel = _coinsLevel;
+            coinsLevelLocal = _coinsLevel;
         }
 
     // -------------------------------------------------------------------------------

@@ -118,7 +118,7 @@ public class LevelManager : MonoBehaviour
 
     public void SaveGame()
     {
-        Manager_Game.Instance.SaveLevelData(Manager_Game.Instance.levelData.LevelGaming,currentCharacter.transform.position.x, currentCharacter.transform.position.y, currentCharacter.GetComponent<Movement>().Life, currentCharacter.GetComponent<Movement>().PowerHero);
+        Manager_Game.Instance.SaveLevelMemory(Manager_Game.Instance.levelData.LevelGaming,currentCharacter.transform.position.x, currentCharacter.transform.position.y, currentCharacter.GetComponent<Movement>().Life, currentCharacter.GetComponent<Movement>().PowerHero);
         SceneManager.LoadScene("SelectLevel");
     }
     void SaveGameButton()

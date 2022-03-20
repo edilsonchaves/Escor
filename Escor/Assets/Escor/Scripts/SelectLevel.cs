@@ -8,7 +8,7 @@ public class SelectLevel : MonoBehaviour
     [SerializeField] Button[] buttons;
     private void Start()
     {
-        Manager_Game.Instance.LoadSectionGame();
+        Manager_Game.Instance.LoadSectionGameMemory();
         for(int i = 0; i < buttons.Length; i++)
         {
             if (i < Manager_Game.Instance.sectionGameData.GetCurrentLevel())
