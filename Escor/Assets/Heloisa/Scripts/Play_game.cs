@@ -30,7 +30,7 @@ public class Play_game : MonoBehaviour
     {
         if (Manager_Game.Instance.levelData.LevelGaming==0)
         {
-			SceneManager.LoadScene("SelectLevel");
+			SceneManager.LoadScene("Prologo");
         }
         else
         {
@@ -41,7 +41,7 @@ public class Play_game : MonoBehaviour
 	void NovoJogo() 
 	{
 		Manager_Game.Instance.InitialNewSectionGame();
-		SceneManager.LoadScene("SelectLevel");
+		SceneManager.LoadScene("Prologo");
 
 	}
 	public void BTN_Config()

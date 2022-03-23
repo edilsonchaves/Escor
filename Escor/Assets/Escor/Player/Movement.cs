@@ -123,7 +123,11 @@ public class Movement : MonoBehaviour {
             if (canMove && !ropeControll.attached && !defendendo)
             {
                 Move();
-            }    
+            }  
+            else if(!canMove)
+            {
+                animator.SetFloat("VelocidadeX", 0);
+            }  
         }
     }
 
