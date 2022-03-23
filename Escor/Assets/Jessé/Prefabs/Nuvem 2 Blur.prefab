@@ -70,7 +70,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 50
+  m_SortingOrder: 5000
   m_Sprite: {fileID: 21300000, guid: 37e78fb643e74d74e81584c88303c0fc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.69803923}
   m_FlipX: 0
@@ -153,7 +153,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 50
+  m_SortingOrder: 5000
   m_Sprite: {fileID: 21300000, guid: 37e78fb643e74d74e81584c88303c0fc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.69803923}
   m_FlipX: 0
@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 4524908675522049742}
   m_Layer: 0
   m_Name: Nuvem 2 Blur
-  m_TagString: Untagged
+  m_TagString: "Decora\xE7\xE3oComCollider"
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
