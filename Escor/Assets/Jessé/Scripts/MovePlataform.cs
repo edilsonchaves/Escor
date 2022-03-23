@@ -67,6 +67,15 @@ public class MovePlataform : MonoBehaviour
         maxDistance = Mathf.Abs(maxDistance);
 
         myVelocity = (MoveOnHorizontal ? Vector2.right : Vector2.up) * (maxDistance / movementTime) * startDirection;
+        // if(MoveOnHorizontal)
+        // {
+        //     myVelocity = Vector2.right * (maxDistance / movementTime) * startDirection;
+        // }
+        // else
+        // {
+        //     // faz com que o player ao pular sejam puxado em direção da plataforma
+        //     myVelocity = Vector2.up * (maxDistance / movementTime); 
+        // }
     }
 
     // Update is called once per frame
@@ -121,6 +130,7 @@ public class MovePlataform : MonoBehaviour
     {
         if(!canMove) // se não pode se mover é porque está parado
             return Vector2.zero ;
+
         // print(myVelocity*startDirection);
         return myVelocity*startDirection; // startDirection é a direção atual
     }

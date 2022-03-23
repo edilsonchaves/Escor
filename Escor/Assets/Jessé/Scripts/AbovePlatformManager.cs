@@ -35,7 +35,7 @@ public class AbovePlatformManager : MonoBehaviour
         {
             if(collision.gameObject.TryGetComponent(out Rigidbody2D objAboveRigidbody))
             {
-                objAboveRigidbody.velocity = new Vector2(myVelocity.x, objAboveRigidbody.velocity.y); // a velocidade no eixo y não muda
+                // objAboveRigidbody.velocity = new Vector2(myVelocity.x, objAboveRigidbody.velocity.y); // a velocidade no eixo y não muda
             }
 
             collision.transform.SetParent(null);
