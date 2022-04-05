@@ -11,14 +11,11 @@ public class configurações : MonoBehaviour
     [SerializeField] private Slider volume = null;
     [SerializeField] private Slider volumeVoz = null;
     [SerializeField] private Slider _fontSlider;
-
-    public delegate void OnSizeChange();
-    public static OnSizeChange SizeChangeDelegate;
     public AudioSource musicaMenu;
     public AudioSource[] vozDoJogo;
 
     public AudioMixer volumeJogo;
-
+    int currentFontSize=0;
 
     private void Start()
     {
@@ -38,7 +35,6 @@ public class configurações : MonoBehaviour
 
        
     }
-
     // ---
     private IEnumerator UpdateValuesFromSlider()
     {
@@ -47,10 +43,34 @@ public class configurações : MonoBehaviour
             Manager_Game.Instance.saveGameData.LetterSize      = (int) _fontSlider.value;
             Manager_Game.Instance.saveGameData.VolumeAmbient   = (int) volume.value;
             Manager_Game.Instance.saveGameData.Volume          = (int) volumeVoz.value;
-            ManagerEvents.GameConfig.ChangedLanguageSize ((int) _fontSlider.value);
+            if (currentFontSize != (int)_fontSlider.value)
+            {
+                Debug.Log((int)_fontSlider.value);
+                ManagerEvents.GameConfig.ChangedLanguageSize((int)_fontSlider.value);
+                currentFontSize = (int)_fontSlider.value;
+            }
+            if (volumeVoz.value == 0)
+            {
+                volumeJogo.SetFloat("vozsound", -80); // Range de volume.value é [0, 100]
 
-            volumeJogo.SetFloat("vozsound", -80 + volumeVoz.value * 0.8f); // Range de volume.value é [0, 100]
-            volumeJogo.SetFloat("bgsound", -80 + volume.value * 0.8f); // Range de volume.value é [0, 100]
+            }
+            else
+            {
+                volumeJogo.SetFloat("vozsound", volumeVoz.value); // Range de volume.value é [0, 100]
+
+            }
+
+            if (volume.value == -40)
+            {
+                volumeJogo.SetFloat("bgsound", -80); // Range de volume.value é [0, 100]
+
+            }
+            else
+            {
+                volumeJogo.SetFloat("bgsound", volume.value); // Range de volume.value é [0, 100]
+
+            }
+            
 
             yield return null;
         }
@@ -59,12 +79,12 @@ public class configurações : MonoBehaviour
 
     public void ChangeFontSize()
     {
-        
+
         //Muda o tamanho das fontes visíveis
-        if (SizeChangeDelegate != null)
-        {
-            SizeChangeDelegate.Invoke();
-        }                
+        if (currentFontSize == (int)_fontSlider.value)
+            return;
+        Debug.Log((int)_fontSlider.value);
+        ManagerEvents.GameConfig.ChangedLanguageSize((int)_fontSlider.value);                
     }
 
     private void salvarAsConfig()
@@ -84,6 +104,5 @@ public class configurações : MonoBehaviour
         Manager_Game.Instance.saveGameData.VolumeAmbient= (int)volume.value;
         Manager_Game.Instance.saveGameData.Volume= (int)volumeVoz.value;
         SaveLoadSystem.SaveFile<GameData>(Manager_Game.Instance.saveGameData);
-        SceneManager.LoadScene("menu_inicial");
     }
 }

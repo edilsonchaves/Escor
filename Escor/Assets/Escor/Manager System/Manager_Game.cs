@@ -53,7 +53,7 @@ public class Manager_Game : MonoBehaviour
 
     public GameData InitializingGameDataSystem()
     {
-        GameData initializeGameData = new GameData(50, 50, 32, 0);
+        GameData initializeGameData = new GameData(50, 50, 100, 0);
 
         SaveLoadSystem.SaveFile<GameData>(initializeGameData);
         return initializeGameData;

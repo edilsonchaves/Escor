@@ -34,7 +34,7 @@ public class Play_game : MonoBehaviour
         }
         else
         {
-			SceneManager.LoadScene("GameLevel");
+			SceneManager.LoadScene("LoadGameScene");
 		}
     }
 
