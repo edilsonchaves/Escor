@@ -20,13 +20,13 @@ public class DefinidorTamanhoLetra : MonoBehaviour
         UpdateSize();
 
         //Salvar o método de atualizar o tamanho no delegate
-        configurações.SizeChangeDelegate += UpdateSize;
+        //configurações.SizeChangeDelegate += UpdateSize;
     }
 
     private void OnDisable()
     {
         //Remove o método de atualizar o tamanho no delegate
-        configurações.SizeChangeDelegate -= UpdateSize;
+        //configurações.SizeChangeDelegate -= UpdateSize;
     }
 
     public void UpdateSize()

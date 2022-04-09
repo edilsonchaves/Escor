@@ -5,16 +5,18 @@ using TMPro;
 public class TextSizeAdapt : MonoBehaviour
 {
     TextMeshProUGUI text;
-    int minLanguageSize;
-    [SerializeField] int maxLanguageletterAdapt;
+    [SerializeField]float minLanguageSize;
     private void Awake()
     {
+        Debug.Log("Awake");
         text = GetComponent<TextMeshProUGUI>();
         minLanguageSize = (int)text.fontSize;
     }
     private void OnEnable()
     {
+        Debug.Log("On Enable");
         ManagerEvents.GameConfig.onChangeLanguageSize += SetupLanguageSize;
+        SetupLanguageSizeEnabled();
     }
     private void OnDisable()
     {
@@ -23,8 +25,15 @@ public class TextSizeAdapt : MonoBehaviour
     }
 
 
-    void SetupLanguageSize(int value)
+    void SetupLanguageSize(float value)
     {
-        text.fontSize = minLanguageSize + Mathf.RoundToInt(maxLanguageletterAdapt*value/100);
+        float valueLetter = minLanguageSize * (value / 100);
+        text.fontSize = Mathf.RoundToInt(minLanguageSize * (value/100));
+    }
+    void SetupLanguageSizeEnabled()
+    {
+        Debug.Log(text.fontSize+": "+ Mathf.RoundToInt(minLanguageSize * (Manager_Game.Instance.saveGameData.LetterSize / 100)));
+        if(text.fontSize != Mathf.RoundToInt(minLanguageSize * (Manager_Game.Instance.saveGameData.LetterSize / 100)))
+        text.fontSize = Mathf.RoundToInt(minLanguageSize * (Manager_Game.Instance.saveGameData.LetterSize/100));
     }
 }

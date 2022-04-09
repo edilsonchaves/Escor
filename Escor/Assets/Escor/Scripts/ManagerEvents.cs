@@ -9,7 +9,7 @@ public class ManagerEvents : MonoBehaviour
 
     {
         public static event Action<int> onChangeLanguage;
-        public static event Action<int> onChangeLanguageSize;
+        public static event Action<float> onChangeLanguageSize;
 
         public static void ChangedLanguage(int value)
         {
@@ -20,7 +20,7 @@ public class ManagerEvents : MonoBehaviour
             }
         }
 
-        public static void ChangedLanguageSize(int value)
+        public static void ChangedLanguageSize(float value)
         {
 
             if (onChangeLanguageSize != null)
