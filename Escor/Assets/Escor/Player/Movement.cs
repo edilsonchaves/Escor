@@ -16,8 +16,26 @@ public class Movement : MonoBehaviour {
     private PlayerRopeControll ropeControll;
     public static bool canMove = true;
     [SerializeField]int _life;
+    [SerializeField] int _fragmentLife;
     SpriteRenderer sprite;
     public bool isInvunerable;
+
+    public int FragmentLife
+    {
+        get { return _fragmentLife;}
+        set 
+        { 
+            if (value == 5)
+            {
+                GainLife();
+                _fragmentLife = 0;
+            }
+            else
+            {
+                _fragmentLife = value;
+            }
+        }
+    }
     public int Life
     {
         
@@ -305,6 +323,16 @@ public class Movement : MonoBehaviour {
             SfxManager.PlaySound(SfxManager.Sound.playerGetNewPower);
 
             Destroy(col.gameObject);
+        }
+
+        if (col.gameObject.CompareTag("FragmentMemory"))
+        {
+            ManagerEvents.PlayerMovementsEvents.PlayerObtainedFragmentMemory();
+        }
+
+        if (col.gameObject.CompareTag("FragmentLife"))
+        {
+            _fragmentLife++;
         }
     }
     

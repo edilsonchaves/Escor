@@ -97,6 +97,7 @@ public class ManagerEvents : MonoBehaviour
         public static event Action onDiePlayer;
         public static event Action<int> onPlayerGetPower;
         public static event Action<float, float> onPlayerDefenseTime;
+        public static event Action onPlayerObtainFragmentMemory;
         public static void LookedDirection(float value)
         {
             
@@ -134,6 +135,14 @@ public class ManagerEvents : MonoBehaviour
             if (onPlayerDefenseTime != null)
             {
                 onPlayerDefenseTime(valueAmount,valueMax);
+            }
+        }
+
+        public static void PlayerObtainedFragmentMemory()
+        {
+            if (onPlayerObtainFragmentMemory != null)
+            {
+                onPlayerObtainFragmentMemory();
             }
         }
     }
