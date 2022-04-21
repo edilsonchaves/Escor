@@ -20,6 +20,11 @@ public static class SfxManager
         javaliStuned,
         javaliParado,
 
+        gotaSplash_1,
+        gotaSplash_2,
+        gotaSplash_3,
+        gotaSplash_4,
+
     }
     private static Dictionary<Sound, float> soundTimerDic;
     public static List<GameObject> TiposDeSom = new List<GameObject>();
@@ -33,7 +38,7 @@ public static class SfxManager
         switch (sound)
         {
             default:
-                return true;                
+                return true;
             case Sound.playerMove:
                 if (soundTimerDic.ContainsKey(sound))
                 {
@@ -100,5 +105,21 @@ public static class SfxManager
 
         Debug.LogError("Sound: " + sound + " not found");
         return null;
+    }
+
+
+    // [Jessé]
+    // toca uma das 4 variações do som da gota de forma aleatória
+    public static void PlayRandomGotaSplash()
+    {
+        Sound randomGotaSplash = new Sound[4]{
+            Sound.gotaSplash_1,
+            Sound.gotaSplash_2,
+            Sound.gotaSplash_3,
+            Sound.gotaSplash_4
+        }[Random.Range(0,4)];
+
+        // Debug.Log(randomGotaSplash);
+        SfxManager.PlaySound(randomGotaSplash);
     }
 }
