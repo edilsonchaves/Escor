@@ -25,6 +25,14 @@ public static class SfxManager
         gotaSplash_3,
         gotaSplash_4,
 
+        armadilhaPedra,
+
+        cordaPegar_1,
+        cordaPegar_2,
+        cordaBalancando,
+
+        estalactiteBalancando,
+        estalactiteDestroy,
     }
     private static Dictionary<Sound, float> soundTimerDic;
     public static List<GameObject> TiposDeSom = new List<GameObject>();
@@ -121,5 +129,20 @@ public static class SfxManager
 
         // Debug.Log(randomGotaSplash);
         SfxManager.PlaySound(randomGotaSplash);
+    }
+
+
+    // [Jessé]
+    // toca uma das 2 variações do som de pegar a corda de forma aleatória
+    public static void PlayRandomCordaPegar()
+    {
+        Sound randomCordaPegar = new Sound[3]{
+            Sound.cordaPegar_1,
+            Sound.cordaPegar_1, // o som 1 parece melhor por isso dupliquei suas chaces de ser reproduzido
+            Sound.cordaPegar_2,
+        }[Random.Range(0,3)];
+
+        // Debug.Log(randomCordaPegar);
+        SfxManager.PlaySound(randomCordaPegar);
     }
 }

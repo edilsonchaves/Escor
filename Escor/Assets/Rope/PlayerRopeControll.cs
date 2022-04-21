@@ -13,8 +13,8 @@ public class PlayerRopeControll : MonoBehaviour
 
     [HideInInspector]
     public bool attached = false;
-    
-    [HideInInspector]
+
+    // [HideInInspector]
     public Transform attachedTo;
     private GameObject disregard;
 
@@ -46,8 +46,10 @@ public class PlayerRopeControll : MonoBehaviour
         }
         else if(attached)
         {
+
+            // SfxManager.PlaySound(SfxManager.Sound.cordaBalancando); // som de efeito
             if(mvtScript.transform.eulerAngles.y == 0)
-            {   
+            {
                 // print(oldPos);
                 Vector3 newRotation = new Vector3(0, Mathf.Round(mvtScript.transform.eulerAngles.y), Mathf.Round(currentSegment.eulerAngles.z));
                 // print(newRotation);
@@ -63,7 +65,7 @@ public class PlayerRopeControll : MonoBehaviour
                 transform.eulerAngles = new Vector3(0, Mathf.Round(mvtScript.transform.eulerAngles.y), -Mathf.Round(currentSegment.eulerAngles.z));
             }
 
-           
+
         }
 
         CheckKeyboardInputs();
@@ -82,7 +84,6 @@ public class PlayerRopeControll : MonoBehaviour
         // print($"Above [{isAboveSegment}]  Distance [{distanceFromSegmentCenter}]");
         Debug.DrawLine(currentSegment.position, currentSegment.position + ((isAboveSegment?currentSegment.up:-currentSegment.up) * distanceFromSegmentCenter), Color.red);
         transform.position = currentSegment.position + ((isAboveSegment?currentSegment.up:-currentSegment.up) * distanceFromSegmentCenter);
-
     }
 
 
@@ -127,12 +128,17 @@ public class PlayerRopeControll : MonoBehaviour
             //     transform.position          = (Vector2) hj.connectedBody.transform.position + dir;
             // }
 
-        }   
+        }
     }
 
     public void Attach(Rigidbody2D ropeBone)
     {
         // print("Attach");
+        SfxManager.PlayRandomCordaPegar(); // som de efeito
+        StopAllCoroutines();
+        // StopCoroutine(KeepPlayingSoundOfCordaBalancando());
+        StartCoroutine(KeepPlayingSoundOfCordaBalancando());
+
         ropeBone.gameObject.GetComponent<RopeSegment>().isPlayerAttached = true;
         currentSegment = ropeBone.gameObject.GetComponent<RopeSegment>().transform;
         ropeBone.velocity = rb.velocity*3;
@@ -149,6 +155,7 @@ public class PlayerRopeControll : MonoBehaviour
     public void Detach()
     {
         // print("Detach");
+        StopAllCoroutines();
         hj.connectedBody.gameObject.GetComponent<RopeSegment>().isPlayerAttached = false;
         hj.enabled = false;
         hj.connectedBody = null;
@@ -202,7 +209,7 @@ public class PlayerRopeControll : MonoBehaviour
                 //     canClimb = false;
                 // }
 
-            }       
+            }
 
         }
 
@@ -227,7 +234,7 @@ public class PlayerRopeControll : MonoBehaviour
         {
             float myDis = ((Vector2)(transform.position - myConnection.connectedAbove.transform.position)).magnitude;
             float segDis = ((Vector2)(myConnection.connectedAbove.transform.position - currentSegment.position)).magnitude;
-            
+
             distanceFromSegmentCenter = ((Vector2)(transform.position - currentSegment.position)).magnitude;
             isAboveSegment = myDis < segDis;
         }
@@ -236,7 +243,7 @@ public class PlayerRopeControll : MonoBehaviour
         {
             float myDis = ((Vector2)(transform.position - myConnection.connectedBelow.transform.position)).magnitude;
             float segDis = ((Vector2)(myConnection.connectedBelow.transform.position - currentSegment.position)).magnitude;
-            
+
             distanceFromSegmentCenter = ((Vector2)(transform.position - currentSegment.position)).magnitude;
             isAboveSegment = myDis > segDis;
         }
@@ -244,10 +251,10 @@ public class PlayerRopeControll : MonoBehaviour
         {
             float myDisUp = ((Vector2)(transform.position - myConnection.connectedAbove.transform.position)).magnitude;
             float myDisDown = ((Vector2)(transform.position - myConnection.connectedBelow.transform.position)).magnitude;
-            
+
             distanceFromSegmentCenter = ((Vector2)(transform.position - currentSegment.position)).magnitude;
             isAboveSegment = myDisUp < myDisDown;
-        } 
+        }
 
 
     }
@@ -297,13 +304,53 @@ public class PlayerRopeControll : MonoBehaviour
         {
             RopeSegment myConnection = hj.connectedBody.gameObject.GetComponent<RopeSegment>();
             print("Debug");
-            return myConnection.connectedBelow != null || myConnection.connectedAbove != null; 
+            return myConnection.connectedBelow != null || myConnection.connectedAbove != null;
         }
         catch
         {
             return false;
         }
     }
+
+
+    IEnumerator KeepPlayingSoundOfCordaBalancando()
+    {
+        while(true)
+        {
+            // SfxManager.PlaySound(SfxManager.Sound.cordaBalancando); // som de efeito
+            yield return new WaitForSeconds(2f + Random.Range(0.0f, 1.0f));
+
+            if(!attached)
+                break;
+
+            if (!CheckIfSegmentIsCloseToCenter())
+            {
+                SfxManager.PlayRandomCordaPegar(); // som de efeito
+            }
+
+            yield return null;
+        }
+    }
+
+    public bool CheckIfSegmentIsCloseToCenter()
+    {
+        GameObject lastSegment = myConnection.gameObject;
+
+        while(true)
+        {
+            if(lastSegment.GetComponent<RopeSegment>().connectedBelow!=null)
+            {
+                lastSegment = lastSegment.GetComponent<RopeSegment>().connectedBelow;
+            }
+            else
+            {
+                break;
+            }
+        }
+        print(lastSegment.transform.localPosition.x);
+        return Mathf.Abs(lastSegment.transform.localPosition.x) < 1;
+    }
+
 
 
     void OnTriggerStay2D(Collider2D col)
@@ -321,7 +368,6 @@ public class PlayerRopeControll : MonoBehaviour
                 }
             }
         }
-
     }
 
 }

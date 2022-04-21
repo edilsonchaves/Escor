@@ -22,7 +22,7 @@ public class EstalactiteManager : MonoBehaviour
     public string tagOfPlayer = "Player";
 
     public LayerMask groundLayer;
-    
+
     private GameObject gota, splash, gameObjectColliderToCanFall;
     private Rigidbody2D gotaRB, myRB;
     private CapsuleCollider2D gotaCollider;
@@ -150,7 +150,7 @@ public class EstalactiteManager : MonoBehaviour
         gotaRB.isKinematic          = true;
         gotaRB.velocity             = Vector3.zero;
         gota.transform.localScale   = Vector3.zero;
-        
+
         if(gota)
             splash.transform.position   = gota.transform.position;
 
@@ -184,6 +184,7 @@ public class EstalactiteManager : MonoBehaviour
                 if(col.tag == tagOfPlayer)
                 {
                     myAnimator.Play("EstalactitePreparandoParaCairStart");
+                    SfxManager.PlaySound(SfxManager.Sound.estalactiteBalancando);
                 }
             }
             else
@@ -193,10 +194,10 @@ public class EstalactiteManager : MonoBehaviour
                 {
 
                     StartAnimationOfDestroyEstalactite();
-                
+
                     if(col.tag == tagOfPlayer)
                     {
-                        // dano no player aqui 
+                        // dano no player aqui
 
                         Movement playerMovement = col.GetComponent<Movement>();
                         if (!playerMovement.isInvunerable && playerMovement.Life > 0)
@@ -226,6 +227,7 @@ public class EstalactiteManager : MonoBehaviour
         isDestroyed         = true;
         myRB.isKinematic    = true;
         myRB.velocity       = Vector2.zero;
+        SfxManager.PlaySound(SfxManager.Sound.estalactiteDestroy);
         myAnimator.Play("EstalactiteDestroyed");
     }
 

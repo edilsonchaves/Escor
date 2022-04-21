@@ -6,7 +6,8 @@ public class RopeSegment : MonoBehaviour
 {
     public GameObject connectedAbove, connectedBelow;
     public bool isPlayerAttached;
-    private RopeSegment aboveSegment;
+    [HideInInspector]
+    public RopeSegment aboveSegment;
 
     // Start is called before the first frame update
     void Start()
