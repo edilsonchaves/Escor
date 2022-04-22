@@ -373,7 +373,7 @@ public class IA_Javali : MonoBehaviour
             return;
 
         attacking = true;
-        StartCoroutine(AttackFinished());
+        StartCoroutine(AttackFinished(2f));
         FlipFaceToPlayer();
         ChangeAnimation("JavaliAtacando", true);
         SfxManager.PlaySound(SfxManager.Sound.javaliAttack);
