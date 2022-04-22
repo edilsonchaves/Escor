@@ -84,8 +84,9 @@ public class LevelManager : MonoBehaviour
         ManagerEvents.UIConfig.onExitMenu += ExitMenuPressButton;
         ManagerEvents.UIConfig.onResumeGame += Resume;
         ManagerEvents.UIConfig.onSaveGame += SaveGameButton;
-        ManagerEvents.PlayerDeadUI.onReplayLevel += RecomeçarFasePressButton;
-        // ManagerEvents.PlayerDeadUI.onReplayLevel += Recome�arFasePressButton;
+
+        ManagerEvents.PlayerDeadUI.onReplayLevel += RecomecarFasePressButton;
+
     }
     private void OnDisable()
     {
@@ -93,8 +94,9 @@ public class LevelManager : MonoBehaviour
         ManagerEvents.UIConfig.onExitMenu -= ExitMenuPressButton;
         ManagerEvents.UIConfig.onResumeGame -= Resume;
         ManagerEvents.UIConfig.onSaveGame -= SaveGameButton;
-        ManagerEvents.PlayerDeadUI.onReplayLevel -= RecomeçarFasePressButton;
-        // ManagerEvents.PlayerDeadUI.onReplayLevel -= Recome�arFasePressButton;
+
+        ManagerEvents.PlayerDeadUI.onReplayLevel -= RecomecarFasePressButton;
+
 
 
     }
@@ -115,7 +117,9 @@ public class LevelManager : MonoBehaviour
     void VoltarMenuPressButton()
     {
         Debug.Log("Teste");
-        popup.InitPopup("Voc� deseja salvar o progresso da fase antes de voltar para o menu?", "Sim", SaveGame, "Nao", () => SceneManager.LoadScene("SelectLevel"));
+
+        popup.InitPopup("Voce deseja salvar o progresso da fase antes de voltar para o menu?", "Sim", SaveGame, "Nao", () => SceneManager.LoadScene("SelectLevel"));
+
     }
 
     public void SaveGame()
@@ -133,9 +137,10 @@ public class LevelManager : MonoBehaviour
     }
 
 
-    public void RecomeçarFasePressButton()
+    public void RecomecarFasePressButton()
     {
-        popup.InitPopup("Cuidado! Esta a��o ir� fazer com que voc� perca o progresso salvo. Deseja continuar?", "Sim", () => Debug.Log("Sim Action"), "Nao", () => Debug.Log("Nao"));
+        popup.InitPopup("Cuidado! Esta acao ira fazer com que voce perca o progresso salvo. Deseja continuar?", "Sim", () => Debug.Log("Sim Action"), "Nao", () => Debug.Log("Nao"));
+
     }
     private void Exit()
     {
