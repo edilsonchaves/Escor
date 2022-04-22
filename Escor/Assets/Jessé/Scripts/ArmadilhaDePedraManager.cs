@@ -7,7 +7,7 @@ public class ArmadilhaDePedraManager : MonoBehaviour
 
 
     [Header("Random")]
-    public bool useRandom;    
+    public bool useRandom;
     [Range(1, 10)]
     public float delayRange;
 
@@ -31,11 +31,13 @@ public class ArmadilhaDePedraManager : MonoBehaviour
     {
 
         while(true && !stop)
-        {   
+        {
             if(useRandom)
                 delay = Random.Range(1,delayRange);
 
             yield return new WaitForSeconds(delay);
+
+            SfxManager.PlaySound(SfxManager.Sound.armadilhaPedra); // som de efeito
 
             anim.Play("ArmadilhaDePedraStart", -1, 0);
         }

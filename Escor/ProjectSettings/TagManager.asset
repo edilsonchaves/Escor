@@ -25,6 +25,7 @@ TagManager:
   - EndGame
   - ConversaPersonagem
   - Boss
+  - Cave Interior
   layers:
   - Default
   - TransparentFX

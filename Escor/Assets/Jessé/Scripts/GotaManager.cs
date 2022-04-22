@@ -19,6 +19,7 @@ public class GotaManager : MonoBehaviour
         if( layersToCanSplash == (layersToCanSplash | ( 1 << col.gameObject.layer)))
         {
             scriptOfEstalactite.ShowSplashAnimation();
+            SfxManager.PlayRandomGotaSplash();
         }
     }
 }
