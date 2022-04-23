@@ -10,6 +10,7 @@ public class Alavanca : MonoBehaviour
     [SerializeField] private Animator myAnimator;
     [SerializeField] private Animator[] portoes;
     
+    
     private Movement mvt;
     
     bool alreadyTriggered=false;
