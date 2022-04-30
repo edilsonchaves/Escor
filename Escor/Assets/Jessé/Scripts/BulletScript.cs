@@ -53,7 +53,7 @@ public class BulletScript : MonoBehaviour
         }
         else if (col.tag == tagOfJavali && isBackToJavali)
         {
-            emissor.GetComponent<IA_Javali_Tiro>().anim.Play("JavaliTonto", -1, 0);
+            emissor.GetComponent<IA_Javali>().JavaliAnimator.Play("JavaliTonto", -1, 0);
         }
         else if (col.tag == tagOfBoss)
         {

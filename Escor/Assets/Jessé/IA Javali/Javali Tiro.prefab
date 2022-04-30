@@ -121,9 +121,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7822855636697483160}
+  - component: {fileID: 7822855636697483143}
   - component: {fileID: 7822855636697483163}
   - component: {fileID: 7822855636697483162}
-  - component: {fileID: 7822855636697483143}
   - component: {fileID: 7822855636697483164}
   m_Layer: 9
   m_Name: Javali Tiro
@@ -140,14 +140,52 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7822855636697483142}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -130.48, y: 0.6, z: 0}
-  m_LocalScale: {x: 2.603806, y: 2.603806, z: 2.603806}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
   m_Children:
   - {fileID: 7822855636735750981}
   - {fileID: 6099879206776170127}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7822855636697483143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7822855636697483142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 789d7c45feb711d4a84dd9cf8eaeaa5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AiLevel: 1
+  Move: 1
+  MovementDistance: 1
+  walkInAllGround: 0
+  MovementSpeed: 0.8
+  FollowDistance: 7
+  AttackDistance: 5
+  JavaliAnimator: {fileID: 7822855636735750983}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8320
+  platformLayer:
+    serializedVersion: 2
+    m_Bits: 16384
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  javaliLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  offSetGround: {x: 0.41, y: -0.16, z: 0.25}
+  offSetWall: {x: 0.41, y: -0.15, z: 1}
+  cadence: 0.5
+  shootForce: 6
+  ShootPosition: {fileID: 6099879206776170127}
+  bulletPrefab: {fileID: 4754797931311059206, guid: 0077e832726cc6b4989217f879739e12, type: 3}
 --- !u!50 &7822855636697483163
 Rigidbody2D:
   serializedVersion: 4
@@ -185,30 +223,6 @@ CapsuleCollider2D:
   m_Offset: {x: -0.020161018, y: 0.05641102}
   m_Size: {x: 0.39498335, y: 0.28291628}
   m_Direction: 1
---- !u!114 &7822855636697483143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7822855636697483142}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 789d7c45feb711d4a84dd9cf8eaeaa5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cadence: 0.5
-  attackDistance: 39.7
-  shootForce: 6
-  ShootPosition: {fileID: 6099879206776170127}
-  bulletPrefab: {fileID: 4754797931311059206, guid: 0077e832726cc6b4989217f879739e12, type: 3}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 24704
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  anim: {fileID: 7822855636735750983}
 --- !u!58 &7822855636697483164
 CircleCollider2D:
   m_ObjectHideFlags: 0

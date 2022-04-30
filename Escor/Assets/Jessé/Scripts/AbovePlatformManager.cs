@@ -6,6 +6,8 @@ public class AbovePlatformManager : MonoBehaviour
 {
     [SerializeField]
     public bool isAbove;
+
+    public int numberOfAbove=0;
     // private Movement mvt;
     private Rigidbody2D objAboveRigidbody;
     // private MovePlataform movePlatform;
@@ -20,10 +22,11 @@ public class AbovePlatformManager : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision) {
         
-        if (collision.gameObject.tag == "Player" && Mathf.Round(collision.contacts[0].normal.y) == Mathf.Round(-Vector2.up.y)) 
+        if ((collision.gameObject.tag == "Player" || collision.gameObject.tag == "Javali") && Mathf.Round(collision.contacts[0].normal.y) == Mathf.Round(-Vector2.up.y)) 
         {
             collision.transform.SetParent(transform);
             isAbove = true;
+            numberOfAbove++;
         }
 
     }
@@ -31,15 +34,16 @@ public class AbovePlatformManager : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D collision) {
         
-        if (collision.gameObject.tag == "Player" && isAbove) 
+        if ((collision.gameObject.tag == "Player" || collision.gameObject.tag == "Javali")) 
         {
-            if(collision.gameObject.TryGetComponent(out Rigidbody2D objAboveRigidbody))
-            {
+            // if(collision.gameObject.TryGetComponent(out Rigidbody2D objAboveRigidbody))
+            // {
                 // objAboveRigidbody.velocity = new Vector2(myVelocity.x, objAboveRigidbody.velocity.y); // a velocidade no eixo y não muda
-            }
+            // }
 
             collision.transform.SetParent(null);
-            isAbove = false;
+            numberOfAbove--;
+            isAbove = (numberOfAbove != 0);
         }
 
     }

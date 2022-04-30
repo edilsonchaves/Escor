@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1724477956436621061}
-  - component: {fileID: 1724477956436621060}
+  - component: {fileID: 6526216613321143585}
   - component: {fileID: 1724477956436621062}
   - component: {fileID: 1724477956436621063}
   m_Layer: 9
@@ -27,14 +27,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1724477956436621083}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1003, z: 0}
-  m_LocalScale: {x: 2.603806, y: 2.603806, z: 2.603806}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
   m_Children:
   - {fileID: 1724477956533421016}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1724477956436621060
+--- !u!114 &6526216613321143585
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,16 +43,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1724477956436621083}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34b94c37fe970064d920cafc25b3b3c0, type: 3}
+  m_Script: {fileID: 11500000, guid: c250c8caf420cd647ae62468c44e0d43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   AiLevel: 1
-  MovementDistance: 12.2
-  walkInAllGround: 1
-  MovementSpeed: 1.3
-  JumpHeight: 1.1
-  FollowDistance: 5
-  AttackDistance: 0.5
+  Move: 1
+  MovementDistance: 1
+  walkInAllGround: 0
+  MovementSpeed: 0.8
+  FollowDistance: 4
+  AttackDistance: 1.1
   JavaliAnimator: {fileID: 1724477956533421018}
   groundLayer:
     serializedVersion: 2
@@ -66,7 +66,7 @@ MonoBehaviour:
   javaliLayer:
     serializedVersion: 2
     m_Bits: 512
-  offSetGround: {x: 0.41, y: -0.16, z: 0.13}
+  offSetGround: {x: 0.41, y: -0.16, z: 0.25}
   offSetWall: {x: 0.41, y: -0.15, z: 1}
 --- !u!50 &1724477956436621062
 Rigidbody2D:

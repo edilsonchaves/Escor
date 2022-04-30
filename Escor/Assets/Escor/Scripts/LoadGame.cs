@@ -15,14 +15,20 @@ public class LoadGame : MonoBehaviour
     void Start()
     {
         if(Manager_Game.Instance.sectionGameData!= null)
+        {
             _levelSelected = Manager_Game.Instance.sectionGameData.GetCurrentLevel();
-        Debug.Log("Level Selected:"+_levelSelected);
-        StartCoroutine(LoadScene(_levelSelected));
+
+        }
+        // Debug.Log($"_levelSelected: {_levelSelected}");
+        // StartCoroutine(LoadScene(_levelSelected)); // está sempre abrindo o menu
+        StartCoroutine(LoadAsyncScene(6)); // acredito que o certo é carregar a cena "GameLevel"
     }
+
 
     IEnumerator LoadScene(int level)
     {
         float progress = 0;
+
         while (currentTime < 2)
         {
             Debug.Log(currentTime);
@@ -35,6 +41,10 @@ public class LoadGame : MonoBehaviour
             yield return null;
         }
 
+        // [Jessé]
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(level);
+        yield return new WaitUntil(() => !asyncLoad.isDone);
+
         /*AsyncOperation operationLoad = SceneManager.LoadSceneAsync("GameLevel");
         while (!operationLoad.isDone)
         {
@@ -42,5 +52,23 @@ public class LoadGame : MonoBehaviour
             Debug.Log("Load Progress: " + progress);
             yield return null;
         }*/
+    }
+
+
+    // [Jessé]
+    IEnumerator LoadAsyncScene(int level)
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(level);
+
+        // Wait until the asynchronous scene fully loads
+        while (!asyncLoad.isDone)
+        {
+            imageFillBar.fillAmount     = asyncLoad.progress;
+            imageBGFillBar.fillAmount   = asyncLoad.progress;
+            textProgress.text           = "Loading("+Mathf.FloorToInt(asyncLoad.progress*100)+"%)";
+            yield return null;
+        }
     }
 }

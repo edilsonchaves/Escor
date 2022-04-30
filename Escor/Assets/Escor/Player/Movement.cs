@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour {
-    
+
     public Animator animator;
     public float speed;
     public float jumpForce;
@@ -16,14 +16,33 @@ public class Movement : MonoBehaviour {
     private PlayerRopeControll ropeControll;
     public static bool canMove = true;
     [SerializeField]int _life;
+    [SerializeField] int _fragmentLife;
     SpriteRenderer sprite;
     public bool isInvunerable;
+    bool insideCave;
+
+    public int FragmentLife
+    {
+        get { return _fragmentLife;}
+        set
+        {
+            if (value == 5)
+            {
+                GainLife();
+                _fragmentLife = 0;
+            }
+            else
+            {
+                _fragmentLife = value;
+            }
+        }
+    }
     public int Life
     {
-        
+
         get { return _life; }
         set {
-            
+
             if (value > _life)
             {
                 _life = value;
@@ -43,9 +62,10 @@ public class Movement : MonoBehaviour {
                     }
                     else
                     {
-                        Debug.Log("Teste");
+                        Debug.Log("Teste-TakeDamage");
                         animator.SetTrigger("TakeDamage");
-                        SfxManager.PlaySound(SfxManager.Sound.playerHurt);
+                        // SfxManager.PlaySound(SfxManager.Sound.playerHurt);
+                        SfxManager.PlayRandomHurt(); // [Jessé] toca um som aleátorio toda vez
                         PersonagemMudarEstado();
                     }
                 }
@@ -118,34 +138,34 @@ public class Movement : MonoBehaviour {
         if(noChao)
             rb.velocity = new Vector2(0, rb.velocity.y); // impedir que o player fique deslisando
 
-        if (LevelManager.levelstatus == LevelManager.LevelStatus.Game) 
+        if (LevelManager.levelstatus == LevelManager.LevelStatus.Game)
         {
             if (canMove && !ropeControll.attached && !defendendo)
             {
                 Move();
-            }  
+            }
             else if(!canMove)
             {
                 animator.SetFloat("VelocidadeX", 0);
-            }  
+            }
         }
     }
 
     void Update()
     {
-        if (LevelManager.levelstatus == LevelManager.LevelStatus.Game) 
+        if (LevelManager.levelstatus == LevelManager.LevelStatus.Game)
         {
-            
+
             animator.SetBool("Balancando", ropeControll.attached);
 
 
             if (canMove && !ropeControll.attached)
             {
-    
+
                 animator.SetBool("NoChao", noChao);
-               
+
                 animator.SetBool("Caindo", noChao == false && pulando == false && rb.velocity.y < -0.5f);
-                
+
                 bool canJump = noChao && !pulando && _powerHero[0];
 
                 if(Input.GetButtonDown("Jump") && canJump)
@@ -155,15 +175,15 @@ public class Movement : MonoBehaviour {
                     SfxManager.PlaySound(SfxManager.Sound.playerJump);
                     animator.SetBool("Pulando", true);
                     animator.Play("pulando", -1, 0);
-                    
-                } 
+
+                }
                 else if (noChao && !pulando)
                 {
                     // pulando = false;
                     animator.SetBool("Pulando", false);
                 }
 
-                
+
                 if (defendendo)
                 {
                     if (timeAbilityDefense[0] > 0)
@@ -196,14 +216,14 @@ public class Movement : MonoBehaviour {
     void Move()
     {
         Vector3 movement = new Vector2(Input.GetAxis("Horizontal"), 0f);
-        
+
         if(slowmotion == true)
         {
             transform.position += movement * Time.fixedDeltaTime * (speed * 1.5f);
             if(pulando == true)
             {
                 movement.y = 0.10f;
-                
+
             }
         }
         if(slowmotion == false)
@@ -225,8 +245,16 @@ public class Movement : MonoBehaviour {
         {
             LookDirection(180);
             if(noChao)
-                SfxManager.PlaySound(SfxManager.Sound.playerMove);
+            SfxManager.PlaySound(SfxManager.Sound.playerMove);
 
+        }
+
+        // [Jessé]
+        if(inputAxis != 0)
+        {
+            LookDirection(inputAxis < 0 ? 180 : 0);
+            if(noChao)
+                SfxManager.PlaySound(insideCave ? SfxManager.Sound.playerMoveCaverna : SfxManager.Sound.playerMove);
         }
     }
 
@@ -239,19 +267,19 @@ public class Movement : MonoBehaviour {
             // animator.SetBool("Pulando", pulando);
             if(slowmotion == true)
             {
-                
+
                 rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
             }
             if(slowmotion == false)
             {
                 rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-            } 
-        
+            }
+
     }
 
     void Defense()
     {
-        if (_powerHero[1] && pulando == false) 
+        if (_powerHero[1] && pulando == false)
         {
             if (Input.GetButtonDown("Defesa") && timeAbilityDefense[0] >0)
             {
@@ -292,6 +320,12 @@ public class Movement : MonoBehaviour {
     }
     void OnTriggerEnter2D(Collider2D col)
     {
+        // [Jessé]
+        if(col.tag == "Cave Interior")
+        {
+            insideCave = true;
+        }
+
         if (col.gameObject.CompareTag("Vida") && Life<3)
         {
             GainLife();
@@ -306,8 +340,27 @@ public class Movement : MonoBehaviour {
 
             Destroy(col.gameObject);
         }
+
+        if (col.gameObject.CompareTag("FragmentMemory"))
+        {
+            ManagerEvents.PlayerMovementsEvents.PlayerObtainedFragmentMemory();
+        }
+
+        if (col.gameObject.CompareTag("FragmentLife"))
+        {
+            _fragmentLife++;
+        }
     }
-    
+
+    // [Jessé]
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if(col.tag == "Cave Interior")
+        {
+            insideCave = false;
+        }
+    }
+
     public void LookDirection(float yAngle)
     {
         transform.eulerAngles = new Vector2(0f, yAngle);
@@ -319,5 +372,5 @@ public class Movement : MonoBehaviour {
     }
 
 
-    
+
 }

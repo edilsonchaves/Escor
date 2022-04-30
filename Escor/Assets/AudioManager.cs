@@ -41,7 +41,7 @@ public class AudioManager : MonoBehaviour
         PlayerPrefs.SetFloat(VozPref, volumeVozSlider.value);
     }
 
-    void NãoEstaMexendo(bool mexendo)
+    void NaoEstaMexendo(bool mexendo)
     {
         if (!mexendo)
         {
