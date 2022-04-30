@@ -145,6 +145,7 @@ public class ManagerEvents : MonoBehaviour
                 onPlayerObtainFragmentMemory();
             }
         }
+        
     }
 
 

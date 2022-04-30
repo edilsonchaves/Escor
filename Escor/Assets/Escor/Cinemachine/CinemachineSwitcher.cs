@@ -42,7 +42,7 @@ public class CinemachineSwitcher : MonoBehaviour
         Debug.Log("2");
 
     }
-    IEnumerator LevaBossAnimation()
+    IEnumerator Scared()
     {
         ManagerEvents.PlayerMovementsEvents.LookedDirection(180);
         yield return new WaitForSeconds(1);
@@ -50,15 +50,26 @@ public class CinemachineSwitcher : MonoBehaviour
 
     IEnumerator TrocaCameraAnimation()
     {
+        ManagerEvents.PlayerMovementsEvents.LookedDirection(180);
+        
         yield return new WaitForSeconds(2);
         animator.Play("Camera Boss");
         yield return new WaitForSeconds(4);
+        GameObject.FindGameObjectWithTag("Fake_Wall").GetComponent<Animator>().Play("parede sumindo");
+        yield return new WaitForSeconds(4);
         animator.Play("Camera Player");
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
+        // GameObject.FindGameObjectWithTag("Exclamation").SetActive(true);
+        GameObject.FindWithTag("Player").GetComponent<Animator>().Play("assustando");
+        yield return new WaitForSeconds(1);
+        // GameObject.FindGameObjectWithTag("Exclamation").SetActive(false);
+
+
+
     }
     public void SwitchState()
     {
-       StartCoroutine(LevaBossAnimation());
+       StartCoroutine(Scared());
     //    animator.Play("fadeTest");
     //     //Aproximar camera Javali
     //     if(playerCamera) {
