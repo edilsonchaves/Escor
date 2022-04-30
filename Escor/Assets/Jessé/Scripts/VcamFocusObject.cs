@@ -58,7 +58,7 @@ public class VcamFocusObject : MonoBehaviour
         // stepByStep=false significa que será usado 'focusTime' para guiar a camera entre os pontos de foco
 
 
-        finish                          = false;
+        // finish                          = false;
         allTargets                      = targets;
         startPos                        = Camera.main.transform.position;
         objToSmooth                     = objToSmooth == null ? new GameObject() : objToSmooth; // objeto que a camera irá seguir

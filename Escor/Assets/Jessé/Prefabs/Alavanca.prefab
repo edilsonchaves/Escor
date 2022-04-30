@@ -120,6 +120,7 @@ MonoBehaviour:
   portoes:
   - {fileID: 0}
   - {fileID: 0}
+  openInSequence: 1
   vcamFocusObject: {fileID: 6958560904978191153}
 --- !u!114 &6958560904978191153
 MonoBehaviour:
@@ -133,12 +134,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98958efc9c6748f47868b45eb48cd0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  virtualCam: {fileID: 0}
   timeToStartFocus: 0.8
   transitionTimeGoing: 0.6
   transitionTimeComingBack: 0.4
   focusTime: 2
-  objectToFocus: {fileID: 0}
 --- !u!1 &5113769799182624311
 GameObject:
   m_ObjectHideFlags: 0

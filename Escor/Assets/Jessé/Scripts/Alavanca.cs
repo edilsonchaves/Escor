@@ -31,7 +31,7 @@ public class Alavanca : MonoBehaviour
         {
             myAnimator.Play("alavanca", -1, 0);
 
-            vcamFocusObject.StartFocus(portoes);
+            vcamFocusObject.StartFocus(portoes, openInSequence);
 
             // vcamFocusObject.StartFocus(portoes, false);
             // vcamFocusObject.StartFocus(new GameObject[]{portoes[0]});
