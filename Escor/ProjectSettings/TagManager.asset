@@ -26,6 +26,8 @@ TagManager:
   - ConversaPersonagem
   - Boss
   - Cave Interior
+  - Fake_Wall
+  - Exclamation
   layers:
   - Default
   - TransparentFX

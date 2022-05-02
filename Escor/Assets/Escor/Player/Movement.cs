@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour {
 
+    
     public Animator animator;
     public float speed;
     public float jumpForce;
@@ -279,6 +280,7 @@ public class Movement : MonoBehaviour {
 
     void Defense()
     {
+
         if (_powerHero[1] && pulando == false)
         {
             if (Input.GetButtonDown("Defesa") && timeAbilityDefense[0] >0)
