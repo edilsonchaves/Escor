@@ -28,6 +28,8 @@ TagManager:
   - Cave Interior
   - Fake_Wall
   - Exclamation
+  - Gate
+  - ParedeJavali
   layers:
   - Default
   - TransparentFX
