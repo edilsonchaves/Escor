@@ -89,6 +89,16 @@ public class VcamFocusObject : MonoBehaviour
                 yield return null;
             }
 
+            // if(currentTarget.tag == "Gate")
+            // {
+            //     // yield return new WaitForSeconds(1);
+            //     currentTarget.GetComponent<Animator>().Play("PortaoAbrindoStart", -1, 0);
+            // }
+            // if(currentTarget.tag == "Player")
+            // {
+            //     // yield return new WaitForSeconds(1);
+            //     currentTarget.GetComponent<Animator>().Play("assustando");
+            // }
 
             if(stepByStep)
             {
