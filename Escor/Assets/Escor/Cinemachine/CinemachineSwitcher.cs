@@ -54,8 +54,9 @@ public class CinemachineSwitcher : MonoBehaviour
         
         yield return new WaitForSeconds(2);
         animator.Play("Camera Boss");
-        yield return new WaitForSeconds(4);
-        GameObject.FindGameObjectWithTag("Fake_Wall").GetComponent<Animator>().Play("parede sumindo");
+        // yield return new WaitForSeconds(4);
+        GameObject.FindGameObjectWithTag("Gate").GetComponent<Animator>().Play("PortaoAbrindoStart");
+        // GameObject.FindGameObjectWithTag("Fake_Wall").GetComponent<Animator>().Play("parede sumindo");
         yield return new WaitForSeconds(4);
         animator.Play("Camera Player");
         yield return new WaitForSeconds(3);
