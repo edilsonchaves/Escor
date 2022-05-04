@@ -30,6 +30,8 @@ TagManager:
   - Exclamation
   - Gate
   - ParedeJavali
+  - FragmentMemory
+  - FragmentLife
   layers:
   - Default
   - TransparentFX

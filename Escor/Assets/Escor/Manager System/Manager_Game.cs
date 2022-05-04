@@ -100,9 +100,9 @@ public class Manager_Game : MonoBehaviour
         ManagerEvents.GameConfig.ChangedLanguage(saveGameData.LanguageSelect);
     }
 
-    public void SaveLevelMemory(int level,float posPlayerX,float posPlayerY,int lifePlayer,bool[] powerLevel)
+    public void SaveLevelMemory(int level,float posPlayerX,float posPlayerY,int lifePlayer,bool[] powerLevel,string fragmentLife, string fragmentMemory)
     {
-        SaveLoadSystem.SaveFile<LevelData>(new LevelData(level, posPlayerX, posPlayerY, lifePlayer,powerLevel));
+        SaveLoadSystem.SaveFile<LevelData>(new LevelData(level, posPlayerX, posPlayerY, lifePlayer,powerLevel,fragmentLife,fragmentMemory));
     }
 }
 
@@ -238,31 +238,39 @@ public class LevelData
     [SerializeField] int _lifePlayerAmountLocal;
     [SerializeField] bool[] _powersLocal;
     [SerializeField] bool[] coinsLevelLocal;
+    [SerializeField] string fragmentLifeStatusLocal;
+    [SerializeField] string fragmentMemoryShardStatusLocal;
+
     //[SerializeField] int progressLevelLocal;
     //[SerializeField] bool[] regionsVisitedLocal;
     [SerializeField] Vector2?[] bossLevelPositionLocal;
     public int LevelGaming { get { return _levelGamingLocal; } private set { } }
     public Vector2 CharacterPosition { get { return new Vector2(_playerPositionXLocal, _playerPositionYLocal); } private set { } }
     public bool[] Powers { get { return _powersLocal; }  private set{}}
-    public LevelData(int valueLevel, float posPlayerX=0,float posPlayerY=0, int valueLifePlayerAmount = 3, bool[] valuePowerPlayer = null) // falta colocar aqui "coinsLevel"
+    public LevelData(int valueLevel, float posPlayerX=0,float posPlayerY=0, int valueLifePlayerAmount = 3, bool[] valuePowerPlayer = null, string fragmentLifeStatus="", string fragmentMemoryStatus = "") // falta colocar aqui "coinsLevel"
     {
         _levelGamingLocal = valueLevel;
         _playerPositionXLocal = posPlayerX;
         _playerPositionYLocal = posPlayerY;
         _lifePlayerAmountLocal = valueLifePlayerAmount;
         _powersLocal = valuePowerPlayer;
+        fragmentLifeStatusLocal = fragmentLifeStatus;
+        fragmentMemoryShardStatusLocal = fragmentMemoryStatus;
+
     }
 
 
     // [Jessé] -----------------------------------------------------------------------
 
-        public void SetLevelData(int valueLevel, float posPlayerX=0,float posPlayerY=0, int valueLifePlayerAmount = 3, bool[] valuePowerPlayer = null, bool[] coinsLevel = null)
+        public void SetLevelData(int valueLevel, float posPlayerX=0,float posPlayerY=0, int valueLifePlayerAmount = 3, bool[] valuePowerPlayer = null, bool[] coinsLevel = null, string fragmentLifeStatus = "", string fragmentMemoryStatus = "")
         {
             SetLevelGaming(valueLevel);
             SetPlayerPosition(posPlayerX, posPlayerY);
             SetLifePlayerAmount(valueLifePlayerAmount);
             SetPowers(valuePowerPlayer);
             SetCoinsLevel(coinsLevel);
+            SetFragmentLifeLevel(fragmentLifeStatus);
+            SetFragmentMemoryLevel(fragmentMemoryStatus);
         }
 
 
@@ -296,6 +304,16 @@ public class LevelData
         {
             coinsLevelLocal = _coinsLevel;
         }
+
+    public void SetFragmentLifeLevel(string fragmentLife)
+    {
+        fragmentLifeStatusLocal = fragmentLife;
+    }
+
+    public void SetFragmentMemoryLevel(string fragmentMemory)
+    {
+        fragmentMemoryShardStatusLocal = fragmentMemory;
+    }
 
     // -------------------------------------------------------------------------------
 

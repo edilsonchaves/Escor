@@ -43,7 +43,7 @@ public class SaveLoadSystem
 
         GameData data = new GameData(50, 50, 18, 0);
         BinaryFormatter bf = new BinaryFormatter();
-        string path = "C:/Users/Edilson Chaves/AppData/LocalLow/DefaultCompany/Escor/GameData.data";
+        string path = "" + Application.persistentDataPath +"/GameData.data";
         FileStream stream = new FileStream(path, FileMode.Create);
         bf.Serialize(stream, data);
         stream.Close();

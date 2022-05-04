@@ -41,7 +41,8 @@ public class LevelManager : MonoBehaviour
     void CreateLevel(int level)
     {
         currentLevel=Instantiate(levelsAvaibles[level-1],Vector3.zero,Quaternion.identity);
-        currentLevel.GetComponent<LevelInformation>().initializeLevelInformation(out Transform initialSpawnPosition);
+        LevelInformation levelInformation = currentLevel.GetComponent<LevelInformation>();
+        levelInformation.initializeLevelInformation(out Transform initialSpawnPosition);
         currentCharacter = Instantiate(characterPrefab, initialSpawnPosition.position, initialSpawnPosition.rotation);
         cam.transform.localPosition = new Vector3(0, 0, -10);
         virtualCam.Follow = currentCharacter.transform;
@@ -124,7 +125,9 @@ public class LevelManager : MonoBehaviour
 
     public void SaveGame()
     {
-        Manager_Game.Instance.SaveLevelMemory(Manager_Game.Instance.levelData.LevelGaming,currentCharacter.transform.position.x, currentCharacter.transform.position.y, currentCharacter.GetComponent<Movement>().Life, currentCharacter.GetComponent<Movement>().PowerHero);
+        Movement playerInfo= currentCharacter.GetComponent<Movement>();
+        LevelInformation levelInformation = currentLevel.GetComponent<LevelInformation>();
+        Manager_Game.Instance.SaveLevelMemory(Manager_Game.Instance.levelData.LevelGaming,currentCharacter.transform.position.x, currentCharacter.transform.position.y, playerInfo.Life, playerInfo.PowerHero, levelInformation.LevelLifeInfo(),levelInformation.LevelMemoryInfo());
         SceneManager.LoadScene("SelectLevel");
     }
     void SaveGameButton()
