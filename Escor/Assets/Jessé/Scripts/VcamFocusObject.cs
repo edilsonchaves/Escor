@@ -60,9 +60,10 @@ public class VcamFocusObject : MonoBehaviour
 
         // finish                          = false;
         allTargets                      = targets;
-        startPos                        = Camera.main.transform.position;
+        // startPos                        = Camera.main.transform.position;
+        startPos                        = virtualCam.Follow.position;
         objToSmooth                     = objToSmooth == null ? new GameObject() : objToSmooth; // objeto que a camera irá seguir
-        objToSmooth.transform.position  = Camera.main.transform.position;
+        objToSmooth.transform.position  = startPos;
         distance                        = ((Vector2)(allTargets[0].transform.position-objToSmooth.transform.position)).magnitude;
         virtualCamTargetBackup          = virtualCam.Follow;
 
@@ -72,6 +73,8 @@ public class VcamFocusObject : MonoBehaviour
 
     IEnumerator StartFocus_(bool stepByStep)
     {
+        // yield return new WaitUntil(() => ((Vector2)(Camera.main.transform.position-virtualCam.Follow.position)).magnitude < 0.001f);
+
         yield return new WaitForSeconds(timeToStartFocus);
 
         virtualCam.Follow = objToSmooth.transform; // muda o alvo da camera para o objeto que será movido entre os objetos de foco
@@ -83,7 +86,7 @@ public class VcamFocusObject : MonoBehaviour
             nextStep        = false;
 
             // indo para o alvo
-            while(((Vector2)(currentTarget.transform.position-objToSmooth.transform.position)).magnitude > 0.01f) // espera chegar no alvo
+            while(((Vector2)(currentTarget.transform.position-objToSmooth.transform.position)).magnitude > 0.001f) // espera chegar no alvo
             {
                 objToSmooth.transform.position = Vector2.MoveTowards(objToSmooth.transform.position, currentTarget.transform.position, distance/transitionTimeGoing*Time.deltaTime);
                 yield return null;
@@ -110,11 +113,11 @@ public class VcamFocusObject : MonoBehaviour
             }
         }
 
-        distance = ((Vector2)(objToSmooth.transform.position)-startPos).magnitude;
+        distance = ((Vector2)(objToSmooth.transform.position-virtualCamTargetBackup.position)).magnitude;
 
-        while(((Vector2)(objToSmooth.transform.position)-startPos).magnitude > 0.01f) // espera chegar no alvo
+        while(((Vector2)(objToSmooth.transform.position-virtualCamTargetBackup.position)).magnitude > 0.001f) // espera chegar no alvo
         {
-            objToSmooth.transform.position = Vector2.MoveTowards(objToSmooth.transform.position, startPos, distance/transitionTimeComingBack*Time.deltaTime);
+            objToSmooth.transform.position = Vector2.MoveTowards(objToSmooth.transform.position, virtualCamTargetBackup.position, distance/transitionTimeComingBack*Time.deltaTime);
             yield return null;
         }
 
