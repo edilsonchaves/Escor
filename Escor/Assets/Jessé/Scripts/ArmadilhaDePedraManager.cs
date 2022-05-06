@@ -29,7 +29,7 @@ public class ArmadilhaDePedraManager : MonoBehaviour
 
     IEnumerator StartOne(Animator anim, float delay)
     {
-
+        SpriteRenderer mySpt = anim.transform.GetChild(0).GetComponent<SpriteRenderer>();
         while(true && !stop)
         {
             if(useRandom)
@@ -37,10 +37,16 @@ public class ArmadilhaDePedraManager : MonoBehaviour
 
             yield return new WaitForSeconds(delay);
 
-            SfxManager.PlaySound(SfxManager.Sound.armadilhaPedra); // som de efeito
+            if(Camera.main.IsObjectVisible(mySpt))
+                SfxManager.PlaySound(SfxManager.Sound.armadilhaPedra); // som de efeito
 
             anim.Play("ArmadilhaDePedraStart", -1, 0);
         }
+    }
+
+    bool PlayerIsClose(Vector3 position)
+    {
+        return ((Vector2)(Camera.main.transform.position - position)).magnitude <= 22f;
     }
 
 

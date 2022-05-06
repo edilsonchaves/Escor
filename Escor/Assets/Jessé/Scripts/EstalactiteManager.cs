@@ -5,28 +5,25 @@ using UnityEngine;
 public class EstalactiteManager : MonoBehaviour
 {
 
-    public GameObject GotaPrefab, SplashPrefab;
-    public Transform shotPoint;
-    public float delayMinime = 2f;
+    public  GameObject          GotaPrefab, SplashPrefab;
+    public  Transform           shotPoint;
+    public  float               delayMinime = 2f;
 
-    [Range(0,40)]
-    public float randomDelayIcrement;
+    [Range(0,60)]
+    public  float               randomDelayIcrement;
 
-    public bool useRandomChanceToFall;
+    public  bool                useRandomChanceToFall;
 
     [Range(0,100)]
-    public float chanceToFall;
+    public  float               chanceToFall;
 
-    public bool killInstantly=false;
-
-    public string tagOfPlayer = "Player";
-
-    public LayerMask groundLayer;
-
-    private GameObject gota, splash, gameObjectColliderToCanFall;
-    private Rigidbody2D gotaRB, myRB;
-    private CapsuleCollider2D gotaCollider;
-    private Animator myAnimator;
+    public  bool                killInstantly=false;
+    public  string              tagOfPlayer = "Player";
+    public  LayerMask           groundLayer;
+    private GameObject          gota, splash, gameObjectColliderToCanFall;
+    private Rigidbody2D         gotaRB, myRB;
+    private CapsuleCollider2D   gotaCollider;
+    private Animator            myAnimator;
 
 
     bool splashFinished = true, gotaFall, fall, isFallen, isDestroyed;
@@ -95,6 +92,9 @@ public class EstalactiteManager : MonoBehaviour
     {
         if(splashFinished && !isFallen)
         {
+            // if(!PlayerIsClose())
+            //     return;
+
             auxDelay                       += Time.deltaTime;
 
             gota.transform.localScale       = Vector3.one * ((auxDelay/currentDelay*gotaScale)/transform.localScale.x);
@@ -212,6 +212,10 @@ public class EstalactiteManager : MonoBehaviour
         }
     }
 
+    bool PlayerIsClose()
+    {
+        return ((Vector2)(Camera.main.transform.position - transform.position)).magnitude <= 22f;
+    }
 
     void DropEstalactite()
     {
