@@ -62,6 +62,8 @@ public class Ativador : MonoBehaviour
 
     IEnumerator OpenAllDoors_()
     {
+        yield return new WaitForSeconds(vcamFocusObject.timeToStartFocus+vcamFocusObject.transitionTimeGoing);
+
         foreach(GameObject goPortao in portoes)
         {
             Animator portao = goPortao.GetComponent<Animator>();
@@ -123,7 +125,7 @@ public class Ativador : MonoBehaviour
 
             if(openInSequence && !alreadyFocused)
             {
-                yield return new WaitForSeconds(1.5f);
+                yield return new WaitForSeconds(vcamFocusObject.focusTime);
                 vcamFocusObject.GoToNextStep();
             }
 
