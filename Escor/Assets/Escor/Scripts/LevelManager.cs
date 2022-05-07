@@ -19,8 +19,12 @@ public class LevelManager : MonoBehaviour
     [SerializeField] AudioClip[] levelsMusicsBG;
     [SerializeField] CinemachineVirtualCamera virtualCam;
     [SerializeField]Popup popup;
+
+    float currentMaxVolume;
+
     void Start()
     {
+        currentMaxVolume = levelAudioSource.volume;
         Manager_Game.Instance.LoadLevelGame();
         popup = control.CreatePopup();
         popup.gameObject.SetActive(false);
@@ -46,8 +50,23 @@ public class LevelManager : MonoBehaviour
         cam.transform.localPosition = new Vector3(0, 0, -10);
         virtualCam.Follow = currentCharacter.transform;
         levelAudioSource.clip = levelsMusicsBG[level - 1];
+        // print(levelAudioSource == null);
         levelAudioSource.Play();
+        FadeInMusic(5);
     }
+
+    public void FadeInMusic(float time=2)
+    {
+        FadeAudio.Fade.In(levelAudioSource, currentMaxVolume, time);
+    }
+
+    public void FadeOutMusic(float time=2)
+    {
+        // currentMaxVolume = levelAudioSource.volume;
+        FadeAudio.Fade.Out(levelAudioSource, time);
+    }
+
+
     void PlayerSetupInformation()
     {
         Vector2 pos = Manager_Game.Instance.levelData.CharacterPosition;

@@ -119,6 +119,7 @@ public class Alavanca : Ativador
     {
         alreadyTriggered = true;
         mvt.animator.SetBool("Pegando", true);
+        SfxManager.PlaySound(SfxManager.Sound.ativandoAlavanca);
         Movement.canMove = false;
     }
 
