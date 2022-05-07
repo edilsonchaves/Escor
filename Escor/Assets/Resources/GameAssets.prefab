@@ -140,3 +140,6 @@ MonoBehaviour:
   - sound: 31
     audioClip: {fileID: 8300000, guid: f805c8cc34f4be24a872fa1c7e6330dd, type: 3}
     audioMixer: {fileID: 7980028146833873902, guid: 4d963a9c4fb612546a1961350d64fdc1, type: 2}
+  - sound: 32
+    audioClip: {fileID: 8300000, guid: dfdd6a2bc47f8074baaf7dcb5935f268, type: 3}
+    audioMixer: {fileID: 7980028146833873902, guid: 4d963a9c4fb612546a1961350d64fdc1, type: 2}

@@ -48,6 +48,8 @@ public static class SfxManager
         playerMoveCaverna,
 
         ativandoAlavanca,
+
+        portaAbrindo,
     }
     private static Dictionary<Sound, float> soundTimerDic;
     public static List<GameObject> TiposDeSom = new List<GameObject>();

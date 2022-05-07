@@ -123,6 +123,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7939791515019143619}
   - component: {fileID: 4430425696163209809}
+  - component: {fileID: 6312034414760974884}
   m_Layer: 0
   m_Name: Portao
   m_TagString: Untagged
@@ -164,6 +165,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6312034414760974884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6797590157976159949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b41e3291fba6889449ea5d5fbb17f293, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound: 32
+  playOnAwake: 0
 --- !u!1 &7737746578517992400
 GameObject:
   m_ObjectHideFlags: 0
