@@ -247,6 +247,8 @@ public class LevelData
     public int LevelGaming { get { return _levelGamingLocal; } private set { } }
     public Vector2 CharacterPosition { get { return new Vector2(_playerPositionXLocal, _playerPositionYLocal); } private set { } }
     public bool[] Powers { get { return _powersLocal; }  private set{}}
+    public string FragmentLifeStatus { get { return fragmentLifeStatusLocal; } private set { } }
+    public string FragmentMemoryStatus { get { return fragmentMemoryShardStatusLocal; } private set { } }
     public LevelData(int valueLevel, float posPlayerX=0,float posPlayerY=0, int valueLifePlayerAmount = 3, bool[] valuePowerPlayer = null, string fragmentLifeStatus="", string fragmentMemoryStatus = "") // falta colocar aqui "coinsLevel"
     {
         _levelGamingLocal = valueLevel;

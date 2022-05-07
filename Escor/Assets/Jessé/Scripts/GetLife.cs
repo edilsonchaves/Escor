@@ -4,31 +4,15 @@ using UnityEngine;
 
 public class GetLife : MonoBehaviour
 {
- 
-    [SerializeField] private string tagOfPlayer = "Player";
+    [SerializeField] GameObject _prefab;
 
-    bool alreadyPickedUp=false;
-
-
-    void OnTriggerEnter2D(Collider2D col)
+    public void PrefabActive(bool value)
     {
-        if(col.tag == tagOfPlayer && !alreadyPickedUp)
-        {
-            alreadyPickedUp = true;
-
-            print("Pegou vida");
-
-            // executar animação caso tenha
-
-            DestroyMe();
-
-        }
+        _prefab.SetActive(value);
     }
 
-
-    void DestroyMe(float waitTime=1f)
+    public bool IsPrefabActive()
     {
-        transform.localScale = Vector3.zero;
-        Destroy(gameObject, waitTime);
+        return _prefab.activeSelf;
     }
 }

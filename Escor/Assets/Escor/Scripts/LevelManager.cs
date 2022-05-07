@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField]UIController control;
     [SerializeField] GameObject[] levelsAvaibles;
     GameObject currentLevel;
+    [SerializeField]LevelInformation levelInformation;
     [SerializeField] GameObject characterPrefab;
     GameObject currentCharacter;
     [SerializeField] Camera cam;
@@ -31,8 +32,11 @@ public class LevelManager : MonoBehaviour
         else
         {
             CreateLevel(Manager_Game.Instance.levelData.LevelGaming);
-            if(Manager_Game.Instance.LevelStatus==LevelInfo.LevelStatus.ContinueLevel)
+            if (Manager_Game.Instance.LevelStatus==LevelInfo.LevelStatus.ContinueLevel)
+            {
                 PlayerSetupInformation();
+                MapSetupInformation();
+            }
         }
         SfxManager.Initialize();
         levelstatus = LevelStatus.Game;
@@ -41,7 +45,7 @@ public class LevelManager : MonoBehaviour
     void CreateLevel(int level)
     {
         currentLevel=Instantiate(levelsAvaibles[level-1],Vector3.zero,Quaternion.identity);
-        LevelInformation levelInformation = currentLevel.GetComponent<LevelInformation>();
+        levelInformation = currentLevel.GetComponent<LevelInformation>();
         levelInformation.initializeLevelInformation(out Transform initialSpawnPosition);
         currentCharacter = Instantiate(characterPrefab, initialSpawnPosition.position, initialSpawnPosition.rotation);
         cam.transform.localPosition = new Vector3(0, 0, -10);
@@ -62,6 +66,14 @@ public class LevelManager : MonoBehaviour
             }
             id++;
         }
+    }
+
+    void MapSetupInformation()
+    {
+        levelInformation.LoadLifeShardInformation(Manager_Game.Instance.levelData.FragmentLifeStatus);
+        levelInformation.LoadLifeShardInformation(Manager_Game.Instance.levelData.FragmentMemoryStatus);
+
+
     }
     void Update()
     {

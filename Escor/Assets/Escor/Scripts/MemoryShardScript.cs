@@ -5,23 +5,35 @@ using UnityEngine;
 public class MemoryShardScript : MonoBehaviour
 {
     [SerializeField] private GetMemory[] countChild;
+    [SerializeField] private string memoryCountTest = "";
     // Start is called before the first frame update
     public void InitializeShard(string shardsStatus)
     {
-        ReadLifeLevel();
-        foreach (char shardStatus in shardsStatus)
+        ReadMemoryLevel();
+        for (int i = 0; i < shardsStatus.Length; i++)
         {
-            Debug.Log(shardStatus);
+            countChild[i].PrefabActive(shardsStatus[i] == '1');
         }
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            memoryCountTest = CaptureMemoryShardInformation();
+        }
 
-    public string CaptureLifeShardInformation()
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            InitializeShard(memoryCountTest);
+        }
+    }
+    public string CaptureMemoryShardInformation()
     {
         string shardLevelStatus = "";
-        ReadLifeLevel();
+        ReadMemoryLevel();
         foreach (GetMemory shardStatus in countChild)
         {
-            if (shardStatus.gameObject.activeSelf)
+            if (shardStatus.IsPrefabActive())
             {
                 shardLevelStatus += "1";
             }
@@ -34,7 +46,7 @@ public class MemoryShardScript : MonoBehaviour
         return shardLevelStatus;
     }
 
-    private void ReadLifeLevel()
+    private void ReadMemoryLevel()
     {
         if (countChild.Length != 0)
             return;
