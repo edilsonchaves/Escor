@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bd058a7036d5b149b6a5b1cfea2234f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tagOfPlayer: Player
+  _prefab: {fileID: 1182385017997498470}
 --- !u!50 &5384576066704601072
 Rigidbody2D:
   serializedVersion: 4
