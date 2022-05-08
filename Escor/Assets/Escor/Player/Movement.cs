@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour {
 
-    
+
     public Animator animator;
     public float speed;
     public float jumpForce;
@@ -246,7 +246,7 @@ public class Movement : MonoBehaviour {
         {
             LookDirection(180);
             if(noChao)
-            SfxManager.PlaySound(SfxManager.Sound.playerMove);
+                SfxManager.PlaySound(SfxManager.Sound.playerMove);
 
         }
 

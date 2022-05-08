@@ -81,7 +81,7 @@ MonoBehaviour:
   SplashPrefab: {fileID: 5922096120857270404, guid: 9ce5e7a27d3911b41872ffec07e025ea, type: 3}
   shotPoint: {fileID: 7423360178972522161}
   delayMinime: 5
-  randomDelayIcrement: 15
+  randomDelayIcrement: 30
   useRandomChanceToFall: 0
   chanceToFall: 35
   killInstantly: 0

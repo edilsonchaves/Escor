@@ -8,7 +8,7 @@ public class MovePlataform : MonoBehaviour
 
     public bool waitPlayerToStartMovement=false, stopMovementOnTheEnd=false, MoveOnHorizontal;
     public float movementTime, maxDistance, waitTimeOnEnd;
-    
+
     public float startDirection; // 1 = cima/direita, -1 = baixo/esquerda
 
     private float movementAux, currentMovement, waitOnEndAux;
@@ -19,18 +19,20 @@ public class MovePlataform : MonoBehaviour
 
     [HideInInspector] Vector2 myVelocity;
 
+    [HideInInspector] public bool esperarAtivador; // a propria alavanca que define essa variável
+
     // Gizmos - Desenvolvimento
     void OnDrawGizmos()
     {
 
-        Gizmos.color = Color.green;   
-        
+        Gizmos.color = Color.green;
+
         if(!started)
         {
-            startPos = transform.position;  
+            startPos = transform.position;
             _startDirection = startDirection;
         }
-        
+
         if(MoveOnHorizontal)
         {
             Gizmos.DrawRay((Vector2)(startPos) + (Vector2)(transform.right*(_startDirection/Mathf.Abs(startDirection))*maxDistance) - Vector2.up, Vector2.up*2);
@@ -74,7 +76,7 @@ public class MovePlataform : MonoBehaviour
         // else
         // {
         //     // faz com que o player ao pular sejam puxado em direção da plataforma
-        //     myVelocity = Vector2.up * (maxDistance / movementTime); 
+        //     myVelocity = Vector2.up * (maxDistance / movementTime);
         // }
     }
 
@@ -85,10 +87,10 @@ public class MovePlataform : MonoBehaviour
 
         if(!startMovement && abovePlatformManager.isAbove)
         {
-            startMovement = true;
+            StartMovement();
         }
-        
-        if(startMovement)
+
+        if(startMovement && !esperarAtivador)
         {
 
             if(canMove)
@@ -123,7 +125,7 @@ public class MovePlataform : MonoBehaviour
             }
 
         }
-    
+
     }
 
     public Vector2 GetVelocity()
@@ -135,6 +137,12 @@ public class MovePlataform : MonoBehaviour
         return myVelocity*startDirection; // startDirection é a direção atual
     }
 
+    public void StartMovement()
+    {
+        startMovement = true;
+    }
+
+
 
     // void OnCollisionEnter2D (Collision2D col)
     // {
@@ -142,7 +150,7 @@ public class MovePlataform : MonoBehaviour
     //     {
     //         col.transform.SetParent(transform);
     //         print("startMovement");
-    //         startMovement = true; 
+    //         startMovement = true;
     //     }
     // }
 

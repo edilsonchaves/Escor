@@ -6,6 +6,7 @@ public class BulletScript : MonoBehaviour
 {
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Animator myAnimator;
+    [SerializeField] private TrailRenderer trail;
     [SerializeField] private string tagOfPlayer = "Player", tagOfJavali = "Javali", tagOfBoss = "Boss";
     [SerializeField] private Rigidbody2D myRb;
     public GameObject emissor;
@@ -14,13 +15,21 @@ public class BulletScript : MonoBehaviour
     bool destroyed;
     bool isBackToJavali;
 
-    void Awake()
+    void OnEnable()
     {
-        destroyed = false;
-        isBackToJavali = false;
+        // StartCoroutine(ResetTrailRenderer(trail)); // serve para desativar o rastro e impedir que ele apareca se teletransportando
+        trail.enabled   = true;
+        destroyed       = false;
+        isBackToJavali  = false;
         myAnimator.Play("PedraLoop", -1, 0);
     }
 
+    IEnumerator ResetTrailRenderer(TrailRenderer tr) {
+        float trailTime = tr.time;
+        tr.time = 0;
+        yield return new WaitForSeconds(0.1f);
+        tr.time = trailTime;
+    }
 
     void OnTriggerEnter2D(Collider2D col)
     {
@@ -67,6 +76,7 @@ public class BulletScript : MonoBehaviour
 
         destroyed = true;
         myRb.velocity = Vector3.zero;
+        StartCoroutine(ResetTrailRenderer(trail)); // serve para desativar o rastro e impedir que ele apareca se teletransportando
         myAnimator.Play("PedraDestroy", -1, 0);
     }
 
@@ -80,6 +90,7 @@ public class BulletScript : MonoBehaviour
     // chamado por evento na animação
     void DestroyMe()
     {
+        // trail.enabled = false;
         destroyed = false;
         ManagerEvents.Enemy.RockDeleted(this.gameObject);
     }

@@ -162,11 +162,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AiLevel: 1
   Move: 1
+  startMovementDirection: 0
   MovementDistance: 1
   walkInAllGround: 0
   MovementSpeed: 0.8
-  FollowDistance: 7
-  AttackDistance: 5
+  FollowDistance: 12
+  AttackDistance: 9
   JavaliAnimator: {fileID: 7822855636735750983}
   groundLayer:
     serializedVersion: 2
