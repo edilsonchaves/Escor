@@ -346,11 +346,13 @@ public class Movement : MonoBehaviour {
         if (col.gameObject.CompareTag("FragmentMemory"))
         {
             ManagerEvents.PlayerMovementsEvents.PlayerObtainedFragmentMemory();
+            Destroy(col.gameObject);
         }
 
         if (col.gameObject.CompareTag("FragmentLife"))
         {
             _fragmentLife++;
+            Destroy(col.gameObject);
         }
     }
 
