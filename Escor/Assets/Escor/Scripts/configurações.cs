@@ -22,18 +22,18 @@ public class configurações : MonoBehaviour
         _fontSlider.value   = Manager_Game.Instance.saveGameData.LetterSize;
         volume.value        = Manager_Game.Instance.saveGameData.VolumeAmbient;
         volumeVoz.value     = Manager_Game.Instance.saveGameData.Volume;
-        
+
         // ---
         volumeJogo.SetFloat("vozsound", -80 + volumeVoz.value * 0.8f); // Range de volume.value é [0, 100]
         volumeJogo.SetFloat("bgsound", -80 + volume.value * 0.8f); // Range de volume.value é [0, 100]
-        
+
         StartCoroutine("UpdateValuesFromSlider");
         // ---
 
         salvarAsConfig();
         ChangeFontSize();
 
-       
+
     }
     // ---
     private IEnumerator UpdateValuesFromSlider()
@@ -70,7 +70,7 @@ public class configurações : MonoBehaviour
                 volumeJogo.SetFloat("bgsound", volume.value); // Range de volume.value é [0, 100]
 
             }
-            
+
 
             yield return null;
         }
@@ -84,7 +84,7 @@ public class configurações : MonoBehaviour
         if (currentFontSize == (int)_fontSlider.value)
             return;
         Debug.Log((int)_fontSlider.value);
-        ManagerEvents.GameConfig.ChangedLanguageSize((int)_fontSlider.value);                
+        ManagerEvents.GameConfig.ChangedLanguageSize((int)_fontSlider.value);
     }
 
     private void salvarAsConfig()
@@ -97,7 +97,7 @@ public class configurações : MonoBehaviour
             //vozDoJogo[i].volume = vozFloat;
         }
     }
-    
+
     public void BTN_Voltar()
     {
         Manager_Game.Instance.saveGameData.LetterSize = (int)_fontSlider.value;

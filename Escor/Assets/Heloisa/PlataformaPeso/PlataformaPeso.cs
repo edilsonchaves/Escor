@@ -7,11 +7,15 @@ public class PlataformaPeso : Ativador
     [SerializeField] private string javali = "Javali";
     // [SerializeField] private GameObject[] cols;
     [SerializeField] private int qntsEmCima = 0;
+    [SerializeField] private Animator myAnim;
 
 
     void Start()
     {
-        print("PlataformaPeso");
+        if(!myAnim)
+            myAnim = GetComponent<Animator>();
+
+        // print("PlataformaPeso");
     }
 
 
@@ -20,8 +24,8 @@ public class PlataformaPeso : Ativador
         if(col.tag == tagOfPlayer || col.tag == javali)
         {
             // desativarColider();
-
-            ActivateAll();
+            myAnim.SetBool("Press", true);
+            ActivateAll(col.tag);
 
             qntsEmCima++;
         }
@@ -40,11 +44,15 @@ public class PlataformaPeso : Ativador
         if (qntsEmCima <= 0) {
             // ativarColider();
 
+            myAnim.SetBool("Press", false);
             DisableAll();
 
             qntsEmCima = 0;
         }
     }
+
+
+
 
 
     // void  ativarColider()

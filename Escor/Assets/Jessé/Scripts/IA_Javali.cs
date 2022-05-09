@@ -48,6 +48,7 @@ public class IA_Javali : MonoBehaviour
 
 
 
+#if UNITY_EDITOR
     // Gizmos - Desenvolvimento
     void OnDrawGizmos()
     {
@@ -99,6 +100,7 @@ public class IA_Javali : MonoBehaviour
         Handles.Label((Vector2) transform.position - Vector2.right * FollowDistance , " Follow Distance", style);
     }
 
+#endif
     void DrawArea(Color color, bool ofAttack=true)
     {
         float dis = AttackDistance;

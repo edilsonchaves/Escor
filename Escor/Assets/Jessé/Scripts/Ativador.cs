@@ -20,10 +20,11 @@ public class Ativador : MonoBehaviour
                      protected bool            alreadyFocused;
     [SerializeField] protected bool            openInSequence=false; // ativa em sequencia
 
+    string _tagOfObj = "Player";
 
     void Start()
     {
-        print("Ativador");
+        // print("Ativador");
         myAnimator = GetComponent<Animator>();
         SetPlatformToWait(); // faz com que as plataformas esperem a ativação
     }
@@ -37,9 +38,10 @@ public class Ativador : MonoBehaviour
 
 
     // ativa todos os objetos (eles vão se ativando em seguida)
-    protected void ActivateAll()
+    protected void ActivateAll(string tagOfObj="Player")
     {
-        if(!alreadyFocused)
+        _tagOfObj = tagOfObj;
+        if(!alreadyFocused && tagOfObj == "Player")
             vcamFocusObject.StartFocus(GetAllObjectsToActivate(), openInSequence);
 
         StartCoroutine(OpenAllDoors_());
@@ -132,7 +134,8 @@ public class Ativador : MonoBehaviour
             yield return null;
         }
 
-        alreadyFocused = focusOnce;
+        if(_tagOfObj == "Player")
+            alreadyFocused = focusOnce;
     }
 
 
