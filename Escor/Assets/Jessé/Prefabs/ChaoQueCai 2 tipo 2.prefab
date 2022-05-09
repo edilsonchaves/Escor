@@ -67,6 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9af3a043c9d4f164a95cfd83e0a8e86e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numberOfPeoplesToDrop: 1
   PlatformType: 1
   tagOfPlayer: Player
   abovePlatformManager: {fileID: 2508661236384524159}
@@ -82,7 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cedacb1dfbaefd4c914184563f3dad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abovePlatformManager: {fileID: 0}
+  abovePlatformManager: {fileID: 2508661236384524159}
   waitPlayerToStartMovement: 0
   stopMovementOnTheEnd: 0
   MoveOnHorizontal: 0
@@ -90,6 +91,7 @@ MonoBehaviour:
   maxDistance: 0
   waitTimeOnEnd: 0
   startDirection: 0
+  esperarAtivador: 0
 --- !u!114 &7584953276416211439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,6 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAbove: 0
+  numberOfAbove: 0
 --- !u!114 &-3563405647862842280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,6 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAbove: 0
+  numberOfAbove: 0
 --- !u!61 &6018070266717609172
 BoxCollider2D:
   m_ObjectHideFlags: 0
