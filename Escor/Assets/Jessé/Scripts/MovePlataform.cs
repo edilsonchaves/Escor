@@ -85,7 +85,7 @@ public class MovePlataform : MonoBehaviour
     {
         abovePlatformManager.SetVelocity(GetVelocity());
 
-        if(!startMovement && abovePlatformManager.isAbove)
+        if(!startMovement && abovePlatformManager.isAbove && abovePlatformManager.playerIsAbove)
         {
             StartMovement();
         }
