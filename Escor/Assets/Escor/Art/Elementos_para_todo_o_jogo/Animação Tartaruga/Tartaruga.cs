@@ -57,12 +57,21 @@ public class Tartaruga : MonoBehaviour
 
         StopTalking();
     }
+
+    // [Jessé]
     public void DropPower()
     {
-        // Debug.Log("Teste");
-        GameObject powerInstantiate = Instantiate(power, new Vector3(transform.position.x + 1, transform.position.y, 0), Quaternion.identity) as GameObject;
-        powerInstantiate.GetComponent<PowerScript>().SetPower(PowerOptions.defesa);
+        power.SetActive(true);
     }
+
+
+    // public void DropPower()
+    // {
+    //     // Debug.Log("Teste");
+    //     GameObject powerInstantiate = Instantiate(power, new Vector3(transform.position.x + 1, transform.position.y, 0), Quaternion.identity) as GameObject;
+    //     powerInstantiate.GetComponent<PowerScript>().SetPower(PowerOptions.defesa);
+    // }
+
     public void StopTalking()
     {
         myAnimator.SetBool("Talking", false);

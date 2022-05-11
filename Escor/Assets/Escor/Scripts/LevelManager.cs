@@ -43,11 +43,11 @@ public class LevelManager : MonoBehaviour
             }
         }
         SfxManager.Initialize();
-        levelstatus = LevelStatus.Game;
     }
 
     void CreateLevel(int level)
     {
+        levelstatus = LevelStatus.Game;
         currentLevel=Instantiate(levelsAvaibles[level-1],Vector3.zero,Quaternion.identity);
         levelInformation = currentLevel.GetComponent<LevelInformation>();
         levelInformation.initializeLevelInformation(out Transform initialSpawnPosition);
@@ -176,6 +176,7 @@ public class LevelManager : MonoBehaviour
         popup.InitPopup("Cuidado! Esta acao ira fazer com que voce perca o progresso salvo. Deseja continuar?", "Sim", () => Debug.Log("Sim Action"), "Nao", () => Debug.Log("Nao"));
 
     }
+
     private void Exit()
     {
         #if UNITY_EDITOR
