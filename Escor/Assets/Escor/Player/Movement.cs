@@ -15,7 +15,7 @@ public class Movement : MonoBehaviour {
     private bool slowmotion = false;
     private Rigidbody2D rb;
     private PlayerRopeControll ropeControll;
-    public static bool canMove = true;
+    [SerializeField]public static bool canMove = true;
     [SerializeField]int _life;
     [SerializeField] int _fragmentLife;
     SpriteRenderer sprite;
@@ -56,6 +56,10 @@ public class Movement : MonoBehaviour {
                     _life = value;
                     if (Life == 0)
                     {
+                        // [Jessé]
+                        if(Manager_Game.Instance.sectionGameData.GetCurrentLevel() == 2)
+                            PlayerPrefs.SetInt("SkipConversationOfTurtle", 1); // diz a tartaruga para pular o diálogo
+
                         animator.SetTrigger("Morrendo");
                         SfxManager.PlaySound(SfxManager.Sound.playerDie);
                         LevelManager.levelstatus = LevelManager.LevelStatus.EndGame;
@@ -110,7 +114,7 @@ public class Movement : MonoBehaviour {
         isInvunerable = false;
         yield return null;
     }
-    void Start()
+    void Awake()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -136,6 +140,8 @@ public class Movement : MonoBehaviour {
 
     void FixedUpdate()
     {
+        // print("_> AQUI 1");
+        
         if(noChao)
             rb.velocity = new Vector2(0, rb.velocity.y); // impedir que o player fique deslisando
 
@@ -154,6 +160,7 @@ public class Movement : MonoBehaviour {
 
     void Update()
     {
+        print("_> "+LevelManager.levelstatus);
         if (LevelManager.levelstatus == LevelManager.LevelStatus.Game)
         {
 

@@ -35,27 +35,30 @@ public class EventsManager : MonoBehaviour
             // cinematic1.Invoke();
             GetComponent<BoxCollider2D>().enabled = false;
             // StartCoroutine(ProxCinematica());
-            
+
         }
 
-        
+
     }
 
-     public void TrocaCamera()
+    public void TrocaCamera()
     {
         StartCoroutine(TrocaCameraAnimation());
     }
+
+
     IEnumerator TrocaCameraAnimation()
     {
-        Animator portao = objects[0].GetComponent<Animator>(); 
+        Animator portao = objects[0].GetComponent<Animator>();
         ManagerEvents.PlayerMovementsEvents.LookedDirection(180);
-        
+
         yield return new WaitForSeconds(3);
-        portao.Play("PortaoAbrindoStart", -1, 0);
+        // portao.Play("PortaoAbrindo", -1, 0);
+        portao.SetBool("Start", true);
         GameObject.FindWithTag("ParedeJavali").GetComponent<Animator>().Play("parede sumindo2");
-        yield return new WaitUntil(() => (portao.GetCurrentAnimatorStateInfo(0).IsName("PortaoAbrindoStart"))); // espera a animação mudar para 'PortaoAbrindoStart'
+        yield return new WaitUntil(() => (portao.GetCurrentAnimatorStateInfo(0).IsName("PortaoAbrindo"))); // espera a animação mudar para 'PortaoAbrindo'
         yield return new WaitUntil(() => (portao.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)); // espera a animação chegar no final
-       
+        print("Debug");
         vcam.GoToNextStep();
         // GameObject.FindWithTag("ParedeJavali").GetComponent<Animator>().Play("parede sumindo2");
         yield return new WaitForSeconds(3);

@@ -14,9 +14,9 @@ public class ConversaPersonagem : MonoBehaviour
     public bool StatusConversa { get { return _statusConversa; } }
     public IEnumerator  ConversaFase(List<Conversa> conversa)
     {
+        _statusConversa = false;
         Movement.canMove = false; // parar o player durante o diálogo [jessé]
         prefab.SetActive(true);
-        _statusConversa = false;
         foreach ( var estrofe in conversa)
         {
             dialogoImagem.sprite = estrofe.personagemImagem;
