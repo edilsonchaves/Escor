@@ -50,8 +50,11 @@ public class Tartaruga : MonoBehaviour
         talking = true;
         myAnimator.SetBool("Talking", true);
         StartCoroutine(conversa.ConversaFase(conversaMestre));
-        yield return new WaitForSeconds(31f);
-        DropPower();
+        yield return new WaitForSeconds(30f);
+        myAnimator.SetBool("GivePower", true);
+        // yield return new WaitForSeconds(1.5f);
+        // DropPower();
+
         // yield return new WaitForSeconds(10f);
         yield return new WaitUntil(() => conversa.StatusConversa); //[Jessé] espera até que o diálogo chegue ao fim
 
@@ -62,6 +65,9 @@ public class Tartaruga : MonoBehaviour
     public void DropPower()
     {
         power.SetActive(true);
+        myAnimator.SetBool("GivePower", false);
+        power.GetComponent<Animator>().Play("ItemFlutuando");
+        // a posição já foi definida manualmente na cena
     }
 
 
