@@ -67,6 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9af3a043c9d4f164a95cfd83e0a8e86e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numberOfPeoplesToDrop: 1
   PlatformType: 0
   tagOfPlayer: Player
   abovePlatformManager: {fileID: 5719450899087005515}
@@ -90,6 +91,7 @@ MonoBehaviour:
   maxDistance: 0
   waitTimeOnEnd: 0
   startDirection: 0
+  esperarAtivador: 0
 --- !u!114 &-9179435080522195417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,6 +105,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAbove: 0
+  playerIsAbove: 0
+  numberOfAbove: 0
 --- !u!114 &-7181245082726757234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,7 +331,7 @@ PlatformEffector2D:
   m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 32247
   m_RotationalOffset: 0
   m_UseOneWay: 1
   m_UseOneWayGrouping: 0
@@ -348,6 +352,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAbove: 0
+  playerIsAbove: 0
+  numberOfAbove: 0
 --- !u!61 &1199906386267250975
 BoxCollider2D:
   m_ObjectHideFlags: 0

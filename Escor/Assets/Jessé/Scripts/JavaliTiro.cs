@@ -31,6 +31,7 @@ public class JavaliTiro : IA_Javali
         if (LevelManager.levelstatus == LevelManager.LevelStatus.Game && Move)
         {
             isGrounded = CheckIsGrounded();
+            ShowExclamation(true);  // mostra a exclamacao quando o player entra na área de ataque
             Movement(); // faz a movimentação do javali
             Attack();
         }
@@ -52,15 +53,18 @@ public class JavaliTiro : IA_Javali
 
         if(!CloseToAttack())
         {
+            // o player não está perto o suficiente ainda
             aux = 0;
+            // firstContactWithPlayer = true;
         }
-        else
+        else // encontrou o player
         {
             if(!attacking)
                 ChangeAnimation("JavaliParado2", false);
 
-            // attacking = true;
-            FlipFaceToPlayer();
+            // ShowExclamation();
+            FlipFaceToPlayer(); // provavelmente desnecessário
+
             aux += Time.deltaTime;
             if(aux > 1/cadence)
             {
@@ -81,7 +85,7 @@ public class JavaliTiro : IA_Javali
     {
         attacking = true;
         // FlipFaceToPlayer();
-        ChangeAnimation("JavaliAtacando", true);
+        ChangeAnimation("JavaliAtacando2", true);
         SfxManager.PlaySound(SfxManager.Sound.javaliShoot);
         myRb.velocity = Vector3.zero;
 

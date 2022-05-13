@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+//OBS: se o javali for cair de alguma superficie, é melhor usar 'walkInAllGround' para não acontecer nenhum BUG
+
+
 public class IA_Javali : MonoBehaviour
 {
     [Range(1,2)]
@@ -31,6 +34,7 @@ public class IA_Javali : MonoBehaviour
     public LayerMask playerLayer;
     public LayerMask javaliLayer;
     public Vector3 offSetGround, offSetWall;
+    public Animator exclamation;
 
 
     // a linha vermelha é usada para mostrar a altura do pulo e para detectar se é possível pular o obstaculo
@@ -43,7 +47,7 @@ public class IA_Javali : MonoBehaviour
     protected Vector3 myStartPosition;
     protected int currentDirection;
     protected float auxMovement, distanceOfCollision = .3f;
-    protected bool isGrounded, following, started, attacking, stuned, bug, canAttack;
+    protected bool isGrounded, following, started, attacking, stuned, bug, canAttack, firstContactWithPlayer; // firstContactWithPlayer reseta quando o player sai da area de visão
     protected Transform playerTrans;
 
 
@@ -176,7 +180,8 @@ public class IA_Javali : MonoBehaviour
         }
 
         auxMovement = Time.fixedDeltaTime * MovementSpeed * currentDirection * 100; // calcula quanto ele deve se mover
-        Vector2 newPosition = myRb.position + new Vector2(auxMovement*Time.fixedDeltaTime, 0); // salva a nova posição após o movimento
+        Vector2 newPosition = myRb.position + new Vector2(auxMovement, 0); // salva a nova posição após o movimento
+        Vector2 newPosition2 = myRb.position + new Vector2(auxMovement*0.5f, 0); // nova posição porém com um offset um pouco mais a frente (Não sei pq funciona, mas funciona)
 
         if (!bug)
         {
@@ -218,9 +223,15 @@ public class IA_Javali : MonoBehaviour
 
 
                 // verifica se encontrou algum obstaculo ou está fora do limite e faz o retorno
-
-                if (HitWall() && GetDistanceOfCollisionWithWall(GetWall()) < distanceOfCollision || (IsOutLimite(newPosition) && !walkInAllGround) || !CheckIsGrounded(true)) // verifica se a nova posição está fora do limite
+                //                false                                                            || (true                     && true            ) || false
+                // print("_> IsOutLimite(newPosition2): "+IsOutLimite(newPosition2));
+                if ((HitWall() && GetDistanceOfCollisionWithWall(GetWall()) < distanceOfCollision) || (IsOutLimite(newPosition2) && !walkInAllGround) || !CheckIsGrounded(true)) // verifica se a nova posição está fora do limite
                 {
+                    // print("_> HitWall()"+HitWall());
+                    // print("_> GetDistanceOfCollisionWithWall(GetWall())< distanceOfCollision"+(GetDistanceOfCollisionWithWall(GetWall())< distanceOfCollision));
+                    // print("_> !walkInAllGround"+!walkInAllGround);
+                    // print("_> !CheckIsGrounded(true)"+!CheckIsGrounded(true));
+                    // print("_> CheckIsGrounded(false)"+CheckIsGrounded(false));
                     if(CheckIsGrounded(false))
                     {
                         InvertDirection();
@@ -376,6 +387,28 @@ public class IA_Javali : MonoBehaviour
     }
 
 
+    // mostra uma exclamação na cabeça do javali
+    protected void ShowExclamation(bool rangeDistaceIsAttack=false)
+    {
+        // firstContactWithPlayer = false;
+
+        if(!PlayerIsCloseWithoutObstacle(rangeDistaceIsAttack)) // fora do alcance
+        {
+            firstContactWithPlayer = true;
+        }
+        else if(!IsFaceToPlayer())
+        {
+            firstContactWithPlayer = true;
+        }
+        else if(firstContactWithPlayer)
+        {
+            firstContactWithPlayer = false;
+            exclamation.Play("exclamacao2", -1, 0); // mostra uma exclamação
+        }
+
+    }
+
+
     //inicia o ataque
     protected virtual void Attack()
     {
@@ -383,6 +416,7 @@ public class IA_Javali : MonoBehaviour
             return;
 
         attacking = true;
+        // ShowExclamation();
         StartCoroutine(AttackFinished(2f));
         FlipFaceToPlayer();
         ChangeAnimation("JavaliAtacando", true);
@@ -432,7 +466,8 @@ public class IA_Javali : MonoBehaviour
     protected IEnumerator AttackFinished(float sec=1f)
     {
         // yield return new WaitForSeconds(sec);
-        yield return new WaitUntil(() => (JavaliAnimator.GetCurrentAnimatorStateInfo(0).IsName("JavaliAtacando"))); // espera a animação mudar para 'JavaliAtacando'
+        yield return new WaitUntil(() => (JavaliAnimator.GetCurrentAnimatorStateInfo(0).IsName("JavaliAtacando") ||
+                                            JavaliAnimator.GetCurrentAnimatorStateInfo(0).IsName("JavaliAtacando2"))); // espera a animação mudar para 'JavaliAtacando' ou 'JavaliAtacando2'
         yield return new WaitUntil(() => (JavaliAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)); // espera a animação chegar no final
 
         // Debug.Log("Attack Finished");
@@ -483,6 +518,7 @@ public class IA_Javali : MonoBehaviour
     // verifica se a posição passada está fora dos limites de movimentação
     protected bool IsOutLimite(Vector3 position)
     {
+        print("_> position: "+position);
         float distance = Mathf.Abs(myStartPosition.x - position.x); // guarda a distancia a partir do ponto inicial
 
         if(distance >= MovementDistance)
@@ -819,6 +855,13 @@ public class IA_Javali : MonoBehaviour
         RaycastHit2D playerHit = Physics2D.Raycast((Vector2)transform.position, dir, Mathf.Infinity, playerLayer);
 
         return (playerHit.distance <= rangeDistance);
+    }
+
+
+    // verifica se o player está perto sem que exista obstáculo
+    protected bool PlayerIsCloseWithoutObstacle(bool useAttackArea=false)
+    {
+        return PlayerInsideArea(useAttackArea) && !HasObstacleOnWay();
     }
 
 
