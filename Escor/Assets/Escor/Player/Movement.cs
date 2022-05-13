@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour {
 
-
+    public static int keepingMeStopped;
     public Animator animator;
     public float speed;
     public float jumpForce;
@@ -116,16 +116,17 @@ public class Movement : MonoBehaviour {
     }
     void Awake()
     {
-        animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
-        ropeControll = GetComponent<PlayerRopeControll>();
-        _life = 3;
+        keepingMeStopped        = 0; // [Jessé]
+        animator                = GetComponent<Animator>();
+        rb                      = GetComponent<Rigidbody2D>();
+        ropeControll            = GetComponent<PlayerRopeControll>();
+        _life                   = 3;
         ManagerEvents.PlayerMovementsEvents.LifedPlayer(_life);
-        sprite = GetComponent<SpriteRenderer>();
-        _powerHero = Manager_Game.Instance.sectionGameData.GetPowersAwarded();
-        timeAbilityDefense = new float[2];
-        timeAbilityDefense[1] = 5;
-        timeAbilityDefense[0] = 5;
+        sprite                  = GetComponent<SpriteRenderer>();
+        _powerHero              = Manager_Game.Instance.sectionGameData.GetPowersAwarded();
+        timeAbilityDefense      = new float[2];
+        timeAbilityDefense[1]   = 5;
+        timeAbilityDefense[0]   = 5;
     }
 
     private void OnEnable()
@@ -140,8 +141,7 @@ public class Movement : MonoBehaviour {
 
     void FixedUpdate()
     {
-        // print("_> AQUI 1");
-        
+
         if(noChao)
             rb.velocity = new Vector2(0, rb.velocity.y); // impedir que o player fique deslisando
 
@@ -160,7 +160,11 @@ public class Movement : MonoBehaviour {
 
     void Update()
     {
-        print("_> "+LevelManager.levelstatus);
+        // print("_> "+LevelManager.levelstatus);
+        canMove = keepingMeStopped == 0; // [Jessé]
+        print("_> keepingMeStopped: "+keepingMeStopped);
+
+
         if (LevelManager.levelstatus == LevelManager.LevelStatus.Game)
         {
 
@@ -283,6 +287,20 @@ public class Movement : MonoBehaviour {
                 rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
             }
 
+    }
+
+    public static void StopKeepPlayerStopped()
+    {
+        keepingMeStopped--;
+
+        if(keepingMeStopped < 0)
+            keepingMeStopped = 0;
+    }
+
+
+    public static void KeepPlayerStopped()
+    {
+        keepingMeStopped++;
     }
 
     void Defense()

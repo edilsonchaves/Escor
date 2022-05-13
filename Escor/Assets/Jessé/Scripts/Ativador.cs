@@ -41,10 +41,11 @@ public class Ativador : MonoBehaviour
     protected void ActivateAll(string tagOfObj="Player")
     {
         _tagOfObj = tagOfObj;
+
         if(!alreadyFocused && tagOfObj == "Player")
         {
             vcamFocusObject.StartFocus(GetAllObjectsToActivate(), openInSequence);
-            JavalisManager.instance.StopMovementOfJavalis(true);
+            // JavalisManager.instance.StopMovementOfJavalis(true);
         }
 
         StartCoroutine(OpenAllDoors_());
@@ -147,7 +148,7 @@ public class Ativador : MonoBehaviour
         if(_tagOfObj == "Player")
             alreadyFocused = focusOnce;
 
-        JavalisManager.instance.StopMovementOfJavalis(false);
+        // JavalisManager.instance.StopMovementOfJavalis(false); // false == movimentar
     }
 
 

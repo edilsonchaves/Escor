@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AiLevel: 1
   Move: 1
+  startMovementDirection: 0
   MovementDistance: 1
   walkInAllGround: 0
   MovementSpeed: 0.8
@@ -216,7 +217,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1724477956533421023}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1

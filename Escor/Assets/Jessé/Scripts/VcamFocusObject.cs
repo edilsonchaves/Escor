@@ -16,6 +16,8 @@ public class VcamFocusObject : MonoBehaviour
     public float focusTime                  = 1;
     // --------------------------------------------
 
+    public bool stopPlayer = true;
+    public bool stopJavali = true;
 
     private CinemachineVirtualCamera virtualCam;
     private GameObject objectToFocus;
@@ -23,7 +25,7 @@ public class VcamFocusObject : MonoBehaviour
     Transform  virtualCamTargetBackup;
     GameObject currentTarget;
 
-    bool            nextStep;
+    bool            nextStep, focusing;
     GameObject      objToSmooth;
     float           distance;
     Vector2         startPos;
@@ -60,6 +62,7 @@ public class VcamFocusObject : MonoBehaviour
 
         // finish                          = false;
         allTargets                      = targets;
+        focusing                        = true;
         // startPos                        = Camera.main.transform.position;
         startPos                        = virtualCam.Follow.position;
         objToSmooth                     = objToSmooth == null ? new GameObject() : objToSmooth; // objeto que a camera irá seguir
@@ -67,13 +70,30 @@ public class VcamFocusObject : MonoBehaviour
         distance                        = ((Vector2)(allTargets[0].transform.position-objToSmooth.transform.position)).magnitude;
         virtualCamTargetBackup          = virtualCam.Follow;
 
+        // Movement.canMove = !stopPlayer;
+        if(stopPlayer)
+            Movement.KeepPlayerStopped(); // mantém o player sem se mover
+
+        if(stopJavali)
+            JavalisManager.instance.StopMovementOfJavalis(true);
+
         StartCoroutine(StartFocus_(stepByStep));
     }
 
 
+    // IEnumerator KeepPlayerStoped()
+    // {
+    //     while(focusing)
+    //     {
+    //         Movement.canMove = false;
+    //         yield return null;
+    //     }
+    // }
+
+
     IEnumerator StartFocus_(bool stepByStep)
     {
-        // yield return new WaitUntil(() => ((Vector2)(Camera.main.transform.position-virtualCam.Follow.position)).magnitude < 0.001f);
+        // yield return new WaitUntil(() => ((Vector2)(Camera.main.transform.position-virtualCam.Follow.position)).magnitude < 0.1f);
 
         yield return new WaitForSeconds(timeToStartFocus);
 
@@ -86,7 +106,7 @@ public class VcamFocusObject : MonoBehaviour
             nextStep        = false;
 
             // indo para o alvo
-            while(((Vector2)(currentTarget.transform.position-objToSmooth.transform.position)).magnitude > 0.001f) // espera chegar no alvo
+            while(((Vector2)(currentTarget.transform.position-objToSmooth.transform.position)).magnitude > 0.1f) // espera chegar no alvo
             {
                 objToSmooth.transform.position = Vector2.MoveTowards(objToSmooth.transform.position, currentTarget.transform.position, distance/transitionTimeGoing*Time.deltaTime);
                 yield return null;
@@ -115,13 +135,21 @@ public class VcamFocusObject : MonoBehaviour
 
         distance = ((Vector2)(objToSmooth.transform.position-virtualCamTargetBackup.position)).magnitude;
 
-        while(((Vector2)(objToSmooth.transform.position-virtualCamTargetBackup.position)).magnitude > 0.001f) // espera chegar no alvo
+        while(((Vector2)(objToSmooth.transform.position-virtualCamTargetBackup.position)).magnitude > 0.1f) // espera chegar no alvo
         {
             objToSmooth.transform.position = Vector2.MoveTowards(objToSmooth.transform.position, virtualCamTargetBackup.position, distance/transitionTimeComingBack*Time.deltaTime);
             yield return null;
         }
 
         virtualCam.Follow = virtualCamTargetBackup; // reseta a camera para o alvo inicial
+        // Movement.canMove  = true;
+        focusing          = false;
+
+        if(stopPlayer)
+            Movement.StopKeepPlayerStopped(); // faz o player se mover
+
+        if(stopJavali)
+            JavalisManager.instance.StopMovementOfJavalis(false);
     }
 
 

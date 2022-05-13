@@ -32,6 +32,8 @@ TagManager:
   - ParedeJavali
   - FragmentMemory
   - FragmentLife
+  - plataforma
+  - Javalizao
   layers:
   - Default
   - TransparentFX
