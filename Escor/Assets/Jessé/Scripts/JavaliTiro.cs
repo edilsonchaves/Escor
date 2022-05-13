@@ -28,7 +28,7 @@ public class JavaliTiro : IA_Javali
     // Update is called once per frame
     void Update()
     {
-        if (LevelManager.levelstatus == LevelManager.LevelStatus.Game)
+        if (LevelManager.levelstatus == LevelManager.LevelStatus.Game && Move)
         {
             isGrounded = CheckIsGrounded();
             Movement(); // faz a movimentação do javali

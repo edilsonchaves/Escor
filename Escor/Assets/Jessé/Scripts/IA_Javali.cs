@@ -218,9 +218,17 @@ public class IA_Javali : MonoBehaviour
 
 
                 // verifica se encontrou algum obstaculo ou está fora do limite e faz o retorno
+
                 if (HitWall() && GetDistanceOfCollisionWithWall(GetWall()) < distanceOfCollision || (IsOutLimite(newPosition) && !walkInAllGround) || !CheckIsGrounded(true)) // verifica se a nova posição está fora do limite
                 {
-                    FlipFaceToStartPosition(); // vira a face do javali para o ponto inicial
+                    if(CheckIsGrounded(false))
+                    {
+                        InvertDirection();
+                    }
+                    // else
+                    // {
+                        // FlipFaceToStartPosition(); // vira a face do javali para o ponto inicial
+                    // }
                 }
 
 
