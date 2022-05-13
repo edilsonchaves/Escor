@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 5113769798561988283}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.667161, y: 4.9004407, z: -11.339786}
-  m_LocalScale: {x: 0.28560597, y: 0.28560597, z: 0.28560597}
+  m_LocalScale: {x: 0.4468351, y: 0.4468351, z: 0.4468351}
   m_Children:
   - {fileID: 5113769799182624310}
   m_Father: {fileID: 0}
@@ -122,7 +122,7 @@ MonoBehaviour:
   plataformas: []
   colisores: []
   vcamFocusObject: {fileID: 6958560904978191153}
-  focusOnce: 0
+  focusOnce: 1
   openInSequence: 1
   actionButton: 119
 --- !u!114 &6958560904978191153

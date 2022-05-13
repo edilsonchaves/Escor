@@ -149,7 +149,7 @@ public class IA_Javali : MonoBehaviour
 
         wallLayer           = groundLayer;
         started             = true;
-        print(started);
+        // print(started);
 
         playerTrans         = GameObject.FindGameObjectWithTag("Player").transform;
         myRb                = GetComponent<Rigidbody2D>();
