@@ -431,7 +431,10 @@ public class IA_Javali : MonoBehaviour
     // inicia a contagem para finalizar o estado de ataque
     protected IEnumerator AttackFinished(float sec=1f)
     {
-        yield return new WaitForSeconds(sec);
+        // yield return new WaitForSeconds(sec);
+        yield return new WaitUntil(() => (JavaliAnimator.GetCurrentAnimatorStateInfo(0).IsName("JavaliAtacando"))); // espera a animação mudar para 'JavaliAtacando'
+        yield return new WaitUntil(() => (JavaliAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)); // espera a animação chegar no final
+
         // Debug.Log("Attack Finished");
         attacking = false;
     }

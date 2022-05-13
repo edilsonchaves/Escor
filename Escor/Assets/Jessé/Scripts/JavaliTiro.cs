@@ -56,6 +56,9 @@ public class JavaliTiro : IA_Javali
         }
         else
         {
+            if(!attacking)
+                ChangeAnimation("JavaliParado2", false);
+
             // attacking = true;
             FlipFaceToPlayer();
             aux += Time.deltaTime;
@@ -88,7 +91,7 @@ public class JavaliTiro : IA_Javali
         Vector2 force   = CalculateDirectionToShoot();
         bullet.GetComponent<BulletScript>().valueForce = shootForce;
         bullet.GetComponent<Rigidbody2D>().AddForce(force*shootForce, ForceMode2D.Impulse);
-        StartCoroutine(AttackFinished(0.5f)); // Espera 0.5 seg para finalizar o ataque
+        StartCoroutine(AttackFinished());
         // yield return new WaitForSeconds(0.5f); // Espera 0.5 seg para finalizar o ataque
         // attacking = false;
     }
