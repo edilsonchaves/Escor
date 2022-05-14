@@ -56,8 +56,9 @@ public class EventsManager : MonoBehaviour
         yield return new WaitForSeconds(3);
         // portao.Play("PortaoAbrindo", -1, 0);
         portao.SetBool("Start", true);
-        GameObject.FindWithTag("ParedeJavali").GetComponent<Animator>().Play("parede sumindo2");
         yield return new WaitUntil(() => (portao.GetCurrentAnimatorStateInfo(0).IsName("PortaoAbrindo"))); // espera a animação mudar para 'PortaoAbrindo'
+        yield return new WaitUntil(() => (portao.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.4f)); // espera a animação chegar em 40%
+        GameObject.FindWithTag("ParedeJavali").GetComponent<Animator>().Play("parede sumindo2");
         yield return new WaitUntil(() => (portao.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)); // espera a animação chegar no final
         // print("Debug");
         vcam.GoToNextStep();
@@ -65,14 +66,17 @@ public class EventsManager : MonoBehaviour
         yield return new WaitForSeconds(3); // focando no javalizao
         IA_Javali jav = objects[1].GetComponent<IA_Javali>();
         jav.Move = true; // ativa o movimento do javalizao
-        jav.MovementSpeed = 1.25f; // ativa o movimento do javalizao
-        jav.JavaliAnimator.SetFloat("WalkSpeed", 0.5f);
+        jav.MovementSpeed = 1.35f; // ativa o movimento do javalizao
+        jav.JavaliAnimator.SetFloat("WalkSpeed", 0.75f);
         // yield return new WaitUntil(() => (jav.JavaliAnimator.GetCurrentAnimatorStateInfo(0).IsName("JavaliAndando"))); // espera a animação mudar para 'PortaoAbrindo'
         // jav.JavaliAnimator.GetCurrentAnimatorClipInfo(0).speed = 0.1f; // ativa o movimento do javalizao
         // objects[1].GetComponent<IA_Javali>().JavaliAnimator.speed = 0.1f; // ativa o movimento do javalizao
         vcam.GoToNextStep();
         yield return new WaitForSeconds(2);
-        GameObject.FindWithTag("Exclamation").GetComponent<Animator>().Play("exclamacao");
+
+        // GameObject.FindWithTag("Exclamation").GetComponent<Animator>().Play("exclamacao",-1,0);
+        // [Jessé] não precisa mais, pq a exclamação está na propria animação de 'assustando'
+
         GameObject.FindWithTag("Player").GetComponent<Animator>().Play("assustando");
         yield return new WaitForSeconds(2);
         Movement.canMove = true;
