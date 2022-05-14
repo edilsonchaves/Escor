@@ -42,16 +42,21 @@ public class ParallaxEffect : MonoBehaviour
 
     protected void MoveCavernParallax()
     {
-        currentCamPos = vcam.position; 
+        // não funciona suavimente porque é necessário esperar um frame depois da camera se mover para então atualizar a posição do parallax
+
+        currentCamPos = vcam.position;
+
+        // Transform ply = GameObject.FindGameObjectWithTag("Player").transform;
 
         if(((Vector2)(currentCamPos-transform.position)).magnitude < cavernMovementRange)
         {
 
             for(int c=0; c<layersGameObject.Count; c++)
             {
-                Vector3 currentCamMovement              = (currentCamPos - transform.position);
+                // Vector3 currentCamMovement              = (ply.position - transform.position);
+                Vector3 currentCamMovement              = (vcam.position - transform.position);
                 // Vector3 currentCamMovement              = (currentCamPos - layersGameObjectStartPosition[c]);
-                Vector3 offset                          = currentCamMovement * ((layersMaterial.Count-c) * bettewMovementSpeed + farMovementSpeed);
+                Vector3 offset                          = currentCamMovement * ((layersMaterial.Count-c) * bettewMovementSpeed + (farMovementSpeed));
                 Vector3 newPos                          = layersGameObjectStartPosition[c] + offset;
                 newPos.z                                = layersGameObjectStartPosition[c].z;
                 layersGameObject[c].transform.position  = newPos;
@@ -64,7 +69,7 @@ public class ParallaxEffect : MonoBehaviour
 
     protected void MoveCityParallax()
     {
-        currentCamPos = vcam.position; 
+        currentCamPos = vcam.position;
         for(int c=0; c<layersMaterial.Count; c++)
         {
             // print(sptBounds);
@@ -82,7 +87,7 @@ public class ParallaxEffect : MonoBehaviour
 
     // protected void MoveCityParallaxbackup2()
     // {
-    //     currentCamPos = vcam.position; 
+    //     currentCamPos = vcam.position;
     //     for(int c=0; c<layersMaterial.Count; c++)
     //     {
     //         Vector3 currentCamMovement = (currentCamPos-camStartPos);
@@ -98,7 +103,7 @@ public class ParallaxEffect : MonoBehaviour
 
     // protected void MoveCityParallaxBackup()
     // {
-    //     currentCamPos = vcam.position; 
+    //     currentCamPos = vcam.position;
     //     for(int c=0; c<layersMaterial.Count; c++)
     //     {
     //         Vector3 currentCamMovement = (currentCamPos-layersGameObject[c].transform.position); // efeito parallax apenas na horizontal
@@ -112,7 +117,7 @@ public class ParallaxEffect : MonoBehaviour
 
     protected void MoveCloudParallax()
     {
-        currentCamPos = vcam.position; 
+        currentCamPos = vcam.position;
         // print("speedOfLayers.Length:       "+speedOfLayers.Length);
         for(int c=0; c<layersGameObject.Count; c++)
         {
