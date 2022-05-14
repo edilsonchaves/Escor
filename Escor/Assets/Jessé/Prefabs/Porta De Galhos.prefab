@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8383227490945568605}
   - component: {fileID: 3346550920496441366}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: galhos 2 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 787442000444347360}
   - component: {fileID: 1268112780857520388}
   - component: {fileID: 8669576516942959694}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: galhos 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0385755, y: -0.08818239}
+  m_Offset: {x: 0.23779255, y: -0.08818239}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -190,7 +190,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.94580704, y: 0.8336352}
+  m_Size: {x: 0.54737294, y: 0.8336352}
   m_EdgeRadius: 0
 --- !u!1 &4348335840630701151
 GameObject:
@@ -202,7 +202,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1987328136495041107}
   - component: {fileID: 8358226718792476104}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: galhos 1 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -285,7 +285,7 @@ GameObject:
   - component: {fileID: 4946679570218257119}
   - component: {fileID: 5998722974794795487}
   - component: {fileID: 7906801175578242861}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Porta De Galhos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -359,7 +359,7 @@ GameObject:
   - component: {fileID: 2970836804046997660}
   - component: {fileID: 379670085485882331}
   - component: {fileID: 4134374379558172366}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: galhos 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -445,7 +445,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.055695415, y: -0.069180265}
+  m_Offset: {x: -0.29021937, y: -0.06918025}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -456,5 +456,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.1365542, y: 0.9616394}
+  m_Size: {x: 0.66750634, y: 0.9616394}
   m_EdgeRadius: 0
