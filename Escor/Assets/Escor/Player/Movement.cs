@@ -162,7 +162,12 @@ public class Movement : MonoBehaviour {
     {
         // print("_> "+LevelManager.levelstatus);
         canMove = keepingMeStopped == 0; // [Jessé]
-        print("_> keepingMeStopped: "+keepingMeStopped);
+        if(!canMove)
+        {
+            animator.SetBool("Pulando", false);
+            pulando = false;
+        }
+        // print("_> keepingMeStopped: "+keepingMeStopped);
 
 
         if (LevelManager.levelstatus == LevelManager.LevelStatus.Game)
@@ -272,6 +277,11 @@ public class Movement : MonoBehaviour {
 
     void Jump()
     {
+        if(keepingMeStopped != 0)
+        {
+            return;
+            pulando = false;
+        }
         // if(Input.GetButtonDown("Jump") && noChao)
         // {
             pulando = true;
