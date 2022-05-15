@@ -241,22 +241,22 @@ public class Movement : MonoBehaviour {
                         defendendo = false;
                     }
                 }
-                // else
-                // {
-                //     if (timeAbilityDefense[0] < timeAbilityDefense[1])
-                //         timeAbilityDefense[0] += Time.deltaTime;
-                //     else
-                //         timeAbilityDefense[0] = timeAbilityDefense[1];
-                // }
-                // ManagerEvents.PlayerMovementsEvents.PlayerDefensedPower(timeAbilityDefense[0],timeAbilityDefense[1]);
+                else
+                {
+                    if (timeAbilityDefense[0] < timeAbilityDefense[1])
+                        timeAbilityDefense[0] += Time.deltaTime;
+                    else
+                        timeAbilityDefense[0] = timeAbilityDefense[1];
+                }
+                ManagerEvents.PlayerMovementsEvents.PlayerDefensedPower(timeAbilityDefense[0],timeAbilityDefense[1]);
                 
                 
                 
             }
 
-            // Defense();
+            Defense();
 
-            // SlowMotion();
+            SlowMotion();
 
             Stun();
 
