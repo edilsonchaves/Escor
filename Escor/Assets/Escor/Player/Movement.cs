@@ -14,6 +14,7 @@ public class Movement : MonoBehaviour {
     public bool stuning = false;
     public bool defendendo = false;
     private bool slowmotion = false;
+    private bool caindo = false;
     private float maxJumpForce;
     private Rigidbody2D rb;
     private PlayerRopeControll ropeControll;
@@ -156,7 +157,10 @@ public class Movement : MonoBehaviour {
 
     void Update()
     {
-        Debug.Log(animator.GetBool("Caindo"));
+        // if(animator.GetBool("Caindo"))
+        // {
+        //     caindo = true;
+        // }
         
         animator.SetFloat("VelocidadeY", rb.velocity.y);
         if (LevelManager.levelstatus == LevelManager.LevelStatus.Game)
@@ -169,6 +173,7 @@ public class Movement : MonoBehaviour {
             {
                 if(rb.velocity.y < maxJumpForce)
                 {
+                    
                     pulando = false;
                     animator.SetBool("Pulando", false);
                     maxJumpForce = 0;
@@ -176,6 +181,19 @@ public class Movement : MonoBehaviour {
 
                 animator.SetBool("NoChao", noChao);
 
+                // if(noChao)
+                // {
+                //     caindo = false;
+                // }
+                if(noChao == false && rb.velocity.y < -0.5f)
+                {
+                    // animator.SetBool("Caindo", true);
+                    caindo = true;
+                } else if(noChao == true || rb.velocity.y >=0)
+                {
+                    caindo = false;
+                    // animator.SetBool("Caindo", false);
+                }
                 animator.SetBool("Caindo", noChao == false && pulando == false && rb.velocity.y < -0.5f);
 
                 bool canJump = noChao && !pulando && _powerHero[0];
@@ -211,22 +229,22 @@ public class Movement : MonoBehaviour {
                         defendendo = false;
                     }
                 }
-                else
-                {
-                    if (timeAbilityDefense[0] < timeAbilityDefense[1])
-                        timeAbilityDefense[0] += Time.deltaTime;
-                    else
-                        timeAbilityDefense[0] = timeAbilityDefense[1];
-                }
-                ManagerEvents.PlayerMovementsEvents.PlayerDefensedPower(timeAbilityDefense[0],timeAbilityDefense[1]);
+                // else
+                // {
+                //     if (timeAbilityDefense[0] < timeAbilityDefense[1])
+                //         timeAbilityDefense[0] += Time.deltaTime;
+                //     else
+                //         timeAbilityDefense[0] = timeAbilityDefense[1];
+                // }
+                // ManagerEvents.PlayerMovementsEvents.PlayerDefensedPower(timeAbilityDefense[0],timeAbilityDefense[1]);
                 
                 
                 
             }
 
-            Defense();
+            // Defense();
 
-            SlowMotion();
+            // SlowMotion();
 
             Stun();
 
@@ -343,11 +361,44 @@ public class Movement : MonoBehaviour {
         }
     }
 
+    // IEnumerator StunningTime()
+    // {
+        
+    //     // yield return new WaitUntil(() => (animator.GetCurrentAnimatorStateInfo(0).IsName("pulando ataque"))); // espera a animação mudar para 'PortaoAbrindo'
+        
+    // }
+
     void Stun()
     {
-        if(pulando && Input.GetButtonDown("Stun"))
+        Debug.Log(caindo);
+        float execAnimator = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        if(!noChao && Input.GetButtonDown("Stun")) //troca pra vermelho
         {
+            if(!caindo)
+            {
+                animator.Play("pulando ataque", -1, execAnimator);
+            }
+            else
+            {
+                animator.Play("caindo ataque", -1, execAnimator);
+            }
             
+            
+            animator.SetBool("Atacando", true);
+        } 
+        else if (!noChao && Input.GetButtonUp("Stun")) // troca pra branco
+        {
+            if(!caindo)
+            {
+                animator.Play("pulando normal", -1, execAnimator);
+            }
+            else
+            {
+                animator.Play("caindo", -1, execAnimator);
+            }
+            
+            animator.SetBool("Atacando", false);
+
         }
     }
     void OnTriggerEnter2D(Collider2D col)
