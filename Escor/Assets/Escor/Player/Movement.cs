@@ -11,8 +11,10 @@ public class Movement : MonoBehaviour {
     public float jumpForce;
     public bool noChao = true;
     public bool pulando = false;
+    public bool stuning = false;
     public bool defendendo = false;
     private bool slowmotion = false;
+    private float maxJumpForce;
     private Rigidbody2D rb;
     private PlayerRopeControll ropeControll;
     public static bool canMove = true;
@@ -154,6 +156,9 @@ public class Movement : MonoBehaviour {
 
     void Update()
     {
+        Debug.Log(animator.GetBool("Caindo"));
+        
+        animator.SetFloat("VelocidadeY", rb.velocity.y);
         if (LevelManager.levelstatus == LevelManager.LevelStatus.Game)
         {
 
@@ -162,6 +167,12 @@ public class Movement : MonoBehaviour {
 
             if (canMove && !ropeControll.attached)
             {
+                if(rb.velocity.y < maxJumpForce)
+                {
+                    pulando = false;
+                    animator.SetBool("Pulando", false);
+                    maxJumpForce = 0;
+                }
 
                 animator.SetBool("NoChao", noChao);
 
@@ -175,7 +186,11 @@ public class Movement : MonoBehaviour {
                     // noChao = false;
                     SfxManager.PlaySound(SfxManager.Sound.playerJump);
                     animator.SetBool("Pulando", true);
-                    animator.Play("pulando", -1, 0);
+                    animator.Play("pulando normal", -1, 0);
+                    // animator.SetBool("Pulando", false);
+                    
+                    
+  
 
                 }
                 else if (noChao && !pulando)
@@ -204,11 +219,16 @@ public class Movement : MonoBehaviour {
                         timeAbilityDefense[0] = timeAbilityDefense[1];
                 }
                 ManagerEvents.PlayerMovementsEvents.PlayerDefensedPower(timeAbilityDefense[0],timeAbilityDefense[1]);
+                
+                
+                
             }
 
             Defense();
 
             SlowMotion();
+
+            Stun();
 
         }
 
@@ -274,6 +294,8 @@ public class Movement : MonoBehaviour {
             if(slowmotion == false)
             {
                 rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+                maxJumpForce = rb.velocity.y;
+                
             }
 
     }
@@ -318,6 +340,14 @@ public class Movement : MonoBehaviour {
             Time.timeScale = 1;
             Time.fixedDeltaTime = Time.timeScale * .02f;
             //Efeito slowmotion inativo
+        }
+    }
+
+    void Stun()
+    {
+        if(pulando && Input.GetButtonDown("Stun"))
+        {
+            
         }
     }
     void OnTriggerEnter2D(Collider2D col)
