@@ -7,10 +7,14 @@ public class AbovePlatformManager : MonoBehaviour
     [SerializeField]
     public bool isAbove;
     public bool playerIsAbove;
+    public bool javaliIsAbove;
+
+    public List<IA_Javali> javalisAbove = new List<IA_Javali>();
 
     public int numberOfAbove=0;
     // private Movement mvt;
     private Rigidbody2D objAboveRigidbody;
+    BoxCollider2D myCol;
     // private MovePlataform movePlatform;
 
     Vector2 myVelocity;
@@ -18,6 +22,22 @@ public class AbovePlatformManager : MonoBehaviour
     void Start()
     {
         // TryGetComponent(out MovePlataform movePlatform);
+
+        // if (!TryGetComponent(out BoxCollider2D myCol))
+            // this.enabled = false;
+
+        myCol = GetComponent<BoxCollider2D>();
+        //
+        if(myCol == null)
+            this.enabled = false;
+
+        // m_Center = m_Collider.bounds.center;
+
+    }
+
+    void Update()
+    {
+        print("_> "+myCol.bounds.center);
     }
 
 
@@ -27,6 +47,13 @@ public class AbovePlatformManager : MonoBehaviour
         {
             if(!playerIsAbove && collision.gameObject.tag == "Player")
                 playerIsAbove = true;
+
+            if(!javaliIsAbove && collision.gameObject.tag == "Javali")
+            {
+                // javaliIsAbove = true;
+                javalisAbove.Add(collision.gameObject.GetComponent<IA_Javali>());
+            }
+
 
             collision.transform.SetParent(transform);
             isAbove = true;
@@ -42,6 +69,12 @@ public class AbovePlatformManager : MonoBehaviour
         {
             if(collision.gameObject.tag == "Player")
                 playerIsAbove = false;
+
+            if(collision.gameObject.tag == "Javali")
+            {
+                // javaliIsAbove = true;
+                javalisAbove.Remove(collision.gameObject.GetComponent<IA_Javali>());
+            }
             // if(collision.gameObject.TryGetComponent(out Rigidbody2D objAboveRigidbody))
             // {
                 // objAboveRigidbody.velocity = new Vector2(myVelocity.x, objAboveRigidbody.velocity.y); // a velocidade no eixo y não muda
@@ -55,9 +88,36 @@ public class AbovePlatformManager : MonoBehaviour
     }
 
 
+    public bool JavaliIsOnCenterOfPlataform()
+    {
+        if(javalisAbove.Count == 0)
+            return false;
+        //
+        foreach(IA_Javali ia in javalisAbove)
+            if(Mathf.Abs(ia.transform.position.x - myCol.bounds.center.x) <= 0.25f)
+                return true;
+
+        return false;
+    }
+
+
     public void SetVelocity(Vector2 vel)
     {
         myVelocity = vel;
+    }
+
+
+    public void StopJavalis()
+    {
+        foreach(IA_Javali ia in javalisAbove)
+            ia.Move = false;
+    }
+
+
+    public void MoveJavalis()
+    {
+        foreach(IA_Javali ia in javalisAbove)
+            ia.Move = true;
     }
 
 

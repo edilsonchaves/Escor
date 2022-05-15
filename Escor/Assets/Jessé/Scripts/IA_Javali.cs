@@ -543,7 +543,7 @@ public class IA_Javali : MonoBehaviour
     {
         RaycastHit2D javaliHit = Physics2D.Raycast(new Vector2(_wall.point.x, transform.position.y), Vector2.right*currentDirection*-1, 100f, javaliLayer);
 
-        Debug.DrawRay(new Vector2(javaliHit.point.x, transform.position.y), Vector2.right*currentDirection*javaliHit.distance, Color.white);
+        Debug.DrawRay(new Vector2(javaliHit.point.x, transform.position.y), Vector2.right*currentDirection*javaliHit.distance, Color.red);
         return Mathf.Abs(javaliHit.point.x - _wall.point.x);
     }
 
