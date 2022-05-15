@@ -3558,7 +3558,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: -78.71001}
+  m_AnchoredPosition: {x: 0, y: -78.71002}
   m_SizeDelta: {x: 961.01, y: 555.42}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1066946610
@@ -7279,6 +7279,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 412766330}
+        m_TargetAssemblyTypeName: "configura\xE7\xF5es, Assembly-CSharp"
+        m_MethodName: BTN_Voltar
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!224 &1710978121246971786
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7308,8 +7320,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1710978121246971786}
   - component: {fileID: 1710978121246971791}
-  - component: {fileID: 1710978121246971784}
   - component: {fileID: 1710978121246971785}
+  - component: {fileID: 1710978121246971784}
   m_Layer: 5
   m_Name: Voltar
   m_TagString: Untagged
@@ -8096,7 +8108,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -11.999817}
+  m_AnchoredPosition: {x: 0, y: -11.999878}
   m_SizeDelta: {x: -1033, y: -587.91}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1710978121780511327

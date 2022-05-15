@@ -24,8 +24,8 @@ public class configurações : MonoBehaviour
         volumeVoz.value     = Manager_Game.Instance.saveGameData.Volume;
 
         // ---
-        volumeJogo.SetFloat("vozsound", -80 + volumeVoz.value * 0.8f); // Range de volume.value é [0, 100]
-        volumeJogo.SetFloat("bgsound", -80 + volume.value * 0.8f); // Range de volume.value é [0, 100]
+        volumeJogo.SetFloat("vozsound", -80 + Manager_Game.Instance.saveGameData.Volume * 0.8f); // Range de volume.value é [0, 100]
+        volumeJogo.SetFloat("bgsound", -80 + Manager_Game.Instance.saveGameData.VolumeAmbient * 0.8f); // Range de volume.value é [0, 100]
 
         StartCoroutine("UpdateValuesFromSlider");
         // ---

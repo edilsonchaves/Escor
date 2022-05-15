@@ -40,11 +40,11 @@ public class BulletScript : MonoBehaviour
         {
             // dano no player
             Movement mvt = col.gameObject.GetComponent<Movement>();
-            print("mvt.defendendo:         " + mvt.defendendo);
+            // print("mvt.defendendo:         " + mvt.defendendo);
             if (mvt.defendendo)
             {
                 isBackToJavali = true;
-                myRb.velocity = -myRb.velocity;
+                myRb.velocity = -myRb.velocity*1.5f;
                 // myRb.velocity = Vector2.zero;
                 // Vector2 force = CalculateDirectionToAttack();
                 // GetComponent<Rigidbody2D>().AddForce(force * valueForce/2, ForceMode2D.Impulse);
@@ -54,7 +54,7 @@ public class BulletScript : MonoBehaviour
 
             if (!mvt.isInvunerable)
             {
-                print("Tiro acertou o player");
+                // print("Tiro acertou o player");
                 mvt.Life -= 1;
             }
 
@@ -62,7 +62,8 @@ public class BulletScript : MonoBehaviour
         }
         else if (col.tag == tagOfJavali && isBackToJavali)
         {
-            emissor.GetComponent<IA_Javali>().JavaliAnimator.Play("JavaliTonto", -1, 0);
+            // emissor.GetComponent<IA_Javali>().JavaliAnimator.Play("JavaliTonto", -1, 0);
+            emissor.GetComponent<IA_Javali>().JavaliStuned();
         }
         else if (col.tag == tagOfBoss)
         {

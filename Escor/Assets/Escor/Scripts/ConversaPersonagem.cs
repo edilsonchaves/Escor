@@ -14,9 +14,10 @@ public class ConversaPersonagem : MonoBehaviour
     public bool StatusConversa { get { return _statusConversa; } }
     public IEnumerator  ConversaFase(List<Conversa> conversa)
     {
-        Movement.canMove = false; // parar o player durante o diálogo [jessé]
-        prefab.SetActive(true);
         _statusConversa = false;
+        Movement.KeepPlayerStopped(); // parar o player durante o diálogo [jessé]
+        // Movement.canMove = false; // parar o player durante o diálogo [jessé]
+        prefab.SetActive(true);
         foreach ( var estrofe in conversa)
         {
             dialogoImagem.sprite = estrofe.personagemImagem;
@@ -26,7 +27,8 @@ public class ConversaPersonagem : MonoBehaviour
             yield return new WaitUntil(()=>!dialogoAudio.isPlaying);
         }
         _statusConversa = true;
-        Movement.canMove = true; // player pode se mover [jessé]
+        // Movement.canMove = true; // player pode se mover [jessé]
+        Movement.StopKeepPlayerStopped();; // player pode se mover [jessé]
         prefab.SetActive(false);
 
     }

@@ -120,14 +120,16 @@ public class Alavanca : Ativador
         alreadyTriggered = true;
         mvt.animator.SetBool("Pegando", true);
         SfxManager.PlaySound(SfxManager.Sound.ativandoAlavanca);
-        Movement.canMove = false;
+        Movement.KeepPlayerStopped();
+        // Movement.canMove = false;
     }
 
 
     protected void Soltarlavanca()
     {
         mvt.animator.SetBool("Pegando", false);
-        Movement.canMove = true;
+        Movement.StopKeepPlayerStopped();
+        // Movement.canMove = true;
     }
 
 
