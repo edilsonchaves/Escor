@@ -230,6 +230,7 @@ public class Movement : MonoBehaviour {
                 {
                     // pulando = false;
                     animator.SetBool("Pulando", false);
+                    animator.SetBool("Atacando", false);
                 }
 
 
@@ -244,22 +245,22 @@ public class Movement : MonoBehaviour {
                         defendendo = false;
                     }
                 }
-                // else
-                // {
-                //     if (timeAbilityDefense[0] < timeAbilityDefense[1])
-                //         timeAbilityDefense[0] += Time.deltaTime;
-                //     else
-                //         timeAbilityDefense[0] = timeAbilityDefense[1];
-                // }
-                // ManagerEvents.PlayerMovementsEvents.PlayerDefensedPower(timeAbilityDefense[0],timeAbilityDefense[1]);
+                else
+                {
+                    if (timeAbilityDefense[0] < timeAbilityDefense[1])
+                        timeAbilityDefense[0] += Time.deltaTime;
+                    else
+                        timeAbilityDefense[0] = timeAbilityDefense[1];
+                }
+                ManagerEvents.PlayerMovementsEvents.PlayerDefensedPower(timeAbilityDefense[0],timeAbilityDefense[1]);
                 
                 
                 
             }
 
-            // Defense();
+            Defense();
 
-            // SlowMotion();
+            SlowMotion();
 
             Stun();
 
@@ -483,10 +484,13 @@ public class Movement : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D col)
     {
     
-        if (atacando && col.gameObject.tag == "Javali" && Mathf.Round(col.contacts[0].normal.y) == 1)
+        if(Mathf.Round(col.contacts[0].normal.y) == 1 && col.gameObject.tag == "Javali")
         {
-            col.gameObject.GetComponent<IA_Javali>().JavaliStuned();
+            rb.velocity = new Vector2(rb.velocity.x, 0.5f);
+            if (atacando) col.gameObject.GetComponent<IA_Javali>().JavaliStuned();
+            
         }
+        
     }
 
     // [Jessé]
