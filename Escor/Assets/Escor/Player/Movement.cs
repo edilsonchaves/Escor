@@ -11,8 +11,11 @@ public class Movement : MonoBehaviour {
     public float jumpForce;
     public bool noChao = true;
     public bool pulando = false;
+    public bool atacando = false;
     public bool defendendo = false;
     private bool slowmotion = false;
+    private bool caindo = false;
+    private float maxJumpForce;
     private Rigidbody2D rb;
     private PlayerRopeControll ropeControll;
     [SerializeField]public static bool canMove = true;
@@ -167,6 +170,7 @@ public class Movement : MonoBehaviour {
             animator.SetBool("Pulando", false);
             pulando = false;
         }
+        animator.SetFloat("VelocidadeY", rb.velocity.y);
         // print("_> keepingMeStopped: "+keepingMeStopped);
 
 
@@ -178,9 +182,29 @@ public class Movement : MonoBehaviour {
 
             if (canMove && !ropeControll.attached)
             {
+                if(rb.velocity.y < maxJumpForce)
+                {
+                    
+                    pulando = false;
+                    animator.SetBool("Pulando", false);
+                    maxJumpForce = 0;
+                }
 
                 animator.SetBool("NoChao", noChao);
 
+                // if(noChao)
+                // {
+                //     caindo = false;
+                // }
+                if(noChao == false && rb.velocity.y < -0.5f)
+                {
+                    // animator.SetBool("Caindo", true);
+                    caindo = true;
+                } else if(noChao == true || rb.velocity.y >=0)
+                {
+                    caindo = false;
+                    // animator.SetBool("Caindo", false);
+                }
                 animator.SetBool("Caindo", noChao == false && pulando == false && rb.velocity.y < -0.5f);
 
                 bool canJump = noChao && !pulando && _powerHero[0];
@@ -191,7 +215,11 @@ public class Movement : MonoBehaviour {
                     // noChao = false;
                     SfxManager.PlaySound(SfxManager.Sound.playerJump);
                     animator.SetBool("Pulando", true);
-                    animator.Play("pulando", -1, 0);
+                    animator.Play("pulando normal", -1, 0);
+                    // animator.SetBool("Pulando", false);
+                    
+                    
+  
 
                 }
                 else if (noChao && !pulando)
@@ -212,19 +240,24 @@ public class Movement : MonoBehaviour {
                         defendendo = false;
                     }
                 }
-                else
-                {
-                    if (timeAbilityDefense[0] < timeAbilityDefense[1])
-                        timeAbilityDefense[0] += Time.deltaTime;
-                    else
-                        timeAbilityDefense[0] = timeAbilityDefense[1];
-                }
-                ManagerEvents.PlayerMovementsEvents.PlayerDefensedPower(timeAbilityDefense[0],timeAbilityDefense[1]);
+                // else
+                // {
+                //     if (timeAbilityDefense[0] < timeAbilityDefense[1])
+                //         timeAbilityDefense[0] += Time.deltaTime;
+                //     else
+                //         timeAbilityDefense[0] = timeAbilityDefense[1];
+                // }
+                // ManagerEvents.PlayerMovementsEvents.PlayerDefensedPower(timeAbilityDefense[0],timeAbilityDefense[1]);
+                
+                
+                
             }
 
-            Defense();
+            // Defense();
 
-            SlowMotion();
+            // SlowMotion();
+
+            Stun();
 
         }
 
@@ -295,6 +328,8 @@ public class Movement : MonoBehaviour {
             if(slowmotion == false)
             {
                 rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+                maxJumpForce = rb.velocity.y;
+                
             }
 
     }
@@ -355,6 +390,54 @@ public class Movement : MonoBehaviour {
             //Efeito slowmotion inativo
         }
     }
+
+    // IEnumerator StunningTime()
+    // {
+        
+    //     // yield return new WaitUntil(() => (animator.GetCurrentAnimatorStateInfo(0).IsName("pulando ataque"))); // espera a animação mudar para 'PortaoAbrindo'
+        
+    // }
+
+    void Stun()
+    {
+        
+        float execAnimator = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        if(!noChao && Input.GetButtonDown("Stun")) //troca pra vermelho
+        {
+            atacando = true;
+            animator.Play(caindo?"caindo ataque":"pulando ataque", -1, execAnimator);
+            // if(!caindo)
+            // {
+            //     animator.Play("pulando ataque", -1, execAnimator);
+
+            // }
+            // else
+            // {
+            //     animator.Play("caindo ataque", -1, execAnimator);
+
+            // }
+            
+            
+            animator.SetBool("Atacando", true);
+        } 
+        else if (!noChao && Input.GetButtonUp("Stun")) // troca pra branco
+        {
+            atacando = false;
+            animator.Play(caindo?"caindo":"pulando normal", -1, execAnimator);
+            // if(!caindo)
+            // {
+            //     animator.Play("pulando normal", -1, execAnimator);
+              
+            // }
+            // else
+            // {
+            //     animator.Play("caindo", -1, execAnimator);
+            // }
+            
+            animator.SetBool("Atacando", false);
+
+        }
+    }
     void OnTriggerEnter2D(Collider2D col)
     {
         // [Jessé]
@@ -388,6 +471,16 @@ public class Movement : MonoBehaviour {
         {
             _fragmentLife++;
             Destroy(col.gameObject);
+        }
+        
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+    
+        if (atacando && col.gameObject.tag == "Javali" && Mathf.Round(col.contacts[0].normal.y) == 1)
+        {
+            col.gameObject.GetComponent<IA_Javali>().JavaliStuned();
         }
     }
 
