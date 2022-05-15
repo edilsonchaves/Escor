@@ -21,7 +21,7 @@ public class EventsManager : MonoBehaviour
     IEnumerator ProxCinematica()
     {
         yield return new WaitForSeconds(9);
-        Movement.canMove = true;
+        Movement.StopKeepPlayerStopped();
     }
 
     void OnTriggerEnter2D(Collider2D collisor)
@@ -29,7 +29,7 @@ public class EventsManager : MonoBehaviour
         if(collisor.gameObject.tag == "Player" && cinematic1 != null)
         {
 
-            Movement.canMove = false;
+            Movement.KeepPlayerStopped();
             vcam.StartFocus(objects);
             StartCoroutine(TrocaCameraAnimation());
             // cinematic1.Invoke();
