@@ -17,6 +17,8 @@ public class AbovePlatformManager : MonoBehaviour
     BoxCollider2D myCol;
     // private MovePlataform movePlatform;
 
+    List<Transform> allAboveMe = new List<Transform>();
+
     Vector2 myVelocity;
 
     void Start()
@@ -41,9 +43,10 @@ public class AbovePlatformManager : MonoBehaviour
     // }
 
 
-    void OnCollisionEnter2D(Collision2D collision) {
-
-        if ((collision.gameObject.tag == "Player" || collision.gameObject.tag == "Javali") && Mathf.Round(collision.contacts[0].normal.y) == Mathf.Round(-Vector2.up.y))
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        // print("_> collision:  "+collision.contacts[0].normal);
+        if ((collision.gameObject.tag == "Player" || collision.gameObject.tag == "Javali") && Mathf.Round(collision.contacts[0].normal.y) == -1)
         {
             if(!playerIsAbove && collision.gameObject.tag == "Player")
                 playerIsAbove = true;
@@ -54,9 +57,9 @@ public class AbovePlatformManager : MonoBehaviour
                 javalisAbove.Add(collision.gameObject.GetComponent<IA_Javali>());
             }
 
-
-            collision.transform.SetParent(transform);
+            allAboveMe.Add(collision.transform);
             isAbove = true;
+            collision.transform.SetParent(transform);
             numberOfAbove++;
         }
 
@@ -79,8 +82,10 @@ public class AbovePlatformManager : MonoBehaviour
             // {
                 // objAboveRigidbody.velocity = new Vector2(myVelocity.x, objAboveRigidbody.velocity.y); // a velocidade no eixo y não muda
             // }
+            if(collision.transform.parent == transform)
+                collision.transform.SetParent(null);
 
-            collision.transform.SetParent(null);
+
             numberOfAbove--;
             isAbove = (numberOfAbove != 0);
         }
