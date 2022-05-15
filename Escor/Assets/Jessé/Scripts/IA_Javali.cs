@@ -730,7 +730,7 @@ public class IA_Javali : MonoBehaviour
     }
 
 
-    protected void JavaliStuned()
+    public void JavaliStuned()
     {
         if(!stuned)
         {

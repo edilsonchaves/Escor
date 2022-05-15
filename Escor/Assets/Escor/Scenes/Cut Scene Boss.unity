@@ -851,7 +851,7 @@ GameObject:
   - component: {fileID: 873563599}
   - component: {fileID: 873563598}
   - component: {fileID: 873563597}
-  m_Layer: 14
+  m_Layer: 7
   m_Name: Tilemap
   m_TagString: ground
   m_Icon: {fileID: 0}
@@ -2151,7 +2151,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1978582613}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.16, y: 2.2, z: -10.75}
+  m_LocalPosition: {x: 4.5, y: 4.91, z: -13.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2491,12 +2491,20 @@ PrefabInstance:
       value: Javali
       objectReference: {fileID: 0}
     - target: {fileID: 6526216613321143585, guid: 0285e0e6955880d42a9c4e2a460d93c9, type: 3}
+      propertyPath: Move
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6526216613321143585, guid: 0285e0e6955880d42a9c4e2a460d93c9, type: 3}
       propertyPath: AttackDistance
       value: 1.53
       objectReference: {fileID: 0}
     - target: {fileID: 6526216613321143585, guid: 0285e0e6955880d42a9c4e2a460d93c9, type: 3}
       propertyPath: FollowDistance
       value: 3.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 6526216613321143585, guid: 0285e0e6955880d42a9c4e2a460d93c9, type: 3}
+      propertyPath: walkInAllGround
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6526216613321143585, guid: 0285e0e6955880d42a9c4e2a460d93c9, type: 3}
       propertyPath: MovementDistance

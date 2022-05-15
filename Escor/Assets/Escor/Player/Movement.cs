@@ -11,7 +11,7 @@ public class Movement : MonoBehaviour {
     public float jumpForce;
     public bool noChao = true;
     public bool pulando = false;
-    public bool stuning = false;
+    public bool atacando = false;
     public bool defendendo = false;
     private bool slowmotion = false;
     private bool caindo = false;
@@ -370,32 +370,39 @@ public class Movement : MonoBehaviour {
 
     void Stun()
     {
-        Debug.Log(caindo);
+        
         float execAnimator = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
         if(!noChao && Input.GetButtonDown("Stun")) //troca pra vermelho
         {
-            if(!caindo)
-            {
-                animator.Play("pulando ataque", -1, execAnimator);
-            }
-            else
-            {
-                animator.Play("caindo ataque", -1, execAnimator);
-            }
+            atacando = true;
+            animator.Play(caindo?"caindo ataque":"pulando ataque", -1, execAnimator);
+            // if(!caindo)
+            // {
+            //     animator.Play("pulando ataque", -1, execAnimator);
+
+            // }
+            // else
+            // {
+            //     animator.Play("caindo ataque", -1, execAnimator);
+
+            // }
             
             
             animator.SetBool("Atacando", true);
         } 
         else if (!noChao && Input.GetButtonUp("Stun")) // troca pra branco
         {
-            if(!caindo)
-            {
-                animator.Play("pulando normal", -1, execAnimator);
-            }
-            else
-            {
-                animator.Play("caindo", -1, execAnimator);
-            }
+            atacando = false;
+            animator.Play(caindo?"caindo":"pulando normal", -1, execAnimator);
+            // if(!caindo)
+            // {
+            //     animator.Play("pulando normal", -1, execAnimator);
+              
+            // }
+            // else
+            // {
+            //     animator.Play("caindo", -1, execAnimator);
+            // }
             
             animator.SetBool("Atacando", false);
 
@@ -434,6 +441,16 @@ public class Movement : MonoBehaviour {
         {
             _fragmentLife++;
             Destroy(col.gameObject);
+        }
+        
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+    
+        if (atacando && col.gameObject.tag == "Javali" && Mathf.Round(col.contacts[0].normal.y) == 1)
+        {
+            col.gameObject.GetComponent<IA_Javali>().JavaliStuned();
         }
     }
 

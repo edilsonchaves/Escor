@@ -121,8 +121,8 @@ InputManager:
     m_Name: Stun
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: down
+    negativeButton: down
+    positiveButton: 
     altNegativeButton: 
     altPositiveButton: 
     gravity: 0
