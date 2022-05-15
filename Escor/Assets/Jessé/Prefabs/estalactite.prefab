@@ -83,7 +83,7 @@ MonoBehaviour:
   delayMinime: 5
   randomDelayIcrement: 30
   useRandomChanceToFall: 0
-  chanceToFall: 35
+  chanceToFall: 25
   killInstantly: 0
   tagOfPlayer: Player
   groundLayer:

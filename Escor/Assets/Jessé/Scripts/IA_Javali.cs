@@ -172,7 +172,9 @@ public class IA_Javali : MonoBehaviour
         if(!CheckIsGrounded(false))
         {
             walkInAllGround = true; // [BUG1] gambiarra pra resolver BUG rsrs
+            myRb.velocity = new Vector2(0, myRb.velocity.y); // [BUG1]
             ChangeAnimation("JavaliParado");
+            print("_> aqui 1");
             return;
         }
 
@@ -180,12 +182,15 @@ public class IA_Javali : MonoBehaviour
         {
             if(!CloseToAttack() && !attacking && !stuned)
             {
+                print("_> aqui 2");
                 ChangeAnimation("JavaliParado2");
             }
 
+            print("_> aqui 3");
             return;
         }
 
+        print("_> aqui 4");
         auxMovement = Time.fixedDeltaTime * MovementSpeed * currentDirection * 100; // calcula quanto ele deve se mover
         Vector2 newPosition = myRb.position + new Vector2(auxMovement, 0); // salva a nova posição após o movimento
         Vector2 newPosition2 = myRb.position + new Vector2(auxMovement*0.5f, 0); // nova posição porém com um offset um pouco mais a frente (Não sei pq funciona, mas funciona)
@@ -224,6 +229,7 @@ public class IA_Javali : MonoBehaviour
             {
                 if(Move)
                 {
+                    print("_> aqui 5");
                     myRb.velocity = new Vector2(auxMovement, myRb.velocity.y); // movimenta para a nova posição
                 }
                 // myRb.velocity = new Vector2(auxMovement, myRb.velocity.y); // movimenta para a nova posição
@@ -232,8 +238,10 @@ public class IA_Javali : MonoBehaviour
                 // verifica se encontrou algum obstaculo ou está fora do limite e faz o retorno
                 //                false                                                            || (true                     && true            ) || false
                 // print("_> IsOutLimite(newPosition2): "+IsOutLimite(newPosition2));
+                print("_> aqui 6");
                 if ((HitWall() && GetDistanceOfCollisionWithWall(GetWall()) < distanceOfCollision) || (IsOutLimite(newPosition2) && !walkInAllGround) || !CheckIsGrounded(true)) // verifica se a nova posição está fora do limite
                 {
+                    print("_> aqui 7");
                     print("_> HitWall(): "+HitWall());
                     print("_> GetDistanceOfCollisionWithWall(GetWall())< distanceOfCollision: "+(GetDistanceOfCollisionWithWall(GetWall())< distanceOfCollision));
                     print("_> IsOutLimite(newPosition2):  "+IsOutLimite(newPosition2));
@@ -242,6 +250,7 @@ public class IA_Javali : MonoBehaviour
                     print("_> CheckIsGrounded(false): "+CheckIsGrounded(false));
                     if(CheckIsGrounded(false))
                     {
+                        print("_> aqui 8");
                         InvertDirection();
                     }
                     // else

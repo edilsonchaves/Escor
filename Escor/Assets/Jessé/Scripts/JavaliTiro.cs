@@ -30,7 +30,7 @@ public class JavaliTiro : IA_Javali
     // Update is called once per frame
     void Update()
     {
-        if (LevelManager.levelstatus == LevelManager.LevelStatus.Game && Move)
+        if (LevelManager.levelstatus == LevelManager.LevelStatus.Game)
         {
             isGrounded = CheckIsGrounded();
             ShowExclamation(true);  // mostra a exclamacao quando o player entra na área de ataque

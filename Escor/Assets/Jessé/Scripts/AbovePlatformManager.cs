@@ -35,10 +35,10 @@ public class AbovePlatformManager : MonoBehaviour
 
     }
 
-    void Update()
-    {
-        print("_> "+myCol.bounds.center);
-    }
+    // void Update()
+    // {
+    //     print("_> "+myCol.bounds.center);
+    // }
 
 
     void OnCollisionEnter2D(Collision2D collision) {
@@ -94,7 +94,7 @@ public class AbovePlatformManager : MonoBehaviour
             return false;
         //
         foreach(IA_Javali ia in javalisAbove)
-            if(Mathf.Abs(ia.transform.position.x - myCol.bounds.center.x) <= 0.25f)
+            if(Mathf.Abs(ia.transform.position.x - myCol.bounds.center.x) <= 1f)
                 return true;
 
         return false;
