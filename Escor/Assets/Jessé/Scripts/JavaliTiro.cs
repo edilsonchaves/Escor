@@ -16,6 +16,8 @@ public class JavaliTiro : IA_Javali
     private List<GameObject> bulletsActive   = new List<GameObject>(){},
                              bulletsDisabled = new List<GameObject>(){};
 
+    bool parado;
+
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +35,11 @@ public class JavaliTiro : IA_Javali
             isGrounded = CheckIsGrounded();
             ShowExclamation(true);  // mostra a exclamacao quando o player entra na área de ataque
             Movement(); // faz a movimentação do javali
+            // if(!attacking && !parado)
+            // {
+            //     parado = true;
+            //     ChangeAnimation("JavaliParado2", false);
+            // }
             Attack();
         }
     }
@@ -50,17 +57,22 @@ public class JavaliTiro : IA_Javali
 
     protected override void Attack()
     {
+        if(stuned)
+        {
+            aux = 0;
+            return;
+        }
 
         if(!CloseToAttack())
         {
             // o player não está perto o suficiente ainda
             aux = 0;
+            parado = false;
             // firstContactWithPlayer = true;
         }
         else // encontrou o player
         {
-            if(!attacking)
-                ChangeAnimation("JavaliParado2", false);
+            // parado = true;
 
             // ShowExclamation();
             FlipFaceToPlayer(); // provavelmente desnecessário

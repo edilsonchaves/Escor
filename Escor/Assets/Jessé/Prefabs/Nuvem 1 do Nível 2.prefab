@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6752887854167836283}
   - component: {fileID: 2920435658471725201}
   m_Layer: 0
-  m_Name: Nuvem 3
+  m_Name: "Nuvem 1 do N\xEDvel 2"
   m_TagString: "Decora\xE7\xE3oComCollider"
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,7 +151,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: a21160d51d7e9d64189cd24619aaab86, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d5da1b059abf9b8439bf435259fd3ee3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -234,7 +234,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: a21160d51d7e9d64189cd24619aaab86, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d5da1b059abf9b8439bf435259fd3ee3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

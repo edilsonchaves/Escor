@@ -777,7 +777,7 @@ public class IA_Javali : MonoBehaviour
     }
 
 
-    protected void JavaliStuned()
+    public void JavaliStuned()
     {
         if(!stuned)
         {
@@ -788,18 +788,31 @@ public class IA_Javali : MonoBehaviour
 
     protected IEnumerator _JavaliStuned()
     {
-        if(attacking)
-        {
-            yield return new WaitForSeconds(0.3f);
+        // if(attacking)
+        // {
+        //     yield return new WaitForSeconds(0.3f);
+        //     ChangeAnimation("JavaliTonto", true);
+        //     stuned = true;
+        //     attacking = false;
+        //     // yield return new WaitForSeconds(2.2f);
+        //     yield return new WaitUntil(() => (JavaliAnimator.GetCurrentAnimatorStateInfo(0).IsName("JavaliTonto"))); // espera a animação mudar para 'PortaoAbrindo'
+        //     yield return new WaitUntil(() => (JavaliAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)); // espera a animação chegar no final
+        //
+        // }
+        // else
+        // {
+            // yield return new WaitForSeconds(2.5f);
+        stuned = true;
+        attacking = false;
+            // yield return new WaitForSeconds(0.3f);
             ChangeAnimation("JavaliTonto", true);
-            stuned = true;
-            attacking = false;
-            yield return new WaitForSeconds(2.2f);
-        }
-        else
-        {
-            yield return new WaitForSeconds(2.5f);
-        }
+            yield return new WaitUntil(() => (JavaliAnimator.GetCurrentAnimatorStateInfo(0).IsName("JavaliTonto"))); // espera a animação mudar para 'PortaoAbrindo'
+            yield return new WaitUntil(() => (JavaliAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)); // espera a animação chegar no final
+
+        // }
+
+        ChangeAnimation("JavaliParado2");
+        attacking = false;
         stuned = false;
     }
 

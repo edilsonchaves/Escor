@@ -1151,7 +1151,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 576492189}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.98, y: 4.48, z: -10}
+  m_LocalPosition: {x: 0.59, y: 4.48, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2399,12 +2399,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -556306898777694631, guid: 99624e07b8ae0aa4a9f8fda63f6fbe3b, type: 3}
+      propertyPath: _life
+      value: 4089
+      objectReference: {fileID: 0}
+    - target: {fileID: -556306898777694631, guid: 99624e07b8ae0aa4a9f8fda63f6fbe3b, type: 3}
       propertyPath: _powerHero.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -556306898777694631, guid: 99624e07b8ae0aa4a9f8fda63f6fbe3b, type: 3}
       propertyPath: _powerHero.Array.data[0]
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -556306898777694631, guid: 99624e07b8ae0aa4a9f8fda63f6fbe3b, type: 3}
+      propertyPath: _powerHero.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -556306898777694631, guid: 99624e07b8ae0aa4a9f8fda63f6fbe3b, type: 3}
+      propertyPath: timeAbilityDefense.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -556306898777694631, guid: 99624e07b8ae0aa4a9f8fda63f6fbe3b, type: 3}
+      propertyPath: timeAbilityDefense.Array.data[1]
+      value: 293.72
       objectReference: {fileID: 0}
     - target: {fileID: 6776107948195502343, guid: 99624e07b8ae0aa4a9f8fda63f6fbe3b, type: 3}
       propertyPath: m_RootOrder
@@ -2477,7 +2493,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7822855636697483142, guid: 0de21c681411c2f42a0eed7d078f5365, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7822855636697483143, guid: 0de21c681411c2f42a0eed7d078f5365, type: 3}
       propertyPath: AttackDistance
@@ -2487,17 +2503,21 @@ PrefabInstance:
       propertyPath: FollowDistance
       value: 22.17
       objectReference: {fileID: 0}
+    - target: {fileID: 7822855636697483143, guid: 0de21c681411c2f42a0eed7d078f5365, type: 3}
+      propertyPath: walkInAllGround
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7822855636697483160, guid: 0de21c681411c2f42a0eed7d078f5365, type: 3}
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7822855636697483160, guid: 0de21c681411c2f42a0eed7d078f5365, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.1
+      value: -7.14
       objectReference: {fileID: 0}
     - target: {fileID: 7822855636697483160, guid: 0de21c681411c2f42a0eed7d078f5365, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.94
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 7822855636697483160, guid: 0de21c681411c2f42a0eed7d078f5365, type: 3}
       propertyPath: m_LocalPosition.z
