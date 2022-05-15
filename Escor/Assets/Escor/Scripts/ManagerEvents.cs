@@ -98,6 +98,16 @@ public class ManagerEvents : MonoBehaviour
         public static event Action<int> onPlayerGetPower;
         public static event Action<float, float> onPlayerDefenseTime;
         public static event Action onPlayerObtainFragmentMemory;
+        public static event Action<float, float> onPlayerGetFragmentLife;
+
+        public static void PlayerGetedFragmentLife(float currentValue,float totalValue)
+        {
+            if (onPlayerGetFragmentLife != null)
+            {
+                onPlayerGetFragmentLife(currentValue,totalValue);
+            }
+        }
+
         public static void LookedDirection(float value)
         {
             
