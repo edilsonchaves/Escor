@@ -47,11 +47,15 @@ public class JavaliTiro : IA_Javali
 
     protected override bool CloseToAttack()
     {
-        if(!PlayerInsideArea(true))
+        // if(!PlayerInsideArea(true))
+        //     return false;
+
+        if(GetDistaceOfPlayer(ShootPosition.position) > AttackDistance)
             return false;
 
+
         return IsFaceToPlayer()
-               && !HaveObstacle(playerTrans.position, transform.position);
+               && !HaveObstacle(playerTrans.position, ShootPosition.position);
     }
 
 
