@@ -190,7 +190,7 @@ public class IA_Javali : MonoBehaviour
             return;
         }
 
-        print("_> aqui 4");
+        print("_> aqui 4 :"+CloseToAttack());
         auxMovement = Time.fixedDeltaTime * MovementSpeed * currentDirection * 100; // calcula quanto ele deve se mover
         Vector2 newPosition = myRb.position + new Vector2(auxMovement, 0); // salva a nova posição após o movimento
         Vector2 newPosition2 = myRb.position + new Vector2(auxMovement*0.5f, 0); // nova posição porém com um offset um pouco mais a frente (Não sei pq funciona, mas funciona)
@@ -214,19 +214,23 @@ public class IA_Javali : MonoBehaviour
             //         FlipFaceToStartPosition(); // vira a face do javali para o ponto inicial
             //     }
             // }
-
             if (attacking || stuned || CloseToAttack())
             {
                 // não faça nada
+                print("_> aqui 4.1");
+                print("_> attacking: "+attacking);
+                print("_> stuned: "+stuned);
             }
             else if (AiLevel==0)
             {
+                print("_> aqui 4.2");
                 // O Javali não anda, fica somente no mesmo lugar esperando a hora de atacar
                 return;
             }
             // inteligência do javali nível 1
             else if (AiLevel == 1)
             {
+                print("_> aqui 4.3");
                 if(Move)
                 {
                     print("_> aqui 5");
@@ -271,6 +275,7 @@ public class IA_Javali : MonoBehaviour
             // inteligência do javali nível 2
             else if (AiLevel == 2)
             {
+                print("_> aqui 4.4");
                 if(Move)
                 {
                     myRb.velocity = new Vector2(auxMovement, myRb.velocity.y); // movimenta para a nova posição
@@ -362,12 +367,15 @@ public class IA_Javali : MonoBehaviour
 
             if (!attacking && !stuned && isGrounded)
             {
+                print("_> aqui 4.5");
                 if(!CloseToAttack())
                 {
+                    print("_> aqui 4.6");
                     ChangeAnimation("JavaliAndando");
                 }
                 else if(myRb.velocity != Vector2.zero)
                 {
+                    print("_> aqui 4.7");
                     myRb.velocity = Vector3.zero;
                     ChangeAnimation("JavaliParado2");
                 }
@@ -377,14 +385,17 @@ public class IA_Javali : MonoBehaviour
         else
         {
 
+            print("_> aqui 4.8");
             if(!isGrounded)
             {
+                print("_> aqui 4.9");
                 ChangeAnimation("JavaliTonto");
                 SfxManager.PlaySound(SfxManager.Sound.javaliStuned);
                 myRb.AddForce(new Vector2(currentDirection*-1, 0)*2, ForceMode2D.Impulse);
             }
             else
             {
+                print("_> aqui 5.5");
                 bug = false;
             }
             // myRb.AddForce(new Vector2(currentDirection*-1, 0)*200, ForceMode2D.Impulse);
@@ -429,7 +440,7 @@ public class IA_Javali : MonoBehaviour
     //inicia o ataque
     protected virtual void Attack()
     {
-        if(!CloseToAttack() || attacking)
+        if(!CloseToAttack() || attacking || stuned)
             return;
 
         attacking = true;
@@ -796,10 +807,10 @@ public class IA_Javali : MonoBehaviour
 
     public void JavaliStuned()
     {
-        if(!stuned)
-        {
-            StartCoroutine(_JavaliStuned());
-        }
+        if(stuned)
+            return;
+
+        StartCoroutine(_JavaliStuned());
     }
 
 
@@ -819,6 +830,7 @@ public class IA_Javali : MonoBehaviour
         // else
         // {
             // yield return new WaitForSeconds(2.5f);
+        Move = false;
         stuned = true;
         attacking = false;
             // yield return new WaitForSeconds(0.3f);
@@ -829,6 +841,7 @@ public class IA_Javali : MonoBehaviour
         // }
 
         ChangeAnimation("JavaliParado2");
+        Move = true;
         attacking = false;
         stuned = false;
     }
@@ -911,7 +924,7 @@ public class IA_Javali : MonoBehaviour
             else
             {
                 JavaliStuned();
-                SfxManager.PlaySound(SfxManager.Sound.playerDefense);
+                // SfxManager.PlaySound(SfxManager.Sound.playerDefense);
                 Debug.Log("Jogador não recebeu dano");
             }
         }
