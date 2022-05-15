@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-//OBS: se o javali for cair de alguma superficie, é melhor usar 'walkInAllGround' para não acontecer nenhum BUG
+//OBS: se o javali for cair de alguma superficie, é melhor usar 'walkInAllGround' para não acontecer nenhum BUG (resolvido na linha 'BUG1')
 
 
 public class IA_Javali : MonoBehaviour
@@ -169,6 +169,13 @@ public class IA_Javali : MonoBehaviour
     // aqui é feito todo o calculo para movimentar o javali
     protected void Movement()
     {
+        if(!CheckIsGrounded(false))
+        {
+            walkInAllGround = true; // [BUG1] gambiarra pra resolver BUG rsrs
+            ChangeAnimation("JavaliParado");
+            return;
+        }
+
         if(!Move)
         {
             if(!CloseToAttack() && !attacking && !stuned)
@@ -227,11 +234,12 @@ public class IA_Javali : MonoBehaviour
                 // print("_> IsOutLimite(newPosition2): "+IsOutLimite(newPosition2));
                 if ((HitWall() && GetDistanceOfCollisionWithWall(GetWall()) < distanceOfCollision) || (IsOutLimite(newPosition2) && !walkInAllGround) || !CheckIsGrounded(true)) // verifica se a nova posição está fora do limite
                 {
-                    // print("_> HitWall()"+HitWall());
-                    // print("_> GetDistanceOfCollisionWithWall(GetWall())< distanceOfCollision"+(GetDistanceOfCollisionWithWall(GetWall())< distanceOfCollision));
-                    // print("_> !walkInAllGround"+!walkInAllGround);
-                    // print("_> !CheckIsGrounded(true)"+!CheckIsGrounded(true));
-                    // print("_> CheckIsGrounded(false)"+CheckIsGrounded(false));
+                    print("_> HitWall(): "+HitWall());
+                    print("_> GetDistanceOfCollisionWithWall(GetWall())< distanceOfCollision: "+(GetDistanceOfCollisionWithWall(GetWall())< distanceOfCollision));
+                    print("_> IsOutLimite(newPosition2):  "+IsOutLimite(newPosition2));
+                    print("_> !walkInAllGround: "+!walkInAllGround);
+                    print("_> !CheckIsGrounded(true): "+!CheckIsGrounded(true));
+                    print("_> CheckIsGrounded(false): "+CheckIsGrounded(false));
                     if(CheckIsGrounded(false))
                     {
                         InvertDirection();
@@ -518,7 +526,7 @@ public class IA_Javali : MonoBehaviour
     // verifica se a posição passada está fora dos limites de movimentação
     protected bool IsOutLimite(Vector3 position)
     {
-        print("_> position: "+position);
+        // print("_> position: "+position);
         float distance = Mathf.Abs(myStartPosition.x - position.x); // guarda a distancia a partir do ponto inicial
 
         if(distance >= MovementDistance)
