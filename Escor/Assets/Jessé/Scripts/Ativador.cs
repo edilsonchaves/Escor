@@ -41,8 +41,12 @@ public class Ativador : MonoBehaviour
     protected void ActivateAll(string tagOfObj="Player")
     {
         _tagOfObj = tagOfObj;
+
         if(!alreadyFocused && tagOfObj == "Player")
+        {
             vcamFocusObject.StartFocus(GetAllObjectsToActivate(), openInSequence);
+            // JavalisManager.instance.StopMovementOfJavalis(true);
+        }
 
         StartCoroutine(OpenAllDoors_());
     }
@@ -54,27 +58,34 @@ public class Ativador : MonoBehaviour
         // para que não fique algo muito repetitivo
 
         foreach(GameObject goPortao in portoes)
-            goPortao.GetComponent<Animator>().Play("PortaoFechando", -1, 0);
+        {
+            // goPortao.GetComponent<Animator>().Play("PortaoFechando", -1, 0);
+            goPortao.GetComponent<Animator>().SetBool("Start", false);
+            goPortao.GetComponent<Animator>().SetBool("End", true);
+        }
 
         foreach(GameObject goPlataforma in plataformas)
-            goPlataforma.GetComponent<MovePlataform>().esperarAtivador = false;
+            goPlataforma.GetComponent<MovePlataform>().esperarAtivador = false; // não me lembro se isso está realmente correto
     }
 
 
 
     IEnumerator OpenAllDoors_()
     {
-        yield return new WaitForSeconds(vcamFocusObject.timeToStartFocus+vcamFocusObject.transitionTimeGoing);
+        yield return new WaitForSeconds(!alreadyFocused ? vcamFocusObject.timeToStartFocus+vcamFocusObject.transitionTimeGoing : 0);
 
         foreach(GameObject goPortao in portoes)
         {
             Animator portao = goPortao.GetComponent<Animator>();
-            portao.Play("PortaoAbrindo", -1, 0);
+            portao.SetBool("Start", true);
+            portao.SetBool("End", false);
+            // portao.Play("PortaoAbrindo", -1, 0);
 
             if(openInSequence)
             {
                 yield return new WaitUntil(() => (portao.GetCurrentAnimatorStateInfo(0).IsName("PortaoAbrindo"))); // espera a animação mudar para 'PortaoAbrindo'
-                yield return new WaitUntil(() => (portao.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)); // espera a animação chegar no final
+                yield return new WaitUntil(() => (portao.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)); // espera a animação chegar no final
+                yield return new WaitForSeconds(0.5f); // além de esperar a animação terminar, esperará por meio segundo
                 vcamFocusObject.GoToNextStep();
             }
 
@@ -136,6 +147,8 @@ public class Ativador : MonoBehaviour
 
         if(_tagOfObj == "Player")
             alreadyFocused = focusOnce;
+
+        // JavalisManager.instance.StopMovementOfJavalis(false); // false == movimentar
     }
 
 

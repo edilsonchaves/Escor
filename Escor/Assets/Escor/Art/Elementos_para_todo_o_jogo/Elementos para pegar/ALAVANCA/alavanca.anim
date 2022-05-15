@@ -232,7 +232,7 @@ AnimationClip:
   m_Events:
   - time: 0.375
     functionName: ActivateAll
-    data: 
+    data: Player
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

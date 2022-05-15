@@ -24,6 +24,14 @@ public class PlataformaPeso : Ativador
         if(col.tag == tagOfPlayer || col.tag == javali)
         {
             // desativarColider();
+            // if(col.tag == tagOfPlayer)
+            // {
+            //     col.GetComponent<Movement>().animator.SetBool("Pulando", false);
+            //     col.GetComponent<Movement>().pulando = false;
+            //
+            // }
+
+
             myAnim.SetBool("Press", true);
             ActivateAll(col.tag);
 

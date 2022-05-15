@@ -32,6 +32,8 @@ TagManager:
   - ParedeJavali
   - FragmentMemory
   - FragmentLife
+  - plataforma
+  - Javalizao
   layers:
   - Default
   - TransparentFX
@@ -48,7 +50,7 @@ TagManager:
   - Parallax
   - Tilemap_liso
   - Platform
-  - 
+  - GroundOnlyToPlayer
   - 
   - 
   - 
