@@ -10,6 +10,7 @@ public class JavaliNormal : IA_Javali
         if (LevelManager.levelstatus == LevelManager.LevelStatus.Game)
         {
             isGrounded = CheckIsGrounded();
+            ShowExclamation(false); // mostra a exclamacao quando o player entra na área de visão
             Movement(); // faz a movimentação do javali
             Attack();
         }

@@ -23,21 +23,46 @@ public class DropPlatform2 : MonoBehaviour
 
     void Update()
     {
-        if(!alreadyAnimade && abovePlatformManager.numberOfAbove >= numberOfPeoplesToDrop)
-        {
-            alreadyAnimade = true;
+        // if(!alreadyAnimade && abovePlatformManager.numberOfAbove >= numberOfPeoplesToDrop)
+        // {
+            // if(abovePlatformManager.javalisAbove.Count != 0)
             // myAnimator.SetBool("StartAnimation", true);
-            StartCoroutine("Drop");
-        }
+        // }
+
+        if(alreadyAnimade)
+            return;
+
+        if(abovePlatformManager.numberOfAbove < numberOfPeoplesToDrop)
+            return;
+
+        if(numberOfPeoplesToDrop > 1 && !abovePlatformManager.JavaliIsOnCenterOfPlataform())
+            return;
+
+        StartCoroutine("Drop");
     }
 
     IEnumerator Drop()
     {
-        yield return new WaitForSeconds(timeToStartDrop);
-        myAnimator.SetBool("StartAnimation", true);
-        yield return new WaitForSeconds(timeSwinging);
-        myAnimator.SetBool("Drop", true);
-        createPlatform.FadeInAllBlocks();
+        alreadyAnimade = true;
+        StopJavalis();                                    // javali param de se mover
+        yield return new WaitForSeconds(timeToStartDrop); // esperando para começar a balançar
+        myAnimator.SetBool("StartAnimation", true);       // começa a balançar
+        yield return new WaitForSeconds(timeSwinging);    // tempo balançando
+        myAnimator.SetBool("Drop", true);                 // cai
+        MoveJavalis();                                    // javali volta a se mover
+        createPlatform.FadeInAllBlocks();                 // desaparecer com os blocos
+    }
+
+
+    private void StopJavalis()
+    {
+        abovePlatformManager.StopJavalis();
+    }
+
+
+    private void MoveJavalis()
+    {
+        abovePlatformManager.MoveJavalis();
     }
 
 }

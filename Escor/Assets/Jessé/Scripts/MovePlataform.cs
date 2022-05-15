@@ -19,7 +19,7 @@ public class MovePlataform : MonoBehaviour
 
     [HideInInspector] Vector2 myVelocity;
 
-    [HideInInspector] public bool esperarAtivador; // a propria alavanca que define essa variável
+    [HideInInspector] public bool esperarAtivador=false; // a propria alavanca que define essa variável
 
     // Gizmos - Desenvolvimento
     void OnDrawGizmos()
@@ -85,7 +85,7 @@ public class MovePlataform : MonoBehaviour
     {
         abovePlatformManager.SetVelocity(GetVelocity());
 
-        if(!startMovement && abovePlatformManager.isAbove)
+        if(!startMovement && abovePlatformManager.isAbove && abovePlatformManager.playerIsAbove)
         {
             StartMovement();
         }

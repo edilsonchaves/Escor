@@ -22,14 +22,14 @@ public class CavernParallax : ParallaxEffect
         SetLayers();
     }
 
-    
+
     void FixedUpdate()
     {
         // farMovementSpeed = m_farMovementSpeed;
         // bettewMovementSpeed = m_bettewMovementSpeed;
         // cavernMovementRange = m_movementRange;
         // SetABS(); // se certifica que as variáveis sejam positivas
-        MoveCavernParallax(); 
+        MoveCavernParallax();
     }
 
     override protected void SetLayers()

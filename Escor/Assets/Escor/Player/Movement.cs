@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour {
 
-
+    public static int keepingMeStopped;
     public Animator animator;
     public float speed;
     public float jumpForce;
@@ -15,7 +15,7 @@ public class Movement : MonoBehaviour {
     private bool slowmotion = false;
     private Rigidbody2D rb;
     private PlayerRopeControll ropeControll;
-    public static bool canMove = true;
+    [SerializeField]public static bool canMove = true;
     [SerializeField]int _life;
     [SerializeField] int _fragmentLife;
     SpriteRenderer sprite;
@@ -56,6 +56,10 @@ public class Movement : MonoBehaviour {
                     _life = value;
                     if (Life == 0)
                     {
+                        // [Jessé]
+                        if(Manager_Game.Instance.sectionGameData.GetCurrentLevel() == 2)
+                            PlayerPrefs.SetInt("SkipConversationOfTurtle", 1); // diz a tartaruga para pular o diálogo
+
                         animator.SetTrigger("Morrendo");
                         SfxManager.PlaySound(SfxManager.Sound.playerDie);
                         LevelManager.levelstatus = LevelManager.LevelStatus.EndGame;
@@ -110,18 +114,19 @@ public class Movement : MonoBehaviour {
         isInvunerable = false;
         yield return null;
     }
-    void Start()
+    void Awake()
     {
-        animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
-        ropeControll = GetComponent<PlayerRopeControll>();
-        _life = 3;
+        keepingMeStopped        = 0; // [Jessé]
+        animator                = GetComponent<Animator>();
+        rb                      = GetComponent<Rigidbody2D>();
+        ropeControll            = GetComponent<PlayerRopeControll>();
+        _life                   = 3;
         ManagerEvents.PlayerMovementsEvents.LifedPlayer(_life);
-        sprite = GetComponent<SpriteRenderer>();
-        _powerHero = Manager_Game.Instance.sectionGameData.GetPowersAwarded();
-        timeAbilityDefense = new float[2];
-        timeAbilityDefense[1] = 5;
-        timeAbilityDefense[0] = 5;
+        sprite                  = GetComponent<SpriteRenderer>();
+        _powerHero              = Manager_Game.Instance.sectionGameData.GetPowersAwarded();
+        timeAbilityDefense      = new float[2];
+        timeAbilityDefense[1]   = 5;
+        timeAbilityDefense[0]   = 5;
     }
 
     private void OnEnable()
@@ -136,6 +141,7 @@ public class Movement : MonoBehaviour {
 
     void FixedUpdate()
     {
+
         if(noChao)
             rb.velocity = new Vector2(0, rb.velocity.y); // impedir que o player fique deslisando
 
@@ -154,6 +160,16 @@ public class Movement : MonoBehaviour {
 
     void Update()
     {
+        // print("_> "+LevelManager.levelstatus);
+        canMove = keepingMeStopped == 0; // [Jessé]
+        if(!canMove)
+        {
+            animator.SetBool("Pulando", false);
+            pulando = false;
+        }
+        // print("_> keepingMeStopped: "+keepingMeStopped);
+
+
         if (LevelManager.levelstatus == LevelManager.LevelStatus.Game)
         {
 
@@ -261,6 +277,11 @@ public class Movement : MonoBehaviour {
 
     void Jump()
     {
+        if(keepingMeStopped != 0)
+        {
+            return;
+            pulando = false;
+        }
         // if(Input.GetButtonDown("Jump") && noChao)
         // {
             pulando = true;
@@ -276,6 +297,20 @@ public class Movement : MonoBehaviour {
                 rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
             }
 
+    }
+
+    public static void StopKeepPlayerStopped()
+    {
+        keepingMeStopped--;
+
+        if(keepingMeStopped < 0)
+            keepingMeStopped = 0;
+    }
+
+
+    public static void KeepPlayerStopped()
+    {
+        keepingMeStopped++;
     }
 
     void Defense()

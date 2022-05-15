@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelInfo
 {
@@ -49,6 +50,18 @@ public class Manager_Game : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        // [Jessé] se não estiver na cena 'GameLevel', o dialago da tartaruga será reiniciado
+        if(SceneManager.GetActiveScene().name != "GameLevel")
+            ResetTurtleDialog();
+    }
+
+
+    // [Jessé] deixa o diálogo da tartura ativado
+    private void ResetTurtleDialog()
+    {
+        print("_> Diálogo reiniciado");
+        PlayerPrefs.SetInt("SkipConversationOfTurtle", 0); // 0 = não pular diálogo
     }
 
     public GameData InitializingGameDataSystem()
@@ -90,7 +103,7 @@ public class Manager_Game : MonoBehaviour
     {
         LoadLevelDataMemory();
         if (levelData == null)
-            _levelStatus = LevelInfo.LevelStatus.NewLevel;    
+            _levelStatus = LevelInfo.LevelStatus.NewLevel;
         else
             _levelStatus = LevelInfo.LevelStatus.ContinueLevel;
     }

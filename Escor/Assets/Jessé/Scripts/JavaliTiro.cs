@@ -16,6 +16,8 @@ public class JavaliTiro : IA_Javali
     private List<GameObject> bulletsActive   = new List<GameObject>(){},
                              bulletsDisabled = new List<GameObject>(){};
 
+    bool parado;
+
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +33,13 @@ public class JavaliTiro : IA_Javali
         if (LevelManager.levelstatus == LevelManager.LevelStatus.Game)
         {
             isGrounded = CheckIsGrounded();
+            ShowExclamation(true);  // mostra a exclamacao quando o player entra na área de ataque
             Movement(); // faz a movimentação do javali
+            // if(!attacking && !parado)
+            // {
+            //     parado = true;
+            //     ChangeAnimation("JavaliParado2", false);
+            // }
             Attack();
         }
     }
@@ -39,25 +47,40 @@ public class JavaliTiro : IA_Javali
 
     protected override bool CloseToAttack()
     {
-        if(!PlayerInsideArea(true))
+        // if(!PlayerInsideArea(true))
+        //     return false;
+
+        if(GetDistaceOfPlayer(ShootPosition.position) > AttackDistance)
             return false;
 
+
         return IsFaceToPlayer()
-               && !HaveObstacle(playerTrans.position, transform.position);
+               && !HaveObstacle(playerTrans.position, ShootPosition.position);
     }
 
 
     protected override void Attack()
     {
+        if(stuned)
+        {
+            aux = 0;
+            return;
+        }
 
         if(!CloseToAttack())
         {
+            // o player não está perto o suficiente ainda
             aux = 0;
+            parado = false;
+            // firstContactWithPlayer = true;
         }
-        else
+        else // encontrou o player
         {
-            // attacking = true;
-            FlipFaceToPlayer();
+            // parado = true;
+
+            // ShowExclamation();
+            FlipFaceToPlayer(); // provavelmente desnecessário
+
             aux += Time.deltaTime;
             if(aux > 1/cadence)
             {
@@ -78,7 +101,7 @@ public class JavaliTiro : IA_Javali
     {
         attacking = true;
         // FlipFaceToPlayer();
-        ChangeAnimation("JavaliAtacando", true);
+        ChangeAnimation("JavaliAtacando2", true);
         SfxManager.PlaySound(SfxManager.Sound.javaliShoot);
         myRb.velocity = Vector3.zero;
 
@@ -88,7 +111,7 @@ public class JavaliTiro : IA_Javali
         Vector2 force   = CalculateDirectionToShoot();
         bullet.GetComponent<BulletScript>().valueForce = shootForce;
         bullet.GetComponent<Rigidbody2D>().AddForce(force*shootForce, ForceMode2D.Impulse);
-        StartCoroutine(AttackFinished(0.5f)); // Espera 0.5 seg para finalizar o ataque
+        StartCoroutine(AttackFinished());
         // yield return new WaitForSeconds(0.5f); // Espera 0.5 seg para finalizar o ataque
         // attacking = false;
     }

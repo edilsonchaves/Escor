@@ -14,15 +14,15 @@ public class CreatePlatform : MonoBehaviour
     List<GameObject> blocks = new List<GameObject>();
 
 
-    void OnDrawGizmos()
-    {
-        print(midleSprite.bounds.size*transform.localScale.x);
-        // Debug.DrawLine(transform.position+Vector3.up*0.5, transform.position+Vector3.right*size);
-        // Debug.DrawLine(transform.position-Vector3.up*0.5, transform.position+Vector3.right*size);
-        // Debug.DrawLine(transform.position+Vector3.up*0.5, transform.position+Vector3.right*size);
-
-
-    }
+    // void OnDrawGizmos()
+    // {
+    //     print(midleSprite.bounds.size*transform.localScale.x);
+    //     // Debug.DrawLine(transform.position+Vector3.up*0.5, transform.position+Vector3.right*size);
+    //     // Debug.DrawLine(transform.position-Vector3.up*0.5, transform.position+Vector3.right*size);
+    //     // Debug.DrawLine(transform.position+Vector3.up*0.5, transform.position+Vector3.right*size);
+    //
+    //
+    // }
 
 
     void Create()
@@ -64,7 +64,7 @@ public class CreatePlatform : MonoBehaviour
 
         float SizeOfColliderY = 0.2f;
         transform.GetChild(0).GetComponent<BoxCollider2D>().size    = new Vector2(_x,SizeOfColliderY);
-        transform.GetChild(0).GetComponent<BoxCollider2D>().offset  = new Vector2(_x/2-firstSpriteSize.x/2, firstSpriteSize.y/2-SizeOfColliderY/2);
+        transform.GetChild(0).GetComponent<BoxCollider2D>().offset  = new Vector2(_x/2-firstSpriteSize.x/2, firstSpriteSize.y/2-SizeOfColliderY/2-0.025f);
 
     }
 
