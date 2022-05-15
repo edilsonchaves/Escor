@@ -156,6 +156,7 @@ GameObject:
   - component: {fileID: 7822855636697483163}
   - component: {fileID: 7822855636697483162}
   - component: {fileID: 7822855636697483164}
+  - component: {fileID: 5438848705490660973}
   m_Layer: 9
   m_Name: Javali Tiro
   m_TagString: Javali
@@ -254,8 +255,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.020161018, y: 0.05641102}
-  m_Size: {x: 0.39498335, y: 0.28291628}
+  m_Offset: {x: -0.020161023, y: -0.032198697}
+  m_Size: {x: 0.39498347, y: 0.09950765}
   m_Direction: 1
 --- !u!58 &7822855636697483164
 CircleCollider2D:
@@ -273,6 +274,32 @@ CircleCollider2D:
   m_Offset: {x: -0.000030517578, y: 0}
   serializedVersion: 2
   m_Radius: 5.33
+--- !u!61 &5438848705490660973
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7822855636697483142}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.020161003, y: 0.060609445}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.3949834, y: 0.17358705}
+  m_EdgeRadius: 0
 --- !u!1 &7822855636735750978
 GameObject:
   m_ObjectHideFlags: 0

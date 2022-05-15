@@ -188,7 +188,7 @@ public class Movement : MonoBehaviour {
             {
                 if(rb.velocity.y < maxJumpForce)
                 {
-                    
+
                     pulando = false;
                     animator.SetBool("Pulando", false);
                     maxJumpForce = 0;
@@ -221,9 +221,9 @@ public class Movement : MonoBehaviour {
                     animator.SetBool("Pulando", true);
                     animator.Play("pulando normal", -1, 0);
                     // animator.SetBool("Pulando", false);
-                    
-                    
-  
+
+
+
 
                 }
                 else if (noChao && !pulando)
@@ -253,9 +253,9 @@ public class Movement : MonoBehaviour {
                         timeAbilityDefense[0] = timeAbilityDefense[1];
                 }
                 ManagerEvents.PlayerMovementsEvents.PlayerDefensedPower(timeAbilityDefense[0],timeAbilityDefense[1]);
-                
-                
-                
+
+
+
             }
 
             Defense();
@@ -334,7 +334,7 @@ public class Movement : MonoBehaviour {
             {
                 rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
                 maxJumpForce = rb.velocity.y;
-                
+
             }
 
     }
@@ -398,14 +398,14 @@ public class Movement : MonoBehaviour {
 
     // IEnumerator StunningTime()
     // {
-        
+
     //     // yield return new WaitUntil(() => (animator.GetCurrentAnimatorStateInfo(0).IsName("pulando ataque"))); // espera a animação mudar para 'PortaoAbrindo'
-        
+
     // }
 
     void Stun()
     {
-        
+
         float execAnimator = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
         if(!noChao && Input.GetButtonDown("Stun")) //troca pra vermelho
         {
@@ -421,10 +421,10 @@ public class Movement : MonoBehaviour {
             //     animator.Play("caindo ataque", -1, execAnimator);
 
             // }
-            
-            
+
+
             animator.SetBool("Atacando", true);
-        } 
+        }
         else if (!noChao && Input.GetButtonUp("Stun")) // troca pra branco
         {
             atacando = false;
@@ -432,13 +432,13 @@ public class Movement : MonoBehaviour {
             // if(!caindo)
             // {
             //     animator.Play("pulando normal", -1, execAnimator);
-              
+
             // }
             // else
             // {
             //     animator.Play("caindo", -1, execAnimator);
             // }
-            
+
             animator.SetBool("Atacando", false);
 
         }
@@ -478,19 +478,19 @@ public class Movement : MonoBehaviour {
             Debug.Log("FragmentLife");
             Destroy(col.gameObject);
         }
-        
+
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-    
+
         if(Mathf.Round(col.contacts[0].normal.y) == 1 && col.gameObject.tag == "Javali")
         {
-            rb.velocity = new Vector2(rb.velocity.x, 0.5f);
+            rb.velocity = new Vector2(Mathf.Abs(transform.eulerAngles.y) > 0 ? -1.5f : 1.5f, 8);
             if (atacando) col.gameObject.GetComponent<IA_Javali>().JavaliStuned();
-            
+
         }
-        
+
     }
 
     // [Jessé]

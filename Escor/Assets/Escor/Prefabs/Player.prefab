@@ -321,9 +321,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   speed: 3
-  jumpForce: 12
+  jumpForce: 6.2
   noChao: 1
   pulando: 0
+  atacando: 0
   defendendo: 0
   _life: 3
   _fragmentLife: 0
