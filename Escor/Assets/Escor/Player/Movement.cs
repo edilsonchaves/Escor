@@ -20,12 +20,12 @@ public class Movement : MonoBehaviour {
     private PlayerRopeControll ropeControll;
     [SerializeField]public static bool canMove = true;
     [SerializeField]int _life;
-    [SerializeField] int _fragmentLife;
+    [SerializeField] float _fragmentLife;
     SpriteRenderer sprite;
     public bool isInvunerable;
     bool insideCave;
-
-    public int FragmentLife
+    Coroutine GainLifeUIUpdate;
+    public float FragmentLife
     {
         get { return _fragmentLife;}
         set
@@ -34,10 +34,14 @@ public class Movement : MonoBehaviour {
             {
                 GainLife();
                 _fragmentLife = 0;
+                ManagerEvents.PlayerMovementsEvents.PlayerGetedFragmentLife(_fragmentLife, 5.0f);
+                GainLifeUIUpdate=StartCoroutine(UpdateGainLifeUI());
             }
             else
             {
                 _fragmentLife = value;
+                Debug.Log("Teste");
+                ManagerEvents.PlayerMovementsEvents.PlayerGetedFragmentLife(_fragmentLife,5.0f);
             }
         }
     }
@@ -57,6 +61,8 @@ public class Movement : MonoBehaviour {
                 if (isInvunerable == false)
                 {
                     _life = value;
+                    if (GainLifeUIUpdate != null)
+                        StopCoroutine(GainLifeUIUpdate);
                     if (Life == 0)
                     {
                         // [Jessé]
@@ -70,16 +76,14 @@ public class Movement : MonoBehaviour {
                     }
                     else
                     {
-                        Debug.Log("Teste-TakeDamage");
                         animator.SetTrigger("TakeDamage");
                         // SfxManager.PlaySound(SfxManager.Sound.playerHurt);
                         SfxManager.PlayRandomHurt(); // [Jessé] toca um som aleátorio toda vez
                         PersonagemMudarEstado();
                     }
                 }
+                ManagerEvents.PlayerMovementsEvents.LifedPlayer(Life);
             }
-
-            ManagerEvents.PlayerMovementsEvents.LifedPlayer(Life);
         }
     }
 
@@ -467,9 +471,10 @@ public class Movement : MonoBehaviour {
             Destroy(col.gameObject);
         }
 
-        if (col.gameObject.CompareTag("FragmentLife"))
+        if (col.gameObject.CompareTag("FragmentLife") && (Life<3 || FragmentLife<4))
         {
-            _fragmentLife++;
+            FragmentLife++;
+            Debug.Log("FragmentLife");
             Destroy(col.gameObject);
         }
         
@@ -502,7 +507,12 @@ public class Movement : MonoBehaviour {
     {
         Life++;
     }
-
+    IEnumerator UpdateGainLifeUI()
+    {
+        yield return new WaitForSeconds(1f);
+        ManagerEvents.PlayerMovementsEvents.LifedPlayer(Life);
+        GainLifeUIUpdate = null;
+    }
 
 
 }

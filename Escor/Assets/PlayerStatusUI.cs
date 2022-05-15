@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class conferirmenu2 : MonoBehaviour
+public class PlayerStatusUI : MonoBehaviour
 {
     [SerializeField] GameObject bgUI;
     [SerializeField] private Sprite[] _vidasSprite;
     [SerializeField] private GameObject[] _poderSprite;
+    [SerializeField] private Image fragmentLifeUI;
     [SerializeField] private Image _vidasImg;
     [SerializeField] private Image _poderImg;
 
@@ -39,6 +40,7 @@ public class conferirmenu2 : MonoBehaviour
         ManagerEvents.PlayerMovementsEvents.onDiePlayer += BGDesactiveDead;
         ManagerEvents.PlayerMovementsEvents.onPlayerGetPower += UpdatePoder;
         ManagerEvents.PlayerMovementsEvents.onPlayerDefenseTime += UpdateFillPowerDefense;
+        ManagerEvents.PlayerMovementsEvents.onPlayerGetFragmentLife += ObtainFragmented;
     }
     private void OnDisable()
     {
@@ -46,6 +48,7 @@ public class conferirmenu2 : MonoBehaviour
         ManagerEvents.PlayerMovementsEvents.onDiePlayer -= BGDesactiveDead;
         ManagerEvents.PlayerMovementsEvents.onPlayerGetPower -= UpdatePoder;
         ManagerEvents.PlayerMovementsEvents.onPlayerDefenseTime -= UpdateFillPowerDefense;
+        ManagerEvents.PlayerMovementsEvents.onPlayerGetFragmentLife -= ObtainFragmented;
 
     }
 
@@ -54,6 +57,28 @@ public class conferirmenu2 : MonoBehaviour
     {
         float valuePercentual = defenseAmount / defenseMax;
         _poderSprite[2].GetComponent<Image>().fillAmount = valuePercentual;
+    }
+
+    private void ObtainFragmented(float currentFragment,float totalFragment)
+    {
+        Debug.Log("Teste");
+        StartCoroutine(ObtainFragmentLogic(currentFragment,totalFragment));
+    }
+
+    IEnumerator ObtainFragmentLogic(float currentFragment, float totalFragment)
+    {
+        float initialFillAmount = fragmentLifeUI.fillAmount;
+        Debug.Log(currentFragment / totalFragment);
+        float fillAmountDestination = (currentFragment / totalFragment);
+        Debug.Log(fillAmountDestination);
+        float timer=0;
+        while (timer<=1)
+        {
+            fragmentLifeUI.fillAmount=Mathf.Lerp(initialFillAmount, fillAmountDestination, timer);
+            yield return new WaitForSeconds(0.01f);
+            timer += 0.01f;
+            Debug.Log(timer);
+        }
     }
 
 }

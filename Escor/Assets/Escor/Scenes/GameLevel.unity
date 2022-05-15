@@ -1233,6 +1233,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UICena
       objectReference: {fileID: 0}
+    - target: {fileID: 8172712416594673559, guid: 0be8f31ebb319294a9ac04beff329bb7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0be8f31ebb319294a9ac04beff329bb7, type: 3}
 --- !u!224 &268183632 stripped
