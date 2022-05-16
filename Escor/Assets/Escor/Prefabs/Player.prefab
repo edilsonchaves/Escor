@@ -320,8 +320,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  speed: 3
-  jumpForce: 6.2
+  speed: 4
+  jumpForce: 5.7
   noChao: 1
   pulando: 0
   atacando: 0
@@ -383,7 +383,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1.83
+  m_GravityScale: 2
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
