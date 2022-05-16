@@ -172,6 +172,8 @@ public class Movement : MonoBehaviour {
         if(!canMove)
         {
             animator.SetBool("Pulando", false);
+            animator.SetBool("Caindo", false);
+            animator.SetBool("NoChao", true);
             pulando = false;
         }
         animator.SetFloat("VelocidadeY", rb.velocity.y);

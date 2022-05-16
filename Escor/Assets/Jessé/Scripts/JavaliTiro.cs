@@ -42,6 +42,10 @@ public class JavaliTiro : IA_Javali
             // }
             Attack();
         }
+        else
+        {
+            JavaliAnimator.Play("JavaliParado2");
+        }
     }
 
 
