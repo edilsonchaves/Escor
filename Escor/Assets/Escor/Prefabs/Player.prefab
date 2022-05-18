@@ -319,9 +319,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1ba8c508ee11b9448d89a78b0d48af9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doubleJump: 1
+  jumpDistanceY: 2.5
+  jumpsLeft: 2
   animator: {fileID: 0}
   speed: 4
-  jumpForce: 5.7
   noChao: 1
   pulando: 0
   atacando: 0
