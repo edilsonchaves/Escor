@@ -69,7 +69,7 @@ MonoBehaviour:
   javaliLayer:
     serializedVersion: 2
     m_Bits: 512
-  offSetGround: {x: 0.41, y: -0.25, z: 0.5}
+  offSetGround: {x: 0.62, y: -0.25, z: 0.5}
   offSetWall: {x: 0.41, y: -0.25, z: 1}
   exclamation: {fileID: 677780322626663697}
 --- !u!50 &1724477956436621062

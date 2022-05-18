@@ -85,9 +85,9 @@ public class MovePlataform : MonoBehaviour
     {
         abovePlatformManager.SetVelocity(GetVelocity());
 
-        if(!startMovement && abovePlatformManager.isAbove && abovePlatformManager.playerIsAbove)
+        if(!startMovement && abovePlatformManager.playerIsAbove)
         {
-            StartMovement();
+            StartMovement(waitPlayerToStartMovement?1.5f:0);
         }
 
         if(startMovement && !esperarAtivador)
@@ -137,8 +137,14 @@ public class MovePlataform : MonoBehaviour
         return myVelocity*startDirection; // startDirection é a direção atual
     }
 
-    public void StartMovement()
+    public void StartMovement(float waitTime = 0.0f)
     {
+        StartCoroutine(StartMovement_(waitTime));
+    }
+
+    IEnumerator StartMovement_(float t)
+    {
+        yield return new WaitForSeconds(t);
         startMovement = true;
     }
 

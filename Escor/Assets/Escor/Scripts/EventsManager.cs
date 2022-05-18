@@ -33,7 +33,7 @@ public class EventsManager : MonoBehaviour
             vcam.StartFocus(objects);
             StartCoroutine(TrocaCameraAnimation());
             // cinematic1.Invoke();
-            GetComponent<BoxCollider2D>().enabled = false;
+            GetComponent<Collider2D>().enabled = false;
             // StartCoroutine(ProxCinematica());
 
         }

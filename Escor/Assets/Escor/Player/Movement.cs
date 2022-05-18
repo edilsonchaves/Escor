@@ -10,7 +10,7 @@ public class Movement : MonoBehaviour {
     public static int   keepingMeStopped;
     public        bool  doubleJump       = true;
                   bool  usingDoubleJump  = false;
-                  bool  usingStun        = false;
+    public        bool  usingStun        = false;
     public        float jumpDistanceY    = 2; // quantidade de blocos que o pulo alcança
 
 
@@ -251,6 +251,7 @@ public class Movement : MonoBehaviour {
                 {
                     // pulando = false;
                     usingStun = false;
+                    atacando = false;
                     jumpsLeft = 2;
                     usingDoubleJump = false;
                     animator.SetBool("Pulando", false);
