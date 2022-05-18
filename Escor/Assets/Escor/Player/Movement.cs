@@ -8,10 +8,13 @@ public class Movement : MonoBehaviour {
 
     // [Jessé]
     public static int   keepingMeStopped;
-    public        bool  doubleJump       = true;
-                  bool  usingDoubleJump  = false;
-    public        bool  usingStun        = false;
-    public        float jumpDistanceY    = 2; // quantidade de blocos que o pulo alcança
+    public        bool  doubleJump        = true;
+                  bool  usingDoubleJump   = false;
+                  bool  walkingOnSpikes   = false;
+    public        bool  usingStun         = false;
+    public        float jumpDistanceY     = 2; // quantidade de blocos que o pulo alcança
+    [Range(0.1f, 1.0f)]
+    public        float PercentageOfSpeedWhenWalkingOnSpikes = 0.5f; 
 
 
 
@@ -308,7 +311,7 @@ public class Movement : MonoBehaviour {
         }
         if(slowmotion == false)
         {
-            transform.position += movement * Time.fixedDeltaTime * speed;
+            transform.position += movement * Time.fixedDeltaTime *(walkingOnSpikes?PercentageOfSpeedWhenWalkingOnSpikes*speed:speed);
         }
         float inputAxis = Input.GetAxis("Horizontal");
         animator.SetFloat("VelocidadeX", Mathf.Abs (inputAxis));
@@ -545,6 +548,10 @@ public class Movement : MonoBehaviour {
         {
             insideCave = true;
         }
+        else if(col.tag == "Spikes")
+        {
+            walkingOnSpikes = true;
+        }
 
         if (col.gameObject.CompareTag("Vida") && Life<3)
         {
@@ -594,6 +601,10 @@ public class Movement : MonoBehaviour {
         if(col.tag == "Cave Interior")
         {
             insideCave = false;
+        }
+        else if(col.tag == "Spikes")
+        {
+            walkingOnSpikes = false;
         }
     }
 

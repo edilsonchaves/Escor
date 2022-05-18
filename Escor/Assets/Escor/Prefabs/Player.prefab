@@ -320,7 +320,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doubleJump: 1
+  usingStun: 0
   jumpDistanceY: 2.5
+  PercentageOfSpeedWhenWalkingOnSpikes: 0.5
   jumpsLeft: 2
   animator: {fileID: 0}
   speed: 4
