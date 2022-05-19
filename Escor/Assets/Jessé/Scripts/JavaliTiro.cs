@@ -42,6 +42,10 @@ public class JavaliTiro : IA_Javali
             // }
             Attack();
         }
+        else
+        {
+            JavaliAnimator.Play("JavaliParado2");
+        }
     }
 
 
@@ -61,7 +65,7 @@ public class JavaliTiro : IA_Javali
 
     protected override void Attack()
     {
-        if(stuned)
+        if(stuned || !Move)
         {
             aux = 0;
             return;

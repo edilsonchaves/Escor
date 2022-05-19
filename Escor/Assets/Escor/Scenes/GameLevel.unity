@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731715, g: 0.13414735, b: 0.121078536, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731703, g: 0.13414727, b: 0.121078506, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -178,7 +178,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -428,7 +428,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 5
+    OrthographicSize: 7
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -1546,6 +1546,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   control: {fileID: 140349217}
   levelsAvaibles:
+  - {fileID: 3918995391385978380, guid: ecb353e8bfdc9ca40bbb36d6676f7d9f, type: 3}
   - {fileID: 7248150087756879033, guid: 5897f0cab24a03c4aa647e0a167dde8d, type: 3}
   - {fileID: 2076049616461170651, guid: bfd4d4165a1c2d240a117c135b4d08c9, type: 3}
   - {fileID: 3918995391385978380, guid: ecb353e8bfdc9ca40bbb36d6676f7d9f, type: 3}
@@ -4009,7 +4010,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 21.235083, y: 13.695135}
+  m_Size: {x: 31.44265, y: 19.637474}
   m_EdgeRadius: 0
 --- !u!4 &1984255633
 Transform:

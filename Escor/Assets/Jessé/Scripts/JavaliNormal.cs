@@ -14,5 +14,9 @@ public class JavaliNormal : IA_Javali
             Movement(); // faz a movimentação do javali
             Attack();
         }
+        else
+        {
+            JavaliAnimator.Play("JavaliParado2");
+        }
     }
 }

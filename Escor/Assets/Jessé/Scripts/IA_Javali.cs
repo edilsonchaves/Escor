@@ -149,7 +149,7 @@ public class IA_Javali : MonoBehaviour
     {
         // print("Start from IA_Javali");
 
-        StartCoroutine(AddForceIfBuged());
+        // StartCoroutine(AddForceIfBuged());
 
         wallLayer           = groundLayer;
         started             = true;
@@ -440,15 +440,17 @@ public class IA_Javali : MonoBehaviour
     //inicia o ataque
     protected virtual void Attack()
     {
-        if(!CloseToAttack() || attacking || stuned)
+        if(!CloseToAttack() || attacking || stuned || !Move)
             return;
 
         attacking = true;
+        stuned = false;
         // ShowExclamation();
+        // StopAllCoroutines();
         StartCoroutine(AttackFinished(2f));
         FlipFaceToPlayer();
         ChangeAnimation("JavaliAtacando", true);
-        SfxManager.PlaySound(SfxManager.Sound.javaliAttack);
+        
         myRb.velocity = Vector3.zero;
     }
 
@@ -496,7 +498,13 @@ public class IA_Javali : MonoBehaviour
         // yield return new WaitForSeconds(sec);
         yield return new WaitUntil(() => (JavaliAnimator.GetCurrentAnimatorStateInfo(0).IsName("JavaliAtacando") ||
                                             JavaliAnimator.GetCurrentAnimatorStateInfo(0).IsName("JavaliAtacando2"))); // espera a animação mudar para 'JavaliAtacando' ou 'JavaliAtacando2'
-        yield return new WaitUntil(() => (JavaliAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)); // espera a animação chegar no final
+        yield return new WaitUntil(() => (JavaliAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5f)); // espera a animação chegar na metade
+        if(!stuned)
+        {
+            SfxManager.PlaySound(SfxManager.Sound.javaliAttack); // som de ataque
+            yield return new WaitUntil(() => (JavaliAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)); // espera a animação chegar no final
+            
+        }
 
         // Debug.Log("Attack Finished");
         attacking = false;
@@ -830,9 +838,8 @@ public class IA_Javali : MonoBehaviour
         // else
         // {
             // yield return new WaitForSeconds(2.5f);
-        Move = false;
+        // Move = false;
         stuned = true;
-        attacking = false;
             // yield return new WaitForSeconds(0.3f);
             ChangeAnimation("JavaliTonto", true);
             yield return new WaitUntil(() => (JavaliAnimator.GetCurrentAnimatorStateInfo(0).IsName("JavaliTonto"))); // espera a animação mudar para 'PortaoAbrindo'
@@ -841,7 +848,7 @@ public class IA_Javali : MonoBehaviour
         // }
 
         ChangeAnimation("JavaliParado2");
-        Move = true;
+        // Move = true;
         attacking = false;
         stuned = false;
     }

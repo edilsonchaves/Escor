@@ -319,9 +319,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1ba8c508ee11b9448d89a78b0d48af9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doubleJump: 1
+  usingStun: 0
+  jumpDistanceY: 2.5
+  PercentageOfSpeedWhenWalkingOnSpikes: 0.5
+  jumpsLeft: 2
   animator: {fileID: 0}
-  speed: 3
-  jumpForce: 6.2
+  speed: 4
   noChao: 1
   pulando: 0
   atacando: 0
@@ -383,7 +387,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1.83
+  m_GravityScale: 2
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1

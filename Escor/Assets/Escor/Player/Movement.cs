@@ -2,13 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class Movement : MonoBehaviour {
 
-    public static int keepingMeStopped;
+    // [Jessé]
+    public static int   keepingMeStopped;
+    public        bool  doubleJump        = true;
+                  bool  usingDoubleJump   = false;
+                  bool  walkingOnSpikes   = false;
+    public        bool  usingStun         = false;
+    public        float jumpDistanceY     = 2; // quantidade de blocos que o pulo alcança
+    [Range(0.1f, 1.0f)]
+    public        float PercentageOfSpeedWhenWalkingOnSpikes = 0.5f; 
+
+
+
+    public int jumpsLeft = 2;
     public Animator animator;
     public float speed;
-    public float jumpForce;
+    float jumpForce; // [Jessé] quem define a força é o script
     public bool noChao = true;
     public bool pulando = false;
     public bool atacando = false;
@@ -134,6 +147,7 @@ public class Movement : MonoBehaviour {
         timeAbilityDefense      = new float[2];
         timeAbilityDefense[1]   = 5;
         timeAbilityDefense[0]   = 5;
+        jumpsLeft = 2;
     }
 
     private void OnEnable()
@@ -148,6 +162,7 @@ public class Movement : MonoBehaviour {
 
     void FixedUpdate()
     {
+        CalculateJumpLine();
 
         if(noChao)
             rb.velocity = new Vector2(0, rb.velocity.y); // impedir que o player fique deslisando
@@ -172,6 +187,8 @@ public class Movement : MonoBehaviour {
         if(!canMove)
         {
             animator.SetBool("Pulando", false);
+            animator.SetBool("Caindo", false);
+            animator.SetBool("NoChao", true);
             pulando = false;
         }
         animator.SetFloat("VelocidadeY", rb.velocity.y);
@@ -189,7 +206,7 @@ public class Movement : MonoBehaviour {
                 if(rb.velocity.y < maxJumpForce)
                 {
 
-                    pulando = false;
+                    // pulando = false;
                     animator.SetBool("Pulando", false);
                     maxJumpForce = 0;
                 }
@@ -200,7 +217,12 @@ public class Movement : MonoBehaviour {
                 // {
                 //     caindo = false;
                 // }
-                if(noChao == false && rb.velocity.y < -0.5f)
+                // if(caindo && rb.velocity.y == 0)
+                // {
+                //
+                // }
+
+                if(noChao == false && rb.velocity.y < 0)
                 {
                     // animator.SetBool("Caindo", true);
                     caindo = true;
@@ -209,17 +231,19 @@ public class Movement : MonoBehaviour {
                     caindo = false;
                     // animator.SetBool("Caindo", false);
                 }
-                animator.SetBool("Caindo", noChao == false && pulando == false && rb.velocity.y < -0.5f);
 
-                bool canJump = noChao && !pulando && _powerHero[0];
+                animator.SetBool("Caindo", noChao == false && rb.velocity.y < 0);
+
+                bool canJump = (noChao && !animator.GetBool("Pulando") && !pulando && _powerHero[0]) || jumpsLeft > 0;
 
                 if(Input.GetButtonDown("Jump") && canJump)
                 {
-                    pulando = true;
+                    // pulando = true;
+                    Jump();
                     // noChao = false;
-                    SfxManager.PlaySound(SfxManager.Sound.playerJump);
-                    animator.SetBool("Pulando", true);
-                    animator.Play("pulando normal", -1, 0);
+                    // SfxManager.PlaySound(SfxManager.Sound.playerJump);
+                    // animator.SetBool("Pulando", true);
+                    // animator.Play("pulando normal", -1, 0);
                     // animator.SetBool("Pulando", false);
 
 
@@ -229,6 +253,10 @@ public class Movement : MonoBehaviour {
                 else if (noChao && !pulando)
                 {
                     // pulando = false;
+                    usingStun = false;
+                    atacando = false;
+                    jumpsLeft = 2;
+                    usingDoubleJump = false;
                     animator.SetBool("Pulando", false);
                     animator.SetBool("Atacando", false);
                 }
@@ -283,7 +311,7 @@ public class Movement : MonoBehaviour {
         }
         if(slowmotion == false)
         {
-            transform.position += movement * Time.fixedDeltaTime * speed;
+            transform.position += movement * Time.fixedDeltaTime *(walkingOnSpikes?PercentageOfSpeedWhenWalkingOnSpikes*speed:speed);
         }
         float inputAxis = Input.GetAxis("Horizontal");
         animator.SetFloat("VelocidadeX", Mathf.Abs (inputAxis));
@@ -313,29 +341,95 @@ public class Movement : MonoBehaviour {
         }
     }
 
+
+    // [Jessé]
+    private void CalculateJumpLine()
+    {
+        // USAR MASSA 1
+
+        float g = rb.gravityScale * Physics2D.gravity.magnitude;
+        // print(g);
+        jumpForce = Mathf.Sqrt((2*g)*(jumpDistanceY*0.97f)); // o quadrado é 0.97x0.97
+        // float v0 = jumpForce / rb.mass; // converts the jumpForce to an initial velocity
+        // 1 = (v0 * v0)/(2*g)
+        // (2*g)*blocosY = v0^0.5
+        // float maxJump_y = transform.position.y + Mathf.Sqrt(jumpForce);
+        // float maxJump_y = transform.position.y + (v0 * v0)/(2*g);
+
+        // For Debug.DrawLine in FixedUpdate :
+        // Vector3 lineStart = new Vector3(-100, maxJump_y, 0);
+        // Vector3 lineEnd = new Vector3(100, maxJump_y, 0);
+        // //
+        // Debug.DrawLine(lineStart, lineEnd, Color.red);
+    }
+
+
+    // [Jessé]
+    public void AddForceUp()
+    {
+        // é subtraido a velocity.y atual para que o pulo tenha a mesma altura sempre
+
+        // porque por exemplo, se ela tiver caindo a uma velocidade de -20, e a força do pulo for 10
+        // ela ainda vai continuar caindo, pois a velocidade resultante será -10 porque 10 + (-20) = -10,
+        // mas de se fizer 10 - (-20), a força do pular será 30, então levando em consideração
+        // o -20 de queda e 30 se subida, o resultado é uma força de 10 para cima
+        rb.AddForce(new Vector2(0f, jumpForce - rb.velocity.y), ForceMode2D.Impulse);
+
+        if(!slowmotion)
+            maxJumpForce = rb.velocity.y;
+    }
+
+
+
     void Jump()
     {
         if(keepingMeStopped != 0)
         {
-            return;
             pulando = false;
+            return;
         }
-        // if(Input.GetButtonDown("Jump") && noChao)
-        // {
-            pulando = true;
-            // noChao = false;
-            // animator.SetBool("Pulando", pulando);
-            if(slowmotion == true)
-            {
 
-                rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-            }
-            if(slowmotion == false)
-            {
-                rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-                maxJumpForce = rb.velocity.y;
+        if(caindo && !pulando) // chegou perto da beirada da plataforma e caiu
+        {
+            jumpsLeft = 1; // vai direto pro segundo pulo
+        }
 
-            }
+        switch(jumpsLeft)
+        {
+            case 2: // primeiro pulo
+
+                animator.Play("pulando normal", -1, 0.33f); // começa a animação já no segundo frame
+                AddForceUp();
+                usingDoubleJump = false;
+                break;
+
+            case 1: // segundo pulo
+
+                // é necessário esperar ocorrer o primeiro pulo antes de pular pela segunda vez
+                bool firstJump = animator.GetCurrentAnimatorStateInfo(0).IsName("pulando normal") &&
+                                 animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.66f;
+
+                // a primeira condição serve para impedir que o segundo pulo ocorra logo em seguida do primeiro
+                if((rb.velocity.y <= jumpForce*0.9f && firstJump) || caindo)
+                {
+                    animator.Play("pulando ataque", -1, 0.33f); // começa a animação já no segundo frame
+                    usingDoubleJump = true;
+                    AddForceUp();
+                    break;
+                }
+                else
+                {
+                    return;
+                }
+
+            case 0: // não pode mais pular
+                return;
+        }
+
+        // AddForceUp();
+        SfxManager.PlaySound(SfxManager.Sound.playerJump);
+        pulando = true;
+        jumpsLeft--;
 
     }
 
@@ -405,43 +499,47 @@ public class Movement : MonoBehaviour {
 
     void Stun()
     {
+        if(usingStun || noChao)
+            return;
 
-        float execAnimator = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-        if(!noChao && Input.GetButtonDown("Stun")) //troca pra vermelho
+
+        if(Input.GetButtonDown("Stun"))
         {
+            float execAnimator = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            usingStun = true;
+            rb.velocity = new Vector2(rb.velocity.x, usingDoubleJump?-12:-10);
             atacando = true;
-            animator.Play(caindo?"caindo ataque":"pulando ataque", -1, execAnimator);
-            // if(!caindo)
-            // {
-            //     animator.Play("pulando ataque", -1, execAnimator);
-
-            // }
-            // else
-            // {
-            //     animator.Play("caindo ataque", -1, execAnimator);
-
-            // }
-
+            animator.Play("caindo ataque", -1, animator.GetCurrentAnimatorStateInfo(0).IsName("caindo")?execAnimator:0);
 
             animator.SetBool("Atacando", true);
         }
-        else if (!noChao && Input.GetButtonUp("Stun")) // troca pra branco
-        {
-            atacando = false;
-            animator.Play(caindo?"caindo":"pulando normal", -1, execAnimator);
-            // if(!caindo)
-            // {
-            //     animator.Play("pulando normal", -1, execAnimator);
 
-            // }
-            // else
-            // {
-            //     animator.Play("caindo", -1, execAnimator);
-            // }
 
-            animator.SetBool("Atacando", false);
 
-        }
+        // else if (!noChao && Input.GetButtonUp("Stun")) // troca pra branco
+        // {
+        //     atacando = false;
+        //     animator.Play(caindo?"caindo":"pulando normal", -1, execAnimator);
+        //
+        //     animator.SetBool("Atacando", false);
+        //
+        // }
+
+        // if(!noChao && Input.GetButtonDown("Stun")) //troca pra vermelho
+        // {
+        //     atacando = true;
+        //     animator.Play(caindo?"caindo ataque":"pulando ataque", -1, execAnimator);
+        //
+        //     animator.SetBool("Atacando", true);
+        // }
+        // else if (!noChao && Input.GetButtonUp("Stun")) // troca pra branco
+        // {
+        //     atacando = false;
+        //     animator.Play(caindo?"caindo":"pulando normal", -1, execAnimator);
+        //
+        //     animator.SetBool("Atacando", false);
+        //
+        // }
     }
     void OnTriggerEnter2D(Collider2D col)
     {
@@ -449,6 +547,10 @@ public class Movement : MonoBehaviour {
         if(col.tag == "Cave Interior")
         {
             insideCave = true;
+        }
+        else if(col.tag == "Spikes")
+        {
+            walkingOnSpikes = true;
         }
 
         if (col.gameObject.CompareTag("Vida") && Life<3)
@@ -499,6 +601,10 @@ public class Movement : MonoBehaviour {
         if(col.tag == "Cave Interior")
         {
             insideCave = false;
+        }
+        else if(col.tag == "Spikes")
+        {
+            walkingOnSpikes = false;
         }
     }
 
