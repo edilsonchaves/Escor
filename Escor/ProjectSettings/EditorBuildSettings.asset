@@ -27,6 +27,12 @@ EditorBuildSettings:
     path: Assets/Escor/Scenes/GameLevel.unity
     guid: f5284c2609122ac44b665ab17e6c27e6
   - enabled: 1
+    path: Assets/Escor/Scenes/Level_2.unity
+    guid: 2b3ae243d28c4104bbfe1a3318c4280d
+  - enabled: 1
+    path: Assets/Escor/Scenes/Level_3.unity
+    guid: b117d391f4df043428286f8a6290f418
+  - enabled: 1
     path: Assets/Escor/Scenes/FinalScene.unity
     guid: 7e30eacd5e626214db96f5ae8a627401
   - enabled: 1
