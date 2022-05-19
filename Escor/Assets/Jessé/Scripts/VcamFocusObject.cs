@@ -19,6 +19,8 @@ public class VcamFocusObject : MonoBehaviour
     public bool stopPlayer = true;
     public bool stopJavali = true;
 
+    public Transform currentPosition;
+
     private CinemachineVirtualCamera virtualCam;
     private GameObject objectToFocus;
 
@@ -67,6 +69,7 @@ public class VcamFocusObject : MonoBehaviour
         startPos                        = virtualCam.Follow.position;
         objToSmooth                     = objToSmooth == null ? new GameObject() : objToSmooth; // objeto que a camera irá seguir
         objToSmooth.transform.position  = startPos;
+        currentPosition                 = objToSmooth.transform;
         distance                        = ((Vector2)(allTargets[0].transform.position-objToSmooth.transform.position)).magnitude;
         virtualCamTargetBackup          = virtualCam.Follow;
 
