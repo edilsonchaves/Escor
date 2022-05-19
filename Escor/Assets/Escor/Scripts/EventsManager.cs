@@ -21,7 +21,7 @@ public class EventsManager : MonoBehaviour
     IEnumerator ProxCinematica()
     {
         yield return new WaitForSeconds(9);
-        Movement.StopKeepPlayerStopped();
+        // Movement.StopKeepPlayerStopped();
     }
 
     void OnTriggerEnter2D(Collider2D collisor)
@@ -29,11 +29,11 @@ public class EventsManager : MonoBehaviour
         if(collisor.gameObject.tag == "Player" && cinematic1 != null)
         {
 
-            Movement.KeepPlayerStopped();
+            // Movement.KeepPlayerStopped();
             vcam.StartFocus(objects);
             StartCoroutine(TrocaCameraAnimation());
             // cinematic1.Invoke();
-            GetComponent<BoxCollider2D>().enabled = false;
+            GetComponent<Collider2D>().enabled = false;
             // StartCoroutine(ProxCinematica());
 
         }
@@ -51,9 +51,12 @@ public class EventsManager : MonoBehaviour
     {
 
         Animator portao = objects[0].GetComponent<Animator>();
+
+        yield return new WaitUntil(() => !Movement.canMove);  // espera até o player não conseguir mais se mexer antes de virar ele para o portão
+        yield return new WaitForSeconds(1f);
         ManagerEvents.PlayerMovementsEvents.LookedDirection(180);
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         // portao.Play("PortaoAbrindo", -1, 0);
         portao.SetBool("Start", true);
         yield return new WaitUntil(() => (portao.GetCurrentAnimatorStateInfo(0).IsName("PortaoAbrindo"))); // espera a animação mudar para 'PortaoAbrindo'

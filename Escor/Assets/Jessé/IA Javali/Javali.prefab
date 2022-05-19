@@ -69,8 +69,8 @@ MonoBehaviour:
   javaliLayer:
     serializedVersion: 2
     m_Bits: 512
-  offSetGround: {x: 0.41, y: -0.16, z: 0.25}
-  offSetWall: {x: 0.41, y: -0.15, z: 1}
+  offSetGround: {x: 0.62, y: -0.25, z: 0.5}
+  offSetWall: {x: 0.41, y: -0.25, z: 1}
   exclamation: {fileID: 677780322626663697}
 --- !u!50 &1724477956436621062
 Rigidbody2D:
@@ -208,7 +208,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 6
   m_Sprite: {fileID: 21300000, guid: e2744a121a081c947b6e4c7c8d864bd1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -356,7 +356,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 6
   m_Sprite: {fileID: 21300000, guid: e2744a121a081c947b6e4c7c8d864bd1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

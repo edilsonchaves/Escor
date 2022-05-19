@@ -39,8 +39,6 @@ public class Alavanca : Ativador
             // vcamFocusObject.StartFocus(new GameObject[]{portoes[0]});
             // vcamFocusObject.StartFocus(new GameObject[]{portoes[0]}, false);
 
-            col.transform.position = new Vector3(transform.position.x-0.18f, col.transform.position.y, col.transform.position.z);
-            col.transform.eulerAngles = Vector3.zero;
             mvt = col.GetComponent<Movement>();
 
             SegurarAlavanca();
@@ -117,10 +115,12 @@ public class Alavanca : Ativador
 
     protected void SegurarAlavanca()
     {
+        Movement.KeepPlayerStopped();
         alreadyTriggered = true;
         mvt.animator.SetBool("Pegando", true);
         SfxManager.PlaySound(SfxManager.Sound.ativandoAlavanca);
-        Movement.KeepPlayerStopped();
+        mvt.transform.position = new Vector3(transform.position.x-0.18f, mvt.transform.position.y, mvt.transform.position.z);
+        mvt.transform.eulerAngles = Vector3.zero;
         // Movement.canMove = false;
     }
 
