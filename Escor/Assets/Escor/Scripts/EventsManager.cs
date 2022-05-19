@@ -69,7 +69,7 @@ public class EventsManager : MonoBehaviour
         yield return new WaitForSeconds(3); // focando no javalizao
         IA_Javali jav = objects[1].GetComponent<IA_Javali>();
         jav.Move = true; // ativa o movimento do javalizao
-        jav.MovementSpeed = 2f; // ativa o movimento do javalizao
+        jav.MovementSpeed = 1.35f; // ativa o movimento do javalizao
         jav.JavaliAnimator.SetFloat("WalkSpeed", 0.75f);
         // yield return new WaitUntil(() => (jav.JavaliAnimator.GetCurrentAnimatorStateInfo(0).IsName("JavaliAndando"))); // espera a animação mudar para 'PortaoAbrindo'
         // jav.JavaliAnimator.GetCurrentAnimatorClipInfo(0).speed = 0.1f; // ativa o movimento do javalizao
