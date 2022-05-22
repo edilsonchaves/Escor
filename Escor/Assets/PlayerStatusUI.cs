@@ -76,7 +76,6 @@ public class PlayerStatusUI : MonoBehaviour
             fragmentLifeUI.fillAmount=Mathf.Lerp(initialFillAmount, fillAmountDestination, timer);
             yield return new WaitForSeconds(0.01f);
             timer += 0.01f;
-            Debug.Log(timer);
         }
     }
 

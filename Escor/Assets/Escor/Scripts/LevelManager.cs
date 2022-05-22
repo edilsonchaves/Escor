@@ -75,7 +75,7 @@ public class LevelManager : MonoBehaviour
     void PlayerSetupInformation()
     {
         Vector2 pos = Manager_Game.Instance.levelData.CharacterPosition;
-        //currentCharacter.transform.position = new Vector3(pos.x, pos.y,0);
+        currentCharacter.transform.position = new Vector3(pos.x, pos.y,0);
         int id = 0;
         foreach(bool powerID in Manager_Game.Instance.levelData.Powers)
         {

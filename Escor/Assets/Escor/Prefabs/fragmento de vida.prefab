@@ -371,3 +371,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefab: {fileID: 4322594022394924762}
+  collider: {fileID: 30275327244523728}
