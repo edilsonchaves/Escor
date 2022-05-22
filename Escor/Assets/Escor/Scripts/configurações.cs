@@ -23,24 +23,18 @@ public class configurações : MonoBehaviour
         volume.value        = VolumeRangeToUnit(Manager_Game.Instance.saveGameData.VolumeAmbient);
         volumeVoz.value     = VolumeRangeToUnit(Manager_Game.Instance.saveGameData.Volume);
 
-        // ---
-        // volumeJogo.SetFloat("vozsound", -80 + Manager_Game.Instance.saveGameData.Volume * 0.8f); // Range de volume.value é [0, 100]
-        // volumeJogo.SetFloat("bgsound", -80 + Manager_Game.Instance.saveGameData.VolumeAmbient * 0.8f); // Range de volume.value é [0, 100]
-
         // [Jessé]
         volumeJogo.SetFloat("vozsound", UnitToVolumeRange(volumeVoz.value)); 
         volumeJogo.SetFloat("bgsound", UnitToVolumeRange(volume.value));
 
 
         StartCoroutine("UpdateValuesFromSlider");
-        // ---
 
         salvarAsConfig();
         ChangeFontSize();
 
 
     }
-    // ---
 
     // [Jessé] 
 
@@ -56,7 +50,7 @@ public class configurações : MonoBehaviour
     // o grafico não é uma reta, e sim um arco, onde nao sofre tanta alteração perto do 0
     float VolumeRangeToUnit(float volume)
     {
-        return -Mathf.Abs(Mathf.Pow(volume/-80, 1/3));
+        return -Mathf.Abs(Mathf.Pow(volume/-80, 1.0f/3.0f));
     }
 
 
@@ -64,42 +58,13 @@ public class configurações : MonoBehaviour
     {
         while(true)
         {
-            // Manager_Game.Instance.saveGameData.LetterSize      = (int) _fontSlider.value;
-            // Manager_Game.Instance.saveGameData.VolumeAmbient   = (int) volume.value;
-            // Manager_Game.Instance.saveGameData.Volume          = (int) volumeVoz.value;
 
             // [Jessé] 
             volumeJogo.SetFloat("vozsound", UnitToVolumeRange(volumeVoz.value)); 
             volumeJogo.SetFloat("bgsound", UnitToVolumeRange(volume.value));
 
-            // if (currentFontSize != (int)_fontSlider.value)
-            // {
-                // Debug.Log((int)_fontSlider.value);
-                ManagerEvents.GameConfig.ChangedLanguageSize((int)_fontSlider.value);
-                currentFontSize = (int)_fontSlider.value;
-            // }
-            // if (volumeVoz.value == 0)
-            // {
-            //     volumeJogo.SetFloat("vozsound", -80); // Range de volume.value é [0, 100]
-
-            // }
-            // else
-            // {
-            //     volumeJogo.SetFloat("vozsound", volumeVoz.value); // Range de volume.value é [0, 100]
-
-            // }
-
-            // if (volume.value == -40)
-            // {
-            //     volumeJogo.SetFloat("bgsound", -80); // Range de volume.value é [0, 100]
-
-            // }
-            // else
-            // {
-            //     volumeJogo.SetFloat("bgsound", volume.value); // Range de volume.value é [0, 100]
-
-            // }
-
+            ManagerEvents.GameConfig.ChangedLanguageSize((int)_fontSlider.value);
+            currentFontSize = (int)_fontSlider.value;
 
             yield return null;
         }
