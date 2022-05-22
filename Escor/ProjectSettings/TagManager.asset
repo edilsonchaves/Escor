@@ -20,7 +20,6 @@ TagManager:
   - quit_text
   - config_text
   - Power
-  - Vida
   - Javali
   - EndGame
   - ConversaPersonagem
@@ -35,6 +34,8 @@ TagManager:
   - plataforma
   - Javalizao
   - Spikes
+  - Life
+  - Vida
   layers:
   - Default
   - TransparentFX

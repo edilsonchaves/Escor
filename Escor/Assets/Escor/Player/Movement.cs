@@ -45,7 +45,6 @@ public class Movement : MonoBehaviour {
         {
             if (value == 5)
             {
-                GainLife();
                 _fragmentLife = 0;
                 ManagerEvents.PlayerMovementsEvents.PlayerGetedFragmentLife(_fragmentLife, 5.0f);
                 GainLifeUIUpdate=StartCoroutine(UpdateGainLifeUI());
@@ -53,7 +52,7 @@ public class Movement : MonoBehaviour {
             else
             {
                 _fragmentLife = value;
-                Debug.Log("Teste");
+                Debug.Log("current fragment life:" + _fragmentLife);
                 ManagerEvents.PlayerMovementsEvents.PlayerGetedFragmentLife(_fragmentLife,5.0f);
             }
         }
@@ -95,8 +94,8 @@ public class Movement : MonoBehaviour {
                         PersonagemMudarEstado();
                     }
                 }
-                ManagerEvents.PlayerMovementsEvents.LifedPlayer(Life);
             }
+            ManagerEvents.PlayerMovementsEvents.LifedPlayer(Life);
         }
     }
 
@@ -562,7 +561,7 @@ public class Movement : MonoBehaviour {
             walkingOnSpikes = true;
         }
 
-        if (col.gameObject.CompareTag("Vida") && Life<3)
+        if (col.gameObject.CompareTag("Life") && Life<3)
         {
             GainLife();
             Destroy(col.gameObject);
@@ -586,7 +585,7 @@ public class Movement : MonoBehaviour {
         if (col.gameObject.CompareTag("FragmentLife") && (Life<3 || FragmentLife<4))
         {
             FragmentLife++;
-            Debug.Log("FragmentLife");
+
             Destroy(col.gameObject);
         }
 
@@ -625,10 +624,12 @@ public class Movement : MonoBehaviour {
     public void GainLife()
     {
         Life++;
+
     }
     IEnumerator UpdateGainLifeUI()
     {
         yield return new WaitForSeconds(1f);
+        GainLife();
         ManagerEvents.PlayerMovementsEvents.LifedPlayer(Life);
         GainLifeUIUpdate = null;
     }

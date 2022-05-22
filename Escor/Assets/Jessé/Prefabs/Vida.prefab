@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4417122217180370475}
   - component: {fileID: 4134138152779118810}
-  - component: {fileID: 8671896359257952246}
   m_Layer: 0
   m_Name: Animation
-  m_TagString: Vida
+  m_TagString: Life
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -84,22 +83,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 1
   m_SpriteSortPoint: 0
---- !u!58 &8671896359257952246
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1182385017997498470}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.39, y: -0.1}
-  serializedVersion: 2
-  m_Radius: 3.8
 --- !u!1 &1695168104540031487
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,11 +93,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5137706223658611437}
   - component: {fileID: 431016618921313061}
-  - component: {fileID: 5741935369873778049}
   - component: {fileID: 5384576066704601072}
+  - component: {fileID: 168999983634016478}
   m_Layer: 0
   m_Name: Vida
-  m_TagString: Untagged
+  m_TagString: Life
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -154,19 +137,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &5741935369873778049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1695168104540031487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bd058a7036d5b149b6a5b1cfea2234f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _prefab: {fileID: 1182385017997498470}
 --- !u!50 &5384576066704601072
 Rigidbody2D:
   serializedVersion: 4
@@ -188,6 +158,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &168999983634016478
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695168104540031487}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.39, y: -0.1}
+  serializedVersion: 2
+  m_Radius: 3.8
 --- !u!1 &5473097606676654813
 GameObject:
   m_ObjectHideFlags: 0
