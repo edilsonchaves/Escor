@@ -16,6 +16,7 @@ public class IA_Javali : MonoBehaviour
     // [2] Se move e é capaz de seguir o alvo (não pula e nem desce de plataformas)
 
     public bool Move;
+    public bool activateAttack = true;
     [Range(-1,1)]
     public int startMovementDirection; // -1 = left, 0 = RandomDirection, 1 = right
 
@@ -26,6 +27,7 @@ public class IA_Javali : MonoBehaviour
     public float MovementSpeed, FollowDistance, AttackDistance;
     private float JumpHeight;
     public Animator JavaliAnimator;
+    public int attacksReceived=0;
 
     [Header("Raycast")]
     public LayerMask groundLayer;
@@ -405,7 +407,7 @@ public class IA_Javali : MonoBehaviour
 
     protected virtual bool CloseToAttack()
     {
-        if(!PlayerInsideArea(true))
+        if(!PlayerInsideArea(true) || !activateAttack)
             return false;
 
         return IsFaceToPlayer()
@@ -440,7 +442,7 @@ public class IA_Javali : MonoBehaviour
     //inicia o ataque
     protected virtual void Attack()
     {
-        if(!CloseToAttack() || attacking || stuned || !Move)
+        if(!CloseToAttack() || attacking || stuned || !Move || !activateAttack)
             return;
 
         attacking = true;
@@ -817,6 +819,8 @@ public class IA_Javali : MonoBehaviour
     {
         if(stuned)
             return;
+
+        attacksReceived++;
 
         StartCoroutine(_JavaliStuned());
     }

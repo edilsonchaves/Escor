@@ -54,7 +54,7 @@ public class JavaliTiro : IA_Javali
         // if(!PlayerInsideArea(true))
         //     return false;
 
-        if(GetDistaceOfPlayer(ShootPosition.position) > AttackDistance)
+        if(GetDistaceOfPlayer(ShootPosition.position) > AttackDistance || !activateAttack)
             return false;
 
 
@@ -65,7 +65,7 @@ public class JavaliTiro : IA_Javali
 
     protected override void Attack()
     {
-        if(stuned || !Move)
+        if(stuned || !Move || !activateAttack)
         {
             aux = 0;
             return;
@@ -111,6 +111,7 @@ public class JavaliTiro : IA_Javali
 
         yield return new WaitForSeconds(0.5f);
         bullet          = GetBullet();
+        bullet.transform.localScale = transform.localScale * 0.075f;
         bullet.GetComponent<BulletScript>().emissor = this.gameObject;
         Vector2 force   = CalculateDirectionToShoot();
         bullet.GetComponent<BulletScript>().valueForce = shootForce;
