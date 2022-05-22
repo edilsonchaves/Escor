@@ -87,7 +87,7 @@ public class MovePlataform : MonoBehaviour
 
         if(!startMovement && abovePlatformManager.playerIsAbove)
         {
-            StartMovement(waitPlayerToStartMovement?1.5f:0);
+            StartMovement(waitPlayerToStartMovement?1f:0);
         }
 
         if(startMovement && !esperarAtivador)

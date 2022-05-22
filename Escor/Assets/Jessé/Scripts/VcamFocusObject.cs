@@ -19,6 +19,11 @@ public class VcamFocusObject : MonoBehaviour
     public bool stopPlayer = true;
     public bool stopJavali = true;
 
+    [HideInInspector] public bool keepFocusingTarget;
+    [HideInInspector] public bool goInstantly;
+
+    public Transform currentPosition;
+
     private CinemachineVirtualCamera virtualCam;
     private GameObject objectToFocus;
 
@@ -33,6 +38,11 @@ public class VcamFocusObject : MonoBehaviour
     GameObject[]    allTargets;
 
 
+    float c_timeToStartFocus;
+    float c_transitionTimeGoing;
+    float c_transitionTimeComingBack;
+    float c_focusTime;
+
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +55,22 @@ public class VcamFocusObject : MonoBehaviour
         {
             Debug.LogWarning("Não foi possível encontrar a virtual camera Cinemachine");
         }
+
+        c_timeToStartFocus          = timeToStartFocus;
+        c_transitionTimeGoing       = transitionTimeGoing;
+        c_transitionTimeComingBack  = transitionTimeComingBack;
+        c_focusTime                 = focusTime;
+
+        // ResetParametersToDefault();
+    }
+
+
+    public void ResetParametersToDefault()
+    {
+        timeToStartFocus         = c_timeToStartFocus;
+        transitionTimeGoing      = c_transitionTimeGoing;
+        transitionTimeComingBack = c_transitionTimeComingBack;
+        focusTime                = c_focusTime;
     }
 
 
@@ -63,10 +89,12 @@ public class VcamFocusObject : MonoBehaviour
         // finish                          = false;
         allTargets                      = targets;
         focusing                        = true;
+        keepFocusingTarget              = false;
         // startPos                        = Camera.main.transform.position;
         startPos                        = virtualCam.Follow.position;
         objToSmooth                     = objToSmooth == null ? new GameObject() : objToSmooth; // objeto que a camera irá seguir
         objToSmooth.transform.position  = startPos;
+        currentPosition                 = objToSmooth.transform;
         distance                        = ((Vector2)(allTargets[0].transform.position-objToSmooth.transform.position)).magnitude;
         virtualCamTargetBackup          = virtualCam.Follow;
 
@@ -106,9 +134,16 @@ public class VcamFocusObject : MonoBehaviour
             nextStep        = false;
 
             // indo para o alvo
-            while(((Vector2)(currentTarget.transform.position-objToSmooth.transform.position)).magnitude > 0.1f) // espera chegar no alvo
+            while((((Vector2)(currentTarget.transform.position-objToSmooth.transform.position)).magnitude > 0.1f || keepFocusingTarget) && !nextStep) // espera chegar no alvo
             {
-                objToSmooth.transform.position = Vector2.MoveTowards(objToSmooth.transform.position, currentTarget.transform.position, distance/transitionTimeGoing*Time.deltaTime);
+                if(!goInstantly)
+                {
+                    objToSmooth.transform.position = Vector2.MoveTowards(objToSmooth.transform.position, currentTarget.transform.position, distance/transitionTimeGoing*Time.deltaTime);
+                }
+                else
+                {
+                    objToSmooth.transform.position = currentTarget.transform.position;
+                }
                 yield return null;
             }
 
@@ -153,9 +188,11 @@ public class VcamFocusObject : MonoBehaviour
     }
 
 
-    public void GoToNextStep()
+    public void GoToNextStep(bool instantly=false)
     {
+        keepFocusingTarget = false;
         nextStep = true;
+        goInstantly = instantly;
     }
 
 

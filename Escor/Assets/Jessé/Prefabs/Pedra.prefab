@@ -169,7 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundLayer:
     serializedVersion: 2
-    m_Bits: 57472
+    m_Bits: 57536
   myAnimator: {fileID: 2811681921014634883}
   trail: {fileID: 11194077149932050}
   tagOfPlayer: Player
