@@ -19,6 +19,7 @@ public class PlayerStatusUI : MonoBehaviour
     // _conferirMenu2.UpdateVidas("nome da forma como foi chamada a vida no script");
     public void UpdateVidas(int vidasCorrentes)
     {
+        Debug.Log("current life: " + vidasCorrentes);
         _vidasImg.sprite = _vidasSprite[vidasCorrentes];
     }
 
@@ -68,9 +69,7 @@ public class PlayerStatusUI : MonoBehaviour
     IEnumerator ObtainFragmentLogic(float currentFragment, float totalFragment)
     {
         float initialFillAmount = fragmentLifeUI.fillAmount;
-        Debug.Log(currentFragment / totalFragment);
         float fillAmountDestination = (currentFragment / totalFragment);
-        Debug.Log(fillAmountDestination);
         float timer=0;
         while (timer<=1)
         {
