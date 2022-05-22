@@ -26,6 +26,11 @@ public class Ativador : MonoBehaviour
     {
         // print("Ativador");
         myAnimator = GetComponent<Animator>();
+        if(!vcamFocusObject)
+        {
+            alreadyFocused = true;
+            focusOnce = true;
+        }
         SetPlatformToWait(); // faz com que as plataformas esperem a ativação
     }
 

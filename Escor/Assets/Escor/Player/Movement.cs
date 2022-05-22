@@ -184,10 +184,19 @@ public class Movement : MonoBehaviour {
         // print("_> "+LevelManager.levelstatus);
         canMove = keepingMeStopped == 0; // [Jessé]
         if(!canMove)
-        {
+        {                    // pulando = false;
+            // if(noChao)
+            //     animator.Play("parado");
+
+            usingStun = false;
+            atacando = false;
+            jumpsLeft = 2;
+            usingDoubleJump = false;
+            // animator.SetBool("Pulando", false);
+            // animator.SetBool("Atacando", false);
             animator.SetBool("Pulando", false);
-            animator.SetBool("Caindo", false);
-            animator.SetBool("NoChao", true);
+            // animator.SetBool("Caindo", false);
+            animator.SetBool("NoChao", noChao);
             pulando = false;
         }
         animator.SetFloat("VelocidadeY", rb.velocity.y);

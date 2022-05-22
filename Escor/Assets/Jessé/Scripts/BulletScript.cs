@@ -60,7 +60,7 @@ public class BulletScript : MonoBehaviour
 
 
         }
-        else if (col.tag == tagOfJavali && isBackToJavali)
+        else if (col.tag == tagOfJavali || col.tag == "Javalizao" && isBackToJavali)
         {
             // emissor.GetComponent<IA_Javali>().JavaliAnimator.Play("JavaliTonto", -1, 0);
             emissor.GetComponent<IA_Javali>().JavaliStuned();
