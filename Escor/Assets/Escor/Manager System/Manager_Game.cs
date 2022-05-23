@@ -104,8 +104,6 @@ public class Manager_Game : MonoBehaviour
         LoadLevelDataMemory();
         if (levelData == null)
             _levelStatus = LevelInfo.LevelStatus.NewLevel;
-        else
-            _levelStatus = LevelInfo.LevelStatus.ContinueLevel;
     }
 
     public void AdaptLanguageInScene()

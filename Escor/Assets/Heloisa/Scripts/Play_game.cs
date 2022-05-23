@@ -30,10 +30,12 @@ public class Play_game : MonoBehaviour
     {
         if (Manager_Game.Instance.levelData.LevelGaming==0)
         {
+
 			SceneManager.LoadScene("Prologo");
         }
         else
         {
+			Manager_Game.Instance.LevelStatus = LevelInfo.LevelStatus.ContinueLevel;
 			SceneManager.LoadScene("LoadGameScene");
 		}
     }
