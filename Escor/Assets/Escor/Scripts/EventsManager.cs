@@ -69,8 +69,8 @@ public class EventsManager : MonoBehaviour
         yield return new WaitForSeconds(3); // focando no javalizao
         IA_Javali jav = objects[1].GetComponent<IA_Javali>();
         jav.Move = true; // ativa o movimento do javalizao
-        jav.MovementSpeed = 1.35f; // ativa o movimento do javalizao
-        jav.JavaliAnimator.SetFloat("WalkSpeed", 0.75f);
+        jav.MovementSpeed = 2.1f; // ativa o movimento do javalizao
+        jav.JavaliAnimator.SetFloat("WalkSpeed", 1f);
         // yield return new WaitUntil(() => (jav.JavaliAnimator.GetCurrentAnimatorStateInfo(0).IsName("JavaliAndando"))); // espera a animação mudar para 'PortaoAbrindo'
         // jav.JavaliAnimator.GetCurrentAnimatorClipInfo(0).speed = 0.1f; // ativa o movimento do javalizao
         // objects[1].GetComponent<IA_Javali>().JavaliAnimator.speed = 0.1f; // ativa o movimento do javalizao
@@ -82,7 +82,7 @@ public class EventsManager : MonoBehaviour
 
         GameObject.FindWithTag("Player").GetComponent<Animator>().Play("assustando");
         yield return new WaitForSeconds(2);
-        Movement.canMove = true;
+        // Movement.canMove = true;
         // GameObject.FindWithTag("Exclamation").SetActive(false);
         // GameObject.FindGameObjectWithTag("Exclamation").SetActive(false);
 

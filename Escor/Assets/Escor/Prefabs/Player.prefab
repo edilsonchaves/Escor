@@ -367,7 +367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
-  pushForce: 10
+  pushForce: 20
   climbSpeed: 3
   attached: 0
   attachedTo: {fileID: 0}
