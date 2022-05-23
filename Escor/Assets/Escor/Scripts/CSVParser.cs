@@ -55,12 +55,7 @@ public class CSVParser : MonoBehaviour
         List<string> languagesInGame = new List<string>();
         languagesInGame = new List<string>(lines[1 + Manager_Game.Instance.saveGameData.LanguageSelect].Split(';'));
         languagesInGame.RemoveAt(0);
-        languagesInGame.RemoveAt(languagesInGame.Count - 1);
-        foreach (string language in languagesInGame)
-        {
-            Debug.Log("Languages escolhidas: " + language);
-        }
-               
+        languagesInGame.RemoveAt(languagesInGame.Count - 1);               
         return languagesInGame;
     }
     
@@ -81,7 +76,6 @@ public class CSVParser : MonoBehaviour
                 }
             }
         }
-        Debug.Log("Key ID: "+id);
         var values = languageDictionary[id];
         return values[languageIndex];
     }

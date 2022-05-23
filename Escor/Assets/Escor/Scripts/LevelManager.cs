@@ -26,25 +26,54 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         currentMaxVolume = levelAudioSource.volume;
-        Manager_Game.Instance.LoadLevelGame();
+        
         popup = control.CreatePopup();
         popup.gameObject.SetActive(false);
+        SfxManager.Initialize();
         if (Manager_Game.Instance.levelData == null)
         {
             CreateLevel(3);
         }
         else
         {
-            CreateLevel(Manager_Game.Instance.levelData.LevelGaming);
-            if (Manager_Game.Instance.LevelStatus==LevelInfo.LevelStatus.ContinueLevel)
+            levelstatus = LevelStatus.Game;
+            int level = Manager_Game.Instance.levelData.LevelGaming;
+            CreateLevelOficial(level);
+            CreatePlayer(level);
+            InitializeSoundBG(level);
+            if (Manager_Game.Instance.LevelStatus == LevelInfo.LevelStatus.NewLevel)
             {
-                PlayerSetupInformation();
-                MapSetupInformation();
+                
+                Debug.Log("New Level");
+                return;
+                
             }
-        }
-        SfxManager.Initialize();
-    }
 
+            Debug.Log("Continue Level");
+            PlayerSetupInformation();
+            MapSetupInformation();
+        }
+        
+    }
+    void CreateLevelOficial(int level)
+    {
+        levelstatus = LevelStatus.Game;
+        currentLevel = Instantiate(levelsAvaibles[Manager_Game.Instance.levelData.LevelGaming - 1], Vector3.zero, Quaternion.identity);
+        levelInformation = currentLevel.GetComponent<LevelInformation>();
+    }
+    void CreatePlayer(int level)
+    {
+        levelInformation.initializeLevelInformation(out Transform initialSpawnPosition);
+        currentCharacter = Instantiate(characterPrefab, initialSpawnPosition.position, initialSpawnPosition.rotation);
+        cam.transform.localPosition = new Vector3(0, 0, -10);
+        virtualCam.Follow = currentCharacter.transform;
+    }
+    void InitializeSoundBG(int level)
+    {
+        levelAudioSource.clip = levelsMusicsBG[level - 1];
+        levelAudioSource.Play();
+        FadeInMusic(5);
+    }
     void CreateLevel(int level)
     {
         levelstatus = LevelStatus.Game;
