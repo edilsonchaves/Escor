@@ -138,7 +138,7 @@ public class PlayerRopeControll : MonoBehaviour
         StopAllCoroutines();
         // StopCoroutine(KeepPlayingSoundOfCordaBalancando());
         StartCoroutine(KeepPlayingSoundOfCordaBalancando());
-
+        GetComponent<Movement>().jumpsLeft = 1;
         ropeBone.gameObject.GetComponent<RopeSegment>().isPlayerAttached = true;
         currentSegment = ropeBone.gameObject.GetComponent<RopeSegment>().transform;
         ropeBone.velocity = rb.velocity*3;
