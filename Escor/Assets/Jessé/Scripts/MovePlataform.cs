@@ -81,7 +81,7 @@ public class MovePlataform : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         abovePlatformManager.SetVelocity(GetVelocity());
 

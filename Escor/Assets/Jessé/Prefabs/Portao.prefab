@@ -123,7 +123,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7939791515019143619}
   - component: {fileID: 4430425696163209809}
-  - component: {fileID: 6312034414760974884}
+  - component: {fileID: 8108551285042149625}
   m_Layer: 0
   m_Name: Portao
   m_TagString: Untagged
@@ -165,7 +165,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &6312034414760974884
+--- !u!114 &8108551285042149625
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b41e3291fba6889449ea5d5fbb17f293, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sound: 16
+  sound: 32
   playOnAwake: 0
 --- !u!1 &7737746578517992400
 GameObject:

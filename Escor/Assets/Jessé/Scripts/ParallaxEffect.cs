@@ -44,7 +44,8 @@ public class ParallaxEffect : MonoBehaviour
     {
         // não funciona suavimente porque é necessário esperar um frame depois da camera se mover para então atualizar a posição do parallax
 
-        currentCamPos = vcam.position;
+        currentCamPos = Camera.main.transform.position;
+        // currentCamPos = vcam.position;
 
         // Transform ply = GameObject.FindGameObjectWithTag("Player").transform;
 
@@ -54,16 +55,34 @@ public class ParallaxEffect : MonoBehaviour
             for(int c=0; c<layersGameObject.Count; c++)
             {
                 // Vector3 currentCamMovement              = (ply.position - transform.position);
-                Vector3 currentCamMovement              = (vcam.position - transform.position);
+                Vector3 currentCamMovement              = (currentCamPos - transform.position);
                 // Vector3 currentCamMovement              = (currentCamPos - layersGameObjectStartPosition[c]);
                 Vector3 offset                          = currentCamMovement * ((layersMaterial.Count-c) * bettewMovementSpeed + (farMovementSpeed));
                 Vector3 newPos                          = layersGameObjectStartPosition[c] + offset;
                 newPos.z                                = layersGameObjectStartPosition[c].z;
+
                 layersGameObject[c].transform.position  = newPos;
             }
 
         }
 
+    }
+
+
+    protected void TestOfSmoothMoveCavernParallax()
+    {
+        currentCamPos = Camera.main.transform.position;
+            for(int c=0; c<layersGameObject.Count; c++)
+            {
+                // Vector3 currentCamMovement              = (ply.position - transform.position);
+                Vector3 currentCamMovement              = (currentCamPos - transform.position);
+                // Vector3 currentCamMovement              = (currentCamPos - layersGameObjectStartPosition[c]);
+                Vector3 offset                          = currentCamMovement * ((layersMaterial.Count-c) * bettewMovementSpeed + (farMovementSpeed+1));
+                Vector3 newPos                          = layersGameObjectStartPosition[c] + offset;
+                newPos.z                                = layersGameObjectStartPosition[c].z;
+
+                layersGameObject[c].transform.position  = newPos;
+            }
     }
 
 
