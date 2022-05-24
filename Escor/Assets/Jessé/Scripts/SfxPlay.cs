@@ -19,4 +19,9 @@ public class SfxPlay : MonoBehaviour
     {
         SfxManager.PlaySound(sound);
     }
+
+    public void PlayExpecifySound(SfxManager.Sound sound)
+    {
+        SfxManager.PlaySound(sound);
+    }   
 }
