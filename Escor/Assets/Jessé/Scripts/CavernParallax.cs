@@ -30,6 +30,7 @@ public class CavernParallax : ParallaxEffect
         // cavernMovementRange = m_movementRange;
         // SetABS(); // se certifica que as variáveis sejam positivas
         MoveCavernParallax();
+        // TestOfSmoothMoveCavernParallax();
     }
 
     override protected void SetLayers()
