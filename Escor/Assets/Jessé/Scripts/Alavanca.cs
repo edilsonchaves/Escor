@@ -46,6 +46,12 @@ public class Alavanca : Ativador
     }
 
 
+    public bool AlreadyTriggered()
+    {
+        return alreadyTriggered;
+    }
+
+
     // void SetPlatformToWaitAlavanca()
     // {
     //     foreach(GameObject plt in plataformas)
