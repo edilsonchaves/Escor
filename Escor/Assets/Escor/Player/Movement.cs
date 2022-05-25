@@ -8,6 +8,8 @@ public class Movement : MonoBehaviour {
 
     // [Jessé]
     public static int   keepingMeStopped;
+    [Range(-1f, -100f)]
+    public float fallingVelocity = -20;
     public        bool  doubleJump        = true;
                   bool  usingDoubleJump   = false;
                   bool  walkingOnSpikes   = false;
@@ -177,6 +179,8 @@ public class Movement : MonoBehaviour {
                 animator.SetFloat("VelocidadeX", 0);
             }
         }
+
+        
     }
 
     void Update()
@@ -238,6 +242,14 @@ public class Movement : MonoBehaviour {
                 {
                     caindo = false;
                     // animator.SetBool("Caindo", false);
+                }
+
+                if(caindo && rb.velocity.y < fallingVelocity)
+                {
+                    animator.SetBool("Caindo 2", true);
+                } else if (!caindo)
+                {
+                    animator.SetBool("Caindo 2", false);
                 }
 
                 animator.SetBool("Caindo", noChao == false && rb.velocity.y < 0);
@@ -451,6 +463,20 @@ public class Movement : MonoBehaviour {
 
 
     public static void KeepPlayerStopped()
+    {
+        keepingMeStopped++;
+    }
+
+    public void StartPlayer()
+    {
+        keepingMeStopped--;
+
+        if(keepingMeStopped < 0)
+            keepingMeStopped = 0;
+    }
+
+
+    public void StopPlayer()
     {
         keepingMeStopped++;
     }
