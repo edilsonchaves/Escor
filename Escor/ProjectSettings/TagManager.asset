@@ -37,6 +37,7 @@ TagManager:
   - Life
   - Vida
   - Bullet
+  - TopoDaCabecaDeKuro
   layers:
   - Default
   - TransparentFX
@@ -54,8 +55,8 @@ TagManager:
   - Tilemap_liso
   - Platform
   - GroundOnlyToPlayer
-  - 
-  - 
+  - TopoDaCabecaDeKuro
+  - Folha
   - 
   - 
   - 
