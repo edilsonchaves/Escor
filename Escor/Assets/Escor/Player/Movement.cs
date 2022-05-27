@@ -90,7 +90,6 @@ public class Movement : MonoBehaviour {
                     }
                     else
                     {
-                        
                         animator.SetTrigger("TakeDamage");
                         // SfxManager.PlaySound(SfxManager.Sound.playerHurt);
                         SfxManager.PlayRandomHurt(); // [Jessé] toca um som aleátorio toda vez
@@ -614,11 +613,6 @@ public class Movement : MonoBehaviour {
             FragmentLife++;
 
             Destroy(col.gameObject);
-        }
-        if(col.tag == "Bullet")
-        {
-           
-            
         }
 
     }

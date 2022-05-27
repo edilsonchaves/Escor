@@ -36,7 +36,6 @@ TagManager:
   - Spikes
   - Life
   - Vida
-  - Bullet
   layers:
   - Default
   - TransparentFX
