@@ -51,7 +51,7 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: 1cd6c6407d0b7ef4f88386bd5d914d92, type: 3}
     audioMixer: {fileID: 7980028146833873902, guid: 4d963a9c4fb612546a1961350d64fdc1, type: 2}
   - sound: 4
-    audioClip: {fileID: 8300000, guid: 5c951a564ea10b947b993ca75f1cec25, type: 3}
+    audioClip: {fileID: 8300000, guid: 4b388895c36c4954f8245391804e8f0c, type: 3}
     audioMixer: {fileID: 7980028146833873902, guid: 4d963a9c4fb612546a1961350d64fdc1, type: 2}
   - sound: 2
     audioClip: {fileID: 8300000, guid: 6be25693095ffb14aa693b4ca4884aed, type: 3}
