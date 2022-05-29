@@ -11,7 +11,7 @@ public class CabecaDeKuro : MonoBehaviour
 
     void Start()
     {
-        gameObject.name = "TopoDaCabeca";
+        // gameObject.name = "TopoDaCabeca";
         movement.enabled = true;
         podeFolhaNaCabeca = true;
     }
@@ -49,14 +49,22 @@ public class CabecaDeKuro : MonoBehaviour
 
     public void SetPodeFolhaNaCabeca()
     {
-        podeFolhaNaCabeca = true;
+        // podeFolhaNaCabeca = true;
+        StartCoroutine(UpdatePodeFolhaNaCabeca(true));
         movement.animator.SetBool("FolhaNaCabeca", false);
+    }
+
+    IEnumerator UpdatePodeFolhaNaCabeca(bool newValue, float waitTime=1f)
+    {
+        yield return new WaitForSeconds(waitTime);
+        podeFolhaNaCabeca = newValue;
     }
 
 
     public void SetNaoPodeFolhaNaCabeca()
     {
         podeFolhaNaCabeca = false;
+        // StartCoroutine(UpdatePodeFolhaNaCabeca(false, .0f));
     }
 
 

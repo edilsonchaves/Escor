@@ -138,7 +138,7 @@ public class VcamFocusObject : MonoBehaviour
             {
                 if(!goInstantly)
                 {
-                    objToSmooth.transform.position = Vector2.MoveTowards(objToSmooth.transform.position, currentTarget.transform.position, distance/transitionTimeGoing*Time.fixedDeltaTime);
+                    objToSmooth.transform.position = Vector2.MoveTowards(objToSmooth.transform.position, currentTarget.transform.position, distance/transitionTimeGoing*Time.deltaTime);
                 }
                 else
                 {
@@ -172,7 +172,7 @@ public class VcamFocusObject : MonoBehaviour
 
         while(((Vector2)(objToSmooth.transform.position-virtualCamTargetBackup.position)).magnitude > 0.1f) // espera chegar no alvo
         {
-            objToSmooth.transform.position = Vector2.MoveTowards(objToSmooth.transform.position, virtualCamTargetBackup.position, distance/transitionTimeComingBack*Time.fixedDeltaTime);
+            objToSmooth.transform.position = Vector2.MoveTowards(objToSmooth.transform.position, virtualCamTargetBackup.position, distance/transitionTimeComingBack*Time.deltaTime);
             yield return null;
         }
 
