@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FolhasManager : MonoBehaviour
 {
+    public int maximumAmount = 20;
     public GameObject folhaPrefab;
     int level;
     public float delayBetweenSpawn=4; // 4 segundos
@@ -15,24 +16,71 @@ public class FolhasManager : MonoBehaviour
     private List<Folha> folhasAtivas = new List<Folha>();
     private List<Folha> folhasInativas = new List<Folha>();
 
+    Movement playerMvt;
+
     // Start is called before the first frame update
     void Start()
-    {
-        level = Manager_Game.Instance.levelData.LevelGaming;
+    {   
+        try
+        {
+            level = Manager_Game.Instance.levelData.LevelGaming;
+        }
+        catch
+        {
+            level = 1;
+        }
+
         if(level <= 2) // não existe folha no nível 3
             StartCoroutine("KeepSpawning");
+    }
+
+    // é chamado depois que tudo já foi desenhado na tela
+    void OnPostRender()
+    {
+
     }
 
 
     IEnumerator KeepSpawning()
     {
         yield return new WaitForSeconds(1); // esperar a camera se posicionar 
+     
+        playerMvt = GameObject.FindWithTag("Player").GetComponent<Movement>();
+
+        //  melhor usar o if fora do loop para não ficar verificando várias vezes sem necessidade
+        if(playerMvt)
+        {
+            while(true)
+            {
+                yield return new WaitUntil(() => !playerMvt.insideCave); // só deve spawnar folhas quando o player estiver fora da caverna
+                yield return new WaitUntil(() => folhasAtivas.Count < maximumAmount); // só deve spawnar folhas quando o player estiver fora da caverna
+                SpawnFolha();
+                yield return new WaitForSeconds(delayBetweenSpawn);
+            }
+        }
 
         while(true)
         {
+            yield return new WaitUntil(() => folhasAtivas.Count < maximumAmount); // só deve spawnar folhas quando o player estiver fora da caverna
             SpawnFolha();
             yield return new WaitForSeconds(delayBetweenSpawn);
         }
+    }
+
+
+    // verifica se a posição está dentro de um colisor do tipo ground
+    bool PositionIsInsideGround(Vector2 position)
+    {      
+        Collider2D[] colisoes = Physics2D.OverlapCircleAll(position, 0f);
+        // foreach(Collider2D colisao in colisoes); // quando eu tento usar colisao dentro do loop diz que não existe
+        for(int c=0; c<colisoes.Length; c++)
+        {
+            if(colisoes[c].gameObject.tag == "ground")
+                return true;
+            // print("93271   "+colisoes[c].gameObject.tag);
+        }    
+
+        return false;
     }
 
 
@@ -75,7 +123,12 @@ public class FolhasManager : MonoBehaviour
 
     void SpawnFolha()
     {
-        Vector3 randomPosition      = GetRandomPositionInsideLimit();
+        Vector3 randomPosition;
+        do 
+        {
+            randomPosition = GetRandomPositionInsideLimit();
+        } while(PositionIsInsideGround(randomPosition));
+        
         Folha folha                 = GetNewFolha();
         folha.transform.position    = randomPosition;
         // folha.TurnOnMe();

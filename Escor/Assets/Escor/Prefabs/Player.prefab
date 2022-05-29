@@ -41,9 +41,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3501948563734182578}
   - component: {fileID: 6916327215211576005}
+  - component: {fileID: 4114515527567472952}
   m_Layer: 16
   m_Name: TopoDaCabeca
-  m_TagString: Untagged
+  m_TagString: TopoDaCabecaDeKuro
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56,7 +57,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6561778611875397154}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.25, y: 5.98, z: 0}
+  m_LocalPosition: {x: -1.33, y: 5.98, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6776107948195502343}
@@ -72,10 +73,10 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.45073462, y: -0.95578367}
+  m_Offset: {x: -0.117696285, y: -0.6192156}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -86,8 +87,29 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 6.997533, y: 0.47273266}
+  m_Size: {x: 4.144158, y: 0.5755188}
   m_EdgeRadius: 0
+--- !u!50 &4114515527567472952
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6561778611875397154}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &6740085203258030652
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,7 +375,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.7000003, y: -1.8418386}
+  m_Offset: {x: -1.7000003, y: -1.5359714}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -364,7 +386,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 7, y: 13.016327}
+  m_Size: {x: 7, y: 13.628061}
   m_EdgeRadius: 0
 --- !u!114 &-556306898777694631
 MonoBehaviour:
@@ -393,6 +415,7 @@ MonoBehaviour:
   _life: 3
   _fragmentLife: 0
   isInvunerable: 0
+  insideCave: 0
   _powerHero: 
   timeAbilityDefense: []
 --- !u!95 &9071136497506583917

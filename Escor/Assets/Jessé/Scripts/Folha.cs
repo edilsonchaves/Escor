@@ -19,29 +19,28 @@ public class Folha : MonoBehaviour
 
     Vector3 startRotation;
     bool folhaSumindo = false;
+    bool isInverting = false;
 
-
-    // Start is called before the first frame update
-    // void Start()
-    // {
-
-    //     SetSpriteColor();
-    //     OnEnable();
-    // }
 
     void OnEnable()
     {
         // transform.rotation = Quaternion.Euler(0, 0, 0);
         // startRotation      = transform.GetChild(0).GetChild(0).eulerAngles;
         // myRb.isKinematic   = false; // dynamic
-        folhaSumindo        = false;
-        myRb.simulated      = true;
-        gameObject.name     = "FolhaSolta"; // a animação de kuro derrubando a folha é linkada pelo nome 'FolhaSolta'
+        isStopped          = false;
+        folhaSumindo       = false;
+        myRb.simulated     = true;
+        gameObject.name    = "FolhaSolta"; // a animação de kuro derrubando a folha é linkada pelo nome 'FolhaSolta'
 
         SetSpriteColor();
 
         if(startWithRandomOffset)
-            myAnim.SetFloat("startOffset", Random.value);
+        {
+            // myAnim.SetFloat("startOffset", Random.value); // isso causa um BUG na hora de inverter a direção quando bate em uma parede
+            myAnim.Play("FolhaBalancando2", -1, Random.value); // isso deve funcionar melhor
+        }
+
+        FolhaCaindo();
     }
 
 
@@ -55,30 +54,9 @@ public class Folha : MonoBehaviour
     }
 
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(folhaSumindo)
-            return;
-
-        isStopped = myRb.velocity.y >= -0.1f; 
-     
-        if(isStopped)
-        {
-            FolhaParada();
-
-            if(!isOnKuroHead)
-                StartCoroutine("FadeOut");
-        }
-        else
-        {
-            FolhaCaindo();
-        }
-    }
-
-
     IEnumerator FadeOut()
     {
+        FolhaParada(); // folha não se mexe
         folhaSumindo = true;
 
         yield return new WaitForSeconds(timeToStartFadeout); // fica uns segundos no chão
@@ -100,13 +78,114 @@ public class Folha : MonoBehaviour
         spriteWithoutColor.color    = new Color(withoutC.r, withoutC.g, withoutC.b, 0);
 
         TurnOffMe();
+    }
 
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        // só detecta colisão com o chão, kuro ou a cabeça de kuro
+        Debug.DrawLine(transform.GetChild(0).position, col.ClosestPoint(transform.GetChild(0).position), Color.red, 15);
+
+        if(!(col.tag == "ground" || col.tag == "Player" || col.tag == "TopoDaCabecaDeKuro") || folhaSumindo || isInverting || isOnKuroHead)
+            return;
+
+        Vector2 colDir = GetDirectionOfContact(col); // a direção pode não ser tão precisa ás vezes
+
+        if(col.tag == "TopoDaCabecaDeKuro") // detecta a colisão sem se importar com a direção
+        {
+            if(col.transform.parent.GetComponent<CabecaDeKuro>().GetPodeFolhaNaCabeca())    
+                StopOnKurosHead(col.transform.parent.gameObject);
+        }
+        else if(VerifyEquality(colDir,-Vector2.up)) // colisão em baixo da folha
+        {
+
+            if(col.tag == "Player") // não faz nada se colidir em cima do player
+                return; 
+
+            StartCoroutine("FadeOut"); // folha desligada e sumindo
+        }
+        else if(!VerifyEquality(colDir, Vector2.up)) // colisão na esquerda ou direita da folha
+        {
+            InverteDirectionX(); 
+        }
+        else // colisão em cima da folha
+        {
+            // TODO
+        }
+
+    }
+
+    // verificar se dois vetores são iguais
+    bool VerifyEquality(Vector2 a, Vector2 b)
+    {
+        return (a-b).magnitude < 0.0001f;
+    }
+
+
+    // coloca a folha na cabeça de kuro
+    void StopOnKurosHead(GameObject player)
+    {
+        FolhaParada();
+        transform.SetParent(player.transform.Find("TopoDaCabeca"));
+        player.GetComponent<Animator>().SetBool("FolhaNaCabeca", true);
+        myRb.simulated  = false; 
+        isOnKuroHead    = true;
+    }
+
+    // inverte a direção da folha
+    void InverteDirectionX()
+    {
+        if(isInverting)
+            return;
+
+        isInverting = true;
+
+        myAnim.SetFloat("startOffset", 0);
+        float currentAnimationStep  = myAnim.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        transform.position          = transform.GetChild(0).position;
+        transform.Rotate(0,currentAnimationStep <= 0.5f ? 180 : 0,0); // espelhamento do pai no eixo Y
+        myAnim.Play("FolhaBalancando2", -1, 0.0f);
+
+        StartCoroutine(UpdateInvertingVariable());
+    }
+
+
+    // verificar de qual direção a folha recebeu contato
+    Vector2 GetDirectionOfContact(Collider2D col)
+    {
+        /*
+             left = (-1, 0)
+            right = ( 1, 0)
+               up = ( 0, 1)
+             down = ( 0,-1)
+        */
+
+        Vector2 myColPos    = transform.GetChild(0).position;
+        Vector2 contactPos  = (col.ClosestPoint(myColPos)-myColPos).normalized;
+
+        if(Mathf.Abs(contactPos.x) >= Mathf.Abs(contactPos.y)) // esquerda ou direita
+        {
+            if(contactPos.x > 0) // direita
+                return Vector2.right;
+
+            return -Vector2.right; // esquerda
+        }
+        else // cima ou baixo
+        {
+            if(contactPos.y > 0) // cima
+                return Vector2.up;
+
+            return -Vector2.up; // baixo
+        }
+
+        return Vector2.zero; // garantia de retorno
     }
 
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if(col.gameObject.tag != "Player")
+        return;
+
+        if(col.gameObject.tag != "TopoDaCabecaDeKuro")
             return; // retorna se não for kuro
 
         if(Mathf.Round(col.contacts[0].normal.y) != 1)
@@ -137,7 +216,8 @@ public class Folha : MonoBehaviour
     // e só então eu posso mudar a posição
     IEnumerator SwitchPosition()
     {
-        transform.SetParent(null); 
+        float yy = transform.localEulerAngles.y;
+        transform.SetParent(controller ? controller.transform : null); 
         myAnim.SetFloat("startOffset", 0);
         myAnim.Play("FolhaBalancando2", -1, 0f);
         yield return new WaitUntil(() => (myAnim.GetCurrentAnimatorStateInfo(0).IsName("FolhaBalancando2"))); // espera a animação mudar para 'FolhaBalancando2'
@@ -146,14 +226,18 @@ public class Folha : MonoBehaviour
         Transform colisor       = transform.GetChild(0);
         transform.position      = colisor.position;
         colisor.position        = Vector3.zero;    
-        // myAnim.SetFloat("startOffset", 0.01f);
-        // myAnim.Play("FolhaBalancando2", -1, 0f);
 
-        transform.rotation      = Quaternion.Euler(0, 0, 0);
-
-        myRb.simulated          = true; 
+        transform.rotation      = Quaternion.Euler(0, yy, 0);
+        FolhaCaindo();
     }
 
+
+    // só serve mesmo para esperar algum tempo antes de trocar o valor de 'isInverting'
+    IEnumerator UpdateInvertingVariable(bool newValue = false, float waitTime = 0.1f)
+    {
+        yield return new WaitForSeconds(waitTime);
+        isInverting = newValue;
+    }
 
 
     public void TurnOffMe()
@@ -167,25 +251,19 @@ public class Folha : MonoBehaviour
     }
 
 
-
-    // void OnCollisionEnter2D(Collision2D col)
-    // {
-    //     if(col.gameObject.tag == "Player")
-    //         isOnKuroHead = false;
-    // }
-
-
     void FolhaParada()
     {
+        isStopped       = true;
+        myRb.simulated  = false;
         myAnim.SetFloat("speed", 0);
     }
 
 
-
-
     void FolhaCaindo()
     {
+        isStopped       = false;
+        myRb.simulated  = true;
+        isOnKuroHead    = false;
         myAnim.SetFloat("speed", 1);
-        isOnKuroHead = false;
     }
 }

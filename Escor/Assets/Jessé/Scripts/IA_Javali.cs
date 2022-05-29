@@ -176,7 +176,7 @@ public class IA_Javali : MonoBehaviour
             walkInAllGround = true; // [BUG1] gambiarra pra resolver BUG rsrs
             myRb.velocity = new Vector2(0, myRb.velocity.y); // [BUG1]
             ChangeAnimation("JavaliParado");
-            print("_> aqui 1");
+            // print("_> aqui 1");
             return;
         }
 
@@ -184,15 +184,15 @@ public class IA_Javali : MonoBehaviour
         {
             if(!CloseToAttack() && !attacking && !stuned)
             {
-                print("_> aqui 2");
+                // print("_> aqui 2");
                 ChangeAnimation("JavaliParado2");
             }
 
-            print("_> aqui 3");
+            // print("_> aqui 3");
             return;
         }
 
-        print("_> aqui 4 :"+CloseToAttack());
+        // print("_> aqui 4 :"+CloseToAttack());
         auxMovement = Time.fixedDeltaTime * MovementSpeed * currentDirection * 100; // calcula quanto ele deve se mover
         Vector2 newPosition = myRb.position + new Vector2(auxMovement, 0); // salva a nova posição após o movimento
         Vector2 newPosition2 = myRb.position + new Vector2(auxMovement*0.5f, 0); // nova posição porém com um offset um pouco mais a frente (Não sei pq funciona, mas funciona)
@@ -219,23 +219,23 @@ public class IA_Javali : MonoBehaviour
             if (attacking || stuned || CloseToAttack())
             {
                 // não faça nada
-                print("_> aqui 4.1");
-                print("_> attacking: "+attacking);
-                print("_> stuned: "+stuned);
+                // print("_> aqui 4.1");
+                // print("_> attacking: "+attacking);
+                // print("_> stuned: "+stuned);
             }
             else if (AiLevel==0)
             {
-                print("_> aqui 4.2");
+                // print("_> aqui 4.2");
                 // O Javali não anda, fica somente no mesmo lugar esperando a hora de atacar
                 return;
             }
             // inteligência do javali nível 1
             else if (AiLevel == 1)
             {
-                print("_> aqui 4.3");
+                // print("_> aqui 4.3");
                 if(Move)
                 {
-                    print("_> aqui 5");
+                    // print("_> aqui 5");
                     myRb.velocity = new Vector2(auxMovement, myRb.velocity.y); // movimenta para a nova posição
                 }
                 // myRb.velocity = new Vector2(auxMovement, myRb.velocity.y); // movimenta para a nova posição
@@ -244,19 +244,19 @@ public class IA_Javali : MonoBehaviour
                 // verifica se encontrou algum obstaculo ou está fora do limite e faz o retorno
                 //                false                                                            || (true                     && true            ) || false
                 // print("_> IsOutLimite(newPosition2): "+IsOutLimite(newPosition2));
-                print("_> aqui 6");
+                // print("_> aqui 6");
                 if ((HitWall() && GetDistanceOfCollisionWithWall(GetWall()) < distanceOfCollision) || (IsOutLimite(newPosition2) && !walkInAllGround) || !CheckIsGrounded(true)) // verifica se a nova posição está fora do limite
                 {
-                    print("_> aqui 7");
-                    print("_> HitWall(): "+HitWall());
-                    print("_> GetDistanceOfCollisionWithWall(GetWall())< distanceOfCollision: "+(GetDistanceOfCollisionWithWall(GetWall())< distanceOfCollision));
-                    print("_> IsOutLimite(newPosition2):  "+IsOutLimite(newPosition2));
-                    print("_> !walkInAllGround: "+!walkInAllGround);
-                    print("_> !CheckIsGrounded(true): "+!CheckIsGrounded(true));
-                    print("_> CheckIsGrounded(false): "+CheckIsGrounded(false));
+                    // print("_> aqui 7");
+                    // print("_> HitWall(): "+HitWall());
+                    // print("_> GetDistanceOfCollisionWithWall(GetWall())< distanceOfCollision: "+(GetDistanceOfCollisionWithWall(GetWall())< distanceOfCollision));
+                    // print("_> IsOutLimite(newPosition2):  "+IsOutLimite(newPosition2));
+                    // print("_> !walkInAllGround: "+!walkInAllGround);
+                    // print("_> !CheckIsGrounded(true): "+!CheckIsGrounded(true));
+                    // print("_> CheckIsGrounded(false): "+CheckIsGrounded(false));
                     if(CheckIsGrounded(false))
                     {
-                        print("_> aqui 8");
+                        // print("_> aqui 8");
                         InvertDirection();
                     }
                     // else
@@ -277,7 +277,7 @@ public class IA_Javali : MonoBehaviour
             // inteligência do javali nível 2
             else if (AiLevel == 2)
             {
-                print("_> aqui 4.4");
+                // print("_> aqui 4.4");
                 if(Move)
                 {
                     myRb.velocity = new Vector2(auxMovement, myRb.velocity.y); // movimenta para a nova posição
@@ -369,15 +369,15 @@ public class IA_Javali : MonoBehaviour
 
             if (!attacking && !stuned && isGrounded)
             {
-                print("_> aqui 4.5");
+                // print("_> aqui 4.5");
                 if(!CloseToAttack())
                 {
-                    print("_> aqui 4.6");
+                    // print("_> aqui 4.6");
                     ChangeAnimation("JavaliAndando");
                 }
                 else if(myRb.velocity != Vector2.zero)
                 {
-                    print("_> aqui 4.7");
+                    // print("_> aqui 4.7");
                     myRb.velocity = Vector3.zero;
                     ChangeAnimation("JavaliParado2");
                 }
@@ -387,17 +387,17 @@ public class IA_Javali : MonoBehaviour
         else
         {
 
-            print("_> aqui 4.8");
+            // print("_> aqui 4.8");
             if(!isGrounded)
             {
-                print("_> aqui 4.9");
+                // print("_> aqui 4.9");
                 ChangeAnimation("JavaliTonto");
                 SfxManager.PlaySound(SfxManager.Sound.javaliStuned);
                 myRb.AddForce(new Vector2(currentDirection*-1, 0)*2, ForceMode2D.Impulse);
             }
             else
             {
-                print("_> aqui 5.5");
+                // print("_> aqui 5.5");
                 bug = false;
             }
             // myRb.AddForce(new Vector2(currentDirection*-1, 0)*200, ForceMode2D.Impulse);
