@@ -73,7 +73,7 @@ public class Manager_Game : MonoBehaviour
     }
     public void InitialNewSectionGame()
     {
-        sectionGameData = new SectionData(1,3,new bool[3]);
+        sectionGameData = new SectionData(1,3,new bool[3],new string[3]);
 
         SaveLoadSystem.SaveFile<SectionData>(sectionGameData);
     }
@@ -94,7 +94,7 @@ public class Manager_Game : MonoBehaviour
     public void InitialNewLevelGame(int levelSelected)
     {
         _levelStatus = LevelInfo.LevelStatus.NewLevel;
-        LevelData data = new LevelData(levelSelected,0,0,3,sectionGameData.GetPowersAwarded());
+        LevelData data = new LevelData(levelSelected,0,0,3,sectionGameData.GetPowersAwarded(),"",sectionGameData.GetMemoryFragment()[levelSelected-1]);
         levelData = data;
         SaveLoadSystem.SaveFile<LevelData>(levelData);
     }
@@ -144,33 +144,46 @@ public class SectionData
     [SerializeField] int _currentLevelLocal;
     [SerializeField] LevelData[] _levelsDataLocal;
     [SerializeField] bool[] powerAwardedLocal;
-    public SectionData(int valueLevel, int valueNumberLevels,bool[] valuePowersAwarded)
+    [SerializeField] string[] _memoryFragmentSection;
+    public SectionData(int valueLevel, int valueNumberLevels,bool[] valuePowersAwarded,string[] memoryFragment)
     {
         _currentLevelLocal = valueLevel;
         _levelsDataLocal = new LevelData[valueNumberLevels];
         powerAwardedLocal = valuePowersAwarded;
+        _memoryFragmentSection = memoryFragment;
     }
 
 
 
     // [Jessé] ----------------------------------
 
-        public void SetSectionData(int valueLevel, int valueNumberLevels,bool[] valuePowersAwarded)
-        {
-            SetCurrentLevel(valueLevel);
-            SetLevelsData(valueNumberLevels);
-            SetPowersAwarded(valuePowersAwarded);
-        }
+    public void SetSectionData(int valueLevel, int valueNumberLevels,bool[] valuePowersAwarded,string[]cutSCeneFragment)
+    {
+        SetCurrentLevel(valueLevel);
+        SetLevelsData(valueNumberLevels);
+        SetPowersAwarded(valuePowersAwarded);
+        SetCutSceneFragmentMemory(cutSCeneFragment);
+    }
 
-        public void SetCurrentLevel(int level)
-        {
-            _currentLevelLocal = level;
-        }
+    public void SetCurrentLevel(int level)
+    {
+        _currentLevelLocal = level;
+    }
 
-        public void SetLevelsData(int valueNumberLevels)
-        {
-            _levelsDataLocal = new LevelData[valueNumberLevels];
-        }
+    public void SetLevelsData(int valueNumberLevels)
+    {
+        _levelsDataLocal = new LevelData[valueNumberLevels];
+    }
+
+    public void SetPowersAwarded(bool[] newValuePowersAwarded)
+    {
+        powerAwardedLocal = newValuePowersAwarded;
+    }
+    public void SetCutSceneFragmentMemory(string[] newMemoryFragmentSection)
+    {
+        _memoryFragmentSection = newMemoryFragmentSection;
+    }
+    
 
     // ------------------------------------------
 
@@ -193,11 +206,11 @@ public class SectionData
     {
         return powerAwardedLocal;
     }
-
-    public void SetPowersAwarded(bool[] newValuePowersAwarded)
+    public string[] GetMemoryFragment()
     {
-        powerAwardedLocal = newValuePowersAwarded;
+        return _memoryFragmentSection;
     }
+
     [System.Serializable]
     public class LevelData{
         [SerializeField]int _currentMaxPercentualConclusionLocal;

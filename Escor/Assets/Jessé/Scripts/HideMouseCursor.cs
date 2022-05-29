@@ -14,7 +14,9 @@ public class HideMouseCursor : MonoBehaviour
     void Update()
     {
         // print("_> "+LevelManager.levelstatus);
+#if !UNITY_EDITOR
         SetCursorVisible(LevelManager.levelstatus != LevelManager.LevelStatus.Game);
+#endif
     }
 
     public void SetCursorVisible(bool vis) 
