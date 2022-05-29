@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -38,7 +38,7 @@ public class Movement : MonoBehaviour {
     [SerializeField] float _fragmentLife;
     SpriteRenderer sprite;
     public bool isInvunerable;
-    bool insideCave;
+    public bool insideCave;
     Coroutine GainLifeUIUpdate;
     public float FragmentLife
     {
@@ -658,6 +658,7 @@ public class Movement : MonoBehaviour {
         Life++;
 
     }
+    
     IEnumerator UpdateGainLifeUI()
     {
         yield return new WaitForSeconds(1f);
