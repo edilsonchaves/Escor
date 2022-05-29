@@ -10,21 +10,20 @@ public class FimFase : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-
             // LevelData instance ------
-            
-                LevelData levelDataInstance     = Manager_Game.Instance.levelData;
+
+            LevelData levelDataInstance     = Manager_Game.Instance.levelData;
 
             // -------------------------
  
             // SectionData instance ----
             
                 SectionData sectionDataInstance = Manager_Game.Instance.sectionGameData;
-            
-            // -------------------------
-            
 
-            int currentLevel = sectionDataInstance.GetCurrentLevel();
+            // -------------------------
+
+
+            int currentLevel = levelDataInstance.LevelGaming;
 
 
             // LevelData ---------------
@@ -34,22 +33,35 @@ public class FimFase : MonoBehaviour
                     currentLevel >= 2,
                     currentLevel >= 3,
                 };
-
-                levelDataInstance.SetLevelData(currentLevel, 0, 0, 3, newPowers, null); // SetLevelData(int, float ,float , int, bool[], bool[])
+            string memoryLevel = GameObject.FindObjectOfType<MemoryShardScript>().CaptureMemoryShardInformation();
+            Debug.Log(memoryLevel);
+                levelDataInstance.SetLevelData(currentLevel, 0, 0, 3, newPowers,null,"", memoryLevel); // SetLevelData(int, float ,float , int, bool[], bool[])
 
             // -------------------------
 
 
             // SectionData -------------
 
-                sectionDataInstance.SetSectionData(currentLevel+1, 0, levelDataInstance.Powers); // SetSectionData(int, int, bool[])
+            string[] fragmentMemorysSection = sectionDataInstance.GetMemoryFragment();
+            Debug.Log(fragmentMemorysSection.Length+", "+currentLevel);
+            fragmentMemorysSection[currentLevel-1] = levelDataInstance.FragmentMemoryStatus;
+            if (currentLevel == sectionDataInstance.GetCurrentLevel()) 
+            {
+                Debug.Log("Desbloquiei um novo nivel");
+                sectionDataInstance.SetSectionData(currentLevel + 1, 0, levelDataInstance.Powers, fragmentMemorysSection); // SetSectionData(int, int, bool[])
+            }
+            else
+            {
+                Debug.Log("Atualizando informações do nível: "+currentLevel );
+                sectionDataInstance.SetSectionData(currentLevel, 0, levelDataInstance.Powers, fragmentMemorysSection); // SetSectionData(int, int, bool[])
+            }
 
             // -------------------------
 
 
             // Save --------------------
-                
-                SaveLoadSystem.SaveFile<SectionData>(Manager_Game.Instance.sectionGameData);
+
+            SaveLoadSystem.SaveFile<SectionData>(Manager_Game.Instance.sectionGameData);
                 SaveLoadSystem.SaveFile<LevelData>(Manager_Game.Instance.levelData);
             
             // -------------------------

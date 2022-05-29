@@ -119,7 +119,7 @@ public class LevelManager : MonoBehaviour
     void MapSetupInformation()
     {
         levelInformation.LoadLifeShardInformation(Manager_Game.Instance.levelData.FragmentLifeStatus);
-        levelInformation.LoadLifeShardInformation(Manager_Game.Instance.levelData.FragmentMemoryStatus);
+        levelInformation.LoadMemoryShardInformation(Manager_Game.Instance.levelData.FragmentMemoryStatus);
 
 
     }
