@@ -587,8 +587,7 @@ public class Movement : MonoBehaviour {
 
         if (col.gameObject.CompareTag("FragmentMemory"))
         {
-            ManagerEvents.PlayerMovementsEvents.PlayerObtainedFragmentMemory();
-            Destroy(col.gameObject);
+            col.GetComponent<GetMemory>().PrefabActive(false);
         }
 
         if (col.gameObject.CompareTag("FragmentLife") && (Life<3 || FragmentLife<4))
