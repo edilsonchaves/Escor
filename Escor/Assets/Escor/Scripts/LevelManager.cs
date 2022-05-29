@@ -41,6 +41,7 @@ public class LevelManager : MonoBehaviour
             CreateLevelOficial(level);
             CreatePlayer(level);
             InitializeSoundBG(level);
+            MapSetupInformation();
             if (Manager_Game.Instance.LevelStatus == LevelInfo.LevelStatus.NewLevel)
             {
                 
@@ -51,7 +52,6 @@ public class LevelManager : MonoBehaviour
 
             Debug.Log("Continue Level");
             PlayerSetupInformation();
-            MapSetupInformation();
         }
         
     }
@@ -119,6 +119,7 @@ public class LevelManager : MonoBehaviour
     void MapSetupInformation()
     {
         levelInformation.LoadLifeShardInformation(Manager_Game.Instance.levelData.FragmentLifeStatus);
+        Debug.Log("Situation memory shard in level data: "+ Manager_Game.Instance.levelData.FragmentMemoryStatus);
         levelInformation.LoadMemoryShardInformation(Manager_Game.Instance.levelData.FragmentMemoryStatus);
 
 
