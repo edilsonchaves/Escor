@@ -87,6 +87,9 @@ public class VcamFocusObject : MonoBehaviour
 
 
         // finish                          = false;
+        if(focusing)
+            return;
+            
         allTargets                      = targets;
         focusing                        = true;
         keepFocusingTarget              = false;
@@ -178,13 +181,13 @@ public class VcamFocusObject : MonoBehaviour
 
         virtualCam.Follow = virtualCamTargetBackup; // reseta a camera para o alvo inicial
         // Movement.canMove  = true;
-        focusing          = false;
 
         if(stopPlayer)
             Movement.StopKeepPlayerStopped(); // faz o player se mover
 
         if(stopJavali)
             JavalisManager.instance.StopMovementOfJavalis(false);
+        focusing          = false;
     }
 
 

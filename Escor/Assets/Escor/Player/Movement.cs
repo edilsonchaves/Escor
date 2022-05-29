@@ -170,20 +170,21 @@ public class Movement : MonoBehaviour {
             rb.velocity = new Vector2(0, rb.velocity.y); // impedir que o player fique deslisando
 
         if (LevelManager.levelstatus == LevelManager.LevelStatus.Game)
-        {
             Move();
+    }
+
+    void Update()
+    {
+        canMove = keepingMeStopped == 0 && !ropeControll.attached && !defendendo; // [Jessé]
+
+        if (LevelManager.levelstatus == LevelManager.LevelStatus.Game)
+        {
+            // Move();
             Jump();
             Defense();
             // SlowMotion();
             Stun();
         }
-
-        
-    }
-
-    void Update()
-    {
-        canMove = !(keepingMeStopped > 0 || ropeControll.attached || defendendo); // [Jessé]
 
         animator.SetFloat("VelocidadeY", rb.velocity.y);
 
