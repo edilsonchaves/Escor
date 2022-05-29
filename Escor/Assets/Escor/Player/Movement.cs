@@ -171,14 +171,11 @@ public class Movement : MonoBehaviour {
 
         if (LevelManager.levelstatus == LevelManager.LevelStatus.Game)
         {
-            if (canMove && !ropeControll.attached && !defendendo)
-            {
-                Move();
-            }
-            else if(!canMove)
-            {
-                animator.SetFloat("VelocidadeX", 0);
-            }
+            Move();
+            Jump();
+            Defense();
+            // SlowMotion();
+            Stun();
         }
 
         
@@ -186,26 +183,9 @@ public class Movement : MonoBehaviour {
 
     void Update()
     {
-        // print("_> "+LevelManager.levelstatus);
-        canMove = keepingMeStopped == 0; // [Jessé]
-        if(!canMove)
-        {                    // pulando = false;
-            // if(noChao)
-            //     animator.Play("parado");
+        canMove = !(keepingMeStopped > 0 || ropeControll.attached || defendendo); // [Jessé]
 
-            usingStun = false;
-            atacando = false;
-            jumpsLeft = 2;
-            usingDoubleJump = false;
-            // animator.SetBool("Pulando", false);
-            // animator.SetBool("Atacando", false);
-            animator.SetBool("Pulando", false);
-            // animator.SetBool("Caindo", false);
-            animator.SetBool("NoChao", noChao);
-            pulando = false;
-        }
         animator.SetFloat("VelocidadeY", rb.velocity.y);
-        // print("_> keepingMeStopped: "+keepingMeStopped);
 
 
         if (LevelManager.levelstatus == LevelManager.LevelStatus.Game)
@@ -214,7 +194,7 @@ public class Movement : MonoBehaviour {
             animator.SetBool("Balancando", ropeControll.attached);
 
 
-            if (canMove && !ropeControll.attached)
+            if (!ropeControll.attached)
             {
                 if(rb.velocity.y < maxJumpForce)
                 {
@@ -226,23 +206,13 @@ public class Movement : MonoBehaviour {
 
                 animator.SetBool("NoChao", noChao);
 
-                // if(noChao)
-                // {
-                //     caindo = false;
-                // }
-                // if(caindo && rb.velocity.y == 0)
-                // {
-                //
-                // }
 
                 if(noChao == false && rb.velocity.y < 0)
                 {
-                    // animator.SetBool("Caindo", true);
                     caindo = true;
                 } else if(noChao == true || rb.velocity.y >=0)
                 {
                     caindo = false;
-                    // animator.SetBool("Caindo", false);
                 }
 
                 if(caindo && rb.velocity.y < fallingVelocity)
@@ -255,23 +225,7 @@ public class Movement : MonoBehaviour {
 
                 animator.SetBool("Caindo", noChao == false && rb.velocity.y < 0);
 
-                bool canJump = (noChao && !animator.GetBool("Pulando") && !pulando && _powerHero[0]) || jumpsLeft > 0;
-
-                if(Input.GetButtonDown("Jump") && canJump)
-                {
-                    // pulando = true;
-                    Jump();
-                    // noChao = false;
-                    // SfxManager.PlaySound(SfxManager.Sound.playerJump);
-                    // animator.SetBool("Pulando", true);
-                    // animator.Play("pulando normal", -1, 0);
-                    // animator.SetBool("Pulando", false);
-
-
-
-
-                }
-                else if (noChao && !pulando)
+                if (noChao && !pulando)
                 {
                     // pulando = false;
                     usingStun = false;
@@ -301,17 +255,11 @@ public class Movement : MonoBehaviour {
                     else
                         timeAbilityDefense[0] = timeAbilityDefense[1];
                 }
-                ManagerEvents.PlayerMovementsEvents.PlayerDefensedPower(timeAbilityDefense[0],timeAbilityDefense[1]);
 
-
+                ManagerEvents.PlayerMovementsEvents.PlayerDefensedPower(timeAbilityDefense[0],timeAbilityDefense[1]); // o que isso faz?
 
             }
 
-            Defense();
-
-            SlowMotion();
-
-            Stun();
 
         }
 
@@ -319,11 +267,20 @@ public class Movement : MonoBehaviour {
 
     void Move()
     {
+        if(!canMove) // não pode se mover
+        {
+            animator.SetFloat("VelocidadeX", 0);
+            return;
+        }
+
         Vector3 movement = new Vector2(Input.GetAxis("Horizontal"), 0f);
 
         if(slowmotion == true)
         {
-            transform.position += movement * Time.fixedDeltaTime * (speed * 1.5f);
+
+            // trocar depois por Time.deltaTime (em todo lugar) e vê se funciona bem
+
+            transform.position += movement * Time.fixedDeltaTime * (speed * 1.5f); 
             if(pulando == true)
             {
                 movement.y = 0.10f;
@@ -360,6 +317,7 @@ public class Movement : MonoBehaviour {
             if(noChao)
                 SfxManager.PlaySound(insideCave ? SfxManager.Sound.playerMoveCaverna : SfxManager.Sound.playerMove);
         }
+
     }
 
 
@@ -401,14 +359,31 @@ public class Movement : MonoBehaviour {
     }
 
 
+    bool CanJump()
+    {
+        if(!canMove)                     return false; // não pode se mover
+        else if(_powerHero.Length == 0)  return false; // não existe valor no array
+        else if(!_powerHero[0])          return false; // não tem o poder do pulo
+        else if(!((noChao && !animator.GetBool("Pulando") && !pulando) || jumpsLeft > 0)) return false; // não pode pular 
+
+        return true; // pode pular
+    }
+
 
     void Jump()
     {
-        if(keepingMeStopped != 0)
-        {
-            pulando = false;
-            return;
-        }
+        if(!Input.GetButtonDown("Jump")) return; // não está querendo pular 
+        else if (!CanJump()) return; // não pode pular 😥
+
+        // parabéns por chegar até aqui
+        // isso significa que você vai pular :)
+
+
+        // if(keepingMeStopped != 0)
+        // {
+        //     pulando = false;
+        //     return;
+        // }
 
         if(caindo && !pulando) // chegou perto da beirada da plataforma e caiu
         {
@@ -484,6 +459,8 @@ public class Movement : MonoBehaviour {
 
     void Defense()
     {
+        if(!noChao || keepingMeStopped > 0 || ropeControll.attached) // não está no chão ou não pode se mover ou está na corda
+            return;
 
         if (_powerHero[1] && pulando == false)
         {
@@ -507,6 +484,10 @@ public class Movement : MonoBehaviour {
     }
     void SlowMotion()
     {
+
+        // if(!canMove) // não pode se mover
+        //     return;
+
         if(Input.GetButtonDown("Tempo") && slowmotion == false)
         {
             Debug.Log("slowmotion ativo");
@@ -534,7 +515,7 @@ public class Movement : MonoBehaviour {
 
     void Stun()
     {
-        if(usingStun || noChao)
+        if(usingStun || noChao || !canMove) // está usando o stun ou está no chão ou não pode se mover
             return;
 
 
