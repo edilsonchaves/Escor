@@ -32,9 +32,11 @@ public class SelectLevel : MonoBehaviour
         float count=0;
         for(int i = 0; i < memoryStatus.Length; i++)
         {
-            if (memoryStatus.Equals('0'))
+            if (memoryStatus[i].Equals('0'))
                 count++;
         }
+        float percentual = count / memoryStatus.Length;
+        Debug.Log("count: " + count + " lenght: " + memoryStatus.Length+" percentual: "+ percentual);
         return count/ memoryStatus.Length;
     }
     public void SelectedLevel(int level)
