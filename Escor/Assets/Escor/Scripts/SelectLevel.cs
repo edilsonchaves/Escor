@@ -10,6 +10,7 @@ public class SelectLevel : MonoBehaviour
     bool levelSelected;
     private void Start()
     {
+        
         Manager_Game.Instance.LoadSectionGameMemory();
         string[] shardsMemoryStatus = Manager_Game.Instance.sectionGameData.GetMemoryFragment();
         levelSelected = false;
