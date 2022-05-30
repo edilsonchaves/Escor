@@ -23,7 +23,10 @@ public class LoadGame : MonoBehaviour
             _levelSelected = Manager_Game.Instance.sectionGameData.GetCurrentLevel();
             
         }
-        StartCoroutine(LoadAsyncScene(6)); // acredito que o certo é carregar a cena "GameLevel"
+        if(Manager_Game.Instance.levelData.LevelGaming!=-1)
+        StartCoroutine(LoadAsyncScene("GameLevel"));// acredito que o certo é carregar a cena "GameLevel"
+        else
+            StartCoroutine(LoadAsyncScene("SelectLevel"));
     }
 
 
@@ -31,12 +34,11 @@ public class LoadGame : MonoBehaviour
 
 
     // [Jessé]
-    IEnumerator LoadAsyncScene(int level)
+    IEnumerator LoadAsyncScene(string scene)
     {
         yield return new WaitForSeconds(0.5f);
 
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(level);
-        Debug.Log("Ola Vim aqui no level: " + level);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scene);
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
         {
