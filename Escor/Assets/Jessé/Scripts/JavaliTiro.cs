@@ -44,7 +44,7 @@ public class JavaliTiro : IA_Javali
         }
         else
         {
-            JavaliAnimator.Play("JavaliParado2");
+            // JavaliAnimator.Play("JavaliParado2"); // causa bug
         }
     }
 
