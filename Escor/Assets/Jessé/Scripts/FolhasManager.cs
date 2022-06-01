@@ -48,13 +48,21 @@ public class FolhasManager : MonoBehaviour
         playerMvt = GameObject.FindWithTag("Player").GetComponent<Movement>();
 
         //  melhor usar o if fora do loop para não ficar verificando várias vezes sem necessidade
+        Vector3 randomPosition;
         if(playerMvt)
         {
             while(true)
             {
                 yield return new WaitUntil(() => !playerMvt.insideCave); // só deve spawnar folhas quando o player estiver fora da caverna
                 yield return new WaitUntil(() => folhasAtivas.Count < maximumAmount); // só deve spawnar folhas quando o player estiver fora da caverna
-                SpawnFolha();
+                
+                do 
+                {
+                    randomPosition = GetRandomPositionInsideLimit();
+                    yield return null;
+                } while(!PositionInsideSpawnArea(randomPosition)); // fica procurando uma posição disponível
+        
+                SpawnFolha(randomPosition);
                 yield return new WaitForSeconds(delayBetweenSpawn);
             }
         }
@@ -62,7 +70,13 @@ public class FolhasManager : MonoBehaviour
         while(true)
         {
             yield return new WaitUntil(() => folhasAtivas.Count < maximumAmount); // só deve spawnar folhas quando o player estiver fora da caverna
-            SpawnFolha();
+            do 
+            {
+                randomPosition = GetRandomPositionInsideLimit();
+                yield return null;
+            } while(!PositionInsideSpawnArea(randomPosition)); // fica procurando uma posição disponível
+    
+            SpawnFolha(randomPosition);
             yield return new WaitForSeconds(delayBetweenSpawn);
         }
     }
@@ -82,6 +96,21 @@ public class FolhasManager : MonoBehaviour
 
         return false;
     }
+
+
+    // verifica se a posição está dentro do colisor onde pode nascer folhas
+    bool PositionInsideSpawnArea(Vector2 position)
+    {      
+        Collider2D[] colisoes = Physics2D.OverlapCircleAll(position, 0f);
+        for(int c=0; c<colisoes.Length; c++)
+        {
+            if(colisoes[c].gameObject.tag == "PodeNascerFolha")
+                return true; // está dentro
+        }    
+
+        return false; // está fora
+    }
+
 
 
     Vector3 GetRandomPositionInsideLimit()
@@ -121,20 +150,13 @@ public class FolhasManager : MonoBehaviour
     }
 
 
-    void SpawnFolha()
+    void SpawnFolha(Vector3 position)
     {
-        Vector3 randomPosition;
-        do 
-        {
-            randomPosition = GetRandomPositionInsideLimit();
-        } while(PositionIsInsideGround(randomPosition));
-        
         Folha folha                 = GetNewFolha();
-        folha.transform.position    = randomPosition;
+        folha.transform.position    = position;
         // folha.TurnOnMe();
         folha.startWithRandomOffset = false;
         // folha.myRb.simulated        = true;
-
         folha.SetSpriteColor(level-1); // level 1 -> color 0 | level 2 -> color 1
     }
 

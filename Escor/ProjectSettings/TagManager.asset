@@ -38,6 +38,7 @@ TagManager:
   - Vida
   - Bullet
   - TopoDaCabecaDeKuro
+  - PodeNascerFolha
   layers:
   - Default
   - TransparentFX
