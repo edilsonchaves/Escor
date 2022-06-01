@@ -147,14 +147,14 @@ MonoBehaviour:
   myAnim: {fileID: 5880037084276615377}
   myRb: {fileID: 5880037084276615390}
   isOnKuroHead: 0
-  startWithRandomOffset: 1
+  startWithRandomOffset: 0
   isStopped: 0
   colors:
   - {r: 0.9137255, g: 0.24705882, b: 0.25490198, a: 1}
   - {r: 0, g: 0.6862745, b: 1, a: 1}
   grayColors:
-  - {r: 0.8018868, g: 0.8018868, b: 0.8018868, a: 1}
-  - {r: 0.8000001, g: 0.8000001, b: 0.8000001, a: 1}
+  - {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
+  - {r: 0.735849, g: 0.735849, b: 0.735849, a: 1}
   colorToUse: 0
   timeToStartFadeout: 4
   durationOfFadeout: 10

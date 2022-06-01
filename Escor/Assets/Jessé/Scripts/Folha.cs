@@ -29,6 +29,7 @@ public class Folha : MonoBehaviour
         // myRb.isKinematic   = false; // dynamic
         isStopped          = false;
         folhaSumindo       = false;
+        bool isInverting   = false;
         myRb.simulated     = true;
         gameObject.name    = "FolhaSolta"; // a animação de kuro derrubando a folha é linkada pelo nome 'FolhaSolta'
 
@@ -89,6 +90,7 @@ public class Folha : MonoBehaviour
             return;
 
         Vector2 colDir = GetDirectionOfContact(col); // a direção pode não ser tão precisa ás vezes
+        Debug.DrawLine(transform.GetChild(0).position, (Vector2)transform.GetChild(0).position+colDir, Color.green, 15);
 
         if(col.tag == "TopoDaCabecaDeKuro") // detecta a colisão sem se importar com a direção
         {
@@ -139,14 +141,26 @@ public class Folha : MonoBehaviour
 
         isInverting = true;
 
-        myAnim.SetFloat("startOffset", 0);
-        float currentAnimationStep  = myAnim.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        myAnim.SetFloat("startOffset", 0); // não to mais usando
+        float currentAnimationStep  = AnimationNormalizedTime();
         transform.position          = transform.GetChild(0).position;
+        print("58114       "+currentAnimationStep);
         transform.Rotate(0,currentAnimationStep <= 0.5f ? 180 : 0,0); // espelhamento do pai no eixo Y
         myAnim.Play("FolhaBalancando2", -1, 0.0f);
 
         StartCoroutine(UpdateInvertingVariable());
     }
+
+
+    float AnimationNormalizedTime()
+    {
+        float currentAnimationStep  = myAnim.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        return currentAnimationStep-Mathf.Floor(currentAnimationStep); //  currentAnimationStep = 0.3 -> 0.3-0 = 0.3
+                                                                       //  currentAnimationStep = 1.3 -> 1.3-1 = 0.3
+                                                                       //  currentAnimationStep = 3.5 -> 3.5-3 = 0.5
+
+    }
+
 
 
     // verificar de qual direção a folha recebeu contato
