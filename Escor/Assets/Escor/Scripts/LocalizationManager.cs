@@ -37,11 +37,9 @@ public class LocalizationManager : MonoBehaviour
                 localizedText.Add(loadedData.items [i].key, loadedData.items [i].value);
             }
 
-            Debug.Log("Data loaded, dictionary contains: " +  localizedText.Count + "entries" );
 
         } else
         {
-            Debug.LogError("Não encontro o arquivo");
         }
 
         isReady = true;

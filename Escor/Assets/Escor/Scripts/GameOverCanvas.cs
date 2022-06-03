@@ -39,6 +39,7 @@ public class GameOverCanvas : MonoBehaviour
 
     public void BTN_LoadLevel()
     {
+        Manager_Game.Instance.LoadLevelGame();
         SceneManager.LoadScene("GameLevel");
     }
 

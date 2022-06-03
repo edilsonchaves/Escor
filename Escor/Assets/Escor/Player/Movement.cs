@@ -54,7 +54,6 @@ public class Movement : MonoBehaviour {
             else
             {
                 _fragmentLife = value;
-                Debug.Log("current fragment life:" + _fragmentLife);
                 ManagerEvents.PlayerMovementsEvents.PlayerGetedFragmentLife(_fragmentLife,5.0f);
             }
         }
@@ -491,7 +490,6 @@ public class Movement : MonoBehaviour {
 
         if(Input.GetButtonDown("Tempo") && slowmotion == false)
         {
-            Debug.Log("slowmotion ativo");
             slowmotion = true;
             Time.timeScale = 0.75f;
             Time.fixedDeltaTime = Time.timeScale * .02f;
@@ -499,7 +497,6 @@ public class Movement : MonoBehaviour {
             //Efeito slowmotion ativo
         } else if (Input.GetButtonDown("Tempo") && slowmotion == true)
         {
-            Debug.Log("slowmotion inativo");
             slowmotion = false;
             Time.timeScale = 1;
             Time.fixedDeltaTime = Time.timeScale * .02f;
@@ -648,5 +645,10 @@ public class Movement : MonoBehaviour {
         GainLifeUIUpdate = null;
     }
 
+    public void LoadLifeInitial(int value) 
+    {
+        _life = value;
+        ManagerEvents.PlayerMovementsEvents.LifedPlayer(_life);
+    }
 
 }
