@@ -22,14 +22,12 @@ public class ScaleUpWhenMouseOver : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("Mouse enter");
         transform.localScale *= scaleMultiply;
     }
 
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Debug.Log("Mouse exit");
         transform.localScale /= scaleMultiply;
     }
 

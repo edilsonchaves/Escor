@@ -936,7 +936,6 @@ public class IA_Javali : MonoBehaviour
             {
                 JavaliStuned();
                 // SfxManager.PlaySound(SfxManager.Sound.playerDefense);
-                Debug.Log("Jogador não recebeu dano");
             }
         }
 

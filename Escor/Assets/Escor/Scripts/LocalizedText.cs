@@ -13,10 +13,7 @@ public class LocalizedText : MonoBehaviour
     }
     void SetupLanguage(int value)
     {
-        Debug.Log(gameObject.name);
-        Debug.Log("Localize key:" + keyDefault);
         text.text = CSVParser.GetTextFromID(keyDefault, value);
-        Debug.Log(text.text);
     }
     public void Setup(string key, int value)
     {

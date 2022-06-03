@@ -24,7 +24,6 @@ public class BossLifeUI : MonoBehaviour
     }
     public void UpdateUI(int valueLife)
     {
-        Debug.Log(valueLife);
         _spriteRenderer.sprite = spriteStatusLife[valueLife];
     }
 

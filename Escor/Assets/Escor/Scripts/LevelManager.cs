@@ -26,7 +26,7 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         currentMaxVolume = levelAudioSource.volume;
-        
+        Debug.Log("Teste: "+Manager_Game.Instance.LevelStatus);
         popup = control.CreatePopup();
         popup.gameObject.SetActive(false);
         SfxManager.Initialize();
@@ -104,6 +104,7 @@ public class LevelManager : MonoBehaviour
     void PlayerSetupInformation()
     {
         Vector2 pos = Manager_Game.Instance.levelData.CharacterPosition;
+        Debug.Log(pos.x+", "+ pos.y);
         currentCharacter.transform.position = new Vector3(pos.x, pos.y,0);
         int id = 0;
         foreach(bool powerID in Manager_Game.Instance.levelData.Powers)
@@ -114,6 +115,7 @@ public class LevelManager : MonoBehaviour
             }
             id++;
         }
+        currentCharacter.GetComponent<Movement>().LoadLifeInitial(Manager_Game.Instance.levelData.GetLifePlayer());
     }
 
     void MapSetupInformation()
@@ -189,7 +191,7 @@ public class LevelManager : MonoBehaviour
         Movement playerInfo= currentCharacter.GetComponent<Movement>();
         LevelInformation levelInformation = currentLevel.GetComponent<LevelInformation>();
         Manager_Game.Instance.SaveLevelMemory(Manager_Game.Instance.levelData.LevelGaming,currentCharacter.transform.position.x, currentCharacter.transform.position.y, playerInfo.Life, playerInfo.PowerHero, levelInformation.LevelLifeInfo(),levelInformation.LevelMemoryInfo());
-        SceneManager.LoadScene("SelectLevel");
+        //SceneManager.LoadScene("SelectLevel");
     }
     void SaveGameButton()
     {

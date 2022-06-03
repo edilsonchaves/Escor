@@ -39,7 +39,6 @@ public class CinemachineSwitcher : MonoBehaviour
     {
 
         yield return new WaitForSeconds(t);
-        Debug.Log("2");
 
     }
     IEnumerator Scared()

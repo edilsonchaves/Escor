@@ -60,7 +60,6 @@ public class Manager_Game : MonoBehaviour
     // [Jessé] deixa o diálogo da tartura ativado
     private void ResetTurtleDialog()
     {
-        print("_> Diálogo reiniciado");
         PlayerPrefs.SetInt("SkipConversationOfTurtle", 0); // 0 = não pular diálogo
     }
 
@@ -73,20 +72,19 @@ public class Manager_Game : MonoBehaviour
     }
     public void InitialNewSectionGame()
     {
-        sectionGameData = new SectionData(1,3,new bool[3],new string[3]);
+        string[] fragmentsLevel = { "", "", "" };
+        sectionGameData = new SectionData(1,3,new bool[3], fragmentsLevel);
 
         SaveLoadSystem.SaveFile<SectionData>(sectionGameData);
     }
 
     public void LoadSectionGameMemory()
     {
-        Debug.Log(Application.persistentDataPath + "/SectionData.data");
         sectionGameData = SaveLoadSystem.LoadFile<SectionData>(Application.persistentDataPath+"/SectionData.data");
     }
 
     public void LoadLevelDataMemory()
     {
-        Debug.Log(Application.persistentDataPath + "/LevelData.data");
         levelData = SaveLoadSystem.LoadFile<LevelData>(Application.persistentDataPath +"/LevelData.data");
 
     }
@@ -309,6 +307,11 @@ public class LevelData
         {
             _lifePlayerAmountLocal = value;
         }
+
+        public int GetLifePlayer()
+    {
+        return _lifePlayerAmountLocal;
+    }
 
         public void ResetPlayerPosition()
         {

@@ -71,7 +71,6 @@ public class CSVParser : MonoBehaviour
                 {
                     List<string> words = new List<string>(row);
                     words.RemoveAt(0);
-                    Debug.Log(row[0]+": "+words[0]+", "+words[1]+", "+words[2]);
                     languageDictionary.Add(row[0], words);
                 }
             }
