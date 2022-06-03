@@ -30,7 +30,7 @@ public class Borboleta : MonoBehaviour
 
     public void ChangeToRandomAnimation()
     {
-        parentAnim.SetFloat("Speed", Random.Range(0.75f, 1.25f));
+        parentAnim.SetFloat("Speed", Random.Range(0.5f, 1f));
         ChangeAnimation(GetRandomAnimationIndex());
     }
 

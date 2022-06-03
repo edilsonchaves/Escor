@@ -50,13 +50,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AiLevel: 1
   Move: 1
+  activateAttack: 1
   startMovementDirection: 0
   MovementDistance: 1
   walkInAllGround: 0
   MovementSpeed: 0.8
-  FollowDistance: 7
+  FollowDistance: 7.5
   AttackDistance: 1.3
   JavaliAnimator: {fileID: 1724477956533421018}
+  attacksReceived: 0
   groundLayer:
     serializedVersion: 2
     m_Bits: 24704

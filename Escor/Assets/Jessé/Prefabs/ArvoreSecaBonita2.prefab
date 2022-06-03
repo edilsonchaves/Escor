@@ -704,7 +704,7 @@ MonoBehaviour:
     m_Center: {x: 0.08630085, y: 4.1595316, z: 0}
     m_Extent: {x: 5.9197836, y: 12.604313, z: 0}
   m_UseBatching: 1
-  m_AlwaysUpdate: 1
+  m_AlwaysUpdate: 0
 --- !u!1 &8224604903723874319
 GameObject:
   m_ObjectHideFlags: 0
@@ -836,4 +836,4 @@ MonoBehaviour:
     m_Center: {x: 0.08630085, y: 4.1595316, z: 0}
     m_Extent: {x: 5.9197836, y: 12.604313, z: 0}
   m_UseBatching: 1
-  m_AlwaysUpdate: 1
+  m_AlwaysUpdate: 0
