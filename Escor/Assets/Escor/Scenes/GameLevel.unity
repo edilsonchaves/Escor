@@ -4356,9 +4356,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8115ad21b66034cb88b6e6f4736d74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximumAmount: 50
+  maximumAmount: 35
   folhaPrefab: {fileID: 5880037084276615376, guid: e81fb4c6269359646bf0aec081fbfd74, type: 3}
-  delayBetweenSpawn: 2
+  delayBetweenSpawn: 4
   timeToStartFadeout: 1
   durationOfFadeout: 5
   limitLeft: {fileID: 436299123}
