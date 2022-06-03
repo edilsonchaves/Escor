@@ -175,6 +175,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAbove: 0
+  playerIsAbove: 0
+  javaliIsAbove: 0
+  javalisAbove: []
+  numberOfAbove: 0
 --- !u!1 &888919944491699800
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,6 +244,7 @@ MonoBehaviour:
   maxDistance: 0
   waitTimeOnEnd: 2
   startDirection: 1
+  esperarAtivador: 0
 --- !u!1 &1725065757624471980
 GameObject:
   m_ObjectHideFlags: 0

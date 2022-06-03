@@ -33,7 +33,7 @@ public class JavaliTiro : IA_Javali
         if (LevelManager.levelstatus == LevelManager.LevelStatus.Game)
         {
             isGrounded = CheckIsGrounded();
-            ShowExclamation(true);  // mostra a exclamacao quando o player entra na área de ataque
+            ShowExclamation(false);  // mostra a exclamacao quando o player entra na área de ataque
             Movement(); // faz a movimentação do javali
             // if(!attacking && !parado)
             // {
@@ -53,10 +53,15 @@ public class JavaliTiro : IA_Javali
     {
         // if(!PlayerInsideArea(true))
         //     return false;
+        // print("71922    GetDistaceOfPlayer(ShootPosition.position)"+GetDistaceOfPlayer(ShootPosition.position));
+        // print("71922    AttackDistance"+AttackDistance);
 
-        if(GetDistaceOfPlayer(ShootPosition.position) > AttackDistance || !activateAttack)
+
+        if(!PlayerInsideArea(true) || !activateAttack)
             return false;
 
+        // print("71922    IsFaceToPlayer()"+IsFaceToPlayer());
+        // print("71922    !HaveObstacle(playerTrans.position, ShootPosition.position)"+!HaveObstacle(playerTrans.position, ShootPosition.position));
 
         return IsFaceToPlayer()
                && !HaveObstacle(playerTrans.position, ShootPosition.position);
