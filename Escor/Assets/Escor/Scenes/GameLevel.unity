@@ -4470,6 +4470,10 @@ PrefabInstance:
       propertyPath: prefab
       value: 
       objectReference: {fileID: 1959967340}
+    - target: {fileID: 2065788740596205919, guid: 258e32b09544c9b4fab65c609749575d, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2225173520201828964, guid: 258e32b09544c9b4fab65c609749575d, type: 3}
       propertyPath: m_Name
       value: ConversaPersonagem

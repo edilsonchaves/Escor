@@ -29,21 +29,27 @@ public class RangeAttackState : BossBaseState
         boss.PlayAnimation("BossTacandoPedra(Ataque1)");
         SfxManager.PlaySound(SfxManager.Sound.javaliShoot);
         yield return new WaitForSeconds(0.5f);
-        //bullet = GetBullet();
-        //bullet.GetComponent<BulletScript>().emissor = shootPosition.gameObject;
-        //bullet.GetComponent<BulletScript>().valueForce = shootForce; ;
-        //Vector2 force = CalculateDirectionToAttack(boss);
-        //bullet.GetComponent<Rigidbody2D>().AddForce(force * shootForce, ForceMode2D.Impulse);
+        bullet = GetBullet();
+        bullet.GetComponent<BulletScript>().emissor = boss.gameObject;
+        bullet.GetComponent<BulletScript>().valueForce = shootForce; ;
+        Vector2 force = CalculateDirectionToAttack(boss);
+        bullet.GetComponent<Rigidbody2D>().AddForce(force * shootForce, ForceMode2D.Impulse);
         yield return new WaitForSeconds(0.8f);
         boss.SwitchState(boss.patrollState);
     }
 
 
     public override void OnCollisionEnter(BossScript boss, Collision2D collsion) { }
+
+    public override void OnCollisionExit(BossScript boss, Collision2D collision)
+    {
+    }
+
     public override string GetStateName()
     {
         return "RangeAttackState";
     }
+
 
     protected Vector2 CalculateDirectionToAttack(BossScript boss)
     {
