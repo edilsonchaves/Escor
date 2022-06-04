@@ -56,7 +56,7 @@ public class BulletScript : MonoBehaviour
             if (!mvt.isInvunerable)
             {
                 // print("Tiro acertou o player");
-                mvt.animator.SetTrigger("BulletDamage");
+                mvt.animator.SetBool("BulletDamage", true);
                 mvt.Life -= 1;
                 
             }

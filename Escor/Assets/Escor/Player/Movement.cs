@@ -87,7 +87,7 @@ public class Movement : MonoBehaviour {
                         LevelManager.levelstatus = LevelManager.LevelStatus.EndGame;
                         StartCoroutine(DiePersonagem());
                     }
-                    else
+                    else if(animator.GetBool("BulletDamage") == false)
                     {
                         
                         animator.SetTrigger("TakeDamage");
@@ -174,6 +174,8 @@ public class Movement : MonoBehaviour {
 
     void Update()
     {
+        print("Bullet" + animator.GetBool("BulletDamage"));
+        print("Take" + animator.GetBool("TakeDamage"));
         canMove = keepingMeStopped == 0 && !ropeControll.attached && !defendendo; // [Jessé]
 
         if (LevelManager.levelstatus == LevelManager.LevelStatus.Game)
@@ -649,6 +651,10 @@ public class Movement : MonoBehaviour {
     {
         _life = value;
         ManagerEvents.PlayerMovementsEvents.LifedPlayer(_life);
+    }
+    public void BulletDamage()
+    {
+        animator.SetBool("BulletDamage", false);
     }
 
 }
