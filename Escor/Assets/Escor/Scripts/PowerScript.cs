@@ -25,6 +25,12 @@ public class PowerScript : MonoBehaviour
     private void Start()
     {
         SetPower(_power);
+        Debug.Log(Manager_Game.Instance.levelData.Powers[Manager_Game.Instance.levelData.LevelGaming-1]);
+        if (Manager_Game.Instance.levelData.Powers[Manager_Game.Instance.levelData.LevelGaming-1])
+        {
+
+            gameObject.SetActive(false);
+        }
     }
     public void SetPower(PowerOptions powerValue)
     {
