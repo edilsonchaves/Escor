@@ -72,8 +72,8 @@ public class Manager_Game : MonoBehaviour
     }
     public void InitialNewSectionGame()
     {
-        string[] fragmentsLevel = { "", "", "" };
-        sectionGameData = new SectionData(1,3,new bool[3], fragmentsLevel);
+        string[] fragmentsLevel = {"","", ""};
+        sectionGameData = new SectionData(1,3,new bool[3], fragmentsLevel,new string[3]);
 
         SaveLoadSystem.SaveFile<SectionData>(sectionGameData);
     }
@@ -143,12 +143,14 @@ public class SectionData
     [SerializeField] LevelData[] _levelsDataLocal;
     [SerializeField] bool[] powerAwardedLocal;
     [SerializeField] string[] _memoryFragmentSection;
-    public SectionData(int valueLevel, int valueNumberLevels,bool[] valuePowersAwarded,string[] memoryFragment)
+    [SerializeField] string[] _powerFragmentSection;
+    public SectionData(int valueLevel, int valueNumberLevels,bool[] valuePowersAwarded,string[] memoryFragment,string[]powerFragment)
     {
         _currentLevelLocal = valueLevel;
         _levelsDataLocal = new LevelData[valueNumberLevels];
         powerAwardedLocal = valuePowersAwarded;
         _memoryFragmentSection = memoryFragment;
+        powerFragment = _powerFragmentSection;
     }
 
 
@@ -262,6 +264,7 @@ public class LevelData
     [SerializeField] bool[] coinsLevelLocal;
     [SerializeField] string fragmentLifeStatusLocal;
     [SerializeField] string fragmentMemoryShardStatusLocal;
+    [SerializeField] string fragmentPowerLevelStatus;
 
     //[SerializeField] int progressLevelLocal;
     //[SerializeField] bool[] regionsVisitedLocal;
@@ -271,7 +274,7 @@ public class LevelData
     public bool[] Powers { get { return _powersLocal; }  private set{}}
     public string FragmentLifeStatus { get { return fragmentLifeStatusLocal; } private set { } }
     public string FragmentMemoryStatus { get { return fragmentMemoryShardStatusLocal; } private set { } }
-    public LevelData(int valueLevel, float posPlayerX=0,float posPlayerY=0, int valueLifePlayerAmount = 3, bool[] valuePowerPlayer = null, string fragmentLifeStatus="", string fragmentMemoryStatus = "") // falta colocar aqui "coinsLevel"
+    public LevelData(int valueLevel, float posPlayerX=0,float posPlayerY=0, int valueLifePlayerAmount = 3, bool[] valuePowerPlayer = null, string fragmentLifeStatus="", string fragmentMemoryStatus = "", string powerLevelStatus="") // falta colocar aqui "coinsLevel"
     {
         _levelGamingLocal = valueLevel;
         _playerPositionXLocal = posPlayerX;
@@ -280,7 +283,7 @@ public class LevelData
         _powersLocal = valuePowerPlayer;
         fragmentLifeStatusLocal = fragmentLifeStatus;
         fragmentMemoryShardStatusLocal = fragmentMemoryStatus;
-
+        fragmentPowerLevelStatus = powerLevelStatus;
     }
 
 

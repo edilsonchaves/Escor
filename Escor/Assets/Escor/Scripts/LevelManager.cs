@@ -42,6 +42,7 @@ public class LevelManager : MonoBehaviour
             CreatePlayer(level);
             InitializeSoundBG(level);
             MapSetupInformation();
+            PlayerSetupGeneric();
             if (Manager_Game.Instance.LevelStatus == LevelInfo.LevelStatus.NewLevel)
             {
                 
@@ -54,6 +55,18 @@ public class LevelManager : MonoBehaviour
             PlayerSetupInformation();
         }
         
+    }
+    void PlayerSetupGeneric()
+    {
+        int id = 0;
+        foreach (bool powerID in Manager_Game.Instance.levelData.Powers)
+        {
+            if (powerID)
+            {
+                ManagerEvents.PlayerMovementsEvents.PlayerGetedPower(id);
+            }
+            id++;
+        }
     }
     void CreateLevelOficial(int level)
     {
@@ -106,15 +119,6 @@ public class LevelManager : MonoBehaviour
         Vector2 pos = Manager_Game.Instance.levelData.CharacterPosition;
         Debug.Log(pos.x+", "+ pos.y);
         currentCharacter.transform.position = new Vector3(pos.x, pos.y,0);
-        int id = 0;
-        foreach(bool powerID in Manager_Game.Instance.levelData.Powers)
-        {
-            if (powerID)
-            {
-                ManagerEvents.PlayerMovementsEvents.PlayerGetedPower(id);
-            }
-            id++;
-        }
         currentCharacter.GetComponent<Movement>().LoadLifeInitial(Manager_Game.Instance.levelData.GetLifePlayer());
     }
 
