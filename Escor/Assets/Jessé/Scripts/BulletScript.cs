@@ -6,7 +6,7 @@ public class BulletScript : MonoBehaviour
 {
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Animator myAnimator;
-    [SerializeField] private TrailRenderer trail;
+                     public TrailRenderer trail;
     [SerializeField] private string tagOfPlayer = "Player", tagOfJavali = "Javali", tagOfBoss = "Boss";
     [SerializeField] private Rigidbody2D myRb;
     public GameObject emissor;
@@ -18,6 +18,7 @@ public class BulletScript : MonoBehaviour
     void OnEnable()
     {
         // StartCoroutine(ResetTrailRenderer(trail)); // serve para desativar o rastro e impedir que ele apareca se teletransportando
+        trail.emitting = true;
         trail.enabled   = true;
         destroyed       = false;
         isBackToJavali  = false;
@@ -62,10 +63,11 @@ public class BulletScript : MonoBehaviour
 
 
         }
-        else if (col.tag == tagOfJavali || col.tag == "Javalizao" && isBackToJavali)
+        else if ((col.tag == tagOfJavali || col.tag == "Javalizao") && isBackToJavali) // estava voltando e colidiu com um jalavi
         {
             // emissor.GetComponent<IA_Javali>().JavaliAnimator.Play("JavaliTonto", -1, 0);
-            emissor.GetComponent<IA_Javali>().JavaliStuned();
+            col.GetComponent<IA_Javali>().JavaliStuned();
+            // emissor.GetComponent<IA_Javali>().JavaliStuned();
         }
         else if (col.tag == tagOfBoss)
         {
@@ -79,7 +81,7 @@ public class BulletScript : MonoBehaviour
 
         destroyed = true;
         myRb.velocity = Vector3.zero;
-        StartCoroutine(ResetTrailRenderer(trail)); // serve para desativar o rastro e impedir que ele apareca se teletransportando
+        // StartCoroutine(ResetTrailRenderer(trail)); // serve para desativar o rastro e impedir que ele apareca se teletransportando
         myAnimator.Play("PedraDestroy", -1, 0);
     }
 
@@ -93,8 +95,15 @@ public class BulletScript : MonoBehaviour
     // chamado por evento na animação
     void DestroyMe()
     {
+        StartCoroutine("DestroyMe_");
         // trail.enabled = false;
-        destroyed = false;
+    }
+
+    IEnumerator DestroyMe_()
+    {
+        trail.emitting = false;
+        yield return new WaitForSeconds(1);
         ManagerEvents.Enemy.RockDeleted(this.gameObject);
+        destroyed = false;
     }
 }

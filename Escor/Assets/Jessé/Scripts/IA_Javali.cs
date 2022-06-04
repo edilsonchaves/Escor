@@ -192,8 +192,11 @@ public class IA_Javali : MonoBehaviour
             return;
         }
 
-        // print("_> aqui 4 :"+CloseToAttack());
-        auxMovement = Time.fixedDeltaTime * MovementSpeed * currentDirection * 100; // calcula quanto ele deve se mover
+
+        bool moveFaster = PlayerInsideArea(false) && IsFaceToPlayer() && !HaveObstacle(playerTrans.position, transform.position);
+        JavaliAnimator.SetFloat("WalkSpeed", moveFaster ? 1.5f:1);
+
+        auxMovement = Time.fixedDeltaTime * (MovementSpeed * (moveFaster ? 2f:1)) * currentDirection * 100; // calcula quanto ele deve se mover
         Vector2 newPosition = myRb.position + new Vector2(auxMovement, 0); // salva a nova posição após o movimento
         Vector2 newPosition2 = myRb.position + new Vector2(auxMovement*0.5f, 0); // nova posição porém com um offset um pouco mais a frente (Não sei pq funciona, mas funciona)
 
@@ -715,6 +718,7 @@ public class IA_Javali : MonoBehaviour
     protected float GetDistaceOfPlayer(Vector2 origin)
     {
         Vector2 dir = (origin - (Vector2) playerTrans.position).normalized; // direção
+        // Vector2 dir = ((Vector2) playerTrans.position - origin).normalized; // direção
 
         RaycastHit2D[] javaliHits = Physics2D.RaycastAll((Vector2)playerTrans.position, dir, Mathf.Infinity, javaliLayer);
         RaycastHit2D javaliHit = default(RaycastHit2D);
