@@ -10,6 +10,8 @@ public class BossScript : MonoBehaviour
     [SerializeField] Animator _animatorBoss;
     [SerializeField] int bossLife=4;
     [SerializeField] ConversaPersonagem conversa;
+    public InitialState initialState = new InitialState();
+    public TalkState talkState = new TalkState();
     public PatrollState patrollState = new PatrollState();
     public RangeAttackState rangeState = new RangeAttackState();
     public MelleAttackState melleState = new MelleAttackState();
@@ -26,7 +28,7 @@ public class BossScript : MonoBehaviour
     void InitializeCombat()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
-        SwitchState(patrollState);
+        SwitchState(initialState);
     }
 
     private void Update()
@@ -54,7 +56,10 @@ public class BossScript : MonoBehaviour
         currentStateName = state.GetStateName();
 
     }
-
+    public void SetTarget(Transform newTarget)
+    {
+        target = newTarget;
+    }
     public Vector3 TargetPosition()
     {
         return target.position;

@@ -71,7 +71,7 @@ public class BulletScript : MonoBehaviour
         }
         else if (col.tag == tagOfBoss)
         {
-            emissor.GetComponent<Boss_Script>()._animatorBoss.Play("BossLevandoDano", -1, 0);
+            emissor.GetComponent<BossScript>().PlayAnimation("BossLevandoDano");
             ManagerEvents.Boss.TakedDamage();
         }
         else if (!(groundLayer == (groundLayer | (1 << col.gameObject.layer))))
