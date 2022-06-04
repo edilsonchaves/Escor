@@ -21,6 +21,9 @@ public class TakeDamageStateAttack : BossBaseState
         return "TakeDamageStateAttack";
     }
 
+    public override void OnCollisionExit(BossScript boss, Collision2D collision)
+    {
+    }
 
     protected IEnumerator TakeDamage(BossScript boss)
     {

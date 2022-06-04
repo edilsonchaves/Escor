@@ -38,11 +38,15 @@ public class TalkState : BossBaseState
         yield return new WaitUntil(() => boss.GetStatusConversa());
         boss.PlayAnimation("BossLevantando");
         ManagerEvents.Boss.InitializedBattle();
-        boss.SetTarget( GameObject.FindGameObjectWithTag("Player").transform);
+        boss.SetTarget( GameObject.FindGameObjectWithTag("Player").transform);        
         // _animatorBoss.Play("BossDerrotadoLoop");
         // fade.SetActive(true);
         yield return new WaitForSeconds(1f);
-
+        boss.SwitchState(boss.patrollState);
         //SceneManager.LoadScene("Final");
+    }
+
+    public override void OnCollisionExit(BossScript boss, Collision2D collision)
+    {
     }
 }

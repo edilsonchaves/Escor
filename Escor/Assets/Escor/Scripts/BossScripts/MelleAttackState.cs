@@ -16,6 +16,11 @@ public class MelleAttackState : BossBaseState
     }
 
     public override void OnCollisionEnter(BossScript boss, Collision2D collsion) { }
+
+    public override void OnCollisionExit(BossScript boss, Collision2D collision)
+    {
+    }
+
     public override string GetStateName()
     {
         return "MelleAttackState";
@@ -25,6 +30,7 @@ public class MelleAttackState : BossBaseState
     {
         boss.PlayAnimation("BossArranhando(Ataque3)");
         SfxManager.PlaySound(SfxManager.Sound.javaliAttack);
+        yield return new WaitForSeconds(0.3f);
         yield return new WaitForSeconds(1f);
         boss.SwitchState(boss.patrollState);
     }

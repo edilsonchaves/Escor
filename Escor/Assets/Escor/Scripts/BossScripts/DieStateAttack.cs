@@ -37,4 +37,7 @@ public class DieStateAttack : BossBaseState
 
         //SceneManager.LoadScene("Final");
     }
+    public override void OnCollisionExit(BossScript boss, Collision2D collision)
+    {
+    }
 }

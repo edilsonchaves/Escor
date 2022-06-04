@@ -28,4 +28,8 @@ public class WaveAttackState : BossBaseState
         yield return new WaitForSeconds(1.45f);
         boss.SwitchState(boss.patrollState);
     }
+
+    public override void OnCollisionExit(BossScript boss, Collision2D collision)
+    {
+    }
 }

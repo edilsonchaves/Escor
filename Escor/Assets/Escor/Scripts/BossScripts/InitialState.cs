@@ -20,7 +20,9 @@ public class InitialState : BossBaseState
         }
     }
 
-
+    public override void OnCollisionExit(BossScript boss, Collision2D collision)
+    {
+    }
 
     public override void UpdateState(BossScript boss)
     {

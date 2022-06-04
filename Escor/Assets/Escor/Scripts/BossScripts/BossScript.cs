@@ -30,25 +30,31 @@ public class BossScript : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player").transform;
         SwitchState(initialState);
     }
-
+    private void OnEnable()
+    {
+        //ManagerEvents.Enemy.onRockDelete += DeletBullet;
+        ManagerEvents.Boss.onTakeDamage += TakeDamage;
+    }
+    private void OnDisable()
+    {
+        //ManagerEvents.Enemy.onRockDelete += DeletBullet;
+        ManagerEvents.Boss.onTakeDamage += TakeDamage;
+    }
     private void Update()
     {
         if (currentState == null)
             return;
         currentState.UpdateState(this);
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            if(bossCoroutineAction!=null)
-                StopCoroutine(bossCoroutineAction);
-            TakeDamage();
-        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         currentState.OnCollisionEnter(this,collision);
     }
-
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        currentState.OnCollisionExit(this, collision);
+    }
     public void SwitchState(BossBaseState state)
     {
         currentState = state;
@@ -94,5 +100,10 @@ public class BossScript : MonoBehaviour
     public bool GetStatusConversa()
     {
         return conversa.StatusConversa;
+    }
+
+    public Vector2 GetTargetPosition()
+    {
+        return new Vector2(target.position.x, target.position.y);
     }
 }

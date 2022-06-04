@@ -611,6 +611,13 @@ public class Movement : MonoBehaviour {
 
         }
 
+        if (Mathf.Round(col.contacts[0].normal.y) == 1 && col.gameObject.tag == "Javali")
+        {
+            rb.velocity = new Vector2(Mathf.Abs(transform.eulerAngles.y) > 0 ? -1.5f : 1.5f, 8);
+            if (atacando) col.gameObject.GetComponent<IA_Javali>().JavaliStuned();
+
+        }
+
     }
 
     // [Jessé]
