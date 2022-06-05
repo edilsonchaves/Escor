@@ -43,7 +43,16 @@ public class SelectLevel : MonoBehaviour
     {
         if (levelSelected) 
             return;
-        Manager_Game.Instance.InitialNewLevelGame(level);
+        Manager_Game.Instance.LoadLevelDataMemory();
+        if (Manager_Game.Instance.levelData == null)
+        {
+            Manager_Game.Instance.LevelStatus = LevelInfo.LevelStatus.NewLevel;
+            Manager_Game.Instance.InitialNewLevelGame(level);
+        }
+        else
+        {
+            Manager_Game.Instance.LevelStatus = LevelInfo.LevelStatus.ContinueLevel;
+        }
         SceneManager.LoadScene("LoadGameScene");
         levelSelected = true;
     }
