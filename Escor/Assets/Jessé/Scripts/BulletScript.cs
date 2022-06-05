@@ -36,8 +36,7 @@ public class BulletScript : MonoBehaviour
     {
         if (destroyed)
             return;
-            
-        destroyed = true;
+
 
         if (col.tag == tagOfPlayer)
         {
@@ -82,6 +81,8 @@ public class BulletScript : MonoBehaviour
             return;
         }
 
+        destroyed = true;
+
         myRb.velocity = Vector3.zero;
         // StartCoroutine(ResetTrailRenderer(trail)); // serve para desativar o rastro e impedir que ele apareca se teletransportando
         myAnimator.Play("PedraDestroy", -1, 0);
@@ -105,7 +106,12 @@ public class BulletScript : MonoBehaviour
     {
         trail.emitting = false;
         yield return new WaitForSeconds(1);
-        ManagerEvents.Enemy.RockDeleted(this.gameObject);
+        
+        if(emissor.tag == tagOfJavali)
+            ManagerEvents.Enemy.RockDeleted(this.gameObject);
+        else
+            Destroy(gameObject, 0.0f);
+
         destroyed = false;
     }
 }
