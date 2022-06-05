@@ -144,7 +144,7 @@ public class Movement : MonoBehaviour {
         _life                   = 3;
         ManagerEvents.PlayerMovementsEvents.LifedPlayer(_life);
         sprite                  = GetComponent<SpriteRenderer>();
-        _powerHero              = Manager_Game.Instance.sectionGameData.GetPowersAwarded();
+        _powerHero              = Manager_Game.Instance.levelData.Powers;
         timeAbilityDefense      = new float[2];
         timeAbilityDefense[1]   = 5;
         timeAbilityDefense[0]   = 5;
