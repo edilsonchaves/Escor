@@ -1255,6 +1255,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 664303284}
     m_Modifications:
+    - target: {fileID: 3798753569583906744, guid: b891fb84b9876584bab01b851f520cce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6573471868760502480, guid: b891fb84b9876584bab01b851f520cce, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 115
+      objectReference: {fileID: 0}
+    - target: {fileID: 8868806765170486067, guid: b891fb84b9876584bab01b851f520cce, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 37.84991
+      objectReference: {fileID: 0}
     - target: {fileID: 8868806766201655426, guid: b891fb84b9876584bab01b851f520cce, type: 3}
       propertyPath: m_Name
       value: Canvas_Pause

@@ -35,6 +35,7 @@ public class menupause : MonoBehaviour
     public void BTN_VoltarMenu()
     {
         // ManagerEvents.UIConfig.ResumedGame();
+        // SceneManager.LoadScene("menu_inicial");
         ManagerEvents.UIConfig.ReturnedMenu();
     }
     public void BTN_VoltarJogo()

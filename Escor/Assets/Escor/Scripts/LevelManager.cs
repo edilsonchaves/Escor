@@ -193,11 +193,17 @@ public class LevelManager : MonoBehaviour
 
     void VoltarMenuPressButton()
     {
-        Debug.Log("Teste");
-
-        popup.InitPopup("Voce deseja salvar o progresso da fase antes de voltar para o menu?", "Sim", ReturnMenuSave, "Nao", () => SceneManager.LoadScene("SelectLevel"));
+        popup.InitPopup("Voce deseja salvar o progresso da fase antes de voltar para o menu?", "Sim", ReturnMenuSave, "Nao", NoReturnToMenuSave);
 
     }
+
+    public void NoReturnToMenuSave()
+    {
+        SaveLoadSystem.DeleteFile<LevelData>();
+        SaveLoadSystem.DeleteFile<BossData>();
+        SceneManager.LoadScene("SelectLevel");
+    }
+
     public void ReturnMenuSave()
     {
         SaveGame();
