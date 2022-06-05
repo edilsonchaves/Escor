@@ -24,7 +24,7 @@ public class IA_Javali : MonoBehaviour
     public float MovementDistance;
     public bool walkInAllGround; // só funciona com "AiLevel == 1" (OBS: nem sei mais)
 
-    public float MovementSpeed, FollowDistance, AttackDistance;
+    public float MovementSpeed, FollowDistance, AttackDistance, multiplyMovementSpeedWhenSeePlayer=2;
     private float JumpHeight;
     public Animator JavaliAnimator;
     public int attacksReceived=0;
@@ -45,10 +45,12 @@ public class IA_Javali : MonoBehaviour
     // a linha preta é para mostrar onde é o limite da movimentação do javali
 
 
+    [SerializeField] protected float distanceOfCollision = .3f;
+
     protected Rigidbody2D myRb;
     protected Vector3 myStartPosition;
     protected int currentDirection;
-    protected float auxMovement, distanceOfCollision = .3f;
+    protected float auxMovement;
     protected bool isGrounded, following, started, attacking, stuned, bug, canAttack, firstContactWithPlayer; // firstContactWithPlayer reseta quando o player sai da area de visão
     protected Transform playerTrans;
 
@@ -196,7 +198,7 @@ public class IA_Javali : MonoBehaviour
         bool moveFaster = PlayerInsideArea(false) && IsFaceToPlayer() && !HaveObstacle(playerTrans.position, transform.position);
         JavaliAnimator.SetFloat("WalkSpeed", moveFaster ? 1.5f:1);
 
-        auxMovement = Time.fixedDeltaTime * (MovementSpeed * (moveFaster ? 2f:1)) * currentDirection * 100; // calcula quanto ele deve se mover
+        auxMovement = Time.fixedDeltaTime * (MovementSpeed * (moveFaster ? multiplyMovementSpeedWhenSeePlayer : 1)) * currentDirection * 100; // calcula quanto ele deve se mover
         Vector2 newPosition = myRb.position + new Vector2(auxMovement, 0); // salva a nova posição após o movimento
         Vector2 newPosition2 = myRb.position + new Vector2(auxMovement*0.5f, 0); // nova posição porém com um offset um pouco mais a frente (Não sei pq funciona, mas funciona)
 
@@ -248,11 +250,12 @@ public class IA_Javali : MonoBehaviour
                 //                false                                                            || (true                     && true            ) || false
                 // print("_> IsOutLimite(newPosition2): "+IsOutLimite(newPosition2));
                 // print("_> aqui 6");
+                // if(gameObject.tag == "Javalizao")
+                    // print("_> 26545 GetDistanceOfCollisionWithWall(GetWall())< distanceOfCollision: "+(GetDistanceOfCollisionWithWall(GetWall())< distanceOfCollision));
                 if ((HitWall() && GetDistanceOfCollisionWithWall(GetWall()) < distanceOfCollision) || (IsOutLimite(newPosition2) && !walkInAllGround) || !CheckIsGrounded(true)) // verifica se a nova posição está fora do limite
                 {
                     // print("_> aqui 7");
                     // print("_> HitWall(): "+HitWall());
-                    // print("_> GetDistanceOfCollisionWithWall(GetWall())< distanceOfCollision: "+(GetDistanceOfCollisionWithWall(GetWall())< distanceOfCollision));
                     // print("_> IsOutLimite(newPosition2):  "+IsOutLimite(newPosition2));
                     // print("_> !walkInAllGround: "+!walkInAllGround);
                     // print("_> !CheckIsGrounded(true): "+!CheckIsGrounded(true));
