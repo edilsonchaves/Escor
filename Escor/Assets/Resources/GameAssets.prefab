@@ -143,3 +143,12 @@ MonoBehaviour:
   - sound: 32
     audioClip: {fileID: 8300000, guid: dfdd6a2bc47f8074baaf7dcb5935f268, type: 3}
     audioMixer: {fileID: 7980028146833873902, guid: 4d963a9c4fb612546a1961350d64fdc1, type: 2}
+  - sound: 33
+    audioClip: {fileID: 8300000, guid: 0fc60de909fe0744ab581eb4a8ec212e, type: 3}
+    audioMixer: {fileID: 7980028146833873902, guid: 4d963a9c4fb612546a1961350d64fdc1, type: 2}
+  - sound: 34
+    audioClip: {fileID: 8300000, guid: 562fd0eeb644229478d9af6379c79b5e, type: 3}
+    audioMixer: {fileID: 7980028146833873902, guid: 4d963a9c4fb612546a1961350d64fdc1, type: 2}
+  - sound: 35
+    audioClip: {fileID: 8300000, guid: e939a2ecad9c4cd41955e2cd57f81138, type: 3}
+    audioMixer: {fileID: 7980028146833873902, guid: 4d963a9c4fb612546a1961350d64fdc1, type: 2}

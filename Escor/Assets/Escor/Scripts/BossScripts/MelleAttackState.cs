@@ -36,7 +36,7 @@ public class MelleAttackState : BossBaseState
     protected IEnumerator MelleAttack(BossScript boss)
     {
         boss.PlayAnimation("BossArranhando(Ataque3)");
-        SfxManager.PlaySound(SfxManager.Sound.javaliAttack);
+        SfxManager.PlaySound(SfxManager.Sound.lobeAttack);
         yield return new WaitForSeconds(0.5f);
         Vector2 targetPosition = new Vector2(boss.GetTargetPosition().x, boss.transform.position.y);
         if (Vector2.Distance(targetPosition, boss.transform.position) > distanceFolga)

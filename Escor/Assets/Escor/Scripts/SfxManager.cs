@@ -50,6 +50,12 @@ public static class SfxManager
         ativandoAlavanca,
 
         portaAbrindo,
+        kuroSusto,
+        kuroCaindoDesesperada,
+
+        lobeAttack,
+
+        vento,
     }
     private static Dictionary<Sound, float> soundTimerDic;
     public static List<GameObject> TiposDeSom = new List<GameObject>();
