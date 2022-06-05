@@ -71,8 +71,8 @@ public class FimFase : MonoBehaviour
             // Save --------------------
 
             SaveLoadSystem.SaveFile<SectionData>(Manager_Game.Instance.sectionGameData);
-            SaveLoadSystem.SaveFile<LevelData>(new LevelData(-1));
-
+            Manager_Game.Instance.bossData?.DeleteBossData();
+            Manager_Game.Instance.levelData?.DeleteLevelData();
             // -------------------------
 
 
