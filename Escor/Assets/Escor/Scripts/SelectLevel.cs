@@ -16,7 +16,7 @@ public class SelectLevel : MonoBehaviour
         levelSelected = false;
         for (int i = 0; i < buttons.Length; i++)
         {
-            if (i <= Manager_Game.Instance.sectionGameData.GetCurrentLevel())
+            if (i < Manager_Game.Instance.sectionGameData.GetCurrentLevel())
             {
                 buttons[i].interactable = true;
                 if (shardsMemoryStatus[i].Length > 0)
