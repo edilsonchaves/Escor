@@ -27,10 +27,7 @@ public class PatrollState : BossBaseState
                 Debug.Log(Vector2.Distance(boss.TargetPosition(), boss.transform.position));
                 if (Vector2.Distance(boss.TargetPosition(), boss.transform.position) > 3)
                 {
-                    if(Vector2.Distance(boss.TargetPosition(), boss.transform.position) < 5)
-                        boss.SwitchState(boss.waveAttackState);
-                    else
-                        boss.SwitchState(boss.rangeState);
+                    boss.SwitchState(boss.rangeState);
                 }
                 else
                 {
