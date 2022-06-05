@@ -57,8 +57,9 @@ public class EventsManager : MonoBehaviour
         ManagerEvents.PlayerMovementsEvents.LookedDirection(180);
 
         yield return new WaitForSeconds(2);
-        // portao.Play("PortaoAbrindo", -1, 0);
+
         portao.SetBool("Start", true);
+
         yield return new WaitUntil(() => (portao.GetCurrentAnimatorStateInfo(0).IsName("PortaoAbrindo"))); // espera a animação mudar para 'PortaoAbrindo'
         yield return new WaitUntil(() => (portao.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.4f)); // espera a animação chegar em 40%
         GameObject.FindWithTag("ParedeJavali").GetComponent<Animator>().Play("parede sumindo2");
@@ -69,23 +70,25 @@ public class EventsManager : MonoBehaviour
         yield return new WaitForSeconds(3); // focando no javalizao
         IA_Javali jav = objects[1].GetComponent<IA_Javali>();
         jav.Move = true; // ativa o movimento do javalizao
-        jav.MovementSpeed = 2.1f; // ativa o movimento do javalizao
+        jav.MovementSpeed = 1.2f; // ativa o movimento do javalizao
         jav.JavaliAnimator.SetFloat("WalkSpeed", 1f);
-        // yield return new WaitUntil(() => (jav.JavaliAnimator.GetCurrentAnimatorStateInfo(0).IsName("JavaliAndando"))); // espera a animação mudar para 'PortaoAbrindo'
-        // jav.JavaliAnimator.GetCurrentAnimatorClipInfo(0).speed = 0.1f; // ativa o movimento do javalizao
-        // objects[1].GetComponent<IA_Javali>().JavaliAnimator.speed = 0.1f; // ativa o movimento do javalizao
-        vcam.GoToNextStep();
-        yield return new WaitForSeconds(2);
+        vcam.transitionTimeComingBack = 0.5f;
+        GameObject ply = GameObject.FindWithTag("Player");
 
-        // GameObject.FindWithTag("Exclamation").GetComponent<Animator>().Play("exclamacao",-1,0);
+        Movement.KeepPlayerStopped(); // player para
+        vcam.GoToNextStep(); // volta pro player
+
+        yield return new WaitForSeconds(0.4f); // tempo até o susto
+
+        ply.GetComponent<Animator>().Play("assustando");
+        GameObject.FindWithTag("Exclamation").GetComponent<Animator>().Play("exclamacao",-1,0);
+        
+        Movement.StopKeepPlayerStopped(); // player anda
+
+        // ManagerEvents.PlayerMovementsEvents.LookedDirection(180);
         // [Jessé] não precisa mais, pq a exclamação está na propria animação de 'assustando'
 
-        GameObject.FindWithTag("Player").GetComponent<Animator>().Play("assustando");
-        yield return new WaitForSeconds(2);
-        // Movement.canMove = true;
-        // GameObject.FindWithTag("Exclamation").SetActive(false);
-        // GameObject.FindGameObjectWithTag("Exclamation").SetActive(false);
-
+        // yield return new WaitForSeconds(2);
 
 
     }
