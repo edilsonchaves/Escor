@@ -70,7 +70,8 @@ public class EventsManager : MonoBehaviour
         yield return new WaitForSeconds(3); // focando no javalizao
         IA_Javali jav = objects[1].GetComponent<IA_Javali>();
         jav.Move = true; // ativa o movimento do javalizao
-        jav.MovementSpeed = 1.2f; // ativa o movimento do javalizao
+        jav.MovementSpeed = 2.05f; // ativa o movimento do javalizao
+        jav.multiplyMovementSpeedWhenSeePlayer = 1f;
         jav.JavaliAnimator.SetFloat("WalkSpeed", 1f);
         vcam.transitionTimeComingBack = 0.5f;
         GameObject ply = GameObject.FindWithTag("Player");
