@@ -6,10 +6,12 @@ public class BossScript : MonoBehaviour
 {
     BossBaseState currentState;
     public string currentStateName;
+    [SerializeField] bool _bossActive = false;
     [SerializeField] Transform target;
     [SerializeField] Animator _animatorBoss;
     [SerializeField] int bossLife=4;
     [SerializeField] ConversaPersonagem conversa;
+    [SerializeField] BoxCollider2D boxConversa;
     public InitialState initialState = new InitialState();
     public TalkState talkState = new TalkState();
     public PatrollState patrollState = new PatrollState();
@@ -97,7 +99,10 @@ public class BossScript : MonoBehaviour
         
         StartCoroutine(conversa.ConversaFase(conversaPersonagens));
     }
-
+    public int GetLifeBoss()
+    {
+        return bossLife;
+    }
     public bool GetStatusConversa()
     {
         return conversa.StatusConversa;
@@ -106,5 +111,34 @@ public class BossScript : MonoBehaviour
     public Vector2 GetTargetPosition()
     {
         return new Vector2(target.position.x, target.position.y);
+    }
+    public bool GetStatusBoss()
+    {
+        return _bossActive;
+    }
+    public void SetActiveBoss(bool newValue)
+    {
+        _bossActive = newValue;
+    }
+
+    public void InitializeBossLife(int value)
+    {
+        bossLife = value;
+        ManagerEvents.Boss.UpdatedLife(bossLife);
+    }
+
+    public void SetStatusBoss(string status)
+    {
+        switch (status)
+        {
+
+            case "InitialState": SwitchState(initialState); boxConversa.enabled = true; break;
+            case "TalkState": SwitchState(talkState); boxConversa.enabled = false; break;
+            case "PatrollState": SwitchState(patrollState); boxConversa.enabled = false; break;
+            case "RangeAttackState": SwitchState(rangeState); boxConversa.enabled = false; break;
+            case "MelleAttackState": SwitchState(melleState); boxConversa.enabled = false; break;
+            case "DieStateAtttack": SwitchState(dieState); boxConversa.enabled = false; break;
+            case "TakeDamageStateAttack": SwitchState(takeDamageState); boxConversa.enabled = false; break;
+        }
     }
 }

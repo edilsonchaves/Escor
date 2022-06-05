@@ -50,4 +50,16 @@ public class SaveLoadSystem
         stream.Close();
     
     }
+
+    public static T DeleteFile<T>()
+    {
+        string path = "" + Application.persistentDataPath;
+        path += "/" + typeof(T).ToString() + ".data";
+        if (!File.Exists(path))
+        {
+            return default(T);
+        }
+        File.Delete(path);
+        return default(T);
+    }
 }

@@ -18,7 +18,6 @@ public class Play_game : MonoBehaviour
     public void BTN_Play()
 	{
 		Manager_Game.Instance.LoadSectionGameMemory();
-		Manager_Game.Instance.LoadLevelGame();
 		if (Manager_Game.Instance.sectionGameData!=null)
 			popup.InitPopup("Você possui um jogo salvo. Deseja continuar?", "Sim", () => CarregarJogo(), "Não", NovoJogo);
         else
@@ -28,15 +27,24 @@ public class Play_game : MonoBehaviour
 	}
 	void CarregarJogo()
     {
-        if (Manager_Game.Instance.levelData.LevelGaming==0)
+        if (Manager_Game.Instance.sectionGameData.GetCurrentLevel()==0)
         {
 
 			SceneManager.LoadScene("Prologo");
         }
         else
         {
-			Manager_Game.Instance.LevelStatus = LevelInfo.LevelStatus.ContinueLevel;
-			SceneManager.LoadScene("LoadGameScene");
+			Manager_Game.Instance.LoadLevelGame();
+			if(Manager_Game.Instance.levelData!=null)
+            {
+				Manager_Game.Instance.LevelStatus = LevelInfo.LevelStatus.ContinueLevel;
+				SceneManager.LoadScene("LoadGameScene");
+            }
+            else
+            {
+				Manager_Game.Instance.LevelStatus = LevelInfo.LevelStatus.NewLevel;
+				SceneManager.LoadScene("SelectLevel");
+			}
 		}
     }
 
