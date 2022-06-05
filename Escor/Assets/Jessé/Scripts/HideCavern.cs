@@ -17,7 +17,7 @@ public class HideCavern : MonoBehaviour
     {
         if(col.tag == "Player")
         {
-            print("Enter");
+            // print("Enter");
             myAnimator.SetBool("In", true);
             // myAnimator.Play("FadeInStart", -1, 0);
         }
