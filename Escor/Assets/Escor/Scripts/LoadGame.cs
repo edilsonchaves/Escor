@@ -25,13 +25,16 @@ public class LoadGame : MonoBehaviour
 
         if (Manager_Game.Instance.sectionGameData!= null)
         {
-
+            print("1723_1");
             _levelSelected = Manager_Game.Instance.levelData.LevelGaming;
+            print("1723_2");
             
         }
+        print("1723_3");
 
         BgColorLevels[_levelSelected-1].transform.parent.gameObject.SetActive(true); // ativa o background correspondente ao nível
 
+        print("1723_4");
         if(Manager_Game.Instance.levelData.LevelGaming!=-1)
             StartCoroutine(LoadAsyncScene("GameLevel"));// acredito que o certo é carregar a cena "GameLevel"
         else
@@ -45,9 +48,12 @@ public class LoadGame : MonoBehaviour
     // [Jessé]
     IEnumerator LoadAsyncScene(string scene)
     {
+        print("1723_5");
         yield return new WaitForSeconds(0.5f);
 
+        print("1723_6");
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scene);
+        print("1723_7");
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
         {

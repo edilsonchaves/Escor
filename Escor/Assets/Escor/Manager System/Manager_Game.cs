@@ -116,6 +116,10 @@ public class Manager_Game : MonoBehaviour
 
     public void SaveLevelMemory(int level,float posPlayerX,float posPlayerY,int lifePlayer,bool[] powerLevel,string fragmentLife, string fragmentMemory)
     {
+        foreach(var power in powerLevel)
+        {
+            Debug.Log(power);
+        }
         SaveLoadSystem.SaveFile<LevelData>(new LevelData(level, posPlayerX, posPlayerY, lifePlayer,powerLevel,fragmentLife,fragmentMemory));
     }
 
