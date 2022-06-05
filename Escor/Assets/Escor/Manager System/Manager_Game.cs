@@ -32,7 +32,7 @@ public class Manager_Game : MonoBehaviour
     public GameData saveGameData;
     public SectionData sectionGameData;
     public LevelData levelData;
-
+    public BossData bossData;
 
     private void Awake()
     {
@@ -89,6 +89,10 @@ public class Manager_Game : MonoBehaviour
 
     }
 
+    public void LoadBossDataMemory() 
+    {
+        bossData = SaveLoadSystem.LoadFile<BossData>(Application.persistentDataPath + "/BossData.data");
+    }
     public void InitialNewLevelGame(int levelSelected)
     {
         _levelStatus = LevelInfo.LevelStatus.NewLevel;
@@ -100,6 +104,7 @@ public class Manager_Game : MonoBehaviour
     public void LoadLevelGame()
     {
         LoadLevelDataMemory();
+        LoadBossDataMemory();
         if (levelData == null)
             _levelStatus = LevelInfo.LevelStatus.NewLevel;
     }
@@ -112,6 +117,11 @@ public class Manager_Game : MonoBehaviour
     public void SaveLevelMemory(int level,float posPlayerX,float posPlayerY,int lifePlayer,bool[] powerLevel,string fragmentLife, string fragmentMemory)
     {
         SaveLoadSystem.SaveFile<LevelData>(new LevelData(level, posPlayerX, posPlayerY, lifePlayer,powerLevel,fragmentLife,fragmentMemory));
+    }
+
+    public void SaveLevelBossMemory(bool valueActive,int valueLife,float[] valuePosition,string valueStatus)
+    {
+        SaveLoadSystem.SaveFile<BossData>(new BossData(valueActive, valueLife, valuePosition, valueStatus));
     }
 }
 
@@ -265,10 +275,9 @@ public class LevelData
     [SerializeField] string fragmentLifeStatusLocal;
     [SerializeField] string fragmentMemoryShardStatusLocal;
     [SerializeField] string fragmentPowerLevelStatus;
-
     //[SerializeField] int progressLevelLocal;
     //[SerializeField] bool[] regionsVisitedLocal;
-    [SerializeField] Vector2?[] bossLevelPositionLocal;
+    
     public int LevelGaming { get { return _levelGamingLocal; } private set { } }
     public Vector2 CharacterPosition { get { return new Vector2(_playerPositionXLocal, _playerPositionYLocal); } private set { } }
     public bool[] Powers { get { return _powersLocal; }  private set{}}
@@ -289,53 +298,53 @@ public class LevelData
 
     // [Jessé] -----------------------------------------------------------------------
 
-        public void SetLevelData(int valueLevel, float posPlayerX=0,float posPlayerY=0, int valueLifePlayerAmount = 3, bool[] valuePowerPlayer = null, bool[] coinsLevel = null, string fragmentLifeStatus = "", string fragmentMemoryStatus = "")
-        {
-            SetLevelGaming(valueLevel);
-            SetPlayerPosition(posPlayerX, posPlayerY);
-            SetLifePlayerAmount(valueLifePlayerAmount);
-            SetPowers(valuePowerPlayer);
-            SetCoinsLevel(coinsLevel);
-            SetFragmentLifeLevel(fragmentLifeStatus);
-            SetFragmentMemoryLevel(fragmentMemoryStatus);
-        }
+    public void SetLevelData(int valueLevel, float posPlayerX=0,float posPlayerY=0, int valueLifePlayerAmount = 3, bool[] valuePowerPlayer = null, bool[] coinsLevel = null, string fragmentLifeStatus = "", string fragmentMemoryStatus = "")
+    {
+        SetLevelGaming(valueLevel);
+        SetPlayerPosition(posPlayerX, posPlayerY);
+        SetLifePlayerAmount(valueLifePlayerAmount);
+        SetPowers(valuePowerPlayer);
+        SetCoinsLevel(coinsLevel);
+        SetFragmentLifeLevel(fragmentLifeStatus);
+        SetFragmentMemoryLevel(fragmentMemoryStatus);
+    }
 
 
-        public void SetLevelGaming(int value)
-        {
-            _levelGamingLocal = value;
-        }
+    public void SetLevelGaming(int value)
+    {
+        _levelGamingLocal = value;
+    }
 
-        public void SetLifePlayerAmount(int value=3)
-        {
-            _lifePlayerAmountLocal = value;
-        }
+    public void SetLifePlayerAmount(int value=3)
+    {
+        _lifePlayerAmountLocal = value;
+    }
 
-        public int GetLifePlayer()
+    public int GetLifePlayer()
     {
         return _lifePlayerAmountLocal;
     }
 
-        public void ResetPlayerPosition()
-        {
-            _playerPositionXLocal = _playerPositionYLocal = 0;
-        }
+    public void ResetPlayerPosition()
+    {
+        _playerPositionXLocal = _playerPositionYLocal = 0;
+    }
 
-        public void SetPlayerPosition(float x, float y)
-        {
-            _playerPositionXLocal = x;
-            _playerPositionYLocal = y;
-        }
+    public void SetPlayerPosition(float x, float y)
+    {
+        _playerPositionXLocal = x;
+        _playerPositionYLocal = y;
+    }
 
-        public void SetPowers(bool[] powers)
-        {
-            _powersLocal = powers;
-        }
+    public void SetPowers(bool[] powers)
+    {
+        _powersLocal = powers;
+    }
 
-        public void SetCoinsLevel(bool[] _coinsLevel)
-        {
-            coinsLevelLocal = _coinsLevel;
-        }
+    public void SetCoinsLevel(bool[] _coinsLevel)
+    {
+        coinsLevelLocal = _coinsLevel;
+    }
 
     public void SetFragmentLifeLevel(string fragmentLife)
     {
@@ -346,7 +355,51 @@ public class LevelData
     {
         fragmentMemoryShardStatusLocal = fragmentMemory;
     }
-
+    public void DeleteLevelData()
+    {
+        SaveLoadSystem.DeleteFile<LevelData>();
+    }
     // -------------------------------------------------------------------------------
 
+}
+
+[System.Serializable]
+public class BossData
+{
+    [SerializeField] bool _activeBoss;
+    [SerializeField] int _lifeBoss;
+    [SerializeField] float[] _bossPosition;
+    [SerializeField] string _bossStatus;
+    public BossData(bool valueActive, int valueLife, float[] valuePosition, string valueStatus)
+    {
+        _activeBoss = valueActive;
+        _lifeBoss = valueLife;
+        _bossPosition= valuePosition;
+        _bossStatus = valueStatus;
+    }
+
+    public bool GetActiveBoss()
+    {
+        return _activeBoss;
+    }
+
+    public int LifeBoss()
+    {
+        return _lifeBoss;
+    }
+
+    public Vector3 GetBossPosition()
+    {
+        return new Vector3(_bossPosition[0], _bossPosition[1], _bossPosition[2]);
+    }
+
+    public string GetBossStatus()
+    {
+        return _bossStatus;
+    }
+
+    public void DeleteBossData()
+    {
+        SaveLoadSystem.DeleteFile<BossData>();
+    }
 }

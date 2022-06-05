@@ -13,7 +13,11 @@ public class BossLifeUI : MonoBehaviour
         _spriteRenderer.gameObject.SetActive(true);
         StartCoroutine(ShowLifeBoss());
     }
-
+    public void LoadBossLife(int valueLife)
+    {
+        _spriteRenderer.gameObject.SetActive(true);
+        _spriteRenderer.sprite = spriteStatusLife[valueLife];
+    }
     IEnumerator ShowLifeBoss()
     {
         foreach(var sprite in spriteStatusLife)
@@ -31,11 +35,13 @@ public class BossLifeUI : MonoBehaviour
     {        
         ManagerEvents.Boss.oninitialBattle += InitializeBossLife;
         ManagerEvents.Boss.onUpdateLifeUI += UpdateUI;
+        ManagerEvents.Boss.onLoadLifeUI += LoadBossLife;
     }
     private void OnDisable()
     {
         ManagerEvents.Boss.oninitialBattle -= InitializeBossLife;
         ManagerEvents.Boss.onUpdateLifeUI -= UpdateUI;
+        ManagerEvents.Boss.onLoadLifeUI -= LoadBossLife;
 
     }
 }

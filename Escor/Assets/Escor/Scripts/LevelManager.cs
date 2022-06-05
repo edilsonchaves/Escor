@@ -127,6 +127,15 @@ public class LevelManager : MonoBehaviour
         levelInformation.LoadLifeShardInformation(Manager_Game.Instance.levelData.FragmentLifeStatus);
         Debug.Log("Situation memory shard in level data: "+ Manager_Game.Instance.levelData.FragmentMemoryStatus);
         levelInformation.LoadMemoryShardInformation(Manager_Game.Instance.levelData.FragmentMemoryStatus);
+        BossScript boss = GameObject.FindObjectOfType<BossScript>();
+        if (boss != null)
+        {
+            boss.SetActiveBoss(Manager_Game.Instance.bossData.GetActiveBoss());
+            boss.transform.position = Manager_Game.Instance.bossData.GetBossPosition();
+            boss.InitializeBossLife(Manager_Game.Instance.bossData.LifeBoss());
+            ManagerEvents.Boss.LoadedLife(Manager_Game.Instance.bossData.LifeBoss());
+            boss.SetStatusBoss(Manager_Game.Instance.bossData.GetBossStatus());
+        }
 
 
     }
@@ -195,6 +204,22 @@ public class LevelManager : MonoBehaviour
         Movement playerInfo= currentCharacter.GetComponent<Movement>();
         LevelInformation levelInformation = currentLevel.GetComponent<LevelInformation>();
         Manager_Game.Instance.SaveLevelMemory(Manager_Game.Instance.levelData.LevelGaming,currentCharacter.transform.position.x, currentCharacter.transform.position.y, playerInfo.Life, playerInfo.PowerHero, levelInformation.LevelLifeInfo(),levelInformation.LevelMemoryInfo());
+        BossScript bossInfo = GameObject.FindObjectOfType<BossScript>();
+        if (bossInfo != null)
+        {
+            Debug.Log("Tenho boss no level");
+            GameObject boss = bossInfo.gameObject;
+            float[] pos = new float[3];
+            pos[0] = boss.transform.position.x;
+            pos[1] = boss.transform.position.y;
+            pos[2] = boss.transform.position.z;
+            Debug.Log(boss + ", " + bossInfo.GetStatusBoss());
+            Manager_Game.Instance.SaveLevelBossMemory(bossInfo.GetStatusBoss(),bossInfo.GetLifeBoss(),pos,bossInfo.currentStateName);
+        }
+        else
+        {
+            Debug.Log("Nao tenho boss no level");
+        }
         //SceneManager.LoadScene("SelectLevel");
     }
     void SaveGameButton()
