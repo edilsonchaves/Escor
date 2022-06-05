@@ -65,7 +65,7 @@ public class Manager_Game : MonoBehaviour
 
     public GameData InitializingGameDataSystem()
     {
-        GameData initializeGameData = new GameData(50, 50, 100, 0);
+        GameData initializeGameData = new GameData(0, 0, 100, 0); // volume musica, volume voz, tamanho da letra, linguagem
 
         SaveLoadSystem.SaveFile<GameData>(initializeGameData);
         return initializeGameData;
