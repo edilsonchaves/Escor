@@ -42,7 +42,7 @@ public class SaveLoadSystem
     public static void ResetGameData()
     {
 
-        GameData data = new GameData(0, 0, 100, 0);
+        GameData data = new GameData(0, 0, 100, 0); // volume musica, volume voz, tamanho da letra, linguagem
         BinaryFormatter bf = new BinaryFormatter();
         string path = "" + Application.persistentDataPath +"/GameData.data";
         FileStream stream = new FileStream(path, FileMode.Create);
