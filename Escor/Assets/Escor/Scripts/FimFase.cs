@@ -24,6 +24,7 @@ public class FimFase : MonoBehaviour
             // -------------------------
 
 
+            // int currentLevel = sectionDataInstance._currentLevelLocal;
             int currentLevel = levelDataInstance.LevelGaming;
 
 
@@ -45,7 +46,7 @@ public class FimFase : MonoBehaviour
             string[] fragmentMemorysSection = sectionDataInstance.GetMemoryFragment();
             Debug.Log(fragmentMemorysSection.Length+", "+currentLevel);
             fragmentMemorysSection[currentLevel-1] = levelDataInstance.FragmentMemoryStatus;
-            if (!unnofficialEndPhase)
+            if (!unnofficialEndPhase) // final não oficial
             {
                 if (currentLevel == sectionDataInstance.GetCurrentLevel())
                 {
@@ -55,7 +56,7 @@ public class FimFase : MonoBehaviour
                 else
                 {
                     Debug.Log("Atualizando informações do nível: " + currentLevel);
-                    sectionDataInstance.SetSectionData(currentLevel, 0, levelDataInstance.Powers, fragmentMemorysSection); // SetSectionData(int, int, bool[])
+                    sectionDataInstance.SetSectionData(sectionDataInstance.GetCurrentLevel(), 0, levelDataInstance.Powers, fragmentMemorysSection); // SetSectionData(int, int, bool[])
                 }
             }
             else
