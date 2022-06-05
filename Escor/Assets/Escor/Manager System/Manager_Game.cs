@@ -394,6 +394,7 @@ public class BossData
 
     public Vector3 GetBossPosition()
     {
+        Debug.Log(_bossPosition.Length);
         return new Vector3(_bossPosition[0], _bossPosition[1], _bossPosition[2]);
     }
 

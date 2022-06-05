@@ -13,10 +13,14 @@ public class BossLifeUI : MonoBehaviour
         _spriteRenderer.gameObject.SetActive(true);
         StartCoroutine(ShowLifeBoss());
     }
-    public void LoadBossLife(int valueLife)
+    public void LoadBossLife(bool bossActive,int valueLife)
     {
-        _spriteRenderer.gameObject.SetActive(true);
-        _spriteRenderer.sprite = spriteStatusLife[valueLife];
+        if (bossActive)
+        {
+            _spriteRenderer.gameObject.SetActive(true);
+            _spriteRenderer.sprite = spriteStatusLife[valueLife];
+        }
+
     }
     IEnumerator ShowLifeBoss()
     {
