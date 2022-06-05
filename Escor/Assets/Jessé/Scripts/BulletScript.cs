@@ -36,6 +36,8 @@ public class BulletScript : MonoBehaviour
     {
         if (destroyed)
             return;
+            
+        destroyed = true;
 
         if (col.tag == tagOfPlayer)
         {
@@ -80,7 +82,6 @@ public class BulletScript : MonoBehaviour
             return;
         }
 
-        destroyed = true;
         myRb.velocity = Vector3.zero;
         // StartCoroutine(ResetTrailRenderer(trail)); // serve para desativar o rastro e impedir que ele apareca se teletransportando
         myAnimator.Play("PedraDestroy", -1, 0);

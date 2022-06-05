@@ -12,6 +12,7 @@ public class ConversaPersonagem : MonoBehaviour
     [SerializeField] GameObject prefab;
     bool _statusConversa;
     public bool StatusConversa { get { return _statusConversa; } }
+    bool currentAudioFinished;
     public IEnumerator  ConversaFase(List<Conversa> conversa)
     {
         _statusConversa = false;
@@ -20,17 +21,54 @@ public class ConversaPersonagem : MonoBehaviour
         prefab.SetActive(true);
         foreach ( var estrofe in conversa)
         {
+            currentAudioFinished = false;
             dialogoImagem.sprite = estrofe.personagemImagem;
             dialogoTexto.text = estrofe.personagemFalaTexto;
             dialogoAudio.clip = estrofe.personagemFalaAudio;
             dialogoAudio.Play();
-            yield return new WaitUntil(()=>!dialogoAudio.isPlaying);
+            Coroutine checkAudioFinished = StartCoroutine("AudioFinished");
+            // if (LevelManager.levelstatus != LevelManager.LevelStatus.Game)
+            // {
+            //     prefab.SetActive(false);
+            //     yield return new WaitUntil(()=>LevelManager.levelstatus==LevelManager.LevelStatus.Game);
+            //     prefab.SetActive(true);
+            // }
+
+            yield return new WaitUntil(()=>currentAudioFinished);
+            StopCoroutine(checkAudioFinished);
+            // yield return new WaitUntil(()=>!dialogoAudio.isPlaying);
         }
         _statusConversa = true;
         // Movement.canMove = true; // player pode se mover [jessé]
         Movement.StopKeepPlayerStopped();; // player pode se mover [jessé]
         prefab.SetActive(false);
 
+    }
+
+
+    IEnumerator AudioFinished()
+    {
+        currentAudioFinished = false;
+
+        while(dialogoAudio.isPlaying)
+        {
+            if(LevelManager.levelstatus != LevelManager.LevelStatus.Game)
+            {
+                dialogoAudio.Pause();
+                prefab.SetActive(false);
+
+                yield return new WaitUntil(()=>LevelManager.levelstatus==LevelManager.LevelStatus.Game);
+
+                prefab.SetActive(true);
+                dialogoAudio.Play();
+            }
+
+            yield return null;
+        }
+
+        currentAudioFinished = true;
+
+        yield return null;
     }
 }
 
