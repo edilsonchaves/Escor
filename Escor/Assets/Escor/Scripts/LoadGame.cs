@@ -21,12 +21,12 @@ public class LoadGame : MonoBehaviour
         StartCoroutine(ShowIfStuck());
 
         _levelSelected = 1;
-        Debug.Log("Ola Vim aqui no level: " + Manager_Game.Instance.sectionGameData.GetCurrentLevel());
+        Debug.Log("Ola Vim aqui no level: " + Manager_Game.Instance.levelData.LevelGaming);
 
         if (Manager_Game.Instance.sectionGameData!= null)
         {
 
-            _levelSelected = Manager_Game.Instance.sectionGameData.GetCurrentLevel();
+            _levelSelected = Manager_Game.Instance.levelData.LevelGaming;
             
         }
 
