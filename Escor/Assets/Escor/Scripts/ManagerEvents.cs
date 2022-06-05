@@ -164,7 +164,7 @@ public class ManagerEvents : MonoBehaviour
         public static event Action oninitialBattle;
         public static event Action onTakeDamage;
         public static event Action<int> onUpdateLifeUI;
-        public static event Action<int> onLoadLifeUI;
+        public static event Action<bool,int> onLoadLifeUI;
 
         public static void InitializedBattle()
         {
@@ -192,12 +192,12 @@ public class ManagerEvents : MonoBehaviour
             }
         }
 
-        public static void LoadedLife(int value)
+        public static void LoadedLife(bool bossActive, int valueLife)
         {
 
             if (onLoadLifeUI != null)
             {
-                onLoadLifeUI(value);
+                onLoadLifeUI(bossActive, valueLife);
             }
         }
     }

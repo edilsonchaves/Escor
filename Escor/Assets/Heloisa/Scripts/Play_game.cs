@@ -50,6 +50,9 @@ public class Play_game : MonoBehaviour
 
 	void NovoJogo() 
 	{
+		SaveLoadSystem.DeleteFile<SectionData>();
+		SaveLoadSystem.DeleteFile<LevelData>();
+		SaveLoadSystem.DeleteFile<BossData>();
 		Manager_Game.Instance.InitialNewSectionGame();
 		SceneManager.LoadScene("Prologo");
 

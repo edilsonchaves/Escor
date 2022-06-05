@@ -32,6 +32,7 @@ public class LevelManager : MonoBehaviour
         SfxManager.Initialize();
         if (Manager_Game.Instance.levelData == null)
         {
+            Debug.Log("Teste 2");
             CreateLevel(3);
         }
         else
@@ -39,9 +40,13 @@ public class LevelManager : MonoBehaviour
             levelstatus = LevelStatus.Game;
             int level = Manager_Game.Instance.levelData.LevelGaming;
             CreateLevelOficial(level);
+            Debug.Log("Teste 3");
             CreatePlayer(level);
+            Debug.Log("Teste 4");
             InitializeSoundBG(level);
+            Debug.Log("Teste 5");
             MapSetupInformation();
+            Debug.Log("Teste 6");
             PlayerSetupGeneric();
             if (Manager_Game.Instance.LevelStatus == LevelInfo.LevelStatus.NewLevel)
             {
@@ -50,8 +55,9 @@ public class LevelManager : MonoBehaviour
                 return;
                 
             }
-
+            Debug.Log("Teste 7");
             Debug.Log("Continue Level");
+            BossSetupInformation();
             PlayerSetupInformation();
         }
         
@@ -61,6 +67,7 @@ public class LevelManager : MonoBehaviour
         int id = 0;
         foreach (bool powerID in Manager_Game.Instance.levelData.Powers)
         {
+            Debug.Log("Teste Power ID: "+powerID);
             if (powerID)
             {
                 ManagerEvents.PlayerMovementsEvents.PlayerGetedPower(id);
@@ -113,7 +120,18 @@ public class LevelManager : MonoBehaviour
         FadeAudio.Fade.Out(levelAudioSource, time);
     }
 
-
+    void BossSetupInformation()
+    {
+        BossScript boss = GameObject.FindObjectOfType<BossScript>();
+        if (boss != null)
+        {
+            boss.SetActiveBoss(Manager_Game.Instance.bossData.GetActiveBoss());
+            boss.transform.position = Manager_Game.Instance.bossData.GetBossPosition();
+            boss.InitializeBossLife(Manager_Game.Instance.bossData.LifeBoss());
+            ManagerEvents.Boss.LoadedLife(Manager_Game.Instance.bossData.GetActiveBoss(), Manager_Game.Instance.bossData.LifeBoss());
+            boss.SetStatusBoss(Manager_Game.Instance.bossData.GetBossStatus());
+        }
+    }
     void PlayerSetupInformation()
     {
         Vector2 pos = Manager_Game.Instance.levelData.CharacterPosition;
@@ -127,17 +145,6 @@ public class LevelManager : MonoBehaviour
         levelInformation.LoadLifeShardInformation(Manager_Game.Instance.levelData.FragmentLifeStatus);
         Debug.Log("Situation memory shard in level data: "+ Manager_Game.Instance.levelData.FragmentMemoryStatus);
         levelInformation.LoadMemoryShardInformation(Manager_Game.Instance.levelData.FragmentMemoryStatus);
-        BossScript boss = GameObject.FindObjectOfType<BossScript>();
-        if (boss != null)
-        {
-            boss.SetActiveBoss(Manager_Game.Instance.bossData.GetActiveBoss());
-            boss.transform.position = Manager_Game.Instance.bossData.GetBossPosition();
-            boss.InitializeBossLife(Manager_Game.Instance.bossData.LifeBoss());
-            ManagerEvents.Boss.LoadedLife(Manager_Game.Instance.bossData.LifeBoss());
-            boss.SetStatusBoss(Manager_Game.Instance.bossData.GetBossStatus());
-        }
-
-
     }
     void Update()
     {
