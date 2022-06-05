@@ -11,9 +11,7 @@ public class SelectLevel : MonoBehaviour
     private void Start()
     {
         
-        Manager_Game.Instance.LoadSectionGameMemory();
-        Manager_Game.Instance.bossData?.DeleteBossData();
-        Manager_Game.Instance.levelData?.DeleteLevelData();
+        Manager_Game.Instance.LoadSectionGameMemory();        
         string[] shardsMemoryStatus = Manager_Game.Instance.sectionGameData.GetMemoryFragment();
         levelSelected = false;
         for (int i = 0; i < buttons.Length; i++)
