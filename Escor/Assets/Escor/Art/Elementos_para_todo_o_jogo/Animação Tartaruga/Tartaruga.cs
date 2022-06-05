@@ -21,8 +21,10 @@ public class Tartaruga : MonoBehaviour
     {
         myAnimator  = GetComponent<Animator>();
         conversa    = GameObject.FindGameObjectWithTag("ConversaPersonagem").GetComponent<ConversaPersonagem>();
-        canSkip     = PlayerPrefs.GetInt("SkipConversationOfTurtle", 0) == 1; // é definido como 0 no menu/selecão de níveis
+        // canSkip     = PlayerPrefs.GetInt("SkipConversationOfTurtle", 0) == 1; // é definido como 0 no menu/selecão de níveis
                                                                               // é definido como 1 na morte de Kurô
+
+        canSkip     = Manager_Game.Instance.levelData.Powers[1];
 
         // caso deva pular o diálogo, o poder já estará na cena
         if(canSkip)
