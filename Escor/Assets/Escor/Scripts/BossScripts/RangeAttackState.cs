@@ -27,7 +27,7 @@ public class RangeAttackState : BossBaseState
     protected IEnumerator Shoot_(BossScript boss)
     {
         boss.PlayAnimation("BossTacandoPedra(Ataque1)");
-        // SfxManager.PlaySound(SfxManager.Sound.javaliShoot);
+        SfxManager.PlaySound(SfxManager.Sound.lobeShoot); 
         yield return new WaitForSeconds(0.5f);
         bullet = GetBullet();
         bullet.GetComponent<BulletScript>().emissor = boss.gameObject;

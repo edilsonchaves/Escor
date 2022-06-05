@@ -54,8 +54,10 @@ public static class SfxManager
         kuroCaindoDesesperada,
 
         lobeAttack,
-
+        lobeShoot,
+        
         vento,
+
     }
     private static Dictionary<Sound, float> soundTimerDic;
     public static List<GameObject> TiposDeSom = new List<GameObject>();
