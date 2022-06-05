@@ -94,7 +94,7 @@ public class Boss_Script : MonoBehaviour
         // [Jessé] ----------------
 
             // _animatorBoss.Play("BossDerrotadoLoop");
-            // fade.SetActive(true);
+            fade.SetActive(true);
             yield return new WaitForSeconds(1f);
 
             SceneManager.LoadScene("Final");

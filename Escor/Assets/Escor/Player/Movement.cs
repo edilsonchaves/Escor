@@ -174,8 +174,6 @@ public class Movement : MonoBehaviour {
 
     void Update()
     {
-        print("Bullet" + animator.GetBool("BulletDamage"));
-        print("Take" + animator.GetBool("TakeDamage"));
         canMove = keepingMeStopped == 0 && !ropeControll.attached && !defendendo; // [Jessé]
 
         if (LevelManager.levelstatus == LevelManager.LevelStatus.Game)
@@ -613,10 +611,11 @@ public class Movement : MonoBehaviour {
 
         }
 
-        if (Mathf.Round(col.contacts[0].normal.y) == 1 && col.gameObject.tag == "Javali")
+        if (Mathf.Round(col.contacts[0].normal.y) == 1 && col.gameObject.tag == "Boss")
         {
-            rb.velocity = new Vector2(Mathf.Abs(transform.eulerAngles.y) > 0 ? -1.5f : 1.5f, 8);
-            if (atacando) col.gameObject.GetComponent<IA_Javali>().JavaliStuned();
+            rb.velocity = new Vector2(Mathf.Abs(transform.eulerAngles.y) > 0 ? -4.5f : 4.5f, 10);
+            if (atacando)
+                ManagerEvents.Boss.TakedDamage();
 
         }
 
