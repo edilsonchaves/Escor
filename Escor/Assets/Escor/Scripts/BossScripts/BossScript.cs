@@ -49,11 +49,8 @@ public class BossScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log("Enter collision");
         currentState.OnCollisionEnter(this,collision);
-    }
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        currentState.OnCollisionExit(this, collision);
     }
     public void SwitchState(BossBaseState state)
     {
@@ -65,6 +62,10 @@ public class BossScript : MonoBehaviour
     public void SetTarget(Transform newTarget)
     {
         target = newTarget;
+    }
+    public GameObject GetTarget()
+    {
+        return target.gameObject;
     }
     public Vector3 TargetPosition()
     {

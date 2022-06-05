@@ -8,7 +8,8 @@ public class TakeDamageStateAttack : BossBaseState
     public override void EnterState(BossScript boss)
     {
         Debug.Log("Execute Take Damage State");
-        boss.StopCoroutine(boss.bossCoroutineAction);
+        if(boss.bossCoroutineAction!=null)
+            boss.StopCoroutine(boss.bossCoroutineAction);
         boss.bossCoroutineAction = boss.StartCoroutine(TakeDamage(boss));
 
     }
