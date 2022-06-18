@@ -2,30 +2,89 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
+
 public class Play_game : MonoBehaviour
 {
-	public void CarregarJogo()
-	{
-		SceneManager.LoadScene("SelectLevel");
-		Manager_Game.Instance.LoadSectionGame();
-	}
+	private Popup popup;
+	[SerializeField] private UIController uicontroller;
 
-	public void CarregarConfig()
+
+    private void Start()
+    {
+		popup = uicontroller.CreatePopup();
+		popup.gameObject.SetActive(false);
+
+	}
+    public void BTN_Play()
+	{
+		Manager_Game.Instance.LoadSectionGameMemory();
+		if (Manager_Game.Instance.sectionGameData!=null)
+			popup.InitPopup("Você possui um jogo salvo. Deseja continuar?", "Sim", () => CarregarJogo(), "Não", NovoJogo);
+        else
+        {
+			NovoJogo();
+		}
+	}
+	void CarregarJogo()
+    {
+        if (Manager_Game.Instance.sectionGameData.GetCurrentLevel()==0)
+        {
+
+			SceneManager.LoadScene("Prologo");
+        }
+        else
+        {
+			Manager_Game.Instance.LoadLevelGame();
+			if(Manager_Game.Instance.levelData!=null)
+            {
+				Manager_Game.Instance.LevelStatus = LevelInfo.LevelStatus.ContinueLevel;
+				SceneManager.LoadScene("LoadGameScene");
+            }
+            else
+            {
+				Manager_Game.Instance.LevelStatus = LevelInfo.LevelStatus.NewLevel;
+				SceneManager.LoadScene("SelectLevel");
+			}
+		}
+    }
+
+	void NovoJogo() 
+	{
+		SaveLoadSystem.DeleteFile<SectionData>();
+		SaveLoadSystem.DeleteFile<LevelData>();
+		SaveLoadSystem.DeleteFile<BossData>();
+		Manager_Game.Instance.InitialNewSectionGame();
+		SceneManager.LoadScene("Prologo");
+
+	}
+	public void BTN_Config()
 	{
 		SceneManager.LoadScene("menu_config");
 	}
 
-	public void CarregarCreditos()
+	public void BTN_Credits()
 	{
-		SceneManager.LoadScene("nome_cena_de_creditos");
+		Debug.Log("Teste");
+		SceneManager.LoadScene("CreditsScene");
 	}
 
-	public void Sair()
+	public void BTN_Exit()
 	{
-		Application.Quit();
+		popup.InitPopup("Você realmente deseja sair do Jogo?", "Sim", ExitAction, "Não", () => Debug.Log(""));
+		
 	}
 
-	public void Voltar()
+	private void ExitAction()
+	{		
+		#if UNITY_EDITOR
+			UnityEditor.EditorApplication.isPlaying = false;
+		#else
+                Application.Quit();
+		#endif
+	}
+
+
+	public void BTN_Voltar()
 	{
 		SceneManager.LoadScene("menu_inicial");
 	}

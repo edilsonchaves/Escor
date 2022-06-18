@@ -11,7 +11,6 @@ public class SaveLoadSystem
         BinaryFormatter bf = new BinaryFormatter();
         string path = "" + Application.persistentDataPath;
         path += "/"+typeof(T).ToString()+".data";
-        Debug.Log(path);
         FileStream stream = new FileStream(path,FileMode.Create);
         bf.Serialize(stream,data);
         stream.Close();        
@@ -39,15 +38,28 @@ public class SaveLoadSystem
         }
         
     }
+
     public static void ResetGameData()
     {
 
-        GameData data = new GameData(50, 50, 18, 0);
+        GameData data = new GameData(0, 0, 100, 0); // volume musica, volume voz, tamanho da letra, linguagem
         BinaryFormatter bf = new BinaryFormatter();
-        string path = "C:/Users/Edilson Chaves/AppData/LocalLow/DefaultCompany/Escor/GameData.data";
+        string path = "" + Application.persistentDataPath +"/GameData.data";
         FileStream stream = new FileStream(path, FileMode.Create);
         bf.Serialize(stream, data);
         stream.Close();
     
+    }
+
+    public static T DeleteFile<T>()
+    {
+        string path = "" + Application.persistentDataPath;
+        path += "/" + typeof(T).ToString() + ".data";
+        if (!File.Exists(path))
+        {
+            return default(T);
+        }
+        File.Delete(path);
+        return default(T);
     }
 }

@@ -3,7 +3,42 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - ground
+  - cinematic
+  - event
+  - Plataform
+  - ground
+  - Rope
+  - Canvas
+  - "Decora\xE7\xE3oComAnimator"
+  - "Decora\xE7\xE3oComCollider"
+  - Estalactite
+  - Gota
+  - credits_text
+  - play_text
+  - quit_text
+  - config_text
+  - Power
+  - Javali
+  - EndGame
+  - ConversaPersonagem
+  - Boss
+  - Cave Interior
+  - Fake_Wall
+  - Exclamation
+  - Gate
+  - ParedeJavali
+  - FragmentMemory
+  - FragmentLife
+  - plataforma
+  - Javalizao
+  - Spikes
+  - Life
+  - Vida
+  - Bullet
+  - TopoDaCabecaDeKuro
+  - PodeNascerFolha
   layers:
   - Default
   - TransparentFX
@@ -15,14 +50,14 @@ TagManager:
   - Ground
   - Player
   - Javali
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Tiles
+  - Background
+  - Parallax
+  - Tilemap_liso
+  - Platform
+  - GroundOnlyToPlayer
+  - TopoDaCabecaDeKuro
+  - Folha
   - 
   - 
   - 
@@ -38,6 +73,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Cloud
+    uniqueID: 579328459
+    locked: 0
+  - name: Parede
+    uniqueID: 3741989819
+    locked: 0
+  - name: SombraTocha
+    uniqueID: 3533326863
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Frente
+    uniqueID: 2811252031
     locked: 0
