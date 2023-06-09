@@ -441,7 +441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a1f5dc34c053f841b5f2ca05f0efe6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NomeDaCena: Menu
+  NomeDaCena: cena_jogo
   tempoParaCarregar: 6.5
 --- !u!1 &1949551123
 GameObject:
