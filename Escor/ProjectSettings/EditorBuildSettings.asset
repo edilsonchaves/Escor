@@ -6,33 +6,27 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Escor/Scenes/AberturaInicial.unity
-    guid: 39a0705b2b3db5a4ebd9bade5d4d5786
+    path: Assets/Escor 1.0/Scenes/Scenes Oficiais/Abertura.unity
+    guid: 2fd8453f35365e94f9c0612f2c1397d6
   - enabled: 1
-    path: Assets/Escor/Scenes/menu_inicial.unity
-    guid: 532e97451020c2c42a9e39d68d18508e
+    path: Assets/Escor 1.0/Scenes/Scenes Oficiais/Menu.unity
+    guid: 79d15bb47cd58a9498cf54d29dcc37c3
   - enabled: 1
-    path: Assets/Escor/Scenes/menu_config.unity
-    guid: 592526f79985a0845a90b13f24aa8055
+    path: Assets/Escor 1.0/Scenes/Scenes Oficiais/Cena_jogo.unity
+    guid: 05213550ca1920e45a1e444053d3dd57
   - enabled: 1
-    path: Assets/Escor/Scenes/SelectLevel.unity
-    guid: 44e8a12c7db9e894f84363d5f85923b2
+    path: Assets/Escor 1.0/Scenes/Scenes Oficiais/Introducao.unity
+    guid: 7b76e3047c05e1a49a0d33f27fac401b
   - enabled: 1
-    path: Assets/Escor/Scenes/LoadGameScene.unity
-    guid: 4004805fa3d5a1141af2d5f7119dbde7
+    path: Assets/Escor 1.0/Scenes/Scenes Oficiais/Level_tutorial.unity
+    guid: ed31972fa1c32c44182a3aa44f4b2e69
   - enabled: 1
-    path: Assets/Escor/Scenes/Prologo.unity
-    guid: b7ee6aa031881ee4e9d15c40e907cbd0
+    path: Assets/Escor 1.0/Scenes/Scenes Oficiais/Level_1.unity
+    guid: 281c5b8dc01249749a2cc10a6e71894f
   - enabled: 1
-    path: Assets/Escor/Scenes/GameLevel.unity
-    guid: f5284c2609122ac44b665ab17e6c27e6
+    path: Assets/Escor 1.0/Scenes/Scenes Oficiais/Level_2.unity
+    guid: 503d2d98aad1cab47bcb55c71420f511
   - enabled: 1
-    path: Assets/Escor/Scenes/FinalScene.unity
-    guid: 7e30eacd5e626214db96f5ae8a627401
-  - enabled: 1
-    path: Assets/Escor/Scenes/CreditsScene.unity
-    guid: 0890b210fb7b7ff468df445130a9928e
-  - enabled: 1
-    path: Assets/Escor/Scenes/FinalVerdadeiro.unity
-    guid: 57b5b6805af72344dad5ece7812fe224
+    path: Assets/Escor 1.0/Scenes/Cena_teste.unity
+    guid: a08e77345a3e45d46848c2059e9f956f
   m_configObjects: {}
