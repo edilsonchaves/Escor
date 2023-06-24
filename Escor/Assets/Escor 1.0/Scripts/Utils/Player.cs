@@ -5,23 +5,50 @@ using Sirenix.Serialization;
 using System.IO;
 using System;
 
-public class Player : MonoBehaviour
+public class Player : Singletons<Player>
 {
-    [SerializeField] private DataPlayer data;
+    [SerializeField] private DataPlayer saveData;
+    [SerializeField] private string _playerName;
+    [SerializeField]private int _playerLife;
+
+    public static bool IsPlayerLoaded;
 
     private void Start()
     {
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            data.SaveMemory();
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            data.Load();
-        }
+    }
+
+    private void OnEnable()
+    {
+        Game_Manager._saveAction += SavePlayerData;
+
+    }
+
+    private void OnDisable()
+    {
+        Game_Manager._saveAction -= SavePlayerData;
+
+    }
+    private void SavePlayerData()
+    {
+        Debug.Log("Player Save");
+        saveData.ConfigureDataToSave(_playerName, _playerLife, transform.position);
+        saveData.SaveMemory();
+    }
+    public static IEnumerator SetupPlayer()
+    {
+        IsPlayerLoaded = false;
+        Instance.saveData.Load();
+        Debug.Log($"Dados Carregados");
+        yield return new WaitForSecondsRealtime(2f);
+        Instance._playerName = Instance.saveData.name;
+        Instance._playerLife = Instance.saveData.vida;
+        Instance.transform.position = Instance.saveData.position;
+        Debug.Log($"Player Atualizado");
+        yield return new WaitForSecondsRealtime(2f);
+        IsPlayerLoaded = true;
     }
 }
 
@@ -30,6 +57,17 @@ public class DataPlayer{
     public string name;
     public int vida;
     public Vector3 position;
+    public void ConfigureDataToSave(string newName,int newVida, Vector3 newPosition)
+    {
+        name = newName;
+        vida = newVida;
+        position = newPosition;
+    }
+    public void ConfigureDataToSave(int newVida, Vector3 newPosition)
+    {
+        vida = newVida;
+        position = newPosition;
+    }
     public void SaveMemory()
     {
         string path;
