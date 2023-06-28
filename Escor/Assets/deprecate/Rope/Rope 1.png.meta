@@ -33,7 +33,7 @@ TextureImporter:
       213: 2345679613646826166
     second: Rope 1_9
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -50,10 +50,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -63,11 +65,11 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 1
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: -1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -92,6 +94,8 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -103,6 +107,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -115,6 +120,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -127,6 +133,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -139,6 +146,20 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -358,65 +379,113 @@ TextureImporter:
     physicsShape: []
     bones:
     - name: bone_1
+      guid: 
       position: {x: 14.688163, y: 798.7022, z: 0}
       rotation: {x: 0, y: 0, z: -0.7071069, w: 0.7071067}
       length: 53.81842
       parentId: -1
+      color:
+        serializedVersion: 2
+        rgba: 0
     - name: bone_2
+      guid: 
       position: {x: 53.818417, y: 0.000013035373, z: 0}
       rotation: {x: 0, y: 0, z: 0.0035964164, w: 0.99999356}
       length: 62.341274
       parentId: 0
+      color:
+        serializedVersion: 2
+        rgba: 0
     - name: bone_3
+      guid: 
       position: {x: 62.34131, y: 0.000018686429, z: 0}
       rotation: {x: 0, y: 0, z: -0.0035922702, w: 0.99999356}
       length: 60.097168
       parentId: 1
+      color:
+        serializedVersion: 2
+        rgba: 0
     - name: bone_4
+      guid: 
       position: {x: 60.097164, y: 0.000018213983, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       length: 55.612305
       parentId: 2
+      color:
+        serializedVersion: 2
+        rgba: 0
     - name: bone_5
+      guid: 
       position: {x: 55.6123, y: 0.00001752276, z: 0}
       rotation: {x: 0, y: 0, z: 0.003508327, w: 0.99999386}
       length: 63.68669
       parentId: 3
+      color:
+        serializedVersion: 2
+        rgba: 0
     - name: bone_6
+      guid: 
       position: {x: 63.68671, y: 0.000015315754, z: 0}
       rotation: {x: 0, y: 0, z: -0.005950224, w: 0.9999823}
       length: 65.40172
       parentId: 4
+      color:
+        serializedVersion: 2
+        rgba: 0
     - name: bone_7
+      guid: 
       position: {x: 65.40173, y: 0.000017424423, z: 0}
       rotation: {x: 0, y: 0, z: 0.0024352951, w: 0.999997}
       length: 73.90299
       parentId: 5
+      color:
+        serializedVersion: 2
+        rgba: 0
     - name: bone_8
+      guid: 
       position: {x: 73.903015, y: 0.000023906385, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       length: 71.94099
       parentId: 6
+      color:
+        serializedVersion: 2
+        rgba: 0
     - name: bone_9
+      guid: 
       position: {x: 71.94099, y: 0.00002233115, z: 0}
       rotation: {x: 0, y: 0, z: 0.0079430165, w: 0.99996847}
       length: 82.415535
       parentId: 7
+      color:
+        serializedVersion: 2
+        rgba: 0
     - name: bone_10
+      guid: 
       position: {x: 82.41553, y: 0.00003271321, z: 0}
       rotation: {x: 0, y: 0, z: -0.023908338, w: 0.9997142}
       length: 79.72823
       parentId: 8
+      color:
+        serializedVersion: 2
+        rgba: 0
     - name: bone_11
+      guid: 
       position: {x: 79.72824, y: 0.00003552707, z: 0}
       rotation: {x: 0, y: 0, z: 0.015970234, w: 0.9998725}
       length: 77.163216
       parentId: 9
+      color:
+        serializedVersion: 2
+        rgba: 0
     - name: bone_12
+      guid: 
       position: {x: 77.16322, y: 0.000026552389, z: 0}
       rotation: {x: 0, y: 0, z: -0.013886868, w: 0.99990356}
       length: 41.476826
       parentId: 10
+      color:
+        serializedVersion: 2
+        rgba: 0
     spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices:
@@ -933,9 +1002,19 @@ TextureImporter:
       boneIndex[2]: 0
       boneIndex[3]: 0
     secondaryTextures: []
-  spritePackingTag: 
+    nameFileIdTable:
+      Rope 1_0: -8542109544820341159
+      Rope 1_1: -666941121242537578
+      Rope 1_2: -4610666678500610741
+      Rope 1_3: -6352048172918036046
+      Rope 1_4: 8845031774817938276
+      Rope 1_5: 2304912727524643567
+      Rope 1_6: 5763488104286951705
+      Rope 1_7: -4701577743046807245
+      Rope 1_8: 7694924115369348864
+      Rope 1_9: 2345679613646826166
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
